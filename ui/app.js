@@ -1,11 +1,11 @@
-const LIST_SOURCES = {
+﻿const LIST_SOURCES = {
   today: {
-    label: 'Bugün',
+    label: 'BugÃ¼n',
     primary: '/data/lists/latest.json',
     fallback: '/data/lists/sample-latest.json',
   },
   tomorrow: {
-    label: 'Yarın',
+    label: 'YarÄ±n',
     primary: '/data/lists/upcoming.json',
     fallback: '/data/lists/sample-upcoming.json',
   },
@@ -51,9 +51,9 @@ function renderListMeta() {
   const { dataDate, view, total } = state.listMeta;
   const viewLabel = LIST_SOURCES[state.source]?.label ?? LIST_SOURCES[view]?.label ?? view;
   listMetaEl.innerHTML = `
-    <span>Tarih: <strong>${dataDate || '—'}</strong></span>
-    <span>Görünüm: ${viewLabel || '—'}</span>
-    <span>Toplam Maç: ${total ?? state.matches.length}</span>
+    <span>Tarih: <strong>${dataDate || 'â€”'}</strong></span>
+    <span>GÃ¶rÃ¼nÃ¼m: ${viewLabel || 'â€”'}</span>
+    <span>Toplam MaÃ§: ${total ?? state.matches.length}</span>
   `;
 }
 
@@ -64,7 +64,7 @@ async function fetchWithFallback(primary, fallback) {
       return await res.json();
     }
     if (!fallback) {
-      throw new Error(`İstek başarısız: ${res.status}`);
+      throw new Error(`Ä°stek baÅŸarÄ±sÄ±z: ${res.status}`);
     }
   } catch (error) {
     if (!fallback) {
@@ -74,7 +74,7 @@ async function fetchWithFallback(primary, fallback) {
 
   const fallbackRes = await fetch(fallback);
   if (!fallbackRes.ok) {
-    throw new Error('Primary ve yedek veri kaynakları yüklenemedi.');
+    throw new Error('Primary ve yedek veri kaynaklarÄ± yÃ¼klenemedi.');
   }
   return fallbackRes.json();
 }
@@ -90,7 +90,7 @@ async function loadMatchList(force = false, sourceKey = 'today') {
 
   state.source = sourceKey;
   highlightActiveTab();
-  listContainer.innerHTML = '<p class="placeholder">Maç listesi yükleniyor...</p>';
+  listContainer.innerHTML = '<p class="placeholder">MaÃ§ listesi yÃ¼kleniyor...</p>';
   try {
     const { primary, fallback } = LIST_SOURCES[sourceKey];
     const data = await fetchWithFallback(primary, fallback);
@@ -106,7 +106,7 @@ async function loadMatchList(force = false, sourceKey = 'today') {
       selectMatch(state.matches[0].matchId);
     }
   } catch (error) {
-    listContainer.innerHTML = `<p class="placeholder">Maç listesi getirilemedi: ${error.message}</p>`;
+    listContainer.innerHTML = `<p class="placeholder">MaÃ§ listesi getirilemedi: ${error.message}</p>`;
     state.listMeta = null;
     renderListMeta();
   }
@@ -115,7 +115,7 @@ async function loadMatchList(force = false, sourceKey = 'today') {
 function renderMatchList() {
   if (!state.matches.length) {
     listContainer.innerHTML =
-      '<p class="placeholder">Hiç veri yok. <code>npm run data:sample</code> veya yeni scrape komutunu çalıştırabilirsiniz.</p>';
+      '<p class="placeholder">HiÃ§ veri yok. <code>npm run data:sample</code> veya yeni scrape komutunu Ã§alÄ±ÅŸtÄ±rabilirsiniz.</p>';
     return;
   }
 
@@ -151,17 +151,17 @@ async function selectMatch(matchId) {
   renderMatchList();
 
   const selectedMatch = state.matches.find((m) => m.matchId === matchId);
-  detailRoot.innerHTML = `<p class="placeholder">#${matchId} maç detayı yükleniyor...</p>`;
+  detailRoot.innerHTML = `<p class="placeholder">#${matchId} maÃ§ detayÄ± yÃ¼kleniyor...</p>`;
 
   try {
     const detail = await loadMatchDetail(matchId);
     renderMatchDetail(detail);
   } catch (error) {
     detailRoot.innerHTML = `<div class="info-card">
-      <h3>Detay yüklenemedi</h3>
+      <h3>Detay yÃ¼klenemedi</h3>
       <p>${error.message}</p>
       <p>
-        Detay JSON'u oluşturmak için:
+        Detay JSON'u oluÅŸturmak iÃ§in:
         <code>npm run scrape:detail -- ${matchId} --home="${selectedMatch?.homeTeam || ''}" --away="${
       selectedMatch?.awayTeam || ''
     }" &gt; data/matches/${matchId}.json</code>
@@ -185,19 +185,13 @@ async function loadMatchDetail(matchId) {
 
 function renderMatchDetail(detail) {
   const scoreboard = detail.scoreboard
-    ? renderScoreboard(detail.scoreboard)
+    ? renderScoreboard(detail.scoreboard, detail.lastUpdatedAt)
     : '<p class="placeholder">Skorboard verisi bulunamadı.</p>';
 
-  const highlight = renderCardSection(
-    'Öne Çıkan Tahminler',
-    detail.highlightPredictions,
-    renderHighlightCard,
-  );
-  const detailedPredictions = renderCardSection(
-    'Detaylı Tahminler',
-    detail.detailPredictions,
-    renderDetailedCard,
-  );
+  const structured = renderStructuredSections(detail);
+
+  const highlight = renderCardSection('Öne Çıkan Tahminler', detail.highlightPredictions, renderHighlightCard);
+  const detailedPredictions = renderCardSection('Detaylı Tahminler', detail.detailPredictions, renderDetailedCard);
 
   const odds = detail.oddsTrends?.length
     ? `<section>
@@ -215,7 +209,7 @@ function renderMatchDetail(detail) {
                         .map(
                           (row) =>
                             `<li><strong>${row.label}:</strong> ${row.values.filter(Boolean).join(
-                              ' · ',
+                              ' &middot; ',
                             )}</li>`,
                         )
                         .join('')}
@@ -245,7 +239,7 @@ function renderMatchDetail(detail) {
                         `<li>
                           <strong>${fixture.opponent}</strong>
                           <div>${fixture.competition || ''}</div>
-                          <small>${fixture.dateText || ''} ${fixture.tag ? `· ${fixture.tag}` : ''}</small>
+                          <small>${fixture.dateText || ''} ${fixture.tag ? `&middot; ${fixture.tag}` : ''}</small>
                         </li>`,
                     )
                     .join('')}
@@ -259,14 +253,13 @@ function renderMatchDetail(detail) {
 
   detailRoot.innerHTML = `
     ${scoreboard}
+    ${structured}
     ${highlight}
     ${detailedPredictions}
     ${odds}
     ${upcoming}
   `;
-}
-
-function renderScoreboard(board) {
+}function renderScoreboard(board, lastUpdatedAt) {
   const badgeMarkup = board.statusBadges
     ?.filter(Boolean)
     .map((badge) => `<span class="badge">${badge}</span>`)
@@ -275,6 +268,17 @@ function renderScoreboard(board) {
   const infoRow = board.info?.length
     ? `<div class="info-row">${board.info.map((chip) => `<span>${chip}</span>`).join('')}</div>`
     : '';
+
+  const metaItems = [];
+  if (board.kickoff) {
+    metaItems.push(
+      `<div class="meta-item"><span>Başlama</span><strong>${board.kickoff} ${board.kickoffTimezone ?? ''}</strong></div>`,
+    );
+  }
+  if (lastUpdatedAt) {
+    metaItems.push(`<div class="meta-item"><span>Güncellendi</span><strong>${lastUpdatedAt}</strong></div>`);
+  }
+  const metaRow = metaItems.length ? `<div class="meta-list">${metaItems.join('')}</div>` : '';
 
   return `<section class="scoreboard">
     <div class="scoreboard-header">
@@ -291,12 +295,11 @@ function renderScoreboard(board) {
       ${renderTeamBlock(board.awayTeam, false)}
     </div>
     ${infoRow}
+    ${metaRow}
   </section>`;
-}
-
-function renderTeamBlock(team, isHome) {
+}function renderTeamBlock(team, isHome) {
   if (!team) {
-    return '<div class="team-block"><em>Takım bilgisi yok</em></div>';
+    return '<div class="team-block"><em>TakÄ±m bilgisi yok</em></div>';
   }
   return `<div class="team-block">
     <div class="badge">${isHome ? 'Ev Sahibi' : 'Deplasman'}</div>
@@ -304,6 +307,54 @@ function renderTeamBlock(team, isHome) {
   </div>`;
 }
 
+function renderStructuredSections(detail) {
+  const sections = [];
+  const sportsEvent = detail?.structuredData?.sportsEvent;
+  if (sportsEvent) {
+    sections.push(renderSportsEventSection(sportsEvent));
+  }
+  const faqItems = detail?.structuredData?.faqPage?.mainEntity ?? [];
+  if (Array.isArray(faqItems) && faqItems.length) {
+    sections.push(renderFaqSection(faqItems));
+  }
+  return sections.join('');
+}
+
+function renderSportsEventSection(event) {
+  const start = event.startDate || event.startdate || '';
+  const location = event.location?.name || '';
+  const status = typeof event.eventStatus === 'string' ? event.eventStatus.split('/').pop() : '';
+  const organizer = event.organizer?.name || '';
+  return `<section class="sports-event">
+    <header>
+      <p>Resmi Etkinlik Bilgisi</p>
+      ${status ? `<small>${status}</small>` : ''}
+    </header>
+    <ul>
+      ${start ? `<li><span>Başlangıç</span><strong>${start}</strong></li>` : ''}
+      ${location ? `<li><span>Stadyum</span><strong>${location}</strong></li>` : ''}
+      ${organizer ? `<li><span>Organizatör</span><strong>${organizer}</strong></li>` : ''}
+    </ul>
+  </section>`;
+}
+
+function renderFaqSection(items) {
+  return `<section>
+    <h2>Sık Sorulan Sorular</h2>
+    <div class="faq-grid">
+      ${items
+        .map((qa, idx) => {
+          const question = qa?.name || `Soru ${idx + 1}`;
+          const answer = qa?.acceptedAnswer?.text || 'Yanıt bulunamadı.';
+          return `<article class="faq-item">
+            <strong>${question}</strong>
+            <p>${answer}</p>
+          </article>`;
+        })
+        .join('')}
+    </div>
+  </section>`;
+}
 function formatScore(value) {
   return typeof value === 'number' && !Number.isNaN(value) ? value : '-';
 }
@@ -324,22 +375,65 @@ function renderHighlightCard(card) {
   return `<div class="info-card">
     <h4>${card.title || '-'}</h4>
     <p class="score-value">${card.pickCode || '---'}</p>
-    <p>Başarı: ${card.successRate ?? '—'}%</p>
-    <p>Güven: ${card.rating}/${card.ratingMax}</p>
-    ${card.locked ? '<small class="badge">Premium içerik</small>' : ''}
+    <p>BaÅŸarÄ±: ${card.successRate ?? 'â€”'}%</p>
+    <p>GÃ¼ven: ${card.rating}/${card.ratingMax}</p>
+    ${card.locked ? '<small class="badge">Premium iÃ§erik</small>' : ''}
   </div>`;
 }
 
 function renderDetailedCard(card) {
   return `<div class="info-card">
     <h4>${card.title || '-'}</h4>
-    <p>Güven göstergesi: ${card.confidence ?? '—'}%</p>
+    <p>Güven göstergesi: ${card.confidence ?? '-'}%</p>
     <ul>
       ${card.outcomes
-        .map((outcome) => `<li><strong>${outcome.label}:</strong> ${outcome.valuePercent ?? '—'}%</li>`)
+        .map((outcome) => `<li><strong>${outcome.label}:</strong> ${outcome.valuePercent ?? '-'}%</li>`)
+        .join('')}
+    </ul>
+  </div>`;
+}function formatScore(value) {
+  return typeof value === 'number' && !Number.isNaN(value) ? value : '-';
+}
+
+function renderCardSection(title, items = [], renderer) {
+  if (!items.length) {
+    return '';
+  }
+  return `<section>
+    <h2>${title}</h2>
+    <div class="card-grid">
+      ${items.map(renderer).join('')}
+    </div>
+  </section>`;
+}
+
+function renderHighlightCard(card) {
+  return `<div class="info-card">
+    <h4>${card.title || '-'}</h4>
+    <p class="score-value">${card.pickCode || '---'}</p>
+    <p>BaÅŸarÄ±: ${card.successRate ?? 'â€”'}%</p>
+    <p>GÃ¼ven: ${card.rating}/${card.ratingMax}</p>
+    ${card.locked ? '<small class="badge">Premium iÃ§erik</small>' : ''}
+  </div>`;
+}
+
+function renderDetailedCard(card) {
+  return `<div class="info-card">
+    <h4>${card.title || '-'}</h4>
+    <p>GÃ¼ven gÃ¶stergesi: ${card.confidence ?? 'â€”'}%</p>
+    <ul>
+      ${card.outcomes
+        .map((outcome) => `<li><strong>${outcome.label}:</strong> ${outcome.valuePercent ?? 'â€”'}%</li>`)
         .join('')}
     </ul>
   </div>`;
 }
 
 loadMatchList();
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+﻿import puppeteer from 'puppeteer';
 import {
   BASE_URL,
   DEFAULT_NAVIGATION_TIMEOUT,
@@ -109,7 +109,7 @@ export async function scrapeMatchDetail(options = {}) {
         return src.startsWith('http') ? src : `${location.origin}${src}`;
       };
 
-      const structuredData = Array.from(
+      const structuredDataList = Array.from(
         document.querySelectorAll('script[type="application/ld+json"]'),
       )
         .map((script) => {
@@ -121,16 +121,31 @@ export async function scrapeMatchDetail(options = {}) {
         })
         .filter(Boolean);
 
-      const sportsEvent = structuredData.find((item) => item?.['@type'] === 'SportsEvent') || null;
+      const pickByType = (type) =>
+        structuredDataList.find((item) => {
+          const entryType = item?.['@type'];
+          if (Array.isArray(entryType)) {
+            return entryType.includes(type);
+          }
+          return entryType === type;
+        }) || null;
+
+      const sportsEvent = pickByType('SportsEvent');
+      const faqPage = pickByType('FAQPage');
+      const article = pickByType('Article');
+      const breadcrumbs = pickByType('BreadcrumbList');
 
       const scoreboardGrid = document.querySelector('main .grid.grid-cols-3.items-center');
-      const scoreboardCard = scoreboardGrid?.closest('div');
-      const scoreboardHeader = scoreboardCard?.querySelector(
-        '.flex.items-center.justify-between.mb-4',
-      );
-      const scoreboardInfoRow = scoreboardCard?.querySelector(
-        '.flex.flex-wrap.items-center.justify-center',
-      );
+      const scoreboardCard =
+        scoreboardGrid?.closest('[class*="relative"]') ?? scoreboardGrid?.closest('div');
+      const scoreboardHeader =
+        scoreboardCard?.querySelector(
+          '.flex.items-center.justify-between.mb-3, .flex.items-center.justify-between.mb-4',
+        ) ?? null;
+      const scoreboardInfoRow =
+        scoreboardCard?.querySelector(
+          '.flex.flex-wrap.items-center.justify-center, .flex.flex-wrap.items-center.gap-x-4',
+        ) ?? null;
 
       const scoreboard = scoreboardGrid
         ? (() => {
@@ -148,6 +163,17 @@ export async function scrapeMatchDetail(options = {}) {
                   .map((chip) => text(chip))
                   .filter(Boolean)
               : [];
+            const kickoffContainer =
+              scoreboardCard?.querySelector('.border-t .text-gray-400') ?? null;
+            const kickoffTimezone = kickoffContainer
+              ? text(kickoffContainer.querySelector('span'))
+              : null;
+            const kickoffTextRaw = kickoffContainer
+              ? text(kickoffContainer).replace(kickoffTimezone || '', '').trim()
+              : null;
+            const kickoffText = kickoffTextRaw
+              ? kickoffTextRaw.replace(/^[^0-9A-Za-z]+/, '').trim()
+              : null;
 
             return {
               leagueLabel: text(scoreboardHeader?.querySelector('.text-gray-300')),
@@ -168,24 +194,32 @@ export async function scrapeMatchDetail(options = {}) {
               },
               halftimeScore: halftime?.replace(/^Devre:\s*/i, '') || null,
               info: infoChips,
+              kickoff: kickoffText || null,
+              kickoffTimezone: kickoffTimezone || null,
             };
           })()
         : null;
 
       const extractHighlightCard = (card, index) => {
         const content =
-          card.querySelector('.relative.p-3, .relative.p-4, .relative.p-5') ?? card.querySelector('.relative');
+          card.querySelector('.relative.p-3, .relative.p-4, .relative.p-5') ??
+          card.querySelector('.relative');
         if (!content) {
           return null;
         }
-        const ratingSpans = Array.from(content.querySelectorAll('span')).filter((span) =>
-          span.textContent?.includes('★'),
+        const ratingContainer = content.querySelector(
+          '[class*="gap-0.5"], [class*="gap-1"], [class*="gap-2"]',
         );
+        const ratingSpans = ratingContainer
+          ? Array.from(ratingContainer.querySelectorAll('span'))
+          : [];
         const rating = ratingSpans.filter((span) => span.className?.includes('bet-yellow')).length;
         const ratingMax = ratingSpans.length || 5;
-        const successRate = text(
-          content.querySelector('.font-bold.text-bet-green, .font-bold.text-bet-yellow'),
-        );
+        const successNode =
+          content.querySelector(
+            '.flex.items-center.justify-between .font-bold.text-bet-green, .flex.items-center.justify-between .font-bold.text-bet-yellow',
+          ) ?? null;
+        const successRate = successNode ? toNumber(text(successNode)) : null;
 
         return {
           position: index + 1,
@@ -193,7 +227,7 @@ export async function scrapeMatchDetail(options = {}) {
           pickCode: text(
             content.querySelector('.text-3xl, .text-4xl, .text-5xl, .text-2xl.font-bold'),
           ),
-          successRate: successRate ? toNumber(successRate) : null,
+          successRate,
           rating,
           ratingMax,
           locked: Boolean(card.querySelector('.absolute.inset-0')),
@@ -280,7 +314,7 @@ export async function scrapeMatchDetail(options = {}) {
       const oddsTrends = extractOddsSection();
 
       const extractUpcomingMatches = () => {
-        const heading = findHeading('Gelecek Maçlar');
+        const heading = findHeading('Gelecek MaÃ§lar');
         if (!heading) {
           return [];
         }
@@ -313,6 +347,17 @@ export async function scrapeMatchDetail(options = {}) {
 
       const upcomingMatches = extractUpcomingMatches();
 
+      const footerMeta = text(
+        document.querySelector('.text-center.text-gray-600.text-xs.py-4'),
+      );
+      let lastUpdated = null;
+      if (footerMeta) {
+        const match = footerMeta.match(/G[üu]ncelleme\s*:\s*([0-9.: ]+)/i);
+        if (match) {
+          lastUpdated = match[1]?.trim() || null;
+        }
+      }
+
       return {
         scoreboard,
         highlightPredictions,
@@ -321,7 +366,12 @@ export async function scrapeMatchDetail(options = {}) {
         upcomingMatches,
         structuredData: {
           sportsEvent,
+          faqPage,
+          article,
+          breadcrumbs,
+          raw: structuredDataList,
         },
+        lastUpdatedAt: lastUpdated,
       };
     });
 
@@ -350,3 +400,4 @@ function createMatchSlug(home, away) {
 function createMatchSlugFromId(matchId) {
   return sanitizeSlug(String(matchId));
 }
+

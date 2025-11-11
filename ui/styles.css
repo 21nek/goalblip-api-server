@@ -221,6 +221,33 @@ body {
   color: #d1d5db;
 }
 
+.meta-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(55, 65, 81, 0.6);
+  background: rgba(15, 23, 42, 0.8);
+  min-width: 140px;
+}
+
+.meta-item span {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.meta-item strong {
+  font-size: 0.95rem;
+  color: #f8fafc;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -232,6 +259,68 @@ body {
   border: 1px solid rgba(55, 65, 81, 0.6);
   background: rgba(17, 24, 39, 0.8);
   padding: 1rem;
+}
+
+.sports-event {
+  border: 1px solid rgba(55, 65, 81, 0.6);
+  border-radius: 18px;
+  background: rgba(12, 18, 32, 0.85);
+  padding: 1.25rem;
+}
+
+.sports-event header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  color: #e0f2fe;
+}
+
+.sports-event ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sports-event li {
+  flex: 1 1 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.sports-event li span {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.sports-event li strong {
+  color: #f8fafc;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.faq-item {
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(55, 65, 81, 0.6);
+  background: rgba(15, 23, 42, 0.85);
+  color: #dbeafe;
+  font-size: 0.9rem;
+}
+
+.faq-item strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #ffffff;
 }
 
 .info-card h4 {
