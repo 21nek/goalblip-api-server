@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gol Sinyali Scraper Preview</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Gol Sinyali · Scraper Önizleme</h1>
+      <p>Sol taraftan bir maç seçin, sağ tarafta detayları görüntüleyin.</p>
+    </header>
+    <div class="app-shell">
+      <aside class="match-list-panel">
+        <div class="panel-header">
+          <h2>Maç Listeleri</h2>
+          <div class="panel-actions">
+            <div class="tab-buttons">
+              <button data-list-source="today" class="tab-button active">Bugün</button>
+              <button data-list-source="tomorrow" class="tab-button">Yarın</button>
+            </div>
+            <button id="refresh-list">Yenile</button>
+          </div>
+        </div>
+        <div id="list-meta" class="list-meta"></div>
+        <div id="match-list" class="match-list"></div>
+      </aside>
+      <main class="match-detail-panel">
+        <div id="detail-root" class="detail-root">
+          <p class="placeholder">
+            Henüz herhangi bir detay yüklenmedi. Soldan bir maç seçebilir veya
+            <code>npm run data:sample</code> komutu ile örnek verileri oluşturabilirsiniz.
+          </p>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "goalblip_api",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scrape:matches": "node src/cli/scrape-golsinyali-matches.js",
+    "scrape:detail": "node src/cli/scrape-golsinyali-match-detail.js",
+    "data:sample": "node src/scripts/generate-sample-data.js",
+    "gui": "node src/gui/server.js",
+    "server": "node src/server/index.js",
+    "start": "node src/server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "puppeteer": "^24.29.1"
+  }
+}
