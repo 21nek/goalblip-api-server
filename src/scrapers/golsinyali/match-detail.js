@@ -43,7 +43,8 @@ export async function scrapeMatchDetail(options = {}) {
     throw new Error('matchId parametresi zorunludur.');
   }
 
-  const fallbackSlug = slug || createMatchSlug(homeTeamName, awayTeamName);
+  const fallbackSlug =
+    slug || createMatchSlug(homeTeamName, awayTeamName) || createMatchSlugFromId(matchId);
   const targetUrl = buildDetailUrl(locale, matchId, fallbackSlug);
 
   const browser = await puppeteer.launch({ headless });
@@ -344,4 +345,8 @@ function createMatchSlug(home, away) {
     return null;
   }
   return [home, away].map(sanitizeSlug).filter(Boolean).join('-');
+}
+
+function createMatchSlugFromId(matchId) {
+  return sanitizeSlug(String(matchId));
 }

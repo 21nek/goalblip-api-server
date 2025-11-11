@@ -246,3 +246,53 @@ main {
     max-height: none;
   }
 }
+section.panel + section.panel {
+  margin-top: 1rem;
+}
+
+.api-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.api-form input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(57, 73, 107, 0.6);
+  background: rgba(3, 6, 14, 0.85);
+  color: #f1f5f9;
+}
+
+.api-form button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1.2rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #021012;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.api-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.helper {
+  display: block;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.helper.error {
+  color: #fecaca;
+}
+
+.helper.success {
+  color: #bef264;
+}

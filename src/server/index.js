@@ -9,10 +9,11 @@ import {
   saveMatchDetail,
   saveMatchList,
 } from '../services/match-storage.js';
-import { ensureDataDirectories } from '../utils/data-store.js';
+import { ensureDataDirectories, getDataDirectories } from '../utils/data-store.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 4000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(express.json());
 app.use(
@@ -92,11 +93,20 @@ app.get('/api/matches/:date', async (req, res, next) => {
 
 app.get('/api/match/:matchId', async (req, res, next) => {
   try {
-    const detail = await loadMatchDetail(req.params.matchId);
+    const { matchId } = req.params;
+    let detail = await loadMatchDetail(matchId);
+
     if (!detail) {
-      res.status(404).json({ error: 'Maç detayı bulunamadı.' });
-      return;
+      const metadata = await findMatchMetadata(Number(matchId));
+      const scraped = await scrapeMatchDetail({
+        matchId,
+        homeTeamName: metadata?.homeTeam,
+        awayTeamName: metadata?.awayTeam,
+      });
+      await saveMatchDetail(scraped);
+      detail = scraped;
     }
+
     res.json(detail);
   } catch (error) {
     next(error);
@@ -129,6 +139,21 @@ app.post('/api/match/:matchId/scrape', async (req, res, next) => {
   }
 });
 
+async function findMatchMetadata(matchId) {
+  const views = ['today', 'tomorrow'];
+  for (const view of views) {
+    const list = await loadMatchListByView(view);
+    const match =
+      list?.matches?.find(
+        (item) => Number(item.matchId) === Number(matchId) || String(item.matchId) === String(matchId),
+      ) ?? null;
+    if (match) {
+      return match;
+    }
+  }
+  return null;
+}
+
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({
@@ -137,7 +162,25 @@ app.use((err, req, res, next) => {
 });
 
 ensureDataDirectories().then(() => {
-  app.listen(PORT, () => {
-    console.log(`⚽️  GoalBlip API http://localhost:${PORT}`);
+  app.listen(PORT, HOST, () => {
+    const hostDisplay = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST;
+    const baseUrl = `http://${hostDisplay}:${PORT}`;
+
+    const dirs = getDataDirectories();
+
+    console.log(`⚽️  GoalBlip API ${baseUrl}`);
+    console.log('📡  Sunucu Bilgisi');
+    console.log(`   Host     : ${HOST}`);
+    console.log(`   Port     : ${PORT}`);
+    console.log(`   Data dir : ${dirs.DATA_ROOT}`);
+    console.log(`   Lists    : ${dirs.LISTS_DIR}`);
+    console.log(`   Matches  : ${dirs.MATCHES_DIR}`);
+    console.log('🛣️  Örnek istekler:');
+    console.log(`   curl ${baseUrl}/api/health`);
+    console.log(`   curl ${baseUrl}/api/matches?view=today`);
+    console.log(
+      `   curl -X POST ${baseUrl}/api/matches/scrape -H 'Content-Type: application/json' -d '{"view":"today"}'`,
+    );
+    console.log(`   curl ${baseUrl}/api/match/<id>`);
   });
 });

@@ -23,16 +23,29 @@ async function safeFetch<T>(path: string): Promise<T | null> {
   }
 }
 
-export async function fetchMatchList(view: MatchView): Promise<MatchListResponse | null> {
-  const url = `${DEFAULT_API_BASE}/api/matches?view=${view}`;
+export async function fetchMatchList(
+  view: MatchView,
+  baseUrl: string = DEFAULT_API_BASE,
+): Promise<MatchListResponse | null> {
+  const url = `${normalizeBase(baseUrl)}/api/matches?view=${view}`;
   return safeFetch<MatchListResponse>(url);
 }
 
-export async function fetchMatchDetail(matchId: number): Promise<MatchDetailResponse | null> {
-  const url = `${DEFAULT_API_BASE}/api/match/${matchId}`;
+export async function fetchMatchDetail(
+  matchId: number,
+  baseUrl: string = DEFAULT_API_BASE,
+): Promise<MatchDetailResponse | null> {
+  const url = `${normalizeBase(baseUrl)}/api/match/${matchId}`;
   return safeFetch<MatchDetailResponse>(url);
 }
 
 export function getApiBaseUrl() {
   return DEFAULT_API_BASE;
+}
+
+function normalizeBase(value: string) {
+  if (!value) {
+    return DEFAULT_API_BASE;
+  }
+  return value.endsWith('/') ? value.slice(0, -1) : value;
 }

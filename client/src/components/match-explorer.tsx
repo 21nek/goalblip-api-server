@@ -14,9 +14,16 @@ interface Props {
   tomorrow: MatchListResponse | null;
   initialDetail: MatchDetailResponse | null;
   apiBaseUrl: string;
+  reloadKey: number;
 }
 
-export default function MatchExplorer({ today, tomorrow, initialDetail, apiBaseUrl }: Props) {
+export default function MatchExplorer({
+  today,
+  tomorrow,
+  initialDetail,
+  apiBaseUrl,
+  reloadKey,
+}: Props) {
   const [activeView, setActiveView] = useState<MatchView>('today');
   const [selectedMatchId, setSelectedMatchId] = useState<number | null>(
     initialDetail?.matchId ?? today?.matches?.[0]?.matchId ?? null,
@@ -34,9 +41,15 @@ export default function MatchExplorer({ today, tomorrow, initialDetail, apiBaseU
     async (match: MatchSummary) => {
       setSelectedMatchId(match.matchId);
       setError(null);
+      if (!apiBaseUrl) {
+        setError('API adresi belirlenmedi.');
+        return;
+      }
       setLoading(true);
       try {
-        const res = await fetch(`${apiBaseUrl}/api/match/${match.matchId}`, { cache: 'no-store' });
+        const res = await fetch(`${apiBaseUrl}/api/match/${match.matchId}`, {
+          cache: 'no-store',
+        });
         if (!res.ok) {
           throw new Error('Maç detayı alınamadı.');
         }
@@ -53,13 +66,25 @@ export default function MatchExplorer({ today, tomorrow, initialDetail, apiBaseU
   );
 
   useEffect(() => {
-    if (!matches.length) {
+    const fallbackId =
+      initialDetail?.matchId ?? today?.matches?.[0]?.matchId ?? tomorrow?.matches?.[0]?.matchId ?? null;
+    setSelectedMatchId(fallbackId);
+    setDetail(initialDetail);
+    setActiveView('today');
+  }, [reloadKey, initialDetail, today, tomorrow]);
+
+  useEffect(() => {
+    if (!apiBaseUrl || !matches.length || !selectedMatchId) {
       return;
     }
-    if (!selectedMatchId || !matches.some((match) => match.matchId === selectedMatchId)) {
-      handleSelect(matches[0]);
+    const selectedMatch = matches.find((match) => match.matchId === selectedMatchId);
+    if (!selectedMatch) {
+      return;
     }
-  }, [matches, selectedMatchId, handleSelect]);
+    if (!detail || detail.matchId !== selectedMatch.matchId) {
+      handleSelect(selectedMatch);
+    }
+  }, [apiBaseUrl, matches, selectedMatchId, detail, handleSelect]);
 
   if (!today && !tomorrow) {
     return (
@@ -76,14 +101,26 @@ export default function MatchExplorer({ today, tomorrow, initialDetail, apiBaseU
           <button
             type="button"
             className={activeView === 'today' ? 'active' : ''}
-            onClick={() => setActiveView('today')}
+            onClick={() => {
+              setActiveView('today');
+              const nextId = today?.matches?.[0]?.matchId ?? null;
+              if (nextId) {
+                setSelectedMatchId(nextId);
+              }
+            }}
           >
             Bugün ({today?.totalMatches ?? today?.matches?.length ?? 0})
           </button>
           <button
             type="button"
             className={activeView === 'tomorrow' ? 'active' : ''}
-            onClick={() => setActiveView('tomorrow')}
+            onClick={() => {
+              setActiveView('tomorrow');
+              const nextId = tomorrow?.matches?.[0]?.matchId ?? null;
+              if (nextId) {
+                setSelectedMatchId(nextId);
+              }
+            }}
           >
             Yarın ({tomorrow?.totalMatches ?? tomorrow?.matches?.length ?? 0})
           </button>
