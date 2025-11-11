@@ -1,0 +1,43 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directories
+node_modules/
+client/.next/
+client/node_modules/
+
+# Optional caches
+.npm/
+.cache/
+
+# Env files
+.env
+.env.*
+
+# Data output
+data/
+
+# Puppeteer chromium cache
+.local-chromium/
+
+# IDE/editor artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Coverage / build artifacts
+coverage/
+dist/
+build/

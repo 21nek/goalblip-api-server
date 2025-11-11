@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
 import { scrapeMatchDetail } from '../scrapers/golsinyali/match-detail.js';
 import {
@@ -14,6 +15,11 @@ const app = express();
 const PORT = Number(process.env.PORT) || 4000;
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGINS?.split(',').map((origin) => origin.trim()) || '*',
+  }),
+);
 
 app.get('/api/health', (req, res) => {
   res.json({
@@ -36,6 +42,12 @@ app.get('/api/matches', async (req, res, next) => {
       payload = await loadMatchListByDate(date);
     } else {
       payload = await loadMatchListByView(view);
+    }
+
+    if (!payload && !date) {
+      const fresh = await scrapeMatchList({ locale, view });
+      await saveMatchList(fresh);
+      payload = fresh;
     }
 
     if (!payload) {
