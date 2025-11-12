@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "badgeLabel": "AI-Powered",
+    "badgeHighlight": "Live Intelligence",
+    "eyebrow": "Realtime analysis",
+    "title": "Supercharge every football prediction with Goalblip.",
+    "description": "Studio level models, live odds pulses, and editorial context for 180+ leagues. Goalblip keeps your betting slips two steps ahead.",
+    "primaryCta": { "label": "Launch match insights", "href": "#get-started" },
+    "secondaryCta": { "label": "View pricing", "href": "#pricing" },
+    "stats": [
+      { "label": "Verified analyses", "value": "50K+", "caption": "Audited weekly" },
+      { "label": "League coverage", "value": "180+", "caption": "Global reach" },
+      { "label": "Core accuracy", "value": "83%", "caption": "Match result" },
+      { "label": "Latency", "value": "1.2s", "caption": "Odds refresh" }
+    ],
+    "highlights": [
+      { "icon": "shield", "label": "Enterprise accuracy controls" },
+      { "icon": "signal", "label": "Live odds automation" },
+      { "icon": "layers", "label": "150+ metrics per match" }
+    ],
+    "trustLogos": ["Opta", "Stats Perform", "Genius Sports", "Goalradar"],
+    "miniMatch": {
+      "label": "Upcoming spotlight",
+      "fixture": "Deportivo Riestra vs Independiente",
+      "kickoff": "16 Nov · 21:00 GMT-3",
+      "meta": "Argentine Division 1",
+      "probabilities": [
+        { "label": "Home", "value": "34%" },
+        { "label": "Draw", "value": "31%" },
+        { "label": "Away", "value": "35%" }
+      ],
+      "cta": { "label": "View full analysis", "href": "#match" }
+    }
+  }
+}
