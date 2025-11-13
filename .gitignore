@@ -15,6 +15,9 @@ pids
 node_modules/
 client/.next/
 client/node_modules/
+clientv0/.next/
+clientv0/node_modules/
+clientv0/out/
 
 # Optional caches
 .npm/

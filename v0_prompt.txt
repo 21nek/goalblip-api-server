@@ -1,0 +1,48 @@
+Project: GoalBlip Companion UI
+
+Context:
+- React + Vite front-end (shadcn/ui + Tailwind already installed). Needs to stay mobile-first, responsive, performant.
+- Consumes REST API from `http://localhost:4000` (Express server).
+- Available endpoints:
+  * `GET /api/matches?view=today|tomorrow&locale=tr` → returns `{ view, dataDate, totalMatches, matches[] }`
+  * `GET /api/matches/:date`
+  * `GET /api/match/:matchId` → returns detailed object with scoreboard, highlight predictions, detail predictions, oddsTrends, upcomingMatches, structuredData, lastUpdatedAt
+  * `POST /api/matches/scrape` and `POST /api/match/:id/scrape` exist but UI can focus on reads.
+- Data structure highlights:
+  * Match list entries: league name, kickoff time, status label, home/away team and side codes, order.
+  * Detail payload: scoreboard (league label, kickoff info, logos, scores), highlightPredictions (title, pickCode, rating, successRate, locked flag), detailPredictions (confidence, outcomes with percentages), oddsTrends (cards with rows of odds history), upcomingMatches (team, role, match cards), structuredData metadata.
+
+Goal:
+Design 3 cohesive pages for a football analysis companion. Visual identity, color palette, and layout choices are entirely up to v0.dev; please explore a bold, modern sports-analytics vibe without prescribing exact compositions.
+
+Pages to deliver:
+1. **Home / Dashboard**  
+   - Acts as the overview landing. Summaries like total matches, data freshness, upcoming highlights, best performing leagues.  
+   - Should surface a couple of hero insights derived from available data (examples: “171 matches today”, “Top predictions” etc.)  
+   - Include hooks for charts/graphs (e.g., mini bar/line/area visualizations) that the dev team can wire to match counts, prediction accuracy, odds trends, etc.
+
+2. **Matches Browser**  
+   - Dedicated list + filters experience for daily fixtures.  
+   - Needs league chips/filtering, Today / Tomorrow toggle, scrollable match cards, statuses.  
+   - Provide space for quick stats per match (kickoff, home/away names, status labels).  
+   - Consider how pagination/virtualization or infinite scroll affordances might appear.  
+   - Include slot for triggering detail view (sheet/drawer/modal) but styling open-ended.
+
+3. **Match Analysis Detail**  
+   - Deep dive into a single match using the `/api/match/:matchId` payload.  
+   - Sections to represent: scoreboard (logos, scores, halftime info), highlight predictions (rating, pick code, lock state), detailed predictions (confidence + outcomes), odds trend groups (cards/rows), upcomingMatches per team, structured metadata callouts.  
+   - Encourage creative visualization ideas (progress bars, radar charts, spark lines) without locking down exact components.  
+   - Provide placeholders for actions such as refreshing data or sharing insights.
+
+General requirements:
+- Responsive grid system that feels native on mobile yet scales gracefully to desktop dashboards.
+- Dark/light mode readiness is appreciated but optional; do not hard-code theme choices.
+- Leave ample whitespace and sections where engineers can bind charts (e.g., `Odds Trend Analysis`, `Prediction Accuracy`).
+- Typography, iconography, and motion/interaction cues are up to v0.dev—just keep polish at a professional sports analytics level.
+- Avoid prescribing asset URLs; just note where logos/team badges could appear (scoreboard context).
+- Keep copy minimal, focusing on data-driven labels (EN or TR both acceptable).
+
+Deliverables:
+- React + shadcn compatible JSX/TSX components or mock screens for the three pages.
+- Any supporting primitives (buttons, tabs, chips, cards) can assume shadcn/Tailwind utilities exist.
+- Ensure color tokens and spacing scale translate well to both mobile and widescreen.
