@@ -1,0 +1,419 @@
+# GoalBlip Anasayfa Yeniden Tasarım - Kapsamlı Planlama
+
+## 📋 Mevcut Durum Analizi
+
+### Şu Anki Anasayfa (index.tsx)
+- Hero section (GoalBlip Scout tanıtımı)
+- Lig vitrin (horizontal scroll, 8 lig kartı)
+- Bugünden 10 maç (horizontal scroll)
+- AI kısa liste (5 maç, horizontal scroll)
+- Metrikler (3 kart: bugünkü maçlar, toplam lig, son güncelleme)
+- Öne çıkan maçlar (vertical list)
+
+### Şu Anki Maç Listesi Sayfası (matches/index.tsx)
+- Bugün/Yarın tabs
+- Lig filtreleme (chips, max 3 seçim)
+- Arama (takım/lig)
+- FlatList ile maç listesi
+- Pull-to-refresh
+
+### Sorunlar
+- Anasayfa çok fazla bölüm içeriyor, odak dağınık
+- Fikstür mantığı ayrı bir sayfada, kullanıcı iki kez tıklamak zorunda
+- Hero section ve metrikler gereksiz yer kaplıyor
+- Horizontal scroll'lar mobilde kullanışsız
+
+---
+
+## 🎯 Hedef: Yeni Anasayfa Yaklaşımı
+
+**Ana Fikir:** Anasayfa direkt olarak maç listesi + lig seçimi olsun. Kullanıcı açılışta hemen maçları görsün ve filtreleyebilsin.
+
+### Temel Prensipler
+1. **Hızlı Erişim:** Kullanıcı açılışta direkt maçları görsün
+2. **Kolay Filtreleme:** Lig seçimi üstte, kolay erişilebilir
+3. **Temiz Arayüz:** Gereksiz bölümler kaldırılsın
+4. **Mobil Öncelikli:** Vertical scroll, touch-friendly
+
+---
+
+## 📊 Elimizdeki Veriler (API'den Gelen)
+
+### MatchListResponse
+```typescript
+{
+  view: 'today' | 'tomorrow',
+  dataDate: string,
+  locale: string,
+  url: string,
+  scrapedAt: string,
+  totalMatches: number,
+  matches: MatchSummary[]
+}
+```
+
+### MatchSummary (Her Maç)
+```typescript
+{
+  order: number,
+  matchId: number,
+  league: string | null,        // Lig adı (örn: "Premier League")
+  kickoffTime: string | null,   // Saat (örn: "20:00")
+  statusLabel: string | null,  // Durum (örn: "Canlı", "Hazırlık")
+  homeTeam: string,            // Ev sahibi takım
+  homeSideCode?: string | null,
+  awayTeam: string,            // Deplasman takımı
+  awaySideCode?: string | null
+}
+```
+
+### MatchDetail (Detay Sayfası İçin)
+- scoreboard (skor, logo, durum)
+- highlightPredictions (AI önerileri)
+- detailPredictions (güven skorları)
+- oddsTrends (oran trendleri)
+- recentForm (son form)
+- headToHead (geçmiş karşılaşmalar)
+
+### Mevcut Helper Fonksiyonlar
+- `aggregateDashboardMetrics()` - Toplam maç, lig sayısı
+- `computeLeagueStats()` - Lig bazında gruplama ve sıralama
+- `extractHighlightPredictions()` - AI tahminlerini çıkarma
+
+---
+
+## 💡 Önerilen Yaklaşımlar
+
+### Yaklaşım 1: Minimalist Maç Listesi (Önerilen)
+**Felsefe:** Sade, odaklı, hızlı
+
+**Layout:**
+```
+┌─────────────────────────────────┐
+│ [Bugün] [Yarın]                 │ ← Tabs (sticky)
+├─────────────────────────────────┤
+│ 🔍 [Arama kutusu]               │ ← Arama (sticky)
+├─────────────────────────────────┤
+│ [Tüm Ligler] [Premier] [La Liga]│ ← Lig filtreleri (horizontal scroll)
+│ ...                             │
+├─────────────────────────────────┤
+│ ┌─────────────────────────────┐ │
+│ │ Premier League       20:00  │ │ ← Maç kartı
+│ │ Arsenal vs Liverpool        │ │
+│ │ Canlı  #1234567             │ │
+│ └─────────────────────────────┘ │
+│ ┌─────────────────────────────┐ │
+│ │ La Liga             21:00  │ │
+│ │ Real Madrid vs Barcelona   │ │
+│ │ Hazırlık  #1234568          │ │
+│ └─────────────────────────────┘ │
+│ ...                             │
+└─────────────────────────────────┘
+```
+
+**Özellikler:**
+- Sticky header (tabs + arama)
+- Lig filtreleri horizontal scroll (tüm ligler + en çok maç olanlar)
+- Maç kartları: lig, saat, takımlar, durum
+- Pull-to-refresh
+- Infinite scroll (lazy loading)
+- Maç kartına tıklayınca detay sayfası
+
+**Avantajlar:**
+- Çok sade, odaklı
+- Hızlı yükleme
+- Kolay navigasyon
+- Mobil-friendly
+
+**Dezavantajlar:**
+- AI önerileri görünmüyor (detay sayfasında)
+- Metrikler yok
+
+---
+
+### Yaklaşım 2: Akıllı Maç Listesi + AI Özeti
+**Felsefe:** Maç listesi + üstte AI önerileri
+
+**Layout:**
+```
+┌─────────────────────────────────┐
+│ [Bugün] [Yarın]                 │ ← Tabs
+├─────────────────────────────────┤
+│ 🤖 AI Önerileri (3 maç)         │ ← Horizontal scroll
+│ [Kart] [Kart] [Kart]            │
+├─────────────────────────────────┤
+│ 🔍 [Arama]                      │
+├─────────────────────────────────┤
+│ [Tüm Ligler] [Premier] ...      │ ← Lig filtreleri
+├─────────────────────────────────┤
+│ Maç Listesi (aynı)              │
+└─────────────────────────────────┘
+```
+
+**Özellikler:**
+- Üstte AI önerileri (3-5 maç, horizontal scroll)
+- AI önerisi kartında: takımlar, lig, AI pick, güven skoru
+- Altında normal maç listesi
+- AI önerileri için match detail fetch edilmeli (lazy)
+
+**Avantajlar:**
+- AI önerileri görünür
+- Kullanıcı değerli maçları hemen görür
+- Hala odaklı
+
+**Dezavantajlar:**
+- Biraz daha karmaşık
+- AI önerileri için ek API çağrıları
+
+---
+
+### Yaklaşım 3: Kategorize Edilmiş Maç Listesi
+**Felsefe:** Lig bazında gruplama
+
+**Layout:**
+```
+┌─────────────────────────────────┐
+│ [Bugün] [Yarın]                 │
+├─────────────────────────────────┤
+│ 🔍 [Arama]                      │
+├─────────────────────────────────┤
+│ [Tüm Ligler] [Premier] ...      │
+├─────────────────────────────────┤
+│ ▼ Premier League (12 maç)       │ ← Collapsible section
+│   ┌─────────────────────────┐   │
+│   │ Arsenal vs Liverpool    │   │
+│   │ ...                      │   │
+│   └─────────────────────────┘   │
+│ ▼ La Liga (8 maç)                │
+│   ┌─────────────────────────┐   │
+│   │ Real vs Barca            │   │
+│   │ ...                      │   │
+│   └─────────────────────────┘   │
+└─────────────────────────────────┘
+```
+
+**Özellikler:**
+- Lig bazında gruplama
+- Her lig collapsible (aç/kapa)
+- Lig başlığında maç sayısı
+- Varsayılan olarak en çok maç olan 3-5 lig açık
+
+**Avantajlar:**
+- Organize görünüm
+- Lig bazında kolay navigasyon
+- Çok maç olduğunda kullanışlı
+
+**Dezavantajlar:**
+- Biraz daha karmaşık UI
+- Scroll uzun olabilir
+
+---
+
+### Yaklaşım 4: Hybrid (Öneriler + Liste)
+**Felsefe:** AI önerileri + kategorize liste
+
+**Layout:**
+```
+┌─────────────────────────────────┐
+│ [Bugün] [Yarın]                 │
+├─────────────────────────────────┤
+│ 🤖 AI Önerileri (3)             │
+│ [Kart] [Kart] [Kart]            │
+├─────────────────────────────────┤
+│ 📊 Hızlı İstatistikler          │
+│ [Bugün: 45 maç] [12 lig]        │
+├─────────────────────────────────┤
+│ 🔍 [Arama]                      │
+├─────────────────────────────────┤
+│ [Tüm Ligler] [Premier] ...      │
+├─────────────────────────────────┤
+│ Maç Listesi (düz veya gruplu)   │
+└─────────────────────────────────┘
+```
+
+**Özellikler:**
+- AI önerileri üstte
+- Kısa metrikler (2-3 kart)
+- Normal maç listesi
+- Tüm özellikler bir arada
+
+**Avantajlar:**
+- En kapsamlı
+- Tüm bilgiler görünür
+- Esnek
+
+**Dezavantajlar:**
+- Biraz daha kalabalık
+- Scroll uzun olabilir
+
+---
+
+## 🎨 UI/UX Önerileri
+
+### Maç Kartı Tasarımı
+**Seçenek A: Kompakt**
+```
+┌─────────────────────────────────┐
+│ Premier League          20:00   │
+│ Arsenal        vs    Liverpool   │
+│ Canlı                    #1234  │
+└─────────────────────────────────┘
+```
+
+**Seçenek B: Logo'lu**
+```
+┌─────────────────────────────────┐
+│ Premier League          20:00   │
+│ [Logo] Arsenal  vs  Liverpool [Logo]│
+│ Canlı                    #1234  │
+└─────────────────────────────────┘
+```
+
+**Seçenek C: AI Badge'li**
+```
+┌─────────────────────────────────┐
+│ Premier League  [🤖 AI: 1X] 20:00│
+│ Arsenal        vs    Liverpool   │
+│ Canlı                    #1234  │
+└─────────────────────────────────┘
+```
+
+### Lig Filtreleri
+- Horizontal scroll
+- Chip tasarımı (pill shape)
+- Aktif olan vurgulu (accent color)
+- "Tüm Ligler" her zaman ilk sırada
+- En çok maç olan ligler önce
+
+### Arama
+- Sticky header'da
+- Real-time filtreleme
+- Takım adı, lig adı, matchId'de arama
+- Clear button
+
+### Tabs (Bugün/Yarın)
+- Sticky header'da
+- Pill shape, active state belirgin
+- Smooth transition
+
+---
+
+## 🔧 Teknik Detaylar
+
+### State Management
+```typescript
+const [view, setView] = useState<'today' | 'tomorrow'>('today');
+const [search, setSearch] = useState('');
+const [selectedLeagues, setSelectedLeagues] = useState<string[]>([]);
+const [expandedLeagues, setExpandedLeagues] = useState<Set<string>>(new Set());
+```
+
+### Data Processing
+```typescript
+// Lig bazında gruplama
+const groupedByLeague = matches.reduce((acc, match) => {
+  const league = match.league || 'Bilinmeyen';
+  if (!acc[league]) acc[league] = [];
+  acc[league].push(match);
+  return acc;
+}, {});
+
+// Filtreleme
+const filtered = matches.filter(match => {
+  const leagueMatch = !selectedLeagues.length || selectedLeagues.includes(match.league);
+  const searchMatch = !search || 
+    `${match.homeTeam} ${match.awayTeam} ${match.league}`.toLowerCase().includes(search.toLowerCase());
+  return leagueMatch && searchMatch;
+});
+```
+
+### Performance
+- FlatList kullan (infinite scroll)
+- initialNumToRender: 10-15
+- windowSize: 5
+- removeClippedSubviews: true
+- Memoization (React.memo, useMemo)
+
+### Lazy Loading (AI Önerileri İçin)
+- İlk 5-10 maç için match detail fetch et
+- Background'da fetch, loading state göster
+- Cache kullan (matches provider'da zaten var)
+
+---
+
+## 📱 Responsive & Platform Considerations
+
+### Mobile (iOS/Android)
+- Touch-friendly (min 44x44px)
+- Pull-to-refresh
+- Smooth scrolling
+- Haptic feedback (optional)
+
+### Web
+- Keyboard navigation
+- Hover states
+- Larger touch targets
+- Scrollbar styling
+
+---
+
+## 🚀 Implementation Phases
+
+### Phase 1: Temel Yapı
+1. Anasayfayı maç listesi yap
+2. Tabs ekle (Bugün/Yarın)
+3. Arama ekle
+4. Lig filtreleri ekle
+5. Maç kartları göster
+
+### Phase 2: İyileştirmeler
+1. AI önerileri ekle (opsiyonel)
+2. Pull-to-refresh
+3. Loading states
+4. Error handling
+5. Empty states
+
+### Phase 3: Optimizasyon
+1. Performance tuning
+2. Lazy loading
+3. Caching
+4. Animations (optional)
+
+---
+
+## ❓ Karar Verilmesi Gerekenler
+
+1. **AI Önerileri:** Üstte gösterilsin mi? (Yaklaşım 2 veya 4)
+2. **Lig Gruplama:** Lig bazında gruplansın mı? (Yaklaşım 3)
+3. **Metrikler:** Kısa metrikler gösterilsin mi? (Yaklaşım 4)
+4. **Maç Kartı:** Logo'lu mu, kompakt mı, AI badge'li mi?
+5. **Varsayılan Görünüm:** Bugün mü, yarın mı?
+
+---
+
+## 📝 Notlar
+
+- Mevcut `/matches` sayfası kaldırılabilir veya "Tüm Maçlar" olarak tutulabilir
+- Hero section ve metrikler kaldırılabilir veya minimal hale getirilebilir
+- AI önerileri için match detail fetch edilmeli (lazy loading)
+- Lig filtreleri dinamik (API'den gelen liglere göre)
+- Arama real-time olmalı (debounce optional)
+
+---
+
+## 🎯 Sonuç
+
+**Önerilen Yaklaşım:** Yaklaşım 1 (Minimalist) veya Yaklaşım 2 (AI Özeti)
+
+**Neden:**
+- Sade, odaklı
+- Hızlı yükleme
+- Mobil-friendly
+- Kullanıcı hemen maçları görür
+
+**Alternatif:** Yaklaşım 4 (Hybrid) - Eğer AI önerileri ve metrikler önemliyse
+
+---
+
+Bu planlama dosyası AI'lara verilerek alternatif tasarım önerileri alınabilir.
+

@@ -1,0 +1,78 @@
+You are designing the new GoalBlip companion UI. It must complement the existing API server (goalblip-api-server) and mirror the current product styling:
+- Dark, data-hub aesthetic: backgrounds `#050814` / `#0f172a`, subtle gradients, glassy cards, neon chartreuse accent `#cbe043`, muted slate typography (#94a3b8, #f8fafc).
+- Minimal blurs, high contrast chips, rounded 20–24 px cards, iconography for leagues/clubs.
+- Entire layout must be responsive; single source of truth for both desktop web and Expo Go (React Native) mobile clients.
+- Avoid heavy client caching; server will handle freshness.
+
+Available API surface (all JSON, base URL configurable but defaults to http://localhost:4000):
+1. `GET /api/matches?view=today|tomorrow&refresh=true?` → match list object:
+   ```json
+   {
+     "view": "today",
+     "dataDate": "2025-11-11",
+     "locale": "tr",
+     "totalMatches": 171,
+     "matches": [
+       {
+         "order": 1,
+         "matchId": 2776277,
+         "league": "Argentine Division 1",
+         "kickoffTime": "01:00",
+         "statusLabel": "Live",
+         "homeTeam": "Deportivo Riestra",
+         "homeSideCode": "E",
+         "awayTeam": "Independiente",
+         "awaySideCode": "D"
+       }
+     ]
+   }
+   ```
+   You can also pass `date=YYYY-MM-DD` to read archived files.
+2. `POST /api/matches/scrape {view}` → forces scraper refresh; shows toast “data updated”.
+3. `GET /api/match/:id` → detailed payload with sections:
+   - `scoreboard`: league label, kickoff time/timezone, badges (live/HT/FT), home/away objects (name, logo, score).
+   - `highlightPredictions`: list of featured AI picks (title, pickCode, successRate/rating).
+   - `detailPredictions`: each has `title`, `confidence`, `outcomes` array (label + %).
+   - `oddsTrends`: nested cards with `rows` (label, values[]).
+   - `upcomingMatches`: for each team, role (home/away), upcoming opponents with competition + date text.
+
+Screen requirements (3 views):
+1. **Home Dashboard**
+   - Top hero: brand (“GoalBlip Scout”), CTA buttons (“Maç Listesi”, “Ligleri İncele”).
+   - League carousel first: horizontally scrollable cards, each shows league name, match count, kickoff of next game. Primary chips (selected/unselected) for filtering.
+   - “Bugünden 10 maç” slider: AI curated horizontal cards with league badge, kickoff, both teams, status, and tap to open detail.
+   - Stats row: total matches, total leagues, last data refresh timestamp (converted via `scrapedAt`).
+   - “AI kısa liste”: highlight cards showing home/away, predicted pick; if API lacks prediction show friendly empty message (“AI tahmini yok”).
+   - “Öne çıkan maçlar”: stacked list for desktop, each row displays badges, teams, kickoff.
+   - All sections must reuse current color tokens and card style; maintain 20px spacing between sections (web) but use margin stacks on mobile.
+
+2. **Matches / Fixture Screen**
+   - Tabs for “Bugün” / “Yarın” toggling `view` param.
+   - Filter chips for leagues (max 3 active). Provide “Tüm ligler” chip for reset and “Filtreleri temizle” text action.
+   - Search input (“Takım veya lig ara”) filters client-side.
+   - List rows: league info (badge + league name), kickoff, both teams (with logos if available, otherwise initials), status label, matchId.
+   - Pull-to-refresh triggers `/api/matches?view=...&refresh=true`.
+   - Keep list virtualization in mind; design should scale to 100+ rows.
+
+3. **Match Detail Screen**
+   - Header/back navigation consistent with rest of app.
+   - Scoreboard card: league label, live badges, home/away blocks (logo fallback, name, score), kickoff time & timezone.
+   - Sections in order:
+     a. “Öne Çıkan Tahminler” – show cards for each highlight prediction (title, pick, success %). If empty, show message.
+     b. “Detaylı Tahminler” – for each entry, show confidence badge and progress bars for outcomes.
+     c. “Oran Trend Analizi” – nested cards with label + odds history rows.
+     d. “Yaklaşan Maçlar” – horizontal cards grouped by team role.
+     e. “Yerel Bilgi” – metadata rows (“Son Güncelleme”, “Veri Kaynağı: GoalBlip Scout”).
+   - Always account for missing arrays; placeholder copy instead of blank space.
+
+General UX notes:
+- Use the same color palette: backgrounds `#050814` / `#0f172a`, accents `#cbe043`, supportive tones (#94a3b8, #64748b). Typography uses Inter (Regular, Medium, SemiBold).
+- Buttons: pill-shaped, 999 radius, 12px vertical padding.
+- Chips: pill border color `#1e293b`, active state `#cbe04322` background.
+- Cards: rounding 18–24 px, 16–20 px padding. Use subtle `#111b2f` surfaces for nested info.
+- Icons: use simple football/league glyphs; fallback initials for logos (circle, neon border).
+- Motion: minimal; rely on scroll + horizontal carousels.
+- Layout must be mobile-first but scale gracefully on desktop (two-column sections where available).
+- No persistent local caches; fetch on view load, rely on server-side caching.
+
+Deliverables: Provide a complete visual spec covering all three screens, state variations (empty, loading, error), and component library (buttons, chips, cards, list rows). Ensure the final UI respects the API data structure so developers can map JSON fields directly to components.

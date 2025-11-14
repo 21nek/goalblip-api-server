@@ -1,0 +1,58 @@
+Design a premium GoalBlip dual-platform experience (desktop web + Expo Go mobile) that feels like a tactical command center: cinematic night-mode gradients (`#04060F` to `#0D1324`), glassmorphic cards with neon lime highlights (`#cbe043`), thin light trails, subtle particle backgrounds, Inter + condensed numeric fonts. The UI should feel like a broadcast studio dashboard—dense yet readable, delightfully animated, but still performant on mobile.
+
+Must reflect current data model of the GoalBlip API (base URL configurable, default http://localhost:4000):
+1. `GET /api/matches?view=today|tomorrow[&refresh=true|date=YYYY-MM-DD]` → returns `{view, dataDate, totalMatches, matches[]}` where each match has `matchId`, `order`, `league`, `kickoffTime`, `statusLabel`, `homeTeam`, `awayTeam`.
+2. `POST /api/matches/scrape` → body `{view}` to force refresh.
+3. `GET /api/match/:matchId` → detailed object with:
+   - `scoreboard`: leagueLabel, kickoff(+timezone), badges, home/away teams (name, logo, score).
+   - `highlightPredictions[]`: title, pickCode, successRate or rating.
+   - `detailPredictions[]`: title, confidence%, outcomes[{label, valuePercent}].
+   - `oddsTrends[]`: cards -> rows[{label, values[]}].
+   - `upcomingMatches[]`: per team (role), list of future opponents (competition, dateText).
+   - metadata: `scrapedAt`, `lastUpdatedAt`, `url`.
+
+Screen blueprints:
+1. **Home Dashboard ("GoalBlip Scout")**
+   - Hero marquee with animated light streaks, KPIs (total matches today, leagues covered, last scrape time). CTA buttons (“Tüm Fikstürü İncele”, “Scraper’ı Yenile”) w/ dynamic status badges (pulling from `scrapedAt`).
+   - League intelligence carousel pinned to top: each card shows crest, league name, AI confidence bar (use `matches` count), first kickoff timestamp. Provide microfilters chips; highlight selected league with glow.
+   - AI Spotlight slider: top 10 matches from `/api/matches`; cards include league badge, home/away (with logos or monogram), kickoff, `statusLabel`, CTA “Analizi Aç”.
+   - Stat strip: show totals + deltas (today vs tomorrow). Use sparkline visual referencing totalMatches.
+   - AI Shortlist grid: for each curated match (top ~5), show predictive confidence gauge; gracefully handle missing prediction (“AI tahmini hazır değil”).
+   - News-style list “Editors’ Picks” (stacked) for users preferring vertical layout.
+
+2. **Fixture Explorer Screen**
+   - Sticky tab bar for `Bugün` / `Yarın`; include date badge and server time.
+   - Smart filters: league chips (max 3), search bar, toggle for “sadece canlı”, badges for selected filters, “Filtreleri temizle” pill.
+   - Virtualized match list with sections by league; each row shows:
+     * Kickoff countdown chip (“01:00 • 2s sonra”).
+     * Team block with crest/fallback, record, status label (Live / FT / Planned).
+     * Micro probability bars (if data available) to preview AI lean.
+   - Pull-to-refresh (ties to `/api/matches?...&refresh=true`); show last refresh timestamp.
+   - Empty state (if filters remove all) with icon + button to reset filters.
+
+3. **Match Intelligence Screen (`/match/:id`)**
+   - Header: back button, matchId, share icon; top callout showing league, fixture date/time, venue (if available) or “Kickoff X timezone”.
+   - Scoreboard card: gradient glass, team columns (logo, name, form dots), animated score digits, live badges.
+   - Sections:
+     a. Highlight Predictions: 3D cards with pick label, pick code, success probability. Provide missing-state banner if array empty.
+     b. Detailed Predictions: vertical stack with progress bars for each outcome, confidence badge, textual explanation.
+     c. Odds Trend Lab: mini-table / sparkline rows showing label vs values (e.g., “1x2 Trend: 1.80 → 1.65 → 1.58”). Provide pill toggle for different trend sets if multiple cards.
+     d. Upcoming Fixtures: scrollable cards per team (role). Each row includes opponent crest, competition tag, time.
+     e. Metadata panel: “Son Güncelleme”, “Veri Kaynağı GoalBlip Scout”, deep link to `detail.url`, button to trigger scraper refresh.
+   - Error/Loading states: shimmering placeholders, friendly messages (“Maç detayı henüz hazır değil. Scraper otomatik çalışıyor.”).
+
+Visual tone:
+- Colors: base `#04060F`, surfaces `#0f172a`, accent `#cbe043`, supporting `#38bdf8`, `#f8fafc`, `#94a3b8`.
+- Typography: Inter 400/500/600, numerals optionally Orbitron/Space Grotesk for scoreboard.
+- Components: 20–24px radius, frosted overlays, subtle gradient borders, drop shadows (0 8px 32px rgba(0,0,0,.5)).
+- Motion: parallax hero, smooth horizontal scrolling, alive data cues (blinking live badge).
+- Accessibility: ensure contrast ratios > 4.5:1, text alternatives for logos.
+
+Functional UX rules:
+- No client persistence; every screen fetches fresh data on entry and shows time since last update.
+- Provide manual refresh control (pull-to-refresh or “Yinele” button) to call `/api/matches/scrape`.
+- Loading skeletons for every major section, error states w/ retry CTA.
+- Responsive layout: single column on phones, dual/triple columns on desktop.
+- Buttons and chips must be easily tappable (min 44px height).
+
+Deliverables: full UI spec covering home, fixture, match detail, plus component tokens (colors, typography, cards, buttons, chips, badges, progress bars, tables). Ensure all data points map directly to the API fields described above. Provide both light/dark variations only if consistent with brand (default dark mode required).

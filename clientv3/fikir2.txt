@@ -1,0 +1,358 @@
+# GoalBlip Homepage Design - Data and Style Guide
+
+## 🎨 Color Palette
+
+### Background Colors
+- `bgPrimary`: #050814 (Main background - very dark blue/black)
+- `bgSecondary`: #0f172a (Card backgrounds)
+- `bgTertiary`: #111b2f (Tertiary background)
+- `bgCard`: #0f172a (Card background)
+- `bgCardHover`: #1a2332 (Card hover state)
+
+### Text Colors
+- `textPrimary`: #f8fafc (Main text - white)
+- `textSecondary`: #cbd5f5 (Secondary text - light blue)
+- `textTertiary`: #94a3b8 (Tertiary text - gray blue)
+- `textMuted`: #64748b (Muted text - dark gray)
+
+### Accent Colors
+- `accent`: #cbe043 (Main accent - green/yellow)
+- `accentDark`: #a8c030 (Dark accent)
+- `accentLight`: #d4e85a (Light accent)
+
+### Status Colors
+- `success`: #10b981 (Success - green)
+- `warning`: #f59e0b (Warning - orange)
+- `error`: #ef4444 (Error - red)
+- `info`: #3b82f6 (Info - blue)
+
+### Border Colors
+- `border`: #1e293b (Main border)
+- `borderLight`: #334155 (Light border)
+
+### Overlay Colors
+- `overlay`: rgba(5, 8, 20, 0.8) (Dark overlay)
+- `overlayLight`: rgba(15, 23, 42, 0.6) (Light overlay)
+
+---
+
+## 📏 Spacing System
+
+- `xs`: 4px
+- `sm`: 8px
+- `md`: 12px
+- `lg`: 16px
+- `xl`: 20px
+- `xxl`: 24px
+- `xxxl`: 32px
+
+---
+
+## 🔲 Border Radius
+
+- `sm`: 8px
+- `md`: 12px
+- `lg`: 16px
+- `xl`: 20px
+- `xxl`: 24px
+- `full`: 999px (fully rounded)
+
+---
+
+## 📝 Typography
+
+### Headings
+- `h1`: 32px, fontWeight: 700, lineHeight: 40px
+- `h2`: 24px, fontWeight: 600, lineHeight: 32px
+- `h3`: 20px, fontWeight: 600, lineHeight: 28px
+
+### Body Text
+- `body`: 16px, fontWeight: 400, lineHeight: 24px
+- `bodySmall`: 14px, fontWeight: 400, lineHeight: 20px
+- `caption`: 12px, fontWeight: 400, lineHeight: 16px
+- `label`: 12px, fontWeight: 600, lineHeight: 16px, textTransform: uppercase
+
+---
+
+## 🌑 Shadow/Elevation
+
+- `card`: Subtle shadow (elevation: 3)
+- `elevated`: Higher shadow (elevation: 6)
+- `subtle`: Very light shadow (elevation: 1)
+
+Note: Platform-specific (shadow props for iOS/Android, boxShadow for Web)
+
+---
+
+## 📊 API Data Structures
+
+### MatchListResponse (Match List API Response)
+
+```typescript
+{
+  view: 'today' | 'tomorrow',        // View: today or tomorrow
+  dataDate: string,                  // Date (YYYY-MM-DD format)
+  locale: string,                    // Language code (e.g., "tr")
+  url: string,                       // Source URL
+  scrapedAt: string,                 // ISO timestamp (e.g., "2025-11-14T21:00:00.000Z")
+  totalMatches: number,              // Total number of matches
+  matches: MatchSummary[]            // Match list
+}
+```
+
+### MatchSummary (Each Match)
+
+```typescript
+{
+  order: number,                     // Order number
+  matchId: number,                   // Unique match ID
+  league: string | null,             // League name (e.g., "Premier League", "La Liga")
+  kickoffTime: string | null,        // Kickoff time (e.g., "20:00", "14:30")
+  statusLabel: string | null,        // Status label (e.g., "Live", "Upcoming", "Finished")
+  homeTeam: string,                  // Home team name
+  homeSideCode?: string | null,      // Home team code (optional)
+  awayTeam: string,                  // Away team name
+  awaySideCode?: string | null       // Away team code (optional)
+}
+```
+
+**Example MatchSummary:**
+```json
+{
+  "order": 1,
+  "matchId": 2776277,
+  "league": "Premier League",
+  "kickoffTime": "20:00",
+  "statusLabel": "Live",
+  "homeTeam": "Arsenal",
+  "homeSideCode": "E",
+  "awayTeam": "Liverpool",
+  "awaySideCode": "D"
+}
+```
+
+### MatchDetail (Match Detail API Response)
+
+```typescript
+{
+  locale: string,                    // Language code
+  matchId: number,                   // Match ID
+  url: string,                       // Source URL
+  scrapedAt: string,                 // ISO timestamp
+  lastUpdatedAt?: string | null,     // Last update (optional)
+  
+  // Scoreboard
+  scoreboard?: {
+    leagueLabel?: string | null,      // League label
+    statusBadges?: string[] | null,  // Status badges (array)
+    homeTeam?: {
+      name?: string | null,
+      score?: number | null,
+      logo?: string | null           // Logo URL (optional)
+    },
+    awayTeam?: {
+      name?: string | null,
+      score?: number | null,
+      logo?: string | null           // Logo URL (optional)
+    },
+    halftimeScore?: string | null,  // Halftime score (e.g., "1-0")
+    kickoff?: string | null,         // Kickoff time
+    kickoffTimezone?: string | null, // Timezone
+    info?: string[] | null           // Additional info (array)
+  },
+  
+  // Highlight Predictions
+  highlightPredictions?: Array<{
+    position: number,                // Position (order)
+    title?: string | null,           // Title (e.g., "Match Result")
+    pickCode?: string | null,        // Pick code (e.g., "1X", "MS2")
+    successRate?: number | null,     // Success rate (0-100)
+    rating?: number | null,          // Rating (0-10)
+    ratingMax?: number | null,       // Max rating (usually 10)
+    locked?: boolean                 // Is locked?
+  }>,
+  
+  // Detail Predictions
+  detailPredictions?: Array<{
+    position: number,                // Position
+    title?: string | null,           // Title (e.g., "Match Result (1X2)")
+    confidence?: number | null,      // Confidence score (0-100)
+    outcomes?: Array<{               // Possible outcomes
+      label?: string | null,         // Label (e.g., "1", "X", "2")
+      valuePercent?: number | null   // Percentage (0-100)
+    }>
+  }>,
+  
+  // Odds Trends
+  oddsTrends?: Array<{
+    title?: string | null,           // Title (e.g., "Match Result")
+    cards?: Array<{
+      title?: string | null,         // Card title (e.g., "Home", "Away")
+      rows?: Array<{
+        label?: string | null,       // Row label (e.g., "1", "X", "2")
+        values?: string[]            // Values (array of strings)
+      }>
+    }>
+  }>,
+  
+  // Upcoming Matches
+  upcomingMatches?: Array<{
+    team?: string | null,            // Team name
+    role?: string | null,            // Role (e.g., "home", "away")
+    matches?: Array<{
+      opponent?: string | null,      // Opponent team
+      badge?: string | null,         // Badge
+      competition?: string | null,   // Competition
+      dateText?: string | null,     // Date text
+      tag?: string | null            // Tag
+    }>
+  }>,
+  
+  // Recent Form
+  recentForm?: Array<{
+    title?: string | null,           // Title (team name)
+    matches?: Array<{
+      result?: string | null,         // Result: "W" (Win), "L" (Loss), "D" (Draw)
+      opponent?: string | null,      // Opponent team
+      competition?: string | null,   // Competition
+      date?: string | null,          // Date
+      score?: string | null          // Score (e.g., "2-1")
+    }>
+  }>,
+  
+  // Head to Head
+  headToHead?: Array<{
+    date?: string | null,            // Date
+    competition?: string | null,     // Competition
+    homeTeam?: string | null,        // Home team
+    awayTeam?: string | null,        // Away team
+    score?: string | null             // Score (e.g., "2-1")
+  }>
+}
+```
+
+**Example MatchDetail (Abbreviated):**
+```json
+{
+  "locale": "tr",
+  "matchId": 2776277,
+  "url": "https://www.golsinyali.com/tr/match/2776277/...",
+  "scrapedAt": "2025-11-14T21:00:00.000Z",
+  "scoreboard": {
+    "leagueLabel": "Premier League",
+    "statusBadges": ["Live"],
+    "homeTeam": {
+      "name": "Arsenal",
+      "score": 2,
+      "logo": "https://..."
+    },
+    "awayTeam": {
+      "name": "Liverpool",
+      "score": 1,
+      "logo": "https://..."
+    },
+    "kickoff": "2025-11-14T20:00:00Z"
+  },
+  "highlightPredictions": [
+    {
+      "position": 1,
+      "title": "Match Result",
+      "pickCode": "1X",
+      "successRate": 85,
+      "rating": 8,
+      "ratingMax": 10,
+      "locked": false
+    }
+  ],
+  "detailPredictions": [
+    {
+      "position": 1,
+      "title": "Match Result (1X2)",
+      "confidence": 87,
+      "outcomes": [
+        { "label": "1", "valuePercent": 45 },
+        { "label": "X", "valuePercent": 30 },
+        { "label": "2", "valuePercent": 25 }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 🔄 Data Processing Notes
+
+### For MatchSummary
+- `league` can be null → use fallback like "Unknown League"
+- `kickoffTime` can be null → use fallback like "--:--"
+- `statusLabel` can be null → use fallback like "Upcoming"
+- `homeSideCode` and `awaySideCode` are usually "E" (Home) or "D" (Away), can be null
+
+### For MatchDetail
+- All nested objects are optional (`?` mark)
+- Arrays can be empty or may not exist
+- `scoreboard.logo` URLs can be base64 or HTTP URLs
+- `recentForm[].matches[].result` values: "W" (Win), "L" (Loss), "D" (Draw)
+
+### Filtering and Grouping
+- Matches can be grouped by `league` field
+- `kickoffTime` is in string format (e.g., "20:00"), should be parsed for sorting
+- Filtering can be done by `statusLabel` values (Live, Upcoming, etc.)
+
+---
+
+## 📱 Platform Requirements
+
+### iOS and Android Compatibility (MANDATORY)
+
+**React Native Limitations:**
+- `gap` CSS property is not supported → use `margin` or `padding`
+- `flexbox` is fully supported
+- `position: fixed` does not exist → use `position: absolute`
+- For sticky header, use `stickyHeaderIndices` in `ScrollView` or `FlatList`
+
+**Touch Targets:**
+- Minimum 44x44px (iOS) / 48x48px (Android)
+- Use `TouchableOpacity` or `Pressable`
+- Provide feedback with `activeOpacity` prop
+
+**Performance:**
+- Use `FlatList` for long lists
+- Optimize `initialNumToRender`, `windowSize`, `maxToRenderPerBatch`
+- Use `removeClippedSubviews: true`
+- Use `React.memo` for component memoization
+
+**Platform-Specific:**
+- Shadow: Use `shadowColor`, `shadowOffset`, `shadowOpacity`, `shadowRadius` for iOS/Android
+- Use `boxShadow` for Web
+- Write platform-specific code with `Platform.OS` check
+
+**Scroll and Navigation:**
+- Use `ScrollView` or `FlatList`
+- Add pull-to-refresh with `RefreshControl`
+- For keyboard dismiss, use `Keyboard.dismiss()` or `keyboardShouldPersistTaps` in `ScrollView`
+
+**Font and Typography:**
+- Use system fonts (iOS: San Francisco, Android: Roboto)
+- If using custom fonts, load with `expo-font`
+- `fontWeight` values should be strings like '400', '600', '700'
+
+**Colors:**
+- Hex colors can be used (#cbe043)
+- RGBA colors can be used (rgba(5, 8, 20, 0.8))
+- Use `Platform.select()` for platform-specific colors
+
+---
+
+## 📋 Summary
+
+- **Colors:** Dark theme (dark background, light text), accent color: #cbe043 (green/yellow)
+- **Spacing:** Standard spacing system from 4px to 32px
+- **Typography:** Font sizes from 12px to 32px, fontWeight: 400/600/700
+- **Data:** MatchListResponse (matches array) and MatchDetail (nested objects)
+- **Platform:** iOS and Android compatibility is mandatory, pay attention to React Native limitations
+
+---
+
+**Note:** This file only contains data structures, colors, and platform requirements. Design decisions are completely left to AI.

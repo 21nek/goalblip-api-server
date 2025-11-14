@@ -1,0 +1,32 @@
+{
+  "name": "goalblip-clientv2",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "start:log": "node scripts/start-with-logs.mjs",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@expo-google-fonts/inter": "^0.3.0",
+    "expo": "^54.0.23",
+    "expo-router": "~6.0.14",
+    "expo-status-bar": "~3.0.8",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-web": "^0.21.0"
+  },
+  "devDependencies": {
+    "@react-native/eslint-config": "0.75.1",
+    "@types/react": "~19.1.10",
+    "babel-plugin-module-resolver": "5.0.0",
+    "eslint": "8.57.0",
+    "typescript": "~5.9.2"
+  }
+}

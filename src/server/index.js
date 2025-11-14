@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import os from 'os';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
 import { scrapeMatchDetail } from '../scrapers/golsinyali/match-detail.js';
 import {
@@ -165,6 +166,11 @@ ensureDataDirectories().then(() => {
   app.listen(PORT, HOST, () => {
     const hostDisplay = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST;
     const baseUrl = `http://${hostDisplay}:${PORT}`;
+    const networkInterfaces = os.networkInterfaces();
+    const localIps = Object.values(networkInterfaces)
+      .flatMap((entries) => entries || [])
+      .filter((entry) => entry && entry.family === 'IPv4' && !entry.internal)
+      .map((entry) => entry.address);
 
     const dirs = getDataDirectories();
 
@@ -175,6 +181,14 @@ ensureDataDirectories().then(() => {
     console.log(`   Data dir : ${dirs.DATA_ROOT}`);
     console.log(`   Lists    : ${dirs.LISTS_DIR}`);
     console.log(`   Matches  : ${dirs.MATCHES_DIR}`);
+    if (localIps.length) {
+      console.log('🌐  Yerel IP adresleri:');
+      localIps.forEach((ip) => {
+        console.log(`   http://${ip}:${PORT}`);
+      });
+    } else {
+      console.log('🌐  Yerel IP adresi tespit edilemedi.');
+    }
     console.log('🛣️  Örnek istekler:');
     console.log(`   curl ${baseUrl}/api/health`);
     console.log(`   curl ${baseUrl}/api/matches?view=today`);

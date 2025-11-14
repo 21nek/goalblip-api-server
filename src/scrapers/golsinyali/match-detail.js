@@ -59,7 +59,7 @@ export async function scrapeMatchDetail(options = {}) {
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
     await page.waitForSelector('main', { timeout: navigationTimeoutMs });
 
-    const detail = await page.evaluate(() => {
+    const detail = await page.evaluate(async () => {
       const text = (node) => (node?.textContent || '').replace(/\s+/g, ' ').trim();
       const toNumber = (value) => {
         if (value === null || value === undefined) {
@@ -71,9 +71,38 @@ export async function scrapeMatchDetail(options = {}) {
 
       const findHeading = (query) => {
         const lower = query.toLowerCase();
-        return Array.from(document.querySelectorAll('h2')).find((node) =>
+        return Array.from(document.querySelectorAll('h1, h2, h3')).find((node) =>
           text(node).toLowerCase().includes(lower),
         );
+      };
+
+      const findSectionAfterHeading = (heading) => {
+        if (!heading) {
+          return null;
+        }
+        const isCandidate = (node) => {
+          if (!node) return false;
+          if (node.querySelector?.('table, ul, ol, .grid')) {
+            return true;
+          }
+          const className = node.className || '';
+          return /grid|space-y|divide-y|flex|list|table/i.test(className);
+        };
+        let context = heading.parentElement;
+        while (context) {
+          let sibling = context.nextElementSibling;
+          while (sibling) {
+            if (isCandidate(sibling)) {
+              return sibling;
+            }
+            if (isCandidate(sibling.firstElementChild)) {
+              return sibling.firstElementChild;
+            }
+            sibling = sibling.nextElementSibling;
+          }
+          context = context.parentElement;
+        }
+        return null;
       };
 
       const findGridAfterHeading = (heading) => {
@@ -269,6 +298,185 @@ export async function scrapeMatchDetail(options = {}) {
       const highlightPredictions = extractCards('Öne Çıkan Tahminler', extractHighlightCard);
       const detailPredictions = extractCards('Detaylı Tahminler', extractDetailedCard);
 
+      const extractTableRows = (table) => {
+        if (!table) return [];
+        const headers = Array.from(table.querySelectorAll('thead th')).map((cell) => text(cell));
+        return Array.from(table.querySelectorAll('tbody tr'))
+          .map((row) => {
+            const cells = Array.from(row.querySelectorAll('th, td')).map((cell) => text(cell));
+            if (!cells.some(Boolean)) {
+              return null;
+            }
+            if (headers.length && headers.length === cells.length) {
+              const entry = {};
+              headers.forEach((header, index) => {
+                const key = header || `column${index + 1}`;
+                entry[key] = cells[index] || null;
+              });
+              return entry;
+            }
+            return { columns: cells };
+          })
+          .filter(Boolean);
+      };
+
+      const extractFormColumns = () => {
+        const headings = Array.from(document.querySelectorAll('h3')).filter((node) =>
+          /form/i.test(text(node)),
+        );
+        if (!headings.length) {
+          return null;
+        }
+
+        const resolveScore = (row) => {
+          const scoreCandidate = Array.from(row.querySelectorAll('span, div'))
+            .map((node) => text(node))
+            .find((value) => /\d+\s*-\s*\d+/i.test(value));
+          return scoreCandidate || null;
+        };
+
+        const parseColumn = (headingNode) => {
+          const columnRoot =
+            headingNode.closest('.bg-card-bg, .rounded-xl, .rounded-lg') || headingNode.parentElement;
+          if (!columnRoot) {
+            return null;
+          }
+
+          const listRoot =
+            columnRoot.querySelector('.space-y-2, .space-y-3') ||
+            columnRoot.querySelector('ul, ol') ||
+            columnRoot;
+          let rowNodes = Array.from(
+            listRoot.matches?.('ul, ol')
+              ? listRoot.querySelectorAll(':scope > li')
+              : listRoot.querySelectorAll(':scope > div'),
+          ).filter((node) => node && node.tagName !== 'H3');
+
+          if (!rowNodes.length) {
+            rowNodes = Array.from(
+              columnRoot.querySelectorAll(
+                '.flex.items-center.gap-2, .flex.items-center.gap-3, .list-disc > li',
+              ),
+            );
+          }
+
+          const rows = rowNodes
+            .map((row) => {
+              const scopedSpans = Array.from(row.querySelectorAll(':scope > span'));
+              const resultBadge = text(scopedSpans[0]);
+              let score = text(scopedSpans[scopedSpans.length - 1]);
+              if (!/\d+\s*-\s*\d+/.test(score || '')) {
+                score = resolveScore(row);
+              }
+
+              const detailWrapper =
+                row.querySelector('.flex-1, .flex-auto, .min-w-0') || row.querySelector('div');
+              const detailLines = detailWrapper
+                ? Array.from(
+                    detailWrapper.querySelectorAll(
+                      '.text-gray-300, .text-sm.text-gray-300, .truncate, .text-xs.text-gray-500, .text-gray-500.text-xs',
+                    ),
+                  )
+                    .map((node) => text(node))
+                    .filter(Boolean)
+                : [];
+              const opponent = detailLines.shift() || null;
+              const competition = detailLines.shift() || null;
+              const date = detailLines.shift() || null;
+
+              if (!(opponent || score || competition || resultBadge || date)) {
+                return null;
+              }
+              return {
+                result: resultBadge || null,
+                opponent,
+                competition: competition || null,
+                date: date || null,
+                score: score || null,
+              };
+            })
+            .filter(Boolean);
+
+          if (!rows.length) {
+            return null;
+          }
+          return {
+            title: text(headingNode),
+            matches: rows,
+          };
+        };
+
+        const columns = headings.map(parseColumn).filter(Boolean);
+        return columns.length ? columns : null;
+      };
+
+      const extractHeadToHead = () => {
+        const headingNode =
+          Array.from(document.querySelectorAll('h3, h4')).find((node) =>
+            /(karşılıklı maçlar|head to head)/i.test(text(node)),
+          ) ||
+          Array.from(document.querySelectorAll('h3, h4')).find((node) =>
+            /(son \d+ karşılaşma|karşılaşma özeti)/i.test(text(node)),
+          );
+        if (!headingNode) {
+          return null;
+        }
+        const container =
+          headingNode.closest('.bg-card-bg, .rounded-xl, .rounded-lg') ||
+          headingNode.parentElement ||
+          findSectionAfterHeading(headingNode) ||
+          headingNode.closest?.('section');
+        if (!container) {
+          return null;
+        }
+        const table = container.querySelector('table');
+        if (table) {
+          const rows = extractTableRows(table);
+          return rows.length ? rows : null;
+        }
+        const listRows = Array.from(
+          container.querySelectorAll(
+            '.space-y-2 > div, .space-y-3 > div, li, .flex.items-center.gap-3, .flex.items-center.justify-between',
+          ),
+        )
+          .map((row) => {
+            const dateText = text(
+              row.querySelector(
+                '.text-xs.w-16, .text-gray-500.text-xs:first-child, .text-xs:first-child',
+              ),
+            );
+            const competition = text(
+              row.querySelector('.text-gray-600.text-xs:last-child, .text-xs.text-right'),
+            );
+            const infoContainer =
+              row.querySelector('.flex-1.flex, .flex-1.flex.items-center') ||
+              row.querySelector('.flex.items-center.justify-between');
+            const infoSpans = infoContainer
+              ? Array.from(infoContainer.querySelectorAll('span')).map((node) => text(node)).filter(Boolean)
+              : [];
+            const scoreIndex = infoSpans.findIndex((value) => /\d+\s*-\s*\d+/.test(value));
+            const scoreText = scoreIndex >= 0 ? infoSpans[scoreIndex] : null;
+            const homeTeam = scoreIndex > 0 ? infoSpans[scoreIndex - 1] : infoSpans[0] || null;
+            const awayTeam =
+              scoreIndex >= 0 && scoreIndex + 1 < infoSpans.length
+                ? infoSpans[scoreIndex + 1]
+                : infoSpans[infoSpans.length - 1] || null;
+
+            if (!(homeTeam || awayTeam || scoreText)) {
+              return null;
+            }
+            return {
+              date: dateText || null,
+              competition: competition || null,
+              homeTeam: homeTeam || null,
+              awayTeam: awayTeam || null,
+              score: scoreText || null,
+            };
+          })
+          .filter(Boolean);
+        return listRows.length ? listRows : null;
+      };
+
       const extractOddsSection = () => {
         const heading = findHeading('Oran Trend Analizi');
         if (!heading) {
@@ -346,6 +554,33 @@ export async function scrapeMatchDetail(options = {}) {
       };
 
       const upcomingMatches = extractUpcomingMatches();
+      let recentForm = extractFormColumns();
+      let headToHead = extractHeadToHead();
+
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      const ensureStatsTabData = async () => {
+        const buttons = Array.from(document.querySelectorAll('button'));
+        const target = buttons.find((btn) => /H2H|Form/i.test((btn.textContent || '').trim()));
+        if (!target) {
+          return;
+        }
+        target.click();
+        for (let attempt = 0; attempt < 15; attempt += 1) {
+          const hasSections = Array.from(document.querySelectorAll('h3, h4')).some((node) =>
+            /Form|Karşılaşma|Head/i.test((node.textContent || '').trim()),
+          );
+          if (hasSections) {
+            recentForm = extractFormColumns() || recentForm;
+            headToHead = extractHeadToHead() || headToHead;
+            return;
+          }
+          await delay(200);
+        }
+      };
+
+      if (!recentForm || !headToHead) {
+        await ensureStatsTabData();
+      }
 
       const footerMeta = text(
         document.querySelector('.text-center.text-gray-600.text-xs.py-4'),
@@ -364,6 +599,8 @@ export async function scrapeMatchDetail(options = {}) {
         detailPredictions,
         oddsTrends,
         upcomingMatches,
+        recentForm,
+        headToHead,
         structuredData: {
           sportsEvent,
           faqPage,
@@ -400,4 +637,3 @@ function createMatchSlug(home, away) {
 function createMatchSlugFromId(matchId) {
   return sanitizeSlug(String(matchId));
 }
-
