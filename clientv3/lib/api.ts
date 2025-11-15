@@ -1,12 +1,12 @@
 import { API_BASE_URL } from './config';
-import type { MatchDetail, MatchListResponse } from '@/types/match';
+import type { MatchDetail, MatchDetailPendingResponse, MatchListResponse } from '@/types/match';
 
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   const target = path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
   
-  // Match detail için daha uzun timeout (API'de scraping sürebilir, bazı maçlar 18-19 saniye sürebilir)
+  // Match detail için timeout - artık 202 dönebilir, bu yüzden daha kısa timeout yeterli
   const isMatchDetail = path.includes('/api/match/');
-  const timeoutMs = isMatchDetail ? 30000 : 20000; // Match detail: 30s, diğerleri: 20s (mobil network için artırıldı)
+  const timeoutMs = isMatchDetail ? 15000 : 20000; // Match detail: 15s (202 hızlı döner), diğerleri: 20s
   
   try {
     console.log('[API] Fetching:', target);
@@ -60,6 +60,13 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
     
       const duration = Date.now() - startTime;
       console.log(`[API] Response received in ${duration}ms:`, response.status, path);
+      
+      // Handle 202 Accepted (pending queue response)
+      if (response.status === 202) {
+        const data = await response.json();
+        console.log('[API] Pending (202):', path, `(${duration}ms)`, data);
+        return data as T;
+      }
       
       if (!response.ok) {
         const message = await response.text().catch(() => 'Unknown error');
@@ -122,8 +129,23 @@ export function fetchMatchList(
 
 export function fetchMatchDetail(
   matchId: number | string,
-  init?: RequestInit
-): Promise<MatchDetail> {
-  return fetchJson<MatchDetail>(`/api/match/${matchId}`, init);
+  init?: RequestInit,
+  options?: { date?: string; view?: 'today' | 'tomorrow' | 'manual' }
+): Promise<MatchDetail | MatchDetailPendingResponse> {
+  let url = `/api/match/${matchId}`;
+  const params = new URLSearchParams();
+  
+  if (options?.date) {
+    params.append('date', options.date);
+  }
+  if (options?.view) {
+    params.append('view', options.view);
+  }
+  
+  if (params.toString()) {
+    url += `?${params.toString()}`;
+  }
+  
+  return fetchJson<MatchDetail | MatchDetailPendingResponse>(url, init);
 }
 

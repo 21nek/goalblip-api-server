@@ -2,14 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import os from 'os';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
-import { scrapeMatchDetail } from '../scrapers/golsinyali/match-detail.js';
 import {
   loadMatchDetail,
   loadMatchListByDate,
   loadMatchListByView,
-  saveMatchDetail,
   saveMatchList,
 } from '../services/match-storage.js';
+import { enqueueMatchDetailScrape } from '../services/scrape-queue.js';
 import { ensureDataDirectories, getDataDirectories } from '../utils/data-store.js';
 
 const app = express();
@@ -95,20 +94,37 @@ app.get('/api/matches/:date', async (req, res, next) => {
 app.get('/api/match/:matchId', async (req, res, next) => {
   try {
     const { matchId } = req.params;
-    let detail = await loadMatchDetail(matchId);
+    const locale = req.query.locale || 'tr';
+    const requestedDate = typeof req.query.date === 'string' ? req.query.date : undefined;
+    const preferredView = typeof req.query.view === 'string' ? req.query.view : undefined;
+    const detail = await loadMatchDetail(matchId, { dataDate: requestedDate, view: preferredView });
 
-    if (!detail) {
-      const metadata = await findMatchMetadata(Number(matchId));
-      const scraped = await scrapeMatchDetail({
-        matchId,
-        homeTeamName: metadata?.homeTeam,
-        awayTeamName: metadata?.awayTeam,
-      });
-      await saveMatchDetail(scraped);
-      detail = scraped;
+    if (detail) {
+      res.json(detail);
+      return;
     }
 
-    res.json(detail);
+    const metadata = await findMatchMetadata(Number(matchId));
+    const resolvedDate = requestedDate ?? metadata?.dataDate ?? currentIsoDate();
+    const viewContext = preferredView ?? metadata?.view ?? 'manual';
+
+    const { queuePosition } = enqueueMatchDetailScrape({
+      matchId,
+      locale,
+      homeTeamName: metadata?.homeTeam,
+      awayTeamName: metadata?.awayTeam,
+      dataDate: resolvedDate,
+      view: viewContext,
+      viewContext,
+      sourceListScrapedAt: metadata?.listScrapedAt,
+    });
+
+    res.status(202).json({
+      status: 'pending',
+      message: 'Ma�� detay�� analiz edilmek ��zere kuyru�a eklendi.',
+      matchId,
+      queuePosition,
+    });
   } catch (error) {
     next(error);
   }
@@ -123,18 +139,30 @@ app.post('/api/match/:matchId/scrape', async (req, res, next) => {
       headless = 'new',
       homeTeamName,
       awayTeamName,
+      dataDate,
+      view,
     } = req.body || {};
 
-    const detail = await scrapeMatchDetail({
+    const resolvedDate = dataDate || currentIsoDate();
+    const viewContext = view || 'manual';
+
+    const { queuePosition } = enqueueMatchDetailScrape({
       matchId,
       locale,
       slug,
       headless,
       homeTeamName,
       awayTeamName,
+      dataDate: resolvedDate,
+      view: viewContext,
+      viewContext,
     });
-    await saveMatchDetail(detail);
-    res.status(201).json({ message: 'Maç detayı güncellendi.', matchId });
+    res.status(202).json({
+      status: 'pending',
+      message: 'Mac detayi analiz kuyruguna alindi.',
+      matchId,
+      queuePosition,
+    });
   } catch (error) {
     next(error);
   }
@@ -149,10 +177,24 @@ async function findMatchMetadata(matchId) {
         (item) => Number(item.matchId) === Number(matchId) || String(item.matchId) === String(matchId),
       ) ?? null;
     if (match) {
-      return match;
+      return {
+        ...match,
+        dataDate: list?.dataDate,
+        view,
+        listScrapedAt: list?.scrapedAt,
+      };
     }
   }
   return null;
+}
+
+function currentIsoDate() {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Istanbul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
 }
 
 app.use((err, req, res, next) => {

@@ -46,11 +46,16 @@ type Outcome = { label?: string | null; valuePercent?: number | null };
 type OddsRow = { label?: string | null; values?: string[] | null };
 
 export default function MatchDetailScreen() {
-  const { matchId } = useLocalSearchParams<{ matchId: string }>();
+  const { matchId, date, view } = useLocalSearchParams<{ matchId: string; date?: string; view?: string }>();
   const router = useRouter();
-  const { getMatchDetail, getOrFetchMatchDetail } = useMatches();
+  const { getMatchDetail, getOrFetchMatchDetail, getPendingMatch } = useMatches();
   const numericId = matchId ? Number(matchId) : null;
-  const cachedDetail = numericId ? getMatchDetail(numericId) ?? null : null;
+  const dateParam = date || undefined;
+  const viewParam = (view as 'today' | 'tomorrow' | 'manual' | undefined) || undefined;
+  
+  // Get cached detail for specific date if provided
+  const cachedDetail = numericId ? (dateParam ? getMatchDetail(numericId, dateParam) : getMatchDetail(numericId)) ?? null : null;
+  const pendingInfo = numericId ? (dateParam ? getPendingMatch(numericId, dateParam) : getPendingMatch(numericId)) : undefined;
   const [detail, setDetail] = useState<MatchDetail | null>(cachedDetail);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -73,60 +78,35 @@ export default function MatchDetailScreen() {
     setError(null);
 
     try {
-      console.log('[MatchDetail] Fetching detail for:', numericId, retryCount > 0 ? `(retry ${retryCount})` : '');
-      const response = await getOrFetchMatchDetail(numericId);
+      const options = dateParam || viewParam ? { date: dateParam, view: viewParam } : undefined;
+      console.log('[MatchDetail] Fetching detail for:', numericId, options, retryCount > 0 ? `(retry ${retryCount})` : '');
+      const response = await getOrFetchMatchDetail(numericId, options);
       if (response) {
-          console.log('[MatchDetail] Detail loaded successfully:', numericId);
+          console.log('[MatchDetail] Detail loaded successfully:', numericId, 'date:', response.dataDate);
           setDetail(response);
           setError(null);
           if (!showLoading) {
             setLastRefreshTime(new Date());
           }
       } else {
-        console.warn('[MatchDetail] Detail is null for:', numericId);
-        // Cache'de varsa onu kullan, yoksa retry dene veya hata göster
+        // Response null ise pending olabilir - pending state provider'dan kontrol edilecek
+        // Cache'de varsa onu göster
         if (cachedDetail) {
           setDetail(cachedDetail);
-          // İlk denemede timeout olduysa, bir kez daha dene
-          if (retryCount === 0) {
-            console.log('[MatchDetail] Retrying after timeout...');
-            if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
-            retryTimeoutRef.current = setTimeout(() => fetchDetail(false, 1), 2000);
-            return;
-          }
-        } else if (retryCount < 1) {
-          // Bir kez daha dene
-          console.log('[MatchDetail] Retrying fetch...');
-          if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
-          retryTimeoutRef.current = setTimeout(() => fetchDetail(showLoading, retryCount + 1), 2000);
-          return;
-        } else {
-          setError('Maç detayı bulunamadı. API\'den veri alınamadı.');
         }
+        // Pending durumu UI'da gösterilecek, burada hata gösterme
+        setLoading(false);
+        setRefreshing(false);
+        return;
       }
     } catch (err) {
       console.error('[MatchDetail] Fetch failed:', numericId, err);
       const errorMessage = err instanceof Error ? err.message : 'Maç detayı alınamadı.';
-      const isTimeout = errorMessage.includes('zaman aşımı');
       
       // Cache'de varsa onu göster
       if (cachedDetail) {
         setDetail(cachedDetail);
-        if (isTimeout && retryCount < 1) {
-          // Timeout olduysa bir kez daha dene
-          console.log('[MatchDetail] Retrying after timeout...');
-          if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
-          retryTimeoutRef.current = setTimeout(() => fetchDetail(false, retryCount + 1), 2000);
-          return;
-        } else {
-          setError('Güncel veri alınamadı, önbellekten gösteriliyor.');
-        }
-      } else if (isTimeout && retryCount < 1) {
-        // Timeout olduysa bir kez daha dene
-        console.log('[MatchDetail] Retrying after timeout...');
-        if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
-        retryTimeoutRef.current = setTimeout(() => fetchDetail(showLoading, retryCount + 1), 2000);
-        return;
+        setError('Güncel veri alınamadı, önbellekten gösteriliyor.');
       } else {
         setError(errorMessage);
       }
@@ -134,7 +114,9 @@ export default function MatchDetailScreen() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [numericId, getOrFetchMatchDetail, cachedDetail]);
+  }, [numericId, dateParam, viewParam, getOrFetchMatchDetail, cachedDetail]);
+
+  // No neighbor prefetching - queue handles requests when user actually navigates to them
 
   useEffect(() => {
     let mounted = true;
@@ -163,7 +145,7 @@ export default function MatchDetailScreen() {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numericId]); // Sadece matchId değiştiğinde yeniden fetch et
+  }, [numericId, dateParam, viewParam]); // matchId, date veya view değiştiğinde yeniden fetch et
 
   const predictions = extractHighlightPredictions(detail, 5);
   const scoreboard = detail?.scoreboard;
@@ -198,6 +180,32 @@ export default function MatchDetailScreen() {
             <Skeleton width="80%" height={24} borderRadius={borderRadius.sm} style={getStyles().marginBottom} />
             <Skeleton width="100%" height={100} borderRadius={borderRadius.lg} />
           </View>
+        ) : pendingInfo && !detail ? (
+          <View style={getStyles().pendingContainer}>
+            <EmptyState
+              icon="robot"
+              title="Analiz Ediliyor"
+              message={`${pendingInfo.message}\n\nSıra: #${pendingInfo.queuePosition}\n\nAnaliz tamamlandığında otomatik olarak güncellenecek.`}
+              action={
+                <View style={{ alignItems: 'center' }}>
+                  <TouchableOpacity
+                    style={getStyles().retryButton}
+                    onPress={() => fetchDetail(false)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={getStyles().retryText}>Yenile</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[getStyles().retryButton, getStyles().backButton]}
+                    onPress={() => router.back()}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={getStyles().backButtonText}>Geri Dön</Text>
+                  </TouchableOpacity>
+                </View>
+              }
+            />
+          </View>
         ) : error ? (
           <View style={getStyles().errorBox}>
             <EmptyState
@@ -212,7 +220,8 @@ export default function MatchDetailScreen() {
                       setLoading(true);
                       setError(null);
                       try {
-                        const response = await getOrFetchMatchDetail(numericId!);
+                        const options = dateParam || viewParam ? { date: dateParam, view: viewParam } : undefined;
+                        const response = await getOrFetchMatchDetail(numericId!, options);
                         if (response) {
                           setDetail(response);
                         } else {
@@ -241,6 +250,15 @@ export default function MatchDetailScreen() {
           </View>
         ) : detail ? (
           <>
+            {/* Data date badge */}
+            {detail.dataDate && (
+              <View style={getStyles().dataDateBadge}>
+                <Text style={getStyles().dataDateText}>
+                  Veri Tarihi: {new Date(detail.dataDate).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {detail.viewContext && ` • ${detail.viewContext === 'today' ? 'Bugün' : detail.viewContext === 'tomorrow' ? 'Yarın' : 'Manuel'}`}
+                </Text>
+              </View>
+            )}
             <View style={getStyles().scoreboard}>
               <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">{scoreboard?.leagueLabel || 'Lig Bilgisi'}</Text>
               {scoreboard?.statusBadges?.length ? (
@@ -667,6 +685,23 @@ const getStyles = () => {
   errorBox: {
     flex: 1,
     paddingTop: 40,
+  },
+  pendingContainer: {
+    flex: 1,
+    paddingTop: 40,
+  },
+  dataDateBadge: {
+    backgroundColor: colors.bgTertiary,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.md,
+    marginBottom: spacing.md,
+    alignItems: 'center',
+  },
+  dataDateText: {
+    ...typography.caption,
+    color: colors.textTertiary,
+    fontSize: 12,
   },
   retryButton: {
     backgroundColor: colors.accent,

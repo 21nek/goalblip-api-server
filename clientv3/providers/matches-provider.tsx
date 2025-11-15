@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchMatchDetail, fetchMatchList } from '@/lib/api';
-import type { MatchDetail, MatchListResponse } from '@/types/match';
+import type { MatchDetail, MatchDetailPendingResponse, MatchListResponse } from '@/types/match';
 
 type ViewKey = 'today' | 'tomorrow';
 
@@ -21,9 +21,10 @@ type MatchesContextValue = {
   getMatchAssets: (matchId: number | string) => MatchAssets | undefined;
   getOrFetchMatchAssets: (matchId: number | string) => Promise<MatchAssets | null>;
   recordMatchAssets: (detail: MatchDetail | null) => void;
-  getMatchDetail: (matchId: number | string) => MatchDetail | null | undefined;
-  getOrFetchMatchDetail: (matchId: number | string) => Promise<MatchDetail | null>;
+  getMatchDetail: (matchId: number | string, date?: string) => MatchDetail | null | undefined;
+  getOrFetchMatchDetail: (matchId: number | string, options?: { date?: string; view?: 'today' | 'tomorrow' | 'manual' }) => Promise<MatchDetail | null>;
   recordMatchDetail: (detail: MatchDetail | null) => void;
+  getPendingMatch: (matchId: number | string, date?: string) => MatchDetailPendingResponse | undefined;
 };
 
 const MatchesContext = createContext<MatchesContextValue | undefined>(undefined);
@@ -46,9 +47,13 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const controllersRef = useRef<Partial<Record<ViewKey, AbortController>>>({});
   const [matchAssets, setMatchAssets] = useState<Record<number, MatchAssets>>({});
-  const [matchDetails, setMatchDetails] = useState<Record<number, MatchDetail>>({});
+  // Cache key format: `${matchId}:${dataDate}` to support multiple dates per match
+  const [matchDetails, setMatchDetails] = useState<Record<string, MatchDetail>>({});
+  const [pendingMatches, setPendingMatches] = useState<Record<string, MatchDetailPendingResponse>>({});
   const assetRequests = useRef<Record<number, Promise<MatchAssets | null>>>({});
-  const detailRequests = useRef<Record<number, Promise<MatchDetail | null>>>({});
+  // Request key format: `${matchId}:${date || 'latest'}:${view || 'latest'}`
+  const detailRequests = useRef<Record<string, Promise<MatchDetail | MatchDetailPendingResponse | null>>>({});
+  const pollingIntervals = useRef<Record<string, NodeJS.Timeout>>({});
 
   const deriveAssetsFromDetail = useCallback((detail: MatchDetail | null): MatchAssets | null => {
     const scoreboard = detail?.scoreboard;
@@ -101,14 +106,17 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
 
   const recordMatchDetail = useCallback(
     (detail: MatchDetail | null) => {
-      if (!detail?.matchId) return;
+      if (!detail?.matchId || !detail?.dataDate) return;
+      
+      // Use matchId:dataDate as key to support multiple dates per match
+      const key = `${detail.matchId}:${detail.dataDate}`;
       
       setMatchDetails((prev) => {
-        const current = prev[detail.matchId];
+        const current = prev[key];
         if (current) {
-          return { ...prev, [detail.matchId]: { ...current, ...detail } };
+          return { ...prev, [key]: { ...current, ...detail } };
         }
-        return { ...prev, [detail.matchId]: detail };
+        return { ...prev, [key]: detail };
       });
       
       recordMatchAssets(detail);
@@ -117,32 +125,112 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
   );
 
   const getMatchDetail = useCallback(
-    (matchId: number | string) => {
+    (matchId: number | string, date?: string) => {
       const numeric = Number(matchId);
       if (!numeric) return undefined;
-      return matchDetails[numeric];
+      
+      // If date is provided, use exact match
+      if (date) {
+        const key = `${numeric}:${date}`;
+        return matchDetails[key];
+      }
+      
+      // Otherwise, find the most recent detail for this matchId
+      const keys = Object.keys(matchDetails).filter((k) => k.startsWith(`${numeric}:`));
+      if (keys.length === 0) return undefined;
+      
+      // Sort by date (most recent first) and return the first one
+      const sorted = keys.sort((a, b) => {
+        const dateA = a.split(':')[1];
+        const dateB = b.split(':')[1];
+        return dateB.localeCompare(dateA);
+      });
+      
+      return matchDetails[sorted[0]];
     },
     [matchDetails]
   );
 
+  const getPendingMatch = useCallback(
+    (matchId: number | string, date?: string) => {
+      const numeric = Number(matchId);
+      if (!numeric) return undefined;
+      
+      // If date is provided, use exact match
+      if (date) {
+        const key = `${numeric}:${date}`;
+        return pendingMatches[key];
+      }
+      
+      // Otherwise, find any pending match for this matchId
+      const keys = Object.keys(pendingMatches).filter((k) => k.startsWith(`${numeric}:`));
+      if (keys.length === 0) return undefined;
+      
+      return pendingMatches[keys[0]];
+    },
+    [pendingMatches]
+  );
+
   const getOrFetchMatchDetail = useCallback(
-    async (matchId: number | string) => {
+    async (matchId: number | string, options?: { date?: string; view?: 'today' | 'tomorrow' | 'manual' }) => {
       const numeric = Number(matchId);
       if (!numeric || isNaN(numeric)) {
         console.warn('[MatchesProvider] Invalid matchId:', matchId);
         return null;
       }
       
-      if (matchDetails[numeric]) {
-        console.log('[MatchesProvider] Using cached detail for:', numeric);
-        return matchDetails[numeric];
+      // Check cache first
+      const cached = getMatchDetail(numeric, options?.date);
+      if (cached) {
+        console.log('[MatchesProvider] Using cached detail for:', numeric, options?.date ? `date:${options.date}` : '');
+        return cached;
       }
       
-      if (!detailRequests.current[numeric]) {
-        console.log('[MatchesProvider] Fetching detail for:', numeric);
-        detailRequests.current[numeric] = fetchMatchDetail(numeric)
-          .then((detail) => {
-            console.log('[MatchesProvider] Detail fetched successfully:', numeric);
+      // Create request key to prevent duplicate requests
+      const requestKey = `${numeric}:${options?.date || 'latest'}:${options?.view || 'latest'}`;
+      
+      if (!detailRequests.current[requestKey]) {
+        console.log('[MatchesProvider] Fetching detail for:', numeric, options);
+        detailRequests.current[requestKey] = fetchMatchDetail(numeric, undefined, options)
+          .then((response) => {
+            // Check if response is pending
+            if ('status' in response && response.status === 'pending') {
+              const pending = response as MatchDetailPendingResponse;
+              // Use requested date or 'latest' for pending key
+              const pendingKey = options?.date ? `${numeric}:${options.date}` : `${numeric}:latest`;
+              console.log('[MatchesProvider] Detail pending in queue:', numeric, 'position:', pending.queuePosition);
+              setPendingMatches((prev) => ({ ...prev, [pendingKey]: pending }));
+              
+              // Start polling if not already polling
+              if (!pollingIntervals.current[pendingKey]) {
+                const pollInterval = 45000; // 45 seconds
+                console.log('[MatchesProvider] Starting poll for:', numeric);
+                pollingIntervals.current[pendingKey] = setInterval(() => {
+                  // Re-fetch after interval with same options
+                  delete detailRequests.current[requestKey];
+                  getOrFetchMatchDetail(numeric, options).catch(() => null);
+                }, pollInterval);
+              }
+              
+              return null; // Return null for pending, UI will show pending state
+            }
+            
+            // Normal detail response
+            const detail = response as MatchDetail;
+            console.log('[MatchesProvider] Detail fetched successfully:', numeric, 'date:', detail.dataDate);
+            
+            // Clear pending state and polling if exists
+            const pendingKey = detail.dataDate ? `${numeric}:${detail.dataDate}` : `${numeric}:latest`;
+            setPendingMatches((prev) => {
+              const next = { ...prev };
+              delete next[pendingKey];
+              return next;
+            });
+            if (pollingIntervals.current[pendingKey]) {
+              clearInterval(pollingIntervals.current[pendingKey]);
+              delete pollingIntervals.current[pendingKey];
+            }
+            
             recordMatchDetail(detail);
             return detail;
           })
@@ -150,21 +238,23 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
             const errorMsg = error instanceof Error ? error.message : String(error);
             console.error('[MatchesProvider] Detail fetch failed:', numeric, errorMsg);
             
-            // Timeout hatası ise, kullanıcıya bilgi ver ama null döndürme (retry için)
-            if (errorMsg.includes('zaman aşımı')) {
-              console.warn('[MatchesProvider] Timeout for match detail, will retry on next access:', numeric);
+            // Clear polling on error
+            const pendingKey = options?.date ? `${numeric}:${options.date}` : `${numeric}:latest`;
+            if (pollingIntervals.current[pendingKey]) {
+              clearInterval(pollingIntervals.current[pendingKey]);
+              delete pollingIntervals.current[pendingKey];
             }
             
             return null;
           })
           .finally(() => {
-            delete detailRequests.current[numeric];
+            delete detailRequests.current[requestKey];
           });
       }
       
-      return detailRequests.current[numeric];
+      return detailRequests.current[requestKey];
     },
-    [matchDetails, recordMatchDetail]
+    [getMatchDetail, recordMatchDetail]
   );
 
   const getOrFetchMatchAssets = useCallback(
@@ -269,6 +359,9 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
     return () => {
       mounted = false;
       Object.values(controllersRef.current).forEach((controller) => controller?.abort());
+      // Cleanup polling intervals
+      Object.values(pollingIntervals.current).forEach((interval) => clearInterval(interval));
+      pollingIntervals.current = {};
     };
   }, [requestView]);
 
@@ -286,6 +379,7 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       getMatchDetail,
       getOrFetchMatchDetail,
       recordMatchDetail,
+      getPendingMatch,
     }),
     [
       data.today,
@@ -300,6 +394,7 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       getMatchDetail,
       getOrFetchMatchDetail,
       recordMatchDetail,
+      getPendingMatch,
     ]
   );
 

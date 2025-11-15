@@ -4,14 +4,35 @@ import path from 'path';
 const DATA_ROOT = path.resolve(process.cwd(), 'data');
 const LISTS_DIR = path.join(DATA_ROOT, 'lists');
 const MATCHES_DIR = path.join(DATA_ROOT, 'matches');
+const MATCHES_ALIAS_DIR = path.join(MATCHES_DIR, 'aliases');
+const MATCH_ALIAS_MAP = {
+  today: 'latest',
+  tomorrow: 'upcoming',
+};
 
 export function getDataDirectories() {
   return { DATA_ROOT, LISTS_DIR, MATCHES_DIR };
 }
 
-export async function ensureDataDirectories() {
+export async function ensureDataDirectories(options = {}) {
   await fs.mkdir(LISTS_DIR, { recursive: true });
   await fs.mkdir(MATCHES_DIR, { recursive: true });
+  await fs.mkdir(MATCHES_ALIAS_DIR, { recursive: true });
+
+  const matchDates = options.matchDates ?? [];
+  for (const date of matchDates) {
+    if (date) {
+      await fs.mkdir(path.join(MATCHES_DIR, date), { recursive: true });
+    }
+  }
+
+  const matchViews = options.matchViews ?? [];
+  for (const view of matchViews) {
+    const aliasDir = getMatchAliasDir(view);
+    if (aliasDir) {
+      await fs.mkdir(aliasDir, { recursive: true });
+    }
+  }
 }
 
 export async function writeJsonFile(targetPath, payload) {
@@ -41,7 +62,25 @@ export function getListAliasPath(view) {
   return path.join(LISTS_DIR, `${alias}.json`);
 }
 
-export function getMatchPath(matchId, { sample = false } = {}) {
+function getMatchAliasDir(view) {
+  if (!view) return null;
+  const aliasFolder = MATCH_ALIAS_MAP[view] ?? view;
+  return path.join(MATCHES_ALIAS_DIR, aliasFolder);
+}
+
+export function getMatchPath(matchId, { sample = false, dataDate } = {}) {
   const prefix = sample ? 'sample-' : '';
-  return path.join(MATCHES_DIR, `${prefix}${matchId}.json`);
+  const filename = `${prefix}${matchId}.json`;
+  if (dataDate) {
+    return path.join(MATCHES_DIR, dataDate, filename);
+  }
+  return path.join(MATCHES_DIR, filename);
+}
+
+export function getMatchAliasPath(matchId, view) {
+  const aliasDir = getMatchAliasDir(view);
+  if (!aliasDir) {
+    return null;
+  }
+  return path.join(aliasDir, `${matchId}.json`);
 }

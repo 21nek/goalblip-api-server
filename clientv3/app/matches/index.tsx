@@ -51,19 +51,49 @@ export default function MatchesScreen() {
 
   const data = useMemo(() => {
     if (!current?.matches) return [];
+    
+    let base = current.matches;
+    
+    // Date filter: For "today" view, filter out all matches if dataDate is from previous days
+    // API doesn't auto-delete old data, so we need to filter on client side
+    if (view === 'today' && current.dataDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dataDate = new Date(current.dataDate);
+      dataDate.setHours(0, 0, 0, 0);
+      
+      // If dataDate is older than today, filter out ALL matches
+      // This prevents showing yesterday's matches as today's matches
+      if (dataDate < today) {
+        console.warn('[MatchesScreen] Filtering out stale data:', {
+          dataDate: current.dataDate,
+          today: today.toISOString().split('T')[0],
+          view,
+          originalMatchCount: base.length
+        });
+        
+        // Filter out all matches from previous days
+        base = [];
+      }
+    }
+    
+    // League filter
+    if (selectedLeagues.length) {
+      base = base.filter((match) =>
+        selectedLeagues.includes(match.league || 'Lig Bilinmiyor')
+      );
+    }
+    
+    // Search filter
     const term = search.trim().toLowerCase();
-    let base = selectedLeagues.length
-      ? current.matches.filter((match) =>
-          selectedLeagues.includes(match.league || 'Lig Bilinmiyor')
-        )
-      : current.matches;
     if (term) {
       base = base.filter((match) =>
         `${match.homeTeam} ${match.awayTeam} ${match.league}`.toLowerCase().includes(term)
       );
     }
+    
     return base;
-  }, [current, search, selectedLeagues]);
+  }, [current, view, search, selectedLeagues]);
 
   function toggleLeague(league: string) {
     if (league === ALL) {
@@ -225,9 +255,17 @@ export default function MatchesScreen() {
             data={data}
             keyExtractor={(item) => `${item.matchId}`}
             contentContainerStyle={styles.listContent}
-            renderItem={({ item }) => (
-              <MatchRow match={item} onPress={() => router.push(`/matches/${item.matchId}`)} />
-            )}
+            renderItem={({ item }) => {
+              const params: { matchId: string; date?: string; view?: string } = { matchId: String(item.matchId) };
+              if (current?.dataDate) params.date = current.dataDate;
+              if (current?.view) params.view = current.view;
+              return (
+                <MatchRow 
+                  match={item} 
+                  onPress={() => router.push({ pathname: '/matches/[matchId]', params })} 
+                />
+              );
+            }}
             initialNumToRender={12}
             windowSize={5}
             maxToRenderPerBatch={10}

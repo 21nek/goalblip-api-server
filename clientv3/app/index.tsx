@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  ViewToken,
 } from 'react-native';
 import { getContainerPadding } from '@/lib/responsive';
 
@@ -58,6 +59,29 @@ export default function HomeScreen() {
     
     let matches = current.matches;
     
+    // Date filter: For "today" view, filter out all matches if dataDate is from previous days
+    // API doesn't auto-delete old data, so we need to filter on client side
+    if (view === 'today' && current.dataDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dataDate = new Date(current.dataDate);
+      dataDate.setHours(0, 0, 0, 0);
+      
+      // If dataDate is older than today, filter out ALL matches
+      // This prevents showing yesterday's matches as today's matches
+      if (dataDate < today) {
+        console.warn('[HomeScreen] Filtering out stale data:', {
+          dataDate: current.dataDate,
+          today: today.toISOString().split('T')[0],
+          view,
+          originalMatchCount: matches.length
+        });
+        
+        // Filter out all matches from previous days
+        matches = [];
+      }
+    }
+    
     // League filter
     if (selectedLeagues.length > 0) {
       matches = matches.filter((match) => selectedLeagues.includes(match.league || 'Lig Bilinmiyor'));
@@ -72,7 +96,7 @@ export default function HomeScreen() {
     }
     
     return matches;
-  }, [current?.matches, selectedLeagues, search]);
+  }, [current?.matches, current?.dataDate, view, selectedLeagues, search]);
 
   // Group matches by league
   const groupedMatches = useMemo(() => {
@@ -142,35 +166,55 @@ export default function HomeScreen() {
     setSelectedLeagues([]);
   }, []);
 
-  // Lazy load match details for visible matches
-  const visibleMatchIds = useMemo(() => {
-    return listItems
-      .filter((item) => item.type === 'match')
-      .slice(0, 20) // Load first 20 matches
-      .map((item) => (item as { type: 'match'; match: MatchSummary }).match.matchId);
-  }, [listItems]);
-
+  // Prefetch details for visible matches - when user sees a match, start loading its detail
+  const prefetchedIds = useRef<Set<string>>(new Set()); // Key format: `${matchId}:${date}`
+  
+  // Store latest values in refs to avoid recreating callback
+  const listItemsRef = useRef(listItems);
+  const currentRef = useRef(current);
+  const getMatchDetailRef = useRef(getMatchDetail);
+  const getOrFetchMatchDetailRef = useRef(getOrFetchMatchDetail);
+  
+  // Update refs when values change
   useEffect(() => {
-    if (visibleMatchIds.length === 0) return;
-    let cancelled = false;
-    
-    async function hydrate() {
-      for (const id of visibleMatchIds) {
-        if (cancelled) break;
-        if (getMatchDetail(id)) continue;
-        try {
-          await getOrFetchMatchDetail(id);
-        } catch (error) {
-          console.warn('[HomeScreen] Failed to fetch detail for:', id, error);
+    listItemsRef.current = listItems;
+    currentRef.current = current;
+    getMatchDetailRef.current = getMatchDetail;
+    getOrFetchMatchDetailRef.current = getOrFetchMatchDetail;
+  }, [listItems, current, getMatchDetail, getOrFetchMatchDetail]);
+
+  // Stable callback that doesn't change between renders - only prefetch visible matches
+  const onViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      // Only prefetch details for currently visible matches
+      const listData = currentRef.current;
+      if (!listData) return;
+      
+      viewableItems.forEach((item) => {
+        if (item.item.type === 'match') {
+          const matchId = item.item.match.matchId;
+          const date = listData.dataDate;
+          const view = listData.view;
+          const prefetchKey = `${matchId}:${date}`;
+          
+          // Only fetch if not already prefetched and not already cached
+          if (!prefetchedIds.current.has(prefetchKey) && !getMatchDetailRef.current(matchId, date)) {
+            prefetchedIds.current.add(prefetchKey);
+            // Fire and forget - queue will handle it
+            // Pass date and view context for proper API routing
+            getOrFetchMatchDetailRef.current(matchId, { date, view }).catch(() => {
+              // Silently fail
+            });
+          }
         }
-      }
+      });
     }
-    
-    hydrate();
-    return () => {
-      cancelled = true;
-    };
-  }, [visibleMatchIds, getOrFetchMatchDetail, getMatchDetail]);
+  ).current;
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+    minimumViewTime: 100,
+  });
 
   // Format meta info
   const metaInfo = useMemo(() => {
@@ -190,16 +234,23 @@ export default function HomeScreen() {
     }
     
     const match = item.match;
-    const detail = getMatchDetail(match.matchId);
+    // Get detail for current list's date
+    const detail = current?.dataDate ? getMatchDetail(match.matchId, current.dataDate) : getMatchDetail(match.matchId);
     
     return (
       <MatchCard
         match={match}
         detail={detail}
-        onPress={() => router.push(`/matches/${match.matchId}`)}
+        onPress={() => {
+          // Navigate with date and view context
+          const params: { matchId: string; date?: string; view?: string } = { matchId: String(match.matchId) };
+          if (current?.dataDate) params.date = current.dataDate;
+          if (current?.view) params.view = current.view;
+          router.push({ pathname: '/matches/[matchId]', params });
+        }}
       />
     );
-  }, [getMatchDetail, router]);
+  }, [getMatchDetail, router, current]);
 
   // Handle refresh
   const handleRefresh = useCallback(async () => {
@@ -207,6 +258,7 @@ export default function HomeScreen() {
     await refreshView(view);
     setRefreshing(false);
   }, [refreshView, view]);
+
 
   // List header component (tabs, meta info, filters) - MUST be before early returns
   const listHeader = useMemo(() => (
@@ -334,6 +386,8 @@ export default function HomeScreen() {
           }}
           renderItem={renderItem}
           ListHeaderComponent={listHeader}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig.current}
           contentContainerStyle={styles.listContent}
           style={styles.list}
           initialNumToRender={15}

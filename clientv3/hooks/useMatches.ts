@@ -18,6 +18,7 @@ export function useMatches() {
     getMatchDetail,
     getOrFetchMatchDetail,
     recordMatchDetail,
+    getPendingMatch,
   } = useMatchesContext();
 
   const dataByView: Record<ViewKey, MatchListResponse | null> = useMemo(
@@ -41,6 +42,7 @@ export function useMatches() {
     getMatchDetail,
     getOrFetchMatchDetail,
     recordMatchDetail,
+    getPendingMatch,
     getViewData: (view: ViewKey) => dataByView[view],
   };
 }

@@ -20,12 +20,22 @@ export type MatchListResponse = {
   matches: MatchSummary[];
 };
 
+export type MatchDetailPendingResponse = {
+  status: 'pending';
+  message: string;
+  matchId: string | number;
+  queuePosition: number;
+};
+
 export type MatchDetail = {
   locale: string;
   matchId: number;
   url: string;
   scrapedAt: string;
   lastUpdatedAt?: string | null;
+  dataDate: string;
+  viewContext: 'today' | 'tomorrow' | 'manual';
+  sourceListScrapedAt?: string | null;
   scoreboard?: {
     leagueLabel?: string | null;
     statusBadges?: string[] | null;
