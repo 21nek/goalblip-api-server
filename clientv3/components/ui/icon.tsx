@@ -14,7 +14,12 @@ type IconName =
   | 'trophy'
   | 'checkmark-circle'
   | 'close-circle'
-  | 'information-circle';
+  | 'information-circle'
+  | 'close'
+  | 'chevron-right'
+  | 'check'
+  | 'arrow-up'
+  | 'arrow-down';
 
 type IconProps = {
   name: IconName;
@@ -37,6 +42,11 @@ const iconMap: Record<IconName, { library: 'Ionicons' | 'MaterialIcons'; iconNam
   'checkmark-circle': { library: 'Ionicons', iconName: 'checkmark-circle' },
   'close-circle': { library: 'Ionicons', iconName: 'close-circle' },
   'information-circle': { library: 'Ionicons', iconName: 'information-circle' },
+  close: { library: 'Ionicons', iconName: 'close' },
+  'chevron-right': { library: 'Ionicons', iconName: 'chevron-forward' },
+  check: { library: 'Ionicons', iconName: 'checkmark' },
+  'arrow-up': { library: 'Ionicons', iconName: 'arrow-up' },
+  'arrow-down': { library: 'Ionicons', iconName: 'arrow-down' },
 };
 
 export function Icon({ name, size = 24, color = colors.textPrimary, style }: IconProps) {

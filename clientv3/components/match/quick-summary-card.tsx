@@ -41,14 +41,14 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
   const topOutcome = sortedOutcomes[0];
 
   return (
-    <View style={styles.container}>
+    <View style={styles.wrapper}>
       <View style={styles.header}>
         <View style={styles.titleRow}>
-          <Icon name="robot" size={24} color={colors.accent} style={{ marginRight: spacing.sm }} />
-          <Text style={styles.title}>AI Tahmin Analizi</Text>
+          <Icon name="robot" size={18} color={colors.accent} style={{ marginRight: spacing.sm }} />
+          <Text style={styles.title}>AI Analiz</Text>
         </View>
         <View style={[styles.confidenceBadge, { backgroundColor: confidenceLevel.color + '20', borderColor: confidenceLevel.color + '40' }]}>
-          <Icon name={confidenceLevel.icon as 'checkmark-circle' | 'information-circle' | 'warning'} size={16} color={confidenceLevel.color} style={{ marginRight: spacing.xs / 2 }} />
+          <Icon name={confidenceLevel.icon as 'checkmark-circle' | 'information-circle' | 'warning'} size={14} color={confidenceLevel.color} style={{ marginRight: spacing.xs / 2 }} />
           <Text style={[styles.confidenceLabel, { color: confidenceLevel.color }]}>
             {confidenceLevel.label}
           </Text>
@@ -58,7 +58,8 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
         </View>
       </View>
 
-      <View style={styles.content}>
+      <View style={styles.container}>
+        <View style={styles.content}>
         <View style={styles.mainPredictionBox}>
           <Text style={styles.mainPredictionLabel}>Ana Tahmin</Text>
           <Text style={styles.mainPredictionValue}>{mainPrediction}</Text>
@@ -128,29 +129,30 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
             <Text style={styles.summary}>{summary}</Text>
           </View>
         )}
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.bgCard,
-    borderRadius: borderRadius.lg,
-    padding: spacing.lg,
+  wrapper: {
     marginBottom: spacing.md,
-    borderWidth: 2,
-    borderColor: colors.accent + '30',
-    ...shadows.elevated,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: spacing.lg,
-    paddingBottom: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+    paddingHorizontal: spacing.xs,
+  },
+  container: {
+    backgroundColor: colors.bgCard,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    borderWidth: 2,
+    borderColor: colors.accent + '30',
+    ...shadows.elevated,
   },
   titleRow: {
     flexDirection: 'row',
@@ -158,9 +160,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    ...typography.h2,
+    ...typography.body,
     color: colors.textPrimary,
     fontWeight: '700',
+    fontSize: 16,
   },
   confidenceBadge: {
     flexDirection: 'row',
@@ -178,7 +181,7 @@ const styles = StyleSheet.create({
   confidenceValue: {
     ...typography.h3,
     fontWeight: '700',
-    fontSize: 20,
+    fontSize: 16,
     marginLeft: spacing.xs,
   },
   content: {

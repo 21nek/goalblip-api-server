@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Switch, Platform } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
 import { Icon } from '@/components/ui/icon';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { getContainerPadding, screenDimensions } from '@/lib/responsive';
@@ -15,10 +15,9 @@ type FilterSectionProps = {
   leagues: LeagueFilter[];
   selectedLeagues: string[];
   onToggleLeague: (league: string) => void;
-  liveOnly: boolean;
-  onLiveOnlyChange: (value: boolean) => void;
   activeFiltersCount: number;
   onClearFilters: () => void;
+  onOpenLeagueModal: () => void;
 };
 
 export const FilterSection = memo(function FilterSection({
@@ -27,12 +26,11 @@ export const FilterSection = memo(function FilterSection({
   leagues,
   selectedLeagues,
   onToggleLeague,
-  liveOnly,
-  onLiveOnlyChange,
   activeFiltersCount,
   onClearFilters,
+  onOpenLeagueModal,
 }: FilterSectionProps) {
-  const ALL_LEAGUES = 'ALL';
+  const styles = getStyles(selectedLeagues.length > 0);
 
   return (
     <View style={styles.container}>
@@ -56,57 +54,35 @@ export const FilterSection = memo(function FilterSection({
         ) : null}
       </View>
 
-      {/* League Chips */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.chipsContainer}
-        style={styles.chipsScroll}
+      {/* League Selection Button */}
+      <TouchableOpacity
+        style={styles.leagueButton}
+        onPress={onOpenLeagueModal}
+        activeOpacity={0.7}
       >
-        <TouchableOpacity
-          style={[styles.chip, !selectedLeagues.length && styles.chipActive]}
-          onPress={() => onToggleLeague(ALL_LEAGUES)}
-          activeOpacity={0.7}
-        >
-          <Icon name="trophy" size={16} color={!selectedLeagues.length ? colors.accent : colors.textTertiary} />
-          <Text style={[styles.chipText, !selectedLeagues.length && styles.chipTextActive]}>
-            Tüm Ligler
-          </Text>
-        </TouchableOpacity>
-        {leagues.map((league) => {
-          const isActive = selectedLeagues.includes(league.name);
-          return (
-            <TouchableOpacity
-              key={league.name}
-              style={[styles.chip, isActive && styles.chipActive]}
-              onPress={() => onToggleLeague(league.name)}
-              activeOpacity={0.7}
-            >
-              <Text 
-                style={[styles.chipText, isActive && styles.chipTextActive]}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {league.name} ({league.total})
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
-
-      {/* Live Toggle and Active Filters */}
-      <View style={styles.footerRow}>
-        <View style={styles.liveToggleRow}>
-          <Text style={styles.liveToggleLabel}>Sadece canlı</Text>
-          <Switch
-            value={liveOnly}
-            onValueChange={onLiveOnlyChange}
-            trackColor={{ false: colors.bgTertiary, true: colors.accent + '80' }}
-            thumbColor={liveOnly ? colors.accent : colors.textTertiary}
-            ios_backgroundColor={colors.bgTertiary}
+        <View style={styles.leagueButtonContent}>
+          <Icon
+            name="trophy"
+            size={20}
+            color={selectedLeagues.length > 0 ? colors.accent : colors.textSecondary}
           />
+          <View style={styles.leagueButtonTextContainer}>
+            <Text style={styles.leagueButtonLabel}>Lig Seç</Text>
+            {selectedLeagues.length > 0 ? (
+              <Text style={styles.leagueButtonCount}>
+                {selectedLeagues.length} lig seçili
+              </Text>
+            ) : (
+              <Text style={styles.leagueButtonSubtext}>Tüm ligler</Text>
+            )}
+          </View>
         </View>
-        {activeFiltersCount > 0 && (
+        <Icon name="chevron-right" size={20} color={colors.textTertiary} />
+      </TouchableOpacity>
+
+      {/* Active Filters */}
+      {activeFiltersCount > 0 && (
+        <View style={styles.footerRow}>
           <View style={styles.activeFiltersRow}>
             {selectedLeagues.slice(0, 2).map((league) => (
               <View key={league} style={styles.activeFilterPill}>
@@ -127,13 +103,13 @@ export const FilterSection = memo(function FilterSection({
               <Text style={styles.clearButtonText}>Temizle</Text>
             </TouchableOpacity>
           </View>
-        )}
-      </View>
+        </View>
+      )}
     </View>
   );
 });
 
-const getStyles = () => {
+const getStyles = (hasSelections: boolean) => {
   const containerPadding = getContainerPadding();
   const isSmall = screenDimensions.isSmall;
   
@@ -181,59 +157,52 @@ const getStyles = () => {
     justifyContent: 'center',
     marginLeft: spacing.sm,
   },
-  chipsScroll: {
-    marginBottom: spacing.md,
-  },
-    chipsContainer: {
-      paddingHorizontal: containerPadding,
-      paddingRight: containerPadding + spacing.md,
-    },
-  chip: {
+  leagueButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: borderRadius.full,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-    marginRight: spacing.sm,
+    justifyContent: 'space-between',
     backgroundColor: colors.bgSecondary,
-    minHeight: 40,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginHorizontal: containerPadding,
+    marginBottom: spacing.md,
+    borderWidth: 1,
+    borderColor: hasSelections ? colors.accent : colors.border,
+    minHeight: 56,
     ...shadows.subtle,
   },
-  chipActive: {
-    borderColor: colors.accent,
-    backgroundColor: colors.accent + '22',
-    borderWidth: 1.5,
+  leagueButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
   },
-    chipText: {
-      ...typography.bodySmall,
-      color: colors.textSecondary,
-      fontWeight: '500',
-      marginLeft: spacing.xs,
-      maxWidth: isSmall ? 120 : 200, // Prevent chips from being too wide
-    },
-  chipTextActive: {
-    color: colors.accent,
+  leagueButtonTextContainer: {
+    marginLeft: spacing.md,
+    flex: 1,
+  },
+  leagueButtonLabel: {
+    ...typography.body,
+    color: colors.textPrimary,
     fontWeight: '600',
+    marginBottom: spacing.xs / 2,
+  },
+  leagueButtonCount: {
+    ...typography.caption,
+    color: colors.accent,
+    fontWeight: '500',
+  },
+  leagueButtonSubtext: {
+    ...typography.caption,
+    color: colors.textTertiary,
   },
     footerRow: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       alignItems: 'center',
       paddingHorizontal: containerPadding,
       paddingTop: spacing.sm,
       flexWrap: 'wrap', // Allow wrapping on small screens
     },
-  liveToggleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  liveToggleLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginRight: spacing.sm,
-  },
   activeFiltersRow: {
     flexDirection: 'row',
     alignItems: 'center',

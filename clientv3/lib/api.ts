@@ -102,7 +102,7 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       throw new Error(
         `İstek zaman aşımına uğradı (${timeoutMs}ms). URL: ${target}\n` +
         `Lütfen kontrol edin:\n` +
-        `1. API sunucusu çalışıyor mu? (http://192.168.137.63:4000)\n` +
+        `1. API sunucusu çalışıyor mu? (http://192.168.1.106:4000)\n` +
         `2. Mobil cihaz ve bilgisayar aynı WiFi ağında mı?\n` +
         `3. Firewall API portunu engelliyor mu? (4000)`
       );

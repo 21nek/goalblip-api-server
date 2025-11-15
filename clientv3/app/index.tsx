@@ -18,6 +18,7 @@ import { Skeleton, SkeletonCard } from '@/components/ui/skeleton';
 import { MatchCard } from '@/components/home/match-card';
 import { LeagueHeader } from '@/components/home/league-header';
 import { FilterSection } from '@/components/home/filter-section';
+import { LeagueSelectionModal } from '@/components/home/league-selection-modal';
 import { useMatches } from '@/hooks/useMatches';
 import { computeLeagueStats } from '@/lib/match-helpers';
 import { colors, spacing, borderRadius, typography } from '@/lib/theme';
@@ -35,8 +36,8 @@ export default function HomeScreen() {
   const [view, setView] = useState<'today' | 'tomorrow'>('today');
   const [search, setSearch] = useState('');
   const [selectedLeagues, setSelectedLeagues] = useState<string[]>([]);
-  const [liveOnly, setLiveOnly] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [leagueModalVisible, setLeagueModalVisible] = useState(false);
 
   const current = view === 'today' ? today : tomorrow;
   const loading = initialLoading && !current;
@@ -62,14 +63,6 @@ export default function HomeScreen() {
       matches = matches.filter((match) => selectedLeagues.includes(match.league || 'Lig Bilinmiyor'));
     }
     
-    // Live filter
-    if (liveOnly) {
-      matches = matches.filter((match) => 
-        match.statusLabel?.toLowerCase().includes('canlı') || 
-        match.statusLabel?.toLowerCase().includes('live')
-      );
-    }
-    
     // Search filter
     if (search.trim()) {
       const term = search.trim().toLowerCase();
@@ -79,7 +72,7 @@ export default function HomeScreen() {
     }
     
     return matches;
-  }, [current?.matches, selectedLeagues, liveOnly, search]);
+  }, [current?.matches, selectedLeagues, search]);
 
   // Group matches by league
   const groupedMatches = useMemo(() => {
@@ -110,7 +103,7 @@ export default function HomeScreen() {
   }, [groupedMatches]);
 
   // Get active filters count
-  const activeFiltersCount = selectedLeagues.length + (liveOnly ? 1 : 0);
+  const activeFiltersCount = selectedLeagues.length;
 
   // Toggle league filter
   const toggleLeague = useCallback((league: string) => {
@@ -134,7 +127,19 @@ export default function HomeScreen() {
   const clearFilters = useCallback(() => {
     setSelectedLeagues([]);
     setSearch('');
-    setLiveOnly(false);
+  }, []);
+
+  // Handle league modal
+  const handleOpenLeagueModal = useCallback(() => {
+    setLeagueModalVisible(true);
+  }, []);
+
+  const handleCloseLeagueModal = useCallback(() => {
+    setLeagueModalVisible(false);
+  }, []);
+
+  const handleSelectAllLeagues = useCallback(() => {
+    setSelectedLeagues([]);
   }, []);
 
   // Lazy load match details for visible matches
@@ -243,14 +248,13 @@ export default function HomeScreen() {
           leagues={leagueCounts}
           selectedLeagues={selectedLeagues}
           onToggleLeague={toggleLeague}
-          liveOnly={liveOnly}
-          onLiveOnlyChange={setLiveOnly}
           activeFiltersCount={activeFiltersCount}
           onClearFilters={clearFilters}
+          onOpenLeagueModal={handleOpenLeagueModal}
         />
       </View>
     </View>
-  ), [view, metaInfo, search, leagueCounts, selectedLeagues, liveOnly, activeFiltersCount]);
+  ), [view, metaInfo, search, leagueCounts, selectedLeagues, activeFiltersCount, handleOpenLeagueModal]);
 
   // Early returns - AFTER all hooks
   if (loading) {
@@ -301,13 +305,13 @@ export default function HomeScreen() {
           <EmptyState
             icon="search"
             title="Maç Bulunamadı"
-            message={
-              search || selectedLeagues.length || liveOnly
-                ? 'Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.'
-                : 'Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!'
-            }
-            action={
-              (search || selectedLeagues.length || liveOnly) && (
+                    message={
+                      search || selectedLeagues.length
+                        ? 'Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.'
+                        : 'Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!'
+                    }
+                    action={
+                      (search || selectedLeagues.length) && (
                 <TouchableOpacity
                   style={styles.retryButton}
                   onPress={clearFilters}
@@ -349,6 +353,17 @@ export default function HomeScreen() {
           ItemSeparatorComponent={() => null}
         />
       )}
+
+      {/* League Selection Modal */}
+      <LeagueSelectionModal
+        visible={leagueModalVisible}
+        onClose={handleCloseLeagueModal}
+        leagues={leagueCounts}
+        selectedLeagues={selectedLeagues}
+        onToggleLeague={toggleLeague}
+        onSelectAll={handleSelectAllLeagues}
+        onClearAll={clearFilters}
+      />
     </AppShell>
   );
 }
