@@ -1,10 +1,12 @@
-import { memo } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, Platform } from 'react-native';
+import { memo, useMemo } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { getContainerPadding, screenDimensions } from '@/lib/responsive';
 
 type LeagueFilter = {
+  key: string;
   name: string;
   total: number;
 };
@@ -30,7 +32,15 @@ export const FilterSection = memo(function FilterSection({
   onClearFilters,
   onOpenLeagueModal,
 }: FilterSectionProps) {
+  const t = useTranslation();
   const styles = getStyles(selectedLeagues.length > 0);
+  const leagueLabelMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    leagues.forEach((league) => {
+      map[league.key] = league.name;
+    });
+    return map;
+  }, [leagues]);
 
   return (
     <View style={styles.container}>
@@ -40,7 +50,7 @@ export const FilterSection = memo(function FilterSection({
           <Icon name="search" size={20} color={colors.textTertiary} />
         </View>
         <TextInput
-          placeholder="Takım veya lig ara..."
+          placeholder={t('filter.searchPlaceholder')}
           placeholderTextColor={colors.textTertiary}
           value={search}
           onChangeText={onSearchChange}
@@ -67,13 +77,13 @@ export const FilterSection = memo(function FilterSection({
             color={selectedLeagues.length > 0 ? colors.accent : colors.textSecondary}
           />
           <View style={styles.leagueButtonTextContainer}>
-            <Text style={styles.leagueButtonLabel}>Lig Seç</Text>
+            <Text style={styles.leagueButtonLabel}>{t('filter.selectLeague')}</Text>
             {selectedLeagues.length > 0 ? (
               <Text style={styles.leagueButtonCount}>
-                {selectedLeagues.length} lig seçili
+                {t('filter.leaguesSelected', { count: selectedLeagues.length })}
               </Text>
             ) : (
-              <Text style={styles.leagueButtonSubtext}>Tüm ligler</Text>
+              <Text style={styles.leagueButtonSubtext}>{t('filter.allLeagues')}</Text>
             )}
           </View>
         </View>
@@ -84,23 +94,23 @@ export const FilterSection = memo(function FilterSection({
       {activeFiltersCount > 0 && (
         <View style={styles.footerRow}>
           <View style={styles.activeFiltersRow}>
-            {selectedLeagues.slice(0, 2).map((league) => (
-              <View key={league} style={styles.activeFilterPill}>
-                <Text style={styles.activeFilterText}>{league}</Text>
-                <TouchableOpacity
-                  onPress={() => onToggleLeague(league)}
-                  style={styles.activeFilterClose}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <Icon name="close-circle" size={14} color={colors.accent} />
-                </TouchableOpacity>
-              </View>
-            ))}
+      {selectedLeagues.slice(0, 2).map((leagueKey) => (
+        <View key={leagueKey} style={styles.activeFilterPill}>
+          <Text style={styles.activeFilterText}>{leagueLabelMap[leagueKey] || leagueKey}</Text>
+          <TouchableOpacity
+            onPress={() => onToggleLeague(leagueKey)}
+            style={styles.activeFilterClose}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Icon name="close-circle" size={14} color={colors.accent} />
+          </TouchableOpacity>
+        </View>
+      ))}
             {activeFiltersCount > 2 && (
               <Text style={styles.moreFiltersText}>+{activeFiltersCount - 2}</Text>
             )}
             <TouchableOpacity onPress={onClearFilters} style={styles.clearButton}>
-              <Text style={styles.clearButtonText}>Temizle</Text>
+              <Text style={styles.clearButtonText}>{t('filter.clearAll')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -245,4 +255,3 @@ const getStyles = (hasSelections: boolean) => {
 };
 
 const styles = getStyles();
-

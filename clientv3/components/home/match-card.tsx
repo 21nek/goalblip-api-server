@@ -1,11 +1,13 @@
 import { memo } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Avatar } from '@/components/ui/avatar';
 import { Icon } from '@/components/ui/icon';
 import { useTeamAssets } from '@/hooks/useTeamAssets';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { formatRecentForm } from '@/lib/match-helpers';
 import { getCardPadding, screenDimensions } from '@/lib/responsive';
+import { getStatusKey, STATUS_TRANSLATION_KEYS, isLiveStatus } from '@/lib/status-labels';
 import type { MatchSummary, MatchDetail } from '@/types/match';
 import { AIProbabilityBars } from './ai-probability-bars';
 
@@ -16,8 +18,13 @@ type MatchCardProps = {
 };
 
 export const MatchCard = memo(function MatchCard({ match, detail, onPress }: MatchCardProps) {
+  const t = useTranslation();
   const assets = useTeamAssets(match.matchId);
-  const isLive = match.statusLabel?.toLowerCase().includes('canlı') || match.statusLabel?.toLowerCase().includes('live');
+  const statusKey = getStatusKey(match.statusLabel);
+  const statusText = statusKey
+    ? t(STATUS_TRANSLATION_KEYS[statusKey])
+    : match.statusLabel || t('match.statusLabels.live');
+  const isLive = isLiveStatus(match.statusLabel);
   const hasScore = detail?.scoreboard?.homeTeam?.score !== null && detail?.scoreboard?.awayTeam?.score !== null;
   
   // Get recent form
@@ -38,11 +45,11 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
             <View style={styles.pulseContainer}>
               <View style={styles.pulseDot} />
             </View>
-            <Text style={styles.liveText}>{match.statusLabel || 'Canlı'}</Text>
+            <Text style={styles.liveText}>{statusText}</Text>
           </View>
         ) : (
           <View style={styles.timeBadge}>
-            <Text style={styles.timeText}>{match.kickoffTime || '--:--'}</Text>
+            <Text style={styles.timeText}>{match.kickoffTimeDisplay || match.kickoffTime || '--:--'}</Text>
           </View>
         )}
         <TouchableOpacity style={styles.bookmarkButton} activeOpacity={0.7}>
@@ -74,7 +81,7 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
               {detail?.scoreboard?.homeTeam?.score ?? 0} - {detail?.scoreboard?.awayTeam?.score ?? 0}
             </Text>
           ) : (
-            <Text style={styles.vs}>vs</Text>
+            <Text style={styles.vs}>{t('match.vs')}</Text>
           )}
         </View>
 
@@ -214,4 +221,3 @@ const getStyles = () => {
     },
   });
 };
-

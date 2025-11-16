@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { ProgressBar } from '@/components/ui/progress-bar';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type Prediction = {
   title?: string | null;
@@ -13,6 +14,8 @@ type PredictionSummaryCardProps = {
 };
 
 export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProps) {
+  const t = useTranslation();
+  
   if (!predictions || predictions.length === 0) {
     return null;
   }
@@ -35,7 +38,7 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tahmin Özeti</Text>
+      <Text style={styles.title}>{t('matchDetail.predictionSummary')}</Text>
       <View style={styles.predictionsList}>
         {predictions.map((prediction, index) => {
           const confidence = prediction.confidence || 0;
@@ -45,7 +48,7 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
           return (
             <View key={index} style={styles.predictionItem}>
               <View style={styles.predictionHeader}>
-                <Text style={styles.predictionTitle}>{prediction.title || 'Tahmin'}</Text>
+                <Text style={styles.predictionTitle}>{prediction.title || t('common.prediction')}</Text>
                 <View style={[styles.confidenceBadge, { backgroundColor: confidenceColor + '20' }]}>
                   <Text style={[styles.confidenceText, { color: confidenceColor }]}>
                     %{confidence.toFixed(0)}
@@ -55,7 +58,7 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
 
               {topOutcome && (
                 <View style={styles.outcomeRow}>
-                  <Text style={styles.outcomeLabel}>Önerilen:</Text>
+                  <Text style={styles.outcomeLabel}>{t('matchDetail.recommended')}</Text>
                   <View style={[styles.outcomeBadge, { backgroundColor: confidenceColor }]}>
                     <Text style={styles.outcomeText}>{topOutcome.label}</Text>
                   </View>

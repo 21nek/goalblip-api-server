@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type TopLeagueCardProps = {
   league: string;
@@ -8,12 +9,16 @@ type TopLeagueCardProps = {
 };
 
 export function TopLeagueCard({ league, total, kickoff }: TopLeagueCardProps) {
+  const t = useTranslation();
+
   return (
     <View style={styles.card}>
       <Text style={styles.league}>{league}</Text>
-      <Text style={styles.total}>{total} maç</Text>
+      <Text style={styles.total}>{t('home.topLeagues.matches', { count: total })}</Text>
       <Text style={styles.kickoff}>
-        {kickoff ? `İlk maç ${kickoff}` : 'Kickoff bekleniyor'}
+        {kickoff
+          ? t('home.topLeagues.firstMatch', { time: kickoff })
+          : t('home.topLeagues.waitingKickoff')}
       </Text>
     </View>
   );
@@ -45,4 +50,3 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
 });
-

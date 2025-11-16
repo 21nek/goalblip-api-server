@@ -3,6 +3,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { SimpleCircularChart } from '@/components/ui/simple-chart';
 import { getCardPadding, screenDimensions } from '@/lib/responsive';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
 
 type FormStatsCardProps = {
@@ -12,6 +13,7 @@ type FormStatsCardProps = {
 };
 
 export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCardProps) {
+  const t = useTranslation();
   const getFormScoreColor = () => {
     if (stats.formScore >= 70) return colors.success;
     if (stats.formScore >= 50) return colors.info;
@@ -21,8 +23,16 @@ export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCard
 
   const getStreakText = () => {
     if (stats.streakCount === 0) return null;
-    const streakType = stats.currentStreak === 'win' ? 'Kazanma' : stats.currentStreak === 'draw' ? 'Beraberlik' : 'Mağlubiyet';
-    return `${stats.streakCount} maç ${streakType} serisi`;
+    const streakType =
+      stats.currentStreak === 'win'
+        ? t('matchDetail.formStatsCard.streakTypes.win')
+        : stats.currentStreak === 'draw'
+        ? t('matchDetail.formStatsCard.streakTypes.draw')
+        : t('matchDetail.formStatsCard.streakTypes.loss');
+    return t('matchDetail.formStatsCard.streakLabel', {
+      count: stats.streakCount,
+      type: streakType,
+    });
   };
 
   return (
@@ -31,7 +41,7 @@ export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCard
         <Text style={styles.teamName}>{teamName}</Text>
         {isHome && (
           <View style={styles.homeBadge}>
-            <Text style={styles.homeBadgeText}>EV</Text>
+            <Text style={styles.homeBadgeText}>{t('matchDetail.formStatsCard.homeBadge')}</Text>
           </View>
         )}
       </View>
@@ -39,9 +49,9 @@ export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCard
       <View style={styles.statsChartContainer}>
         <SimpleCircularChart
           data={[
-            { label: 'Galibiyet', value: stats.winRate, color: colors.success },
-            { label: 'Beraberlik', value: stats.drawRate, color: colors.warning },
-            { label: 'Mağlubiyet', value: stats.lossRate, color: colors.error },
+            { label: t('matchDetail.formStats.winRate'), value: stats.winRate, color: colors.success },
+            { label: t('matchDetail.formStats.drawRate'), value: stats.drawRate, color: colors.warning },
+            { label: t('matchDetail.formStats.lossRate'), value: stats.lossRate, color: colors.error },
           ]}
           size={120}
           showLabels={true}
@@ -50,7 +60,7 @@ export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCard
 
       <View style={styles.formScoreContainer}>
         <View style={styles.formScoreHeader}>
-          <Text style={styles.formScoreLabel}>Form Skoru</Text>
+          <Text style={styles.formScoreLabel}>{t('matchDetail.formStatsCard.formScoreLabel')}</Text>
           <Text style={[styles.formScoreValue, { color: getFormScoreColor() }]}>
             {stats.formScore.toFixed(0)}/100
           </Text>
@@ -65,15 +75,15 @@ export function FormStatsCard({ teamName, stats, isHome = false }: FormStatsCard
 
       <View style={styles.goalsRow}>
         <View style={styles.goalStat}>
-          <Text style={styles.goalLabel}>Gol Ort.</Text>
+          <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgGoals')}</Text>
           <Text style={styles.goalValue}>{stats.avgGoalsFor.toFixed(1)}</Text>
         </View>
         <View style={styles.goalStat}>
-          <Text style={styles.goalLabel}>Yenilen Gol</Text>
+          <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgConceded')}</Text>
           <Text style={styles.goalValue}>{stats.avgGoalsAgainst.toFixed(1)}</Text>
         </View>
         <View style={styles.goalStat}>
-          <Text style={styles.goalLabel}>Gol Farkı</Text>
+          <Text style={styles.goalLabel}>{t('matchDetail.formStatsCard.goalDifference')}</Text>
           <Text style={[styles.goalValue, { color: stats.goalDifference >= 0 ? colors.success : colors.error }]}>
             {stats.goalDifference >= 0 ? '+' : ''}{stats.goalDifference.toFixed(1)}
           </Text>
@@ -189,4 +199,3 @@ const getStyles = () => {
 };
 
 const styles = getStyles();
-

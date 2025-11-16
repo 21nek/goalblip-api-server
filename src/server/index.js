@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import os from 'os';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
+import { findTimezoneById } from '../config/timezones.js';
+import { formatUtcForTimezone } from '../utils/datetime.js';
+import { normalizeLocale } from '../config/locales.js';
+import { isValidView } from '../scrapers/golsinyali/i18n/views.js';
 import {
   loadMatchDetail,
   loadMatchListByDate,
@@ -22,6 +26,24 @@ app.use(
   }),
 );
 
+app.use((req, _res, next) => {
+  const locale =
+    req.query.locale ||
+    (typeof req.body?.locale === 'string' ? req.body.locale : undefined) ||
+    'tr';
+  const view =
+    req.query.view ||
+    (typeof req.body?.view === 'string' ? req.body.view : undefined) ||
+    undefined;
+  const timezone = req.query.timezone || req.body?.timezone;
+  console.info('[api]', req.method, req.path, {
+    locale,
+    view,
+    timezone,
+  });
+  next();
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -33,20 +55,31 @@ app.get('/api/health', (req, res) => {
 app.get('/api/matches', async (req, res, next) => {
   try {
     const { date, view = 'today', refresh, locale = 'tr' } = req.query;
+    const normalizedLocale = normalizeLocale(typeof locale === 'string' ? locale : 'tr');
+    if (!isValidView(view)) {
+      res.status(400).json({ error: `Geçersiz view parametresi: ${view}` });
+      return;
+    }
+    const timezoneParam =
+      typeof req.query.timezone === 'string' && req.query.timezone.trim()
+        ? req.query.timezone.trim()
+        : null;
+    const tzPreset = findTimezoneById(timezoneParam);
+    const targetTimezone = tzPreset.tz;
     let payload = null;
 
     if (refresh === 'true') {
-      const scrape = await scrapeMatchList({ locale, view });
+      const scrape = await scrapeMatchList({ locale: normalizedLocale, view });
       await saveMatchList(scrape);
       payload = scrape;
     } else if (date) {
-      payload = await loadMatchListByDate(date);
+      payload = await loadMatchListByDate(date, { locale: normalizedLocale });
     } else {
-      payload = await loadMatchListByView(view);
+      payload = await loadMatchListByView(view, { locale: normalizedLocale });
     }
 
     if (!payload && !date) {
-      const fresh = await scrapeMatchList({ locale, view });
+      const fresh = await scrapeMatchList({ locale: normalizedLocale, view });
       await saveMatchList(fresh);
       payload = fresh;
     }
@@ -56,7 +89,26 @@ app.get('/api/matches', async (req, res, next) => {
       return;
     }
 
-    res.json(payload);
+    const matches = Array.isArray(payload.matches)
+      ? payload.matches.map((match) => {
+          const kickoffDisplay =
+            match.kickoffIsoUtc && targetTimezone
+              ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
+              : match.kickoffTime ?? null;
+          return {
+            ...match,
+            kickoffTimeDisplay: kickoffDisplay,
+          };
+        })
+      : [];
+
+    res.json({
+      ...payload,
+      locale: payload.locale || normalizedLocale,
+      timezone: targetTimezone,
+      timezoneId: tzPreset.id,
+      matches,
+    });
   } catch (error) {
     next(error);
   }
@@ -65,12 +117,18 @@ app.get('/api/matches', async (req, res, next) => {
 app.post('/api/matches/scrape', async (req, res, next) => {
   try {
     const { view = 'today', locale = 'tr', headless = 'new' } = req.body || {};
-    const list = await scrapeMatchList({ view, locale, headless });
+    const normalizedLocale = normalizeLocale(locale);
+    if (!isValidView(view)) {
+      res.status(400).json({ error: `Geçersiz view parametresi: ${view}` });
+      return;
+    }
+    const list = await scrapeMatchList({ view, locale: normalizedLocale, headless });
     await saveMatchList(list);
     res.status(201).json({
       message: 'Maç listesi güncellendi.',
       view: list.view,
       dataDate: list.dataDate,
+      locale: list.locale,
       total: list.totalMatches,
     });
   } catch (error) {
@@ -80,12 +138,42 @@ app.post('/api/matches/scrape', async (req, res, next) => {
 
 app.get('/api/matches/:date', async (req, res, next) => {
   try {
-    const payload = await loadMatchListByDate(req.params.date);
+    const locale = normalizeLocale(
+      typeof req.query.locale === 'string' ? req.query.locale : 'tr',
+    );
+    const timezoneParam =
+      typeof req.query.timezone === 'string' && req.query.timezone.trim()
+        ? req.query.timezone.trim()
+        : null;
+    const tzPreset = findTimezoneById(timezoneParam);
+    const targetTimezone = tzPreset.tz;
+
+    const payload = await loadMatchListByDate(req.params.date, { locale });
     if (!payload) {
       res.status(404).json({ error: 'Belirtilen tarihe ait veri bulunamadı.' });
       return;
     }
-    res.json(payload);
+
+    const matches = Array.isArray(payload.matches)
+      ? payload.matches.map((match) => {
+          const kickoffDisplay =
+            match.kickoffIsoUtc && targetTimezone
+              ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
+              : match.kickoffTime ?? null;
+          return {
+            ...match,
+            kickoffTimeDisplay: kickoffDisplay,
+          };
+        })
+      : [];
+
+    res.json({
+      ...payload,
+      locale: payload.locale || locale,
+      timezone: targetTimezone,
+      timezoneId: tzPreset.id,
+      matches,
+    });
   } catch (error) {
     next(error);
   }
@@ -94,13 +182,40 @@ app.get('/api/matches/:date', async (req, res, next) => {
 app.get('/api/match/:matchId', async (req, res, next) => {
   try {
     const { matchId } = req.params;
-    const locale = req.query.locale || 'tr';
+    const locale = normalizeLocale(req.query.locale || 'tr');
+    const timezoneParam =
+      typeof req.query.timezone === 'string' && req.query.timezone.trim()
+        ? req.query.timezone.trim()
+        : null;
+    const tzPreset = findTimezoneById(timezoneParam);
+    const targetTimezone = tzPreset.tz;
     const requestedDate = typeof req.query.date === 'string' ? req.query.date : undefined;
     const preferredView = typeof req.query.view === 'string' ? req.query.view : undefined;
-    const detail = await loadMatchDetail(matchId, { dataDate: requestedDate, view: preferredView });
+    const detail = await loadMatchDetail(matchId, {
+      dataDate: requestedDate,
+      view: preferredView,
+      locale,
+    });
 
     if (detail) {
-      res.json(detail);
+      const enriched = { ...detail };
+      if (enriched.scoreboard && enriched.scoreboard.kickoffIsoUtc && targetTimezone) {
+        const displayTime = formatUtcForTimezone(
+          enriched.scoreboard.kickoffIsoUtc,
+          targetTimezone,
+        );
+        enriched.scoreboard = {
+          ...enriched.scoreboard,
+          kickoffTimeDisplay: displayTime,
+        };
+      }
+
+      res.json({
+        ...enriched,
+        timezone: targetTimezone,
+        timezoneId: tzPreset.id,
+        locale: enriched.locale || locale,
+      });
       return;
     }
 
@@ -171,7 +286,8 @@ app.post('/api/match/:matchId/scrape', async (req, res, next) => {
 async function findMatchMetadata(matchId) {
   const views = ['today', 'tomorrow'];
   for (const view of views) {
-    const list = await loadMatchListByView(view);
+    // Varsayılan olarak TR listesi üzerinden metadata bakıyoruz.
+    const list = await loadMatchListByView(view, { locale: 'tr' });
     const match =
       list?.matches?.find(
         (item) => Number(item.matchId) === Number(matchId) || String(item.matchId) === String(matchId),
@@ -205,7 +321,7 @@ app.use((err, req, res, next) => {
 });
 
 ensureDataDirectories().then(() => {
-  app.listen(PORT, HOST, () => {
+  const server = app.listen(PORT, HOST, () => {
     const hostDisplay = HOST === '0.0.0.0' || HOST === '::' ? 'localhost' : HOST;
     const baseUrl = `http://${hostDisplay}:${PORT}`;
     const networkInterfaces = os.networkInterfaces();
@@ -238,5 +354,9 @@ ensureDataDirectories().then(() => {
       `   curl -X POST ${baseUrl}/api/matches/scrape -H 'Content-Type: application/json' -d '{"view":"today"}'`,
     );
     console.log(`   curl ${baseUrl}/api/match/<id>`);
+  });
+
+  server.on('close', () => {
+    console.log('🛑 HTTP server closed');
   });
 });

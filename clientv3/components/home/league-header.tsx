@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, typography } from '@/lib/theme';
 import { getContainerPadding, screenDimensions } from '@/lib/responsive';
 
@@ -9,13 +10,14 @@ type LeagueHeaderProps = {
 };
 
 export const LeagueHeader = memo(function LeagueHeader({ league }: LeagueHeaderProps) {
+  const t = useTranslation();
   const styles = getStyles();
   
   return (
     <View style={styles.container}>
       <View style={styles.accentBar} />
       <Icon name="trophy" size={20} color={colors.accent} style={styles.icon} />
-      <Text style={styles.leagueName}>{league || 'Lig Bilinmiyor'}</Text>
+      <Text style={styles.leagueName}>{league || t('common.unknownLeague')}</Text>
     </View>
   );
 });

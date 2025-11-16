@@ -10,10 +10,12 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { getContainerPadding, screenDimensions } from '@/lib/responsive';
 
 type LeagueFilter = {
+  key: string;
   name: string;
   total: number;
 };
@@ -37,6 +39,7 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
   onSelectAll,
   onClearAll,
 }: LeagueSelectionModalProps) {
+  const t = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const styles = getStyles();
 
@@ -44,9 +47,7 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
   const filteredLeagues = useMemo(() => {
     if (!searchQuery.trim()) return leagues;
     const query = searchQuery.trim().toLowerCase();
-    return leagues.filter((league) =>
-      league.name.toLowerCase().includes(query)
-    );
+    return leagues.filter((league) => league.name.toLowerCase().includes(query));
   }, [leagues, searchQuery]);
 
   const allSelected = selectedLeagues.length === 0;
@@ -70,7 +71,7 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
             >
               <Icon name="close" size={24} color={colors.textPrimary} />
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>Lig Seç</Text>
+            <Text style={styles.headerTitle}>{t('filter.selectLeague')}</Text>
             <View style={styles.closeButton} />
           </View>
 
@@ -78,7 +79,7 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
           <View style={styles.searchContainer}>
             <Icon name="search" size={20} color={colors.textTertiary} style={styles.searchIcon} />
             <TextInput
-              placeholder="Lig ara..."
+              placeholder={t('filter.searchPlaceholder')}
               placeholderTextColor={colors.textTertiary}
               value={searchQuery}
               onChangeText={setSearchQuery}
@@ -103,7 +104,7 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
               style={[styles.actionButton, allSelected && styles.actionButtonActive]}
             >
               <Text style={[styles.actionButtonText, allSelected && styles.actionButtonTextActive]}>
-                Tümü
+                {t('filter.all')}
               </Text>
             </TouchableOpacity>
             {hasSelections && (
@@ -111,12 +112,12 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
                 onPress={onClearAll}
                 style={styles.actionButton}
               >
-                <Text style={styles.actionButtonText}>Temizle</Text>
+                <Text style={styles.actionButtonText}>{t('filter.clearAll')}</Text>
               </TouchableOpacity>
             )}
             {hasSelections && (
               <Text style={styles.selectionCount}>
-                {selectedLeagues.length} lig seçili
+                {t('filter.leaguesSelected', { count: selectedLeagues.length })}
               </Text>
             )}
           </View>
@@ -125,14 +126,14 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
         {/* League List */}
         <FlatList
           data={filteredLeagues}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item.key}
           contentContainerStyle={styles.listContent}
           renderItem={({ item }) => {
-            const isSelected = selectedLeagues.includes(item.name);
+            const isSelected = selectedLeagues.includes(item.key);
             return (
               <TouchableOpacity
                 style={[styles.leagueItem, isSelected && styles.leagueItemSelected]}
-                onPress={() => onToggleLeague(item.name)}
+                onPress={() => onToggleLeague(item.key)}
                 activeOpacity={0.7}
               >
                 <View style={styles.leagueItemContent}>
@@ -149,13 +150,13 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
                     >
                       {item.name}
                     </Text>
-                    <Text style={styles.leagueCount}>{item.total} maç</Text>
+                    <Text style={styles.leagueCount}>
+                      {item.total} {t('filter.matches')}
+                    </Text>
                   </View>
                 </View>
                 <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
-                  {isSelected && (
-                    <Icon name="check" size={16} color={colors.accent} />
-                  )}
+                  {isSelected && <Icon name="check" size={16} color={colors.accent} />}
                 </View>
               </TouchableOpacity>
             );
@@ -163,9 +164,9 @@ export const LeagueSelectionModal = memo(function LeagueSelectionModal({
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
               <Icon name="search" size={48} color={colors.textTertiary} />
-              <Text style={styles.emptyText}>Lig bulunamadı</Text>
+              <Text style={styles.emptyText}>{t('home.noMatches')}</Text>
               <Text style={styles.emptySubtext}>
-                Arama kriterlerinizi değiştirip tekrar deneyin
+                {t('home.noMatchesFiltered')}
               </Text>
             </View>
           }
@@ -260,7 +261,6 @@ const getStyles = () => {
     actionRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: spacing.sm,
     },
     actionButton: {
       paddingHorizontal: spacing.md,
@@ -269,6 +269,7 @@ const getStyles = () => {
       backgroundColor: colors.bgSecondary,
       borderWidth: 1,
       borderColor: colors.border,
+      marginRight: spacing.sm,
     },
     actionButtonActive: {
       backgroundColor: colors.accent + '22',
@@ -367,4 +368,3 @@ const getStyles = () => {
     },
   });
 };
-

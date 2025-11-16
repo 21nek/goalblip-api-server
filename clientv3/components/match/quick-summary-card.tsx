@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type Outcome = {
   label?: string | null;
@@ -17,6 +18,8 @@ type QuickSummaryCardProps = {
 };
 
 export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, summary, outcomes }: QuickSummaryCardProps) {
+  const t = useTranslation();
+  
   const getConfidenceColor = () => {
     if (confidence >= 75) return colors.success;
     if (confidence >= 60) return colors.info;
@@ -30,11 +33,11 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
     : [];
 
   const getConfidenceLevel = () => {
-    if (confidence >= 85) return { label: 'Çok Yüksek Güven', color: colors.success, icon: 'checkmark-circle' };
-    if (confidence >= 75) return { label: 'Yüksek Güven', color: colors.success, icon: 'checkmark-circle' };
-    if (confidence >= 65) return { label: 'İyi Güven', color: colors.info, icon: 'information-circle' };
-    if (confidence >= 55) return { label: 'Orta Güven', color: colors.warning, icon: 'warning' };
-    return { label: 'Düşük Güven', color: colors.error, icon: 'warning' };
+    if (confidence >= 85) return { label: t('matchDetail.confidence.veryHigh'), color: colors.success, icon: 'checkmark-circle' };
+    if (confidence >= 75) return { label: t('matchDetail.confidence.high'), color: colors.success, icon: 'checkmark-circle' };
+    if (confidence >= 65) return { label: t('matchDetail.confidence.good'), color: colors.info, icon: 'information-circle' };
+    if (confidence >= 55) return { label: t('matchDetail.confidence.medium'), color: colors.warning, icon: 'warning' };
+    return { label: t('matchDetail.confidence.low'), color: colors.error, icon: 'warning' };
   };
 
   const confidenceLevel = getConfidenceLevel();
@@ -45,7 +48,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
       <View style={styles.header}>
         <View style={styles.titleRow}>
           <Icon name="robot" size={18} color={colors.accent} style={{ marginRight: spacing.sm }} />
-          <Text style={styles.title}>AI Analiz</Text>
+          <Text style={styles.title}>{t('matchDetail.aiAnalysis')}</Text>
         </View>
         <View style={[styles.confidenceBadge, { backgroundColor: confidenceLevel.color + '20', borderColor: confidenceLevel.color + '40' }]}>
           <Icon name={confidenceLevel.icon as 'checkmark-circle' | 'information-circle' | 'warning'} size={14} color={confidenceLevel.color} style={{ marginRight: spacing.xs / 2 }} />
@@ -61,7 +64,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
       <View style={styles.container}>
         <View style={styles.content}>
         <View style={styles.mainPredictionBox}>
-          <Text style={styles.mainPredictionLabel}>Ana Tahmin</Text>
+          <Text style={styles.mainPredictionLabel}>{t('matchDetail.mainPrediction')}</Text>
           <Text style={styles.mainPredictionValue}>{mainPrediction}</Text>
         </View>
 
@@ -69,7 +72,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
           <View style={styles.recommendedBox}>
             <View style={styles.recommendedHeader}>
               <Icon name="star" size={18} color={colors.warning} style={{ marginRight: spacing.xs }} />
-              <Text style={styles.recommendedLabel}>Önerilen Seçim</Text>
+              <Text style={styles.recommendedLabel}>{t('matchDetail.recommendedPick')}</Text>
             </View>
             <View style={styles.recommendedContent}>
               <View style={[styles.recommendedBadge, { backgroundColor: confidenceLevel.color }]}>
@@ -77,7 +80,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
               </View>
               <View style={styles.recommendedStats}>
                 <Text style={styles.recommendedPercent}>%{topOutcome.valuePercent?.toFixed(1) || '0'}</Text>
-                <Text style={styles.recommendedSubtext}>olasılık</Text>
+                <Text style={styles.recommendedSubtext}>{t('matchDetail.probability')}</Text>
               </View>
             </View>
           </View>
@@ -85,7 +88,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
 
         {sortedOutcomes.length > 1 && (
           <View style={styles.outcomesContainer}>
-            <Text style={styles.outcomesLabel}>Tüm Olasılıklar</Text>
+            <Text style={styles.outcomesLabel}>{t('matchDetail.allProbabilities')}</Text>
             {sortedOutcomes.map((outcome, index) => {
               const percentage = outcome.valuePercent || 0;
               const isHighest = index === 0;
@@ -100,7 +103,7 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
                     {isHighest && (
                       <View style={[styles.highestBadge, { backgroundColor: outcomeColor + '20' }]}>
                         <Icon name="checkmark-circle" size={14} color={outcomeColor} style={{ marginRight: spacing.xs / 2 }} />
-                        <Text style={[styles.highestText, { color: outcomeColor }]}>En Yüksek</Text>
+                        <Text style={[styles.highestText, { color: outcomeColor }]}>{t('matchDetail.highest')}</Text>
                       </View>
                     )}
                   </View>

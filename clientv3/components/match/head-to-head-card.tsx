@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type HeadToHeadMatch = {
   date?: string | null;
@@ -16,13 +17,14 @@ type HeadToHeadCardProps = {
 };
 
 export function HeadToHeadCard({ matches, currentHomeTeam, currentAwayTeam }: HeadToHeadCardProps) {
+  const t = useTranslation();
   if (!matches || matches.length === 0) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Geçmiş Karşılaşmalar</Text>
+      <Text style={styles.title}>{t('matchDetail.headToHead')}</Text>
       <View style={styles.matchesContainer}>
         {matches.map((match, index) => {
           // Parse score to determine winner
@@ -144,4 +146,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

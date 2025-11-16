@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
 
 type RiskFactor = {
@@ -20,6 +21,7 @@ type RiskAnalysisCardProps = {
 };
 
 export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) {
+  const t = useTranslation();
   const analyzeRisk = (team: { name: string; stats: FormStats }, isHome: boolean): RiskFactor[] => {
     const factors: RiskFactor[] = [];
 
@@ -27,12 +29,15 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (team.stats.lossRate >= 60) {
       factors.push({
         type: 'high',
-        message: `${team.name} son 5 maçta %${team.stats.lossRate.toFixed(0)} mağlubiyet oranıyla zorlanıyor.`,
+        message: t('matchDetail.riskAnalysisCard.factors.highLossRate', {
+          team: team.name,
+          lossRate: team.stats.lossRate.toFixed(0),
+        }),
       });
     } else if (team.stats.lossRate >= 40) {
       factors.push({
         type: 'medium',
-        message: `${team.name} son maçlarda form düşüşü yaşıyor.`,
+        message: t('matchDetail.riskAnalysisCard.factors.mediumLossRate', { team: team.name }),
       });
     }
 
@@ -40,7 +45,10 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (team.stats.currentStreak === 'loss' && team.stats.streakCount >= 3) {
       factors.push({
         type: 'high',
-        message: `${team.name} ${team.stats.streakCount} maçtır kaybediyor.`,
+        message: t('matchDetail.riskAnalysisCard.factors.lossStreak', {
+          team: team.name,
+          streak: team.stats.streakCount,
+        }),
       });
     }
 
@@ -48,7 +56,10 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (team.stats.avgGoalsFor < 0.8) {
       factors.push({
         type: 'high',
-        message: `${team.name} son maçlarda gol atma konusunda zorlanıyor (maç başına ${team.stats.avgGoalsFor.toFixed(1)} gol).`,
+        message: t('matchDetail.riskAnalysisCard.factors.lowScoring', {
+          team: team.name,
+          goalsFor: team.stats.avgGoalsFor.toFixed(1),
+        }),
       });
     }
 
@@ -56,7 +67,10 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (team.stats.avgGoalsAgainst > 2) {
       factors.push({
         type: 'medium',
-        message: `${team.name} son maçlarda çok gol yiyor (maç başına ${team.stats.avgGoalsAgainst.toFixed(1)} gol).`,
+        message: t('matchDetail.riskAnalysisCard.factors.highConceding', {
+          team: team.name,
+          goalsAgainst: team.stats.avgGoalsAgainst.toFixed(1),
+        }),
       });
     }
 
@@ -64,12 +78,15 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (team.stats.formScore < 30) {
       factors.push({
         type: 'high',
-        message: `${team.name} düşük form skoruna sahip (${team.stats.formScore.toFixed(0)}/100).`,
+        message: t('matchDetail.riskAnalysisCard.factors.lowFormScore', {
+          team: team.name,
+          formScore: team.stats.formScore.toFixed(0),
+        }),
       });
     } else if (team.stats.formScore < 50) {
       factors.push({
         type: 'medium',
-        message: `${team.name} orta seviye form skoruna sahip.`,
+        message: t('matchDetail.riskAnalysisCard.factors.mediumFormScore', { team: team.name }),
       });
     }
 
@@ -77,7 +94,7 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
     if (!isHome && team.stats.formScore < 40) {
       factors.push({
         type: 'medium',
-        message: `${team.name} deplasman performansı zayıf.`,
+        message: t('matchDetail.riskAnalysisCard.factors.weakAway', { team: team.name }),
       });
     }
 
@@ -104,14 +121,14 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
   };
 
   const getRiskLabel = (level: 'high' | 'medium' | 'low') => {
-    if (level === 'high') return 'Yüksek Risk';
-    if (level === 'medium') return 'Orta Risk';
-    return 'Düşük Risk';
+    if (level === 'high') return t('matchDetail.riskAnalysisCard.riskLevel.high');
+    if (level === 'medium') return t('matchDetail.riskAnalysisCard.riskLevel.medium');
+    return t('matchDetail.riskAnalysisCard.riskLevel.low');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Risk Analizi</Text>
+      <Text style={styles.title}>{t('matchDetail.riskAnalysisCard.title')}</Text>
 
       <View style={styles.teamsRow}>
         <View style={styles.teamRisk}>
@@ -137,7 +154,7 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
               ))}
             </View>
           ) : (
-            <Text style={styles.noRiskText}>Belirgin risk faktörü yok</Text>
+            <Text style={styles.noRiskText}>{t('matchDetail.riskAnalysisCard.noRisk')}</Text>
           )}
         </View>
 
@@ -164,7 +181,7 @@ export function RiskAnalysisCard({ homeTeam, awayTeam }: RiskAnalysisCardProps) 
               ))}
             </View>
           ) : (
-            <Text style={styles.noRiskText}>Belirgin risk faktörü yok</Text>
+            <Text style={styles.noRiskText}>{t('matchDetail.riskAnalysisCard.noRisk')}</Text>
           )}
         </View>
       </View>
@@ -241,4 +258,3 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
 });
-

@@ -19,6 +19,13 @@ export async function ensureDataDirectories(options = {}) {
   await fs.mkdir(MATCHES_DIR, { recursive: true });
   await fs.mkdir(MATCHES_ALIAS_DIR, { recursive: true });
 
+  const listLocales = options.listLocales ?? [];
+  for (const locale of listLocales) {
+    if (locale) {
+      await fs.mkdir(path.join(LISTS_DIR, locale), { recursive: true });
+    }
+  }
+
   const matchDates = options.matchDates ?? [];
   for (const date of matchDates) {
     if (date) {
@@ -31,6 +38,14 @@ export async function ensureDataDirectories(options = {}) {
     const aliasDir = getMatchAliasDir(view);
     if (aliasDir) {
       await fs.mkdir(aliasDir, { recursive: true });
+    }
+  }
+
+  const matchLocales = options.matchLocales ?? [];
+  for (const locale of matchLocales) {
+    if (locale) {
+      await fs.mkdir(path.join(MATCHES_DIR, locale), { recursive: true });
+      await fs.mkdir(path.join(MATCHES_ALIAS_DIR, locale), { recursive: true });
     }
   }
 }
@@ -53,32 +68,47 @@ export async function readJsonFile(targetPath) {
   }
 }
 
-export function getListPathByDate(date) {
+export function getListPathByDate(date, { locale } = {}) {
+  if (locale) {
+    return path.join(LISTS_DIR, locale, `${date}.json`);
+  }
   return path.join(LISTS_DIR, `${date}.json`);
 }
 
-export function getListAliasPath(view) {
+export function getListAliasPath(view, { locale } = {}) {
   const alias = view === 'tomorrow' ? 'upcoming' : 'latest';
+  if (locale) {
+    return path.join(LISTS_DIR, locale, `${alias}.json`);
+  }
   return path.join(LISTS_DIR, `${alias}.json`);
 }
 
-function getMatchAliasDir(view) {
+function getMatchAliasDir(view, { locale } = {}) {
   if (!view) return null;
   const aliasFolder = MATCH_ALIAS_MAP[view] ?? view;
+  if (locale) {
+    return path.join(MATCHES_ALIAS_DIR, locale, aliasFolder);
+  }
   return path.join(MATCHES_ALIAS_DIR, aliasFolder);
 }
 
-export function getMatchPath(matchId, { sample = false, dataDate } = {}) {
+export function getMatchPath(matchId, { sample = false, dataDate, locale } = {}) {
   const prefix = sample ? 'sample-' : '';
   const filename = `${prefix}${matchId}.json`;
+  if (dataDate && locale) {
+    return path.join(MATCHES_DIR, locale, dataDate, filename);
+  }
   if (dataDate) {
     return path.join(MATCHES_DIR, dataDate, filename);
+  }
+  if (locale) {
+    return path.join(MATCHES_DIR, locale, filename);
   }
   return path.join(MATCHES_DIR, filename);
 }
 
-export function getMatchAliasPath(matchId, view) {
-  const aliasDir = getMatchAliasDir(view);
+export function getMatchAliasPath(matchId, view, { locale } = {}) {
+  const aliasDir = getMatchAliasDir(view, { locale });
   if (!aliasDir) {
     return null;
   }

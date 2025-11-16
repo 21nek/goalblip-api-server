@@ -13,6 +13,8 @@ import {
 
 import { extractHighlightPredictions } from '@/lib/match-helpers';
 import { useMatches } from '@/hooks/useMatches';
+import { useLocale } from '@/providers/locale-provider';
+import { useTranslation } from '@/hooks/useTranslation';
 import { AppShell } from '@/components/layout/app-shell';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { EmptyState } from '@/components/ui/empty-state';
@@ -39,8 +41,71 @@ import {
 } from '@/lib/match-analysis';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { getContainerPadding, getCardPadding, screenDimensions } from '@/lib/responsive';
+import { getStatusKey, STATUS_TRANSLATION_KEYS } from '@/lib/status-labels';
 import type { MatchDetail } from '@/types/match';
 
+const UPCOMING_ROLE_KEY_MAP: Record<string, string> = {
+  home: 'matchDetail.upcomingMatchTags.home',
+  ev: 'matchDetail.upcomingMatchTags.home',
+  evsahibi: 'matchDetail.upcomingMatchTags.home',
+  local: 'matchDetail.upcomingMatchTags.home',
+  casa: 'matchDetail.upcomingMatchTags.home',
+  host: 'matchDetail.upcomingMatchTags.home',
+  away: 'matchDetail.upcomingMatchTags.away',
+  dep: 'matchDetail.upcomingMatchTags.away',
+  deplasman: 'matchDetail.upcomingMatchTags.away',
+  visitante: 'matchDetail.upcomingMatchTags.away',
+  visitor: 'matchDetail.upcomingMatchTags.away',
+  neutral: 'matchDetail.upcomingMatchTags.neutral',
+  neutr: 'matchDetail.upcomingMatchTags.neutral',
+  form: 'matchDetail.upcomingMatchTags.form',
+  formda: 'matchDetail.upcomingMatchTags.form',
+};
+
+const DEFAULT_UPCOMING_ROLE_KEY = 'matchDetail.upcomingMatchTags.neutral';
+
+function getUpcomingRoleLabel(role: string | null | undefined, t: (key: string, params?: Record<string, string | number>) => string) {
+  if (!role) return t(DEFAULT_UPCOMING_ROLE_KEY);
+  const normalized = role
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z]/g, '');
+  if (!normalized) return t(DEFAULT_UPCOMING_ROLE_KEY);
+  const key = UPCOMING_ROLE_KEY_MAP[normalized];
+  return key ? t(key) : t(DEFAULT_UPCOMING_ROLE_KEY);
+}
+
+function formatDateTime(value: string | null | undefined, locale: string, timezone?: string) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  try {
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'short',
+      timeStyle: 'short',
+      timeZone: timezone || undefined,
+    }).format(date);
+  } catch {
+    return date.toLocaleString();
+  }
+}
+
+function localizeScoreboardInfo(entry: string, t: (key: string, params?: Record<string, string | number>) => string) {
+  const normalized = entry
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  if (normalized.includes('guncel') || normalized.includes('update')) {
+    const parts = entry.split(/[:\-]/);
+    const suffix = parts.length > 1 ? parts.slice(1).join(':').trim() : '';
+    const label = t('match.lastUpdate');
+    return suffix ? `${label}: ${suffix}` : label;
+  }
+  return entry;
+}
 type TeamInfo = { name?: string | null; logo?: string | null; score?: number | null };
 type Outcome = { label?: string | null; valuePercent?: number | null };
 type OddsRow = { label?: string | null; values?: string[] | null };
@@ -48,6 +113,8 @@ type OddsRow = { label?: string | null; values?: string[] | null };
 export default function MatchDetailScreen() {
   const { matchId, date, view } = useLocalSearchParams<{ matchId: string; date?: string; view?: string }>();
   const router = useRouter();
+  const { locale, timezone } = useLocale();
+  const t = useTranslation();
   const { getMatchDetail, getOrFetchMatchDetail, getPendingMatch } = useMatches();
   const numericId = matchId ? Number(matchId) : null;
   const dateParam = date || undefined;
@@ -65,7 +132,7 @@ export default function MatchDetailScreen() {
 
   const fetchDetail = useCallback(async (showLoading = true, retryCount = 0) => {
     if (!numericId) {
-      setError('Geçersiz maç ID');
+      setError(t('matchDetail.invalidMatchId'));
       setLoading(false);
       return;
     }
@@ -101,12 +168,12 @@ export default function MatchDetailScreen() {
       }
     } catch (err) {
       console.error('[MatchDetail] Fetch failed:', numericId, err);
-      const errorMessage = err instanceof Error ? err.message : 'Maç detayı alınamadı.';
+      const errorMessage = err instanceof Error ? err.message : t('match.detailError');
       
       // Cache'de varsa onu göster
       if (cachedDetail) {
         setDetail(cachedDetail);
-        setError('Güncel veri alınamadı, önbellekten gösteriliyor.');
+        setError(t('matchDetail.cacheMessage'));
       } else {
         setError(errorMessage);
       }
@@ -114,7 +181,7 @@ export default function MatchDetailScreen() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [numericId, dateParam, viewParam, getOrFetchMatchDetail, cachedDetail]);
+  }, [numericId, dateParam, viewParam, getOrFetchMatchDetail, cachedDetail, t]);
 
   // No neighbor prefetching - queue handles requests when user actually navigates to them
 
@@ -147,11 +214,14 @@ export default function MatchDetailScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numericId, dateParam, viewParam]); // matchId, date veya view değiştiğinde yeniden fetch et
 
-  const predictions = extractHighlightPredictions(detail, 5);
-  const scoreboard = detail?.scoreboard;
-  const detailPredictions = detail?.detailPredictions ?? [];
-  const oddsTrends = detail?.oddsTrends ?? [];
-  const upcoming = detail?.upcomingMatches ?? [];
+const predictions = extractHighlightPredictions(detail, 5, t);
+const scoreboard = detail?.scoreboard;
+const detailPredictions = detail?.detailPredictions ?? [];
+const oddsTrends = detail?.oddsTrends ?? [];
+const upcoming = detail?.upcomingMatches ?? [];
+const formattedLastUpdatedAt = detail?.lastUpdatedAt
+  ? formatDateTime(detail.lastUpdatedAt, locale, timezone)
+  : null;
 
   return (
     <AppShell
@@ -167,7 +237,7 @@ export default function MatchDetailScreen() {
             onRefresh={() => fetchDetail(false)}
             tintColor={colors.accent}
             colors={[colors.accent]}
-            title="Yenileniyor..."
+            title={t('home.refreshing')}
             titleColor={colors.textTertiary}
           />
         }
@@ -184,8 +254,8 @@ export default function MatchDetailScreen() {
           <View style={getStyles().pendingContainer}>
             <EmptyState
               icon="robot"
-              title="Analiz Ediliyor"
-              message={`${pendingInfo.message}\n\nSıra: #${pendingInfo.queuePosition}\n\nAnaliz tamamlandığında otomatik olarak güncellenecek.`}
+              title={t('match.pendingAnalysis')}
+              message={t('match.pendingMessage', { position: pendingInfo.queuePosition })}
               action={
                 <View style={{ alignItems: 'center' }}>
                   <TouchableOpacity
@@ -193,14 +263,14 @@ export default function MatchDetailScreen() {
                     onPress={() => fetchDetail(false)}
                     activeOpacity={0.7}
                   >
-                    <Text style={getStyles().retryText}>Yenile</Text>
+                    <Text style={getStyles().retryText}>{t('match.refresh')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[getStyles().retryButton, getStyles().backButton]}
                     onPress={() => router.back()}
                     activeOpacity={0.7}
                   >
-                    <Text style={getStyles().backButtonText}>Geri Dön</Text>
+                    <Text style={getStyles().backButtonText}>{t('common.back')}</Text>
                   </TouchableOpacity>
                 </View>
               }
@@ -210,8 +280,8 @@ export default function MatchDetailScreen() {
           <View style={getStyles().errorBox}>
             <EmptyState
               icon="error"
-              title="Maç Detayı Yüklenemedi"
-              message={`${error}\n\nLütfen internet bağlantınızı kontrol edin ve tekrar deneyin.`}
+              title={t('match.detailError')}
+              message={`${error}\n\n${t('match.detailErrorMessage')}`}
               action={
                 <View style={{ alignItems: 'center' }}>
                   <TouchableOpacity
@@ -225,24 +295,24 @@ export default function MatchDetailScreen() {
                         if (response) {
                           setDetail(response);
                         } else {
-                          setError('Maç detayı bulunamadı.');
+                          setError(t('matchDetail.detailNotFound'));
                         }
                       } catch (err) {
-                        setError((err as Error).message || 'Yeniden yükleme başarısız.');
+                        setError((err as Error).message || t('matchDetail.reloadFailed'));
                       } finally {
                         setLoading(false);
                       }
                     }}
                     activeOpacity={0.7}
                   >
-                    <Text style={getStyles().retryText}>Tekrar Dene</Text>
+                    <Text style={getStyles().retryText}>{t('common.retry')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[getStyles().retryButton, getStyles().backButton]}
                     onPress={() => router.back()}
                     activeOpacity={0.7}
                   >
-                    <Text style={getStyles().backButtonText}>Geri Dön</Text>
+                    <Text style={getStyles().backButtonText}>{t('common.back')}</Text>
                   </TouchableOpacity>
                 </View>
               }
@@ -254,27 +324,31 @@ export default function MatchDetailScreen() {
             {detail.dataDate && (
               <View style={getStyles().dataDateBadge}>
                 <Text style={getStyles().dataDateText}>
-                  Veri Tarihi: {new Date(detail.dataDate).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  {detail.viewContext && ` • ${detail.viewContext === 'today' ? 'Bugün' : detail.viewContext === 'tomorrow' ? 'Yarın' : 'Manuel'}`}
+                  {t('match.dataDate')}: {new Date(detail.dataDate).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {detail.viewContext && ` • ${detail.viewContext === 'today' ? t('matchDetail.today') : detail.viewContext === 'tomorrow' ? t('matchDetail.tomorrow') : t('matchDetail.manual')}`}
                 </Text>
               </View>
             )}
             <View style={getStyles().scoreboard}>
-              <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">{scoreboard?.leagueLabel || 'Lig Bilgisi'}</Text>
+              <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">{scoreboard?.leagueLabel || t('matchDetail.leagueInfo')}</Text>
               {scoreboard?.statusBadges?.length ? (
                 <View style={getStyles().badgeRow}>
-                  {scoreboard.statusBadges.map((badge) => (
-                    <Text key={badge} style={getStyles().statusBadge} numberOfLines={1}>
-                      {badge}
-                    </Text>
-                  ))}
+                  {scoreboard.statusBadges.map((badge, idx) => {
+                    const badgeKey = getStatusKey(badge);
+                    const badgeText = badgeKey ? t(STATUS_TRANSLATION_KEYS[badgeKey]) : badge;
+                    return (
+                      <Text key={`${badge}-${idx}`} style={getStyles().statusBadge} numberOfLines={1}>
+                        {badgeText}
+                      </Text>
+                    );
+                  })}
                 </View>
               ) : null}
               <View style={getStyles().teamsRow}>
                 <TeamBlock team={scoreboard?.homeTeam} align="left" />
                 <View style={getStyles().vsContainer}>
                   <View style={getStyles().vsBadge}>
-                    <Text style={getStyles().vsText}>VS</Text>
+                    <Text style={getStyles().vsText}>{t('match.vs').toUpperCase()}</Text>
                   </View>
                   {scoreboard?.halftimeScore ? (
                     <Text style={getStyles().halftimeScore}>{scoreboard.halftimeScore}</Text>
@@ -286,14 +360,19 @@ export default function MatchDetailScreen() {
                 <View style={getStyles().infoRow}>
                   {scoreboard.info.map((info, idx) => (
                     <Text key={idx} style={[getStyles().infoText, idx > 0 && { marginLeft: spacing.xs }]} numberOfLines={1}>
-                      {info}
+                      {localizeScoreboardInfo(info ?? '', t)}
                     </Text>
                   ))}
                 </View>
               ) : (
                 <Text style={getStyles().kickoff} numberOfLines={2} ellipsizeMode="tail">
-                  {scoreboard?.kickoff || detail.lastUpdatedAt || 'Kickoff yakında'}
-                  {scoreboard?.kickoffTimezone ? ` • ${scoreboard.kickoffTimezone}` : ''}
+                  {scoreboard?.kickoffTimeDisplay ||
+                    scoreboard?.kickoff ||
+                    formattedLastUpdatedAt ||
+                    t('matchDetail.scoreboard.kickoffFallback')}
+                  {scoreboard?.kickoffTimezone
+                    ? ` • ${t('matchDetail.scoreboard.timezoneLabel', { timezone: scoreboard.kickoffTimezone })}`
+                    : ''}
                 </Text>
               )}
             </View>
@@ -306,9 +385,10 @@ export default function MatchDetailScreen() {
                 homeForm,
                 awayForm,
                 scoreboard?.homeTeam?.name,
-                scoreboard?.awayTeam?.name
+                scoreboard?.awayTeam?.name,
+                t,
               );
-              const quickSummary = getQuickSummary(detail.detailPredictions, comparison);
+              const quickSummary = getQuickSummary(detail.detailPredictions, comparison, t);
               
               return quickSummary ? (
                 <View style={getStyles().section}>
@@ -327,7 +407,8 @@ export default function MatchDetailScreen() {
                 detail.headToHead,
                 detail.detailPredictions,
                 scoreboard?.homeTeam?.name,
-                scoreboard?.awayTeam?.name
+                scoreboard?.awayTeam?.name,
+                t
               );
               return insights.length > 0 ? (
                 <View style={getStyles().section}>
@@ -344,7 +425,8 @@ export default function MatchDetailScreen() {
                 homeForm,
                 awayForm,
                 scoreboard?.homeTeam?.name,
-                scoreboard?.awayTeam?.name
+                scoreboard?.awayTeam?.name,
+                t,
               );
               return comparison ? (
                 <View style={getStyles().section}>
@@ -361,8 +443,8 @@ export default function MatchDetailScreen() {
 
               const homeStats = calculateFormStats(homeForm.matches);
               const awayStats = calculateFormStats(awayForm.matches);
-              const homeTeamName = scoreboard?.homeTeam?.name || 'Ev Sahibi';
-              const awayTeamName = scoreboard?.awayTeam?.name || 'Deplasman';
+              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 
               return (
                 <View style={getStyles().section}>
@@ -382,8 +464,8 @@ export default function MatchDetailScreen() {
 
               const homeStats = calculateFormStats(homeForm.matches);
               const awayStats = calculateFormStats(awayForm.matches);
-              const homeTeamName = scoreboard?.homeTeam?.name || 'Ev Sahibi';
-              const awayTeamName = scoreboard?.awayTeam?.name || 'Deplasman';
+              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 
               return (
                 <View style={getStyles().section}>
@@ -396,11 +478,19 @@ export default function MatchDetailScreen() {
             })()}
 
             {/* Prediction Summary */}
-            {detailPredictions.length > 0 && (
+            {detailPredictions.length > 0 ? (
               <View style={getStyles().section}>
                 <PredictionSummaryCard predictions={detailPredictions} />
               </View>
-            )}
+            ) : locale !== 'tr' ? (
+              <View style={getStyles().section}>
+                <EmptyState 
+                  icon="information-circle" 
+                  title={t('matchDetail.predictionsNotAvailable')} 
+                  message={t('matchDetail.predictionsNotAvailableMessage')} 
+                />
+              </View>
+            ) : null}
 
             {/* Goal Analysis */}
             {(() => {
@@ -410,8 +500,8 @@ export default function MatchDetailScreen() {
 
               const homeStats = calculateFormStats(homeForm.matches);
               const awayStats = calculateFormStats(awayForm.matches);
-              const homeTeamName = scoreboard?.homeTeam?.name || 'Ev Sahibi';
-              const awayTeamName = scoreboard?.awayTeam?.name || 'Deplasman';
+              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 
               // Find Over/Under prediction
               const overUnderPrediction = detailPredictions.find(
@@ -437,8 +527,8 @@ export default function MatchDetailScreen() {
 
               const homeStats = calculateFormStats(homeForm.matches);
               const awayStats = calculateFormStats(awayForm.matches);
-              const homeTeamName = scoreboard?.homeTeam?.name || 'Ev Sahibi';
-              const awayTeamName = scoreboard?.awayTeam?.name || 'Deplasman';
+              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 
               return (
                 <View style={getStyles().section}>
@@ -451,7 +541,7 @@ export default function MatchDetailScreen() {
             })()}
 
             <View style={getStyles().section}>
-              <Text style={getStyles().sectionTitle}>Detaylı Tahminler</Text>
+              <Text style={getStyles().sectionTitle}>{t('matchDetail.detailedPredictions')}</Text>
               {detailPredictions.length ? (
                 detailPredictions.map((prediction) => (
                   <PredictionDetail
@@ -462,16 +552,20 @@ export default function MatchDetailScreen() {
                   />
                 ))
               ) : (
-                <EmptyState icon="empty" title="Detaylı Analiz Yok" message="Bu maç için detaylı tahmin analizi henüz hazır değil." />
+                <EmptyState icon="empty" title={t('matchDetail.noDetailedAnalysis')} message={t('matchDetail.noDetailedAnalysisMessage')} />
               )}
             </View>
 
             {detail.recentForm && detail.recentForm.length > 0 && (
               <View style={getStyles().section}>
-                <Text style={getStyles().sectionTitle}>Form İstatistikleri</Text>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.formStats')}</Text>
                 {detail.recentForm.map((form, index) => {
                   const stats = calculateFormStats(form.matches || []);
-                  const teamName = form.title?.replace(/📈\s*/, '').replace(/\s*-\s*Son Form/, '').trim() || `Takım ${index + 1}`;
+                  const teamName =
+                    form.title
+                      ?.replace(/📈\s*/, '')
+                      .replace(/\s*-\s*Son Form/, '')
+                      .trim() || t('matchDetail.teams.formFallback', { index: index + 1 });
                   return (
                     <FormStatsCard
                       key={index}
@@ -486,11 +580,11 @@ export default function MatchDetailScreen() {
 
             {detail.recentForm && detail.recentForm.length > 0 && (
               <View style={getStyles().section}>
-                <Text style={getStyles().sectionTitle}>Son Form Detayları</Text>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.recentForm')}</Text>
                 {detail.recentForm.map((form, index) => (
                   <RecentFormCard
                     key={index}
-                    title={form.title || 'Son Form'}
+                    title={form.title || t('matchDetail.recentFormCard.titleFallback')}
                     matches={form.matches || []}
                   />
                 ))}
@@ -509,11 +603,11 @@ export default function MatchDetailScreen() {
 
             {oddsTrends.length ? (
               <View style={getStyles().section}>
-                <Text style={getStyles().sectionTitle}>Oran Trend Analizi</Text>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.oddsTrends')}</Text>
                 {oddsTrends.map((trend, idx) => (
                   <OddsTrendCard
                     key={`${trend.title}-${idx}`}
-                    title={trend.title || 'Oran Trendleri'}
+                    title={trend.title || t('matchDetail.oddsTrends')}
                     cards={trend.cards || []}
                   />
                 ))}
@@ -522,40 +616,60 @@ export default function MatchDetailScreen() {
 
             {upcoming.length ? (
               <View style={getStyles().section}>
-                <Text style={getStyles().sectionTitle}>Yaklaşan Maçlar</Text>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.upcomingMatches')}</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                   {upcoming.map((team, idx) => (
                     <View key={`${team.team}-${idx}`} style={getStyles().upcomingCard}>
                       <Text style={getStyles().predictionTitle} numberOfLines={1} ellipsizeMode="tail">
-                        {team.team} • {team.role}
+                        {(team.team || t('common.unknown')) + ' • ' + getUpcomingRoleLabel(team.role, t)}
                       </Text>
-                      {team.matches?.map((match, matchIdx) => (
-                        <View key={`${match?.opponent}-${matchIdx}`} style={getStyles().upcomingRow}>
-                          <Text style={getStyles().upcomingOpponent} numberOfLines={1}>{match?.opponent}</Text>
-                          <Text style={getStyles().upcomingMeta} numberOfLines={1}>{match?.competition}</Text>
-                          <Text style={getStyles().upcomingMeta} numberOfLines={1}>{match?.dateText}</Text>
-                        </View>
-                      ))}
+                      {team.matches?.length ? (
+                        team.matches.map((match, matchIdx) => (
+                          <View key={`${match?.opponent}-${matchIdx}`} style={getStyles().upcomingRow}>
+                            <Text style={getStyles().upcomingOpponent} numberOfLines={1}>
+                              {match?.opponent || t('common.unknown')}
+                            </Text>
+                            <Text style={getStyles().upcomingMeta} numberOfLines={1}>
+                              {match?.competition || ''}
+                            </Text>
+                            <Text style={getStyles().upcomingMeta} numberOfLines={1}>
+                              {match?.dateText || ''}
+                            </Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text style={getStyles().upcomingMeta}>
+                          {t('matchDetail.upcomingMatchesEmpty')}
+                        </Text>
+                      )}
                     </View>
                   ))}
                 </ScrollView>
               </View>
-            ) : null}
+            ) : (
+              <View style={getStyles().section}>
+                <EmptyState
+                  icon="information-circle"
+                  title={t('matchDetail.upcomingMatches')}
+                  message={t('matchDetail.upcomingMatchesEmpty')}
+                />
+              </View>
+            )}
 
             <View style={getStyles().section}>
-              <Text style={getStyles().sectionTitle}>Yerel Bilgi</Text>
+              <Text style={getStyles().sectionTitle}>{t('matchDetail.localInfo')}</Text>
               <View style={getStyles().metaRow}>
-                <Text style={getStyles().metaLabel}>Son Güncelleme</Text>
-                <Text style={getStyles().metaValue} numberOfLines={1}>{detail.lastUpdatedAt || '—'}</Text>
+                <Text style={getStyles().metaLabel}>{t('match.lastUpdate')}</Text>
+                <Text style={getStyles().metaValue} numberOfLines={1}>{formattedLastUpdatedAt || '—'}</Text>
               </View>
               <View style={getStyles().metaRow}>
-                <Text style={getStyles().metaLabel}>Veri Kaynağı</Text>
-                <Text style={getStyles().metaValue}>GoalBlip Scout</Text>
+                <Text style={getStyles().metaLabel}>{t('match.dataSource')}</Text>
+                <Text style={getStyles().metaValue}>{t('match.dataSourceValue')}</Text>
               </View>
             </View>
           </>
         ) : (
-          <Text style={getStyles().empty}>Maç verisi alınamadı.</Text>
+          <Text style={getStyles().empty}>{t('match.detailNotFound')}</Text>
         )}
       </ScrollView>
     </AppShell>
@@ -563,7 +677,8 @@ export default function MatchDetailScreen() {
 }
 
 function TeamBlock({ team, align }: { team?: TeamInfo; align: 'left' | 'right' }) {
-  const name = team?.name || 'Bilinmiyor';
+  const t = useTranslation();
+  const name = team?.name || t('common.unknown');
   const score = team?.score ?? null;
   const styles = getStyles();
   const isSmall = screenDimensions.isSmall;
@@ -588,10 +703,13 @@ function PredictionDetail({
   outcomes?: Outcome[];
 }) {
   const styles = getStyles();
+  const t = useTranslation();
   return (
     <View style={styles.detailedPrediction}>
       <View style={styles.detailedHeader}>
-        <Text style={styles.predictionTitle} numberOfLines={1} ellipsizeMode="tail">{title || 'Tahmin'}</Text>
+        <Text style={styles.predictionTitle} numberOfLines={1} ellipsizeMode="tail">
+          {title || t('common.prediction')}
+        </Text>
         {confidence ? (
           <View style={styles.confidenceBadge}>
             <Text style={styles.predictionConfidence}>%{confidence}</Text>
@@ -601,7 +719,7 @@ function PredictionDetail({
       {outcomes?.map((outcome, idx) => (
         <ProgressBar
           key={`${outcome?.label}-${idx}`}
-          label={outcome?.label || 'Bilinmiyor'}
+          label={outcome?.label || t('common.unknown')}
           value={outcome?.valuePercent ?? 0}
           max={100}
           showValue={true}
@@ -1072,4 +1190,3 @@ const getStyles = () => {
 };
 
 const styles = getStyles();
-

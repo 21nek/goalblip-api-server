@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { KeyInsight } from '@/lib/match-analysis';
 
 type KeyInsightsCardProps = {
@@ -8,6 +9,7 @@ type KeyInsightsCardProps = {
 };
 
 export function KeyInsightsCard({ insights }: KeyInsightsCardProps) {
+  const t = useTranslation();
   if (!insights || insights.length === 0) {
     return null;
   }
@@ -32,7 +34,7 @@ export function KeyInsightsCard({ insights }: KeyInsightsCardProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Önemli Notlar</Text>
+      <Text style={styles.title}>{t('matchDetail.keyInsights')}</Text>
       <View style={styles.insightsList}>
         {insights.map((insight, index) => (
           <View
@@ -88,4 +90,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-

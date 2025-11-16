@@ -6,6 +6,8 @@ import {
   DEFAULT_VIEWPORT,
   MATCH_LIST_PATH,
 } from './constants.js';
+import { normalizeLocale } from '../../config/locales.js';
+import { buildHeadingConfig } from './i18n/headings.js';
 
 function buildDetailUrl(locale, matchId, slug) {
   const safeLocale = (locale || 'tr').toString().trim().replace(/^\/+|\/+$|\s+/g, '') || 'tr';
@@ -43,9 +45,11 @@ export async function scrapeMatchDetail(options = {}) {
     throw new Error('matchId parametresi zorunludur.');
   }
 
+  const normalizedLocale = normalizeLocale(locale);
   const fallbackSlug =
     slug || createMatchSlug(homeTeamName, awayTeamName) || createMatchSlugFromId(matchId);
-  const targetUrl = buildDetailUrl(locale, matchId, fallbackSlug);
+  const targetUrl = buildDetailUrl(normalizedLocale, matchId, fallbackSlug);
+  const headingConfig = buildHeadingConfig(normalizedLocale);
 
   const browser = await puppeteer.launch({ headless });
 
@@ -59,7 +63,7 @@ export async function scrapeMatchDetail(options = {}) {
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
     await page.waitForSelector('main', { timeout: navigationTimeoutMs });
 
-    const detail = await page.evaluate(async () => {
+    const detail = await page.evaluate(async (headingConfig) => {
       const text = (node) => (node?.textContent || '').replace(/\s+/g, ' ').trim();
       const toNumber = (value) => {
         if (value === null || value === undefined) {
@@ -69,10 +73,17 @@ export async function scrapeMatchDetail(options = {}) {
         return match ? Number(match[0]) : null;
       };
 
-      const findHeading = (query) => {
-        const lower = query.toLowerCase();
-        return Array.from(document.querySelectorAll('h1, h2, h3')).find((node) =>
-          text(node).toLowerCase().includes(lower),
+      const findHeading = (candidates) => {
+        const texts = Array.isArray(candidates) ? candidates : [candidates].filter(Boolean);
+        const lowered = texts.map((value) => value.toString().toLowerCase());
+        if (!lowered.length) {
+          return null;
+        }
+        return (
+          Array.from(document.querySelectorAll('h1, h2, h3')).find((node) => {
+            const content = text(node).toLowerCase();
+            return lowered.some((needle) => needle && content.includes(needle));
+          }) || null
         );
       };
 
@@ -203,6 +214,7 @@ export async function scrapeMatchDetail(options = {}) {
             const kickoffText = kickoffTextRaw
               ? kickoffTextRaw.replace(/^[^0-9A-Za-z]+/, '').trim()
               : null;
+            const kickoffIsoUtc = sportsEvent?.startDate || null;
 
             return {
               leagueLabel: text(scoreboardHeader?.querySelector('.text-gray-300')),
@@ -225,6 +237,7 @@ export async function scrapeMatchDetail(options = {}) {
               info: infoChips,
               kickoff: kickoffText || null,
               kickoffTimezone: kickoffTimezone || null,
+              kickoffIsoUtc: kickoffIsoUtc || null,
             };
           })()
         : null;
@@ -284,8 +297,8 @@ export async function scrapeMatchDetail(options = {}) {
         };
       };
 
-      const extractCards = (headingText, parser) => {
-        const heading = findHeading(headingText);
+      const extractCards = (headingTexts, parser) => {
+        const heading = findHeading(headingTexts);
         const grid = findGridAfterHeading(heading);
         if (!grid) {
           return [];
@@ -295,8 +308,14 @@ export async function scrapeMatchDetail(options = {}) {
           .filter(Boolean);
       };
 
-      const highlightPredictions = extractCards('Öne Çıkan Tahminler', extractHighlightCard);
-      const detailPredictions = extractCards('Detaylı Tahminler', extractDetailedCard);
+      const highlightPredictions = extractCards(
+        headingConfig?.highlight ?? ['Öne Çıkan Tahminler'],
+        extractHighlightCard,
+      );
+      const detailPredictions = extractCards(
+        headingConfig?.detailed ?? ['Detaylı Tahminler'],
+        extractDetailedCard,
+      );
 
       const extractTableRows = (table) => {
         if (!table) return [];
@@ -413,10 +432,12 @@ export async function scrapeMatchDetail(options = {}) {
       const extractHeadToHead = () => {
         const headingNode =
           Array.from(document.querySelectorAll('h3, h4')).find((node) =>
-            /(karşılıklı maçlar|head to head)/i.test(text(node)),
+            /(karşılıklı maçlar|head to head|encuentros directos|enfrentamientos)/i.test(text(node)),
           ) ||
           Array.from(document.querySelectorAll('h3, h4')).find((node) =>
-            /(son \d+ karşılaşma|karşılaşma özeti)/i.test(text(node)),
+            /(son \d+ karşılaşma|karşılaşma özeti|last \d+ matches|match summary|resumen de partidos|últimos \d+ encuentros)/i.test(
+              text(node),
+            ),
           );
         if (!headingNode) {
           return null;
@@ -478,7 +499,7 @@ export async function scrapeMatchDetail(options = {}) {
       };
 
       const extractOddsSection = () => {
-        const heading = findHeading('Oran Trend Analizi');
+        const heading = findHeading(headingConfig?.odds ?? ['Oran Trend Analizi']);
         if (!heading) {
           return [];
         }
@@ -522,32 +543,42 @@ export async function scrapeMatchDetail(options = {}) {
       const oddsTrends = extractOddsSection();
 
       const extractUpcomingMatches = () => {
-        const heading = findHeading('Gelecek MaÃ§lar');
+        const heading = findHeading(headingConfig?.upcoming ?? ['Gelecek Maçlar']);
         if (!heading) {
           return [];
         }
         const container = heading.closest('.space-y-6') || heading.parentElement?.parentElement;
-        const grid = container?.querySelector('.grid');
+        const grid = container?.querySelector('.grid') || container;
         if (!grid) {
           return [];
         }
-        return Array.from(grid.children).map((column) => {
-          const matches = Array.from(column.querySelectorAll('.group.relative')).map((card) => {
-            const footer = card.querySelector('.flex.items-center.justify-between.pt-3');
-            const footerSpans = footer
-              ? Array.from(footer.querySelectorAll('span')).map((span) => text(span))
-              : [];
-            return {
-              badge: text(card.querySelector('.inline-flex')),
-              opponent: text(card.querySelector('h4')),
-              competition: text(card.querySelector('p.text-xs')),
-              dateText: footerSpans[0] || null,
-              tag: footerSpans[1] || null,
-            };
-          });
+        const columns = Array.from(grid.children).filter((child) => {
+          const title = text(child.querySelector('h3'));
+          return Boolean(title);
+        });
+        return columns.map((column) => {
+          const matches = Array.from(column.querySelectorAll('.group.relative, li, article')).map(
+            (card) => {
+              const footer =
+                card.querySelector('.flex.items-center.justify-between.pt-3') ||
+                card.querySelector('.flex.items-center.justify-between') ||
+                card.querySelector('.flex.items-center.gap-2') ||
+                card.querySelector('.flex.items-center');
+              const footerSpans = footer
+                ? Array.from(footer.querySelectorAll('span')).map((span) => text(span))
+                : [];
+              return {
+                badge: text(card.querySelector('.inline-flex, .px-2.py-1, .rounded-full')),
+                opponent: text(card.querySelector('h4, h5, h6')),
+                competition: text(card.querySelector('p.text-xs, p.text-sm')),
+                dateText: footerSpans[0] || null,
+                tag: footerSpans[1] || null,
+              };
+            },
+          );
           return {
             team: text(column.querySelector('h3')),
-            role: text(column.querySelector('p.text-xs')),
+            role: text(column.querySelector('p.text-xs, p.text-sm')),
             matches,
           };
         });
@@ -567,7 +598,7 @@ export async function scrapeMatchDetail(options = {}) {
         target.click();
         for (let attempt = 0; attempt < 15; attempt += 1) {
           const hasSections = Array.from(document.querySelectorAll('h3, h4')).some((node) =>
-            /Form|Karşılaşma|Head/i.test((node.textContent || '').trim()),
+            /Form|Karşılaşma|Head|Encuentro|Partido/i.test((node.textContent || '').trim()),
           );
           if (hasSections) {
             recentForm = extractFormColumns() || recentForm;
@@ -587,7 +618,10 @@ export async function scrapeMatchDetail(options = {}) {
       );
       let lastUpdated = null;
       if (footerMeta) {
-        const match = footerMeta.match(/G[üu]ncelleme\s*:\s*([0-9.: ]+)/i);
+        const match =
+          footerMeta.match(/G[üu]ncelleme\s*:\s*([0-9.: ]+)/i) ||
+          footerMeta.match(/Update\s*:\s*([0-9.: ]+)/i) ||
+          footerMeta.match(/Actualizaci[oó]n\s*:\s*([0-9.: ]+)/i);
         if (match) {
           lastUpdated = match[1]?.trim() || null;
         }
@@ -610,7 +644,7 @@ export async function scrapeMatchDetail(options = {}) {
         },
         lastUpdatedAt: lastUpdated,
       };
-    });
+    }, headingConfig);
 
     return {
       locale,

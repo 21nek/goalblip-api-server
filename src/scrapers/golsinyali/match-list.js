@@ -6,6 +6,9 @@ import {
   DEFAULT_VIEWPORT,
   MATCH_LIST_PATH,
 } from './constants.js';
+import { localeToPathSegment, normalizeLocale } from '../../config/locales.js';
+import { ensureView, isValidView } from './i18n/views.js';
+import { toUtcFromLocal } from '../../utils/datetime.js';
 
 const SELECTORS = {
   scroller:
@@ -18,10 +21,6 @@ SELECTORS.card = `${SELECTORS.list} > div > button`;
 const DEFAULT_SCROLL_DELAY_MS = 120;
 const MAX_SCROLL_ATTEMPTS = 400;
 const TIME_ZONE = 'Europe/Istanbul';
-const VIEW_LABELS = {
-  today: 'bugün',
-  tomorrow: 'yarın',
-};
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -37,11 +36,12 @@ export async function scrapeMatchList(options = {}) {
     view = 'today',
   } = options;
 
-  if (!VIEW_LABELS[view]) {
-    throw new Error(`Geçersiz 'view' parametresi: ${view}. Desteklenen değerler: ${Object.keys(VIEW_LABELS).join(', ')}`);
+  if (!isValidView(view)) {
+    throw new Error(`Geçersiz 'view' parametresi: ${view}. Desteklenen değerler: today, tomorrow`);
   }
 
-  const targetUrl = buildMatchListUrl(locale);
+  const normalizedLocale = normalizeLocale(locale);
+  const targetUrl = buildMatchListUrl(normalizedLocale);
   const browser = await puppeteer.launch({ headless });
 
   try {
@@ -53,18 +53,20 @@ export async function scrapeMatchList(options = {}) {
 
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
     await page.waitForSelector(SELECTORS.card, { timeout: navigationTimeoutMs });
-    await ensureView(page, view);
+    await ensureView(page, view, normalizedLocale);
 
+    const dataDate = computeDataDate(view);
     const matches = await harvestMatches(page, {
       scrollDelayMs,
       maxScrolls,
       logger,
+      dataDate,
     });
 
     return {
       view,
-      dataDate: computeDataDate(view),
-      locale,
+      dataDate,
+      locale: normalizedLocale,
       url: targetUrl,
       scrapedAt: new Date().toISOString(),
       totalMatches: matches.length,
@@ -75,7 +77,7 @@ export async function scrapeMatchList(options = {}) {
   }
 }
 
-async function harvestMatches(page, { scrollDelayMs, maxScrolls, logger }) {
+async function harvestMatches(page, { scrollDelayMs, maxScrolls, logger, dataDate }) {
   const seen = new Map();
   let scrollAttempts = 0;
   let stagnantIterations = 0;
@@ -86,7 +88,7 @@ async function harvestMatches(page, { scrollDelayMs, maxScrolls, logger }) {
 
     visibleMatches.forEach((match, index) => {
       const key = match.matchId ?? fallbackKey(match, index);
-      const normalized = normalizeMatch(match);
+      const normalized = normalizeMatch(match, { dataDate });
 
       if (seen.has(key)) {
         const existing = seen.get(key);
@@ -209,11 +211,17 @@ async function scrollList(page) {
   }, SELECTORS.scroller);
 }
 
-function normalizeMatch(match) {
+function normalizeMatch(match, { dataDate }) {
+  const kickoffTime = textContentValue(match.kickoffTime);
+  const kickoffIsoUtc =
+    dataDate && kickoffTime ? toUtcFromLocal(dataDate, kickoffTime, TIME_ZONE) : null;
+
   return {
     matchId: match.matchId ? Number(match.matchId) : null,
     league: textContentValue(match.league),
-    kickoffTime: textContentValue(match.kickoffTime),
+    kickoffTime,
+    kickoffIsoUtc,
+    kickoffTimezone: TIME_ZONE,
     statusLabel: textContentValue(match.statusLabel),
     homeTeam: textContentValue(match.homeTeam),
     homeSideCode: textContentValue(match.homeSideCode),
@@ -239,23 +247,9 @@ function fallbackKey(match, index) {
 }
 
 function buildMatchListUrl(locale) {
-  const safeLocale = (locale || 'tr').toString().trim().replace(/^\/+|\/+$|\s+/g, '') || 'tr';
-  return `${BASE_URL}/${safeLocale}/${MATCH_LIST_PATH}`;
-}
-
-async function ensureView(page, view) {
-  if (view === 'today') {
-    return;
-  }
-  const label = VIEW_LABELS[view];
-  await page.evaluate((buttonLabel) => {
-    const normalized = buttonLabel.toLowerCase();
-    const candidates = Array.from(document.querySelectorAll('aside button, div button'));
-    const target = candidates.find((btn) => btn.textContent?.trim().toLowerCase().includes(normalized));
-    target?.click();
-  }, label);
-  // allow UI to update dataset
-  await sleep(1200);
+  const safeSegment = localeToPathSegment(locale).replace(/^\/+|\/+$|\s+/g, '');
+  const finalSegment = safeSegment || 'tr';
+  return `${BASE_URL}/${finalSegment}/${MATCH_LIST_PATH}`;
 }
 
 function computeDataDate(view) {

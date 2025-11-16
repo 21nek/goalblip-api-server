@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { TeamComparison } from '@/lib/match-analysis';
 
 type TeamComparisonCardProps = {
@@ -7,13 +8,14 @@ type TeamComparisonCardProps = {
 };
 
 export function TeamComparisonCard({ comparison }: TeamComparisonCardProps) {
+  const t = useTranslation();
   const getAdvantageText = () => {
     if (comparison.homeAdvantage > 15) {
-      return `${comparison.homeTeam.name} belirgin avantajlı`;
+      return t('matchDetail.teamComparisonCard.advantage.home', { team: comparison.homeTeam.name });
     } else if (comparison.homeAdvantage < -15) {
-      return `${comparison.awayTeam.name} belirgin avantajlı`;
+      return t('matchDetail.teamComparisonCard.advantage.away', { team: comparison.awayTeam.name });
     } else {
-      return 'İki takım da dengeli';
+      return t('matchDetail.teamComparisonCard.advantage.balanced');
     }
   };
 
@@ -25,30 +27,34 @@ export function TeamComparisonCard({ comparison }: TeamComparisonCardProps) {
   };
 
   const getPredictionText = () => {
-    if (comparison.prediction === 'home') return 'Ev Sahibi';
-    if (comparison.prediction === 'away') return 'Deplasman';
-    if (comparison.prediction === 'draw') return 'Beraberlik';
-    return 'Dengeli';
+    if (comparison.prediction === 'home') return t('matchDetail.teamComparisonCard.predictionValues.home');
+    if (comparison.prediction === 'away') return t('matchDetail.teamComparisonCard.predictionValues.away');
+    if (comparison.prediction === 'draw') return t('matchDetail.teamComparisonCard.predictionValues.draw');
+    return t('matchDetail.teamComparisonCard.predictionValues.balanced');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Takım Karşılaştırması</Text>
+      <Text style={styles.title}>{t('matchDetail.teamComparison')}</Text>
 
       <View style={styles.comparisonRow}>
         <View style={styles.teamColumn}>
           <Text style={styles.teamName}>{comparison.homeTeam.name}</Text>
           <Text style={styles.formScore}>
-            Form: {comparison.homeTeam.stats.formScore.toFixed(0)}/100
+            {t('matchDetail.teamComparisonCard.formScore', {
+              score: comparison.homeTeam.stats.formScore.toFixed(0),
+            })}
           </Text>
         </View>
         <View style={styles.vsContainer}>
-          <Text style={styles.vsText}>VS</Text>
+          <Text style={styles.vsText}>{t('match.vs').toUpperCase()}</Text>
         </View>
         <View style={styles.teamColumn}>
           <Text style={styles.teamName}>{comparison.awayTeam.name}</Text>
           <Text style={styles.formScore}>
-            Form: {comparison.awayTeam.stats.formScore.toFixed(0)}/100
+            {t('matchDetail.teamComparisonCard.formScore', {
+              score: comparison.awayTeam.stats.formScore.toFixed(0),
+            })}
           </Text>
         </View>
       </View>
@@ -63,11 +69,11 @@ export function TeamComparisonCard({ comparison }: TeamComparisonCardProps) {
 
       <View style={styles.predictionContainer}>
         <View style={styles.predictionRow}>
-          <Text style={styles.predictionLabel}>Tahmin:</Text>
+          <Text style={styles.predictionLabel}>{t('matchDetail.teamComparisonCard.predictionLabel')}:</Text>
           <Text style={styles.predictionValue}>{getPredictionText()}</Text>
         </View>
         <View style={styles.predictionRow}>
-          <Text style={styles.predictionLabel}>Güven:</Text>
+          <Text style={styles.predictionLabel}>{t('matchDetail.teamComparisonCard.confidenceLabel')}:</Text>
           <Text style={styles.predictionValue}>%{comparison.confidence.toFixed(0)}</Text>
         </View>
       </View>
@@ -153,4 +159,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-

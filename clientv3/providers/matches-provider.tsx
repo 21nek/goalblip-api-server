@@ -1,5 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchMatchDetail, fetchMatchList } from '@/lib/api';
+import { useLocale } from './locale-provider';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { MatchDetail, MatchDetailPendingResponse, MatchListResponse } from '@/types/match';
 
 type ViewKey = 'today' | 'tomorrow';
@@ -30,6 +32,9 @@ type MatchesContextValue = {
 const MatchesContext = createContext<MatchesContextValue | undefined>(undefined);
 
 export function MatchesProvider({ children }: { children: React.ReactNode }) {
+  const { locale, timezone } = useLocale();
+  const t = useTranslation();
+  
   const [data, setData] = useState<{
     today: MatchListResponse | null;
     tomorrow: MatchListResponse | null;
@@ -54,6 +59,32 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
   // Request key format: `${matchId}:${date || 'latest'}:${view || 'latest'}`
   const detailRequests = useRef<Record<string, Promise<MatchDetail | MatchDetailPendingResponse | null>>>({});
   const pollingIntervals = useRef<Record<string, NodeJS.Timeout>>({});
+  const parseErrorCode = useCallback((error: unknown): string | undefined => {
+    if (error && typeof error === 'object' && 'code' in error) {
+      return (error as { code?: string }).code;
+    }
+    if (error instanceof Error) {
+      return error.name;
+    }
+    return undefined;
+  }, []);
+
+  const formatErrorMessage = useCallback(
+    (error: unknown) => {
+      const code = parseErrorCode(error);
+      switch (code) {
+        case 'REQUEST_TIMEOUT':
+          return t('errors.timeout');
+        case 'NETWORK_ERROR':
+          return t('errors.network');
+        case 'API_ERROR':
+          return t('errors.api');
+        default:
+          return t('errors.unknown');
+      }
+    },
+    [parseErrorCode, t],
+  );
 
   const deriveAssetsFromDetail = useCallback((detail: MatchDetail | null): MatchAssets | null => {
     const scoreboard = detail?.scoreboard;
@@ -187,11 +218,15 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       }
       
       // Create request key to prevent duplicate requests
-      const requestKey = `${numeric}:${options?.date || 'latest'}:${options?.view || 'latest'}`;
+      const requestKey = `${numeric}:${options?.date || 'latest'}:${options?.view || 'latest'}:${locale}:${timezone}`;
       
       if (!detailRequests.current[requestKey]) {
         console.log('[MatchesProvider] Fetching detail for:', numeric, options);
-        detailRequests.current[requestKey] = fetchMatchDetail(numeric, undefined, options)
+        detailRequests.current[requestKey] = fetchMatchDetail(numeric, undefined, {
+          ...options,
+          locale,
+          timezone,
+        })
           .then((response) => {
             // Check if response is pending
             if ('status' in response && response.status === 'pending') {
@@ -254,7 +289,7 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       
       return detailRequests.current[requestKey];
     },
-    [getMatchDetail, recordMatchDetail]
+    [getMatchDetail, recordMatchDetail, locale, timezone]
   );
 
   const getOrFetchMatchAssets = useCallback(
@@ -294,10 +329,10 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
               return deriveAssetsFromDetail(fetched);
             })
             .catch((error) => {
-              const errorMsg = error instanceof Error ? error.message : String(error);
-              // Timeout hatası için daha az agresif log
-              if (!errorMsg.includes('zaman aşımı')) {
-                console.warn('[MatchesProvider] Match asset fetch failed', numeric, errorMsg);
+              const code = parseErrorCode(error);
+              const errorMsg = formatErrorMessage(error);
+              if (code !== 'REQUEST_TIMEOUT') {
+                console.warn('[MatchesProvider] Match asset fetch failed', numeric, error);
               }
               return null;
             })
@@ -309,7 +344,15 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       
       return assetRequests.current[numeric];
     },
-    [matchAssets, matchDetails, recordMatchAssets, recordMatchDetail, deriveAssetsFromDetail]
+    [
+      matchAssets,
+      matchDetails,
+      recordMatchAssets,
+      recordMatchDetail,
+      deriveAssetsFromDetail,
+      formatErrorMessage,
+      parseErrorCode,
+    ]
   );
 
   const requestView = useCallback(async (view: ViewKey) => {
@@ -320,8 +363,8 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
     setViewStatus((prev) => ({ ...prev, [view]: 'loading' }));
     
     try {
-      console.log(`[MatchesProvider] Requesting view: ${view}`);
-      const response = await fetchMatchList(view, { signal: controller.signal });
+      console.log(`[MatchesProvider] Requesting view: ${view}`, { locale, timezone });
+      const response = await fetchMatchList(view, { signal: controller.signal }, { locale, timezone });
       console.log(`[MatchesProvider] View ${view} loaded:`, response?.matches?.length || 0, 'matches');
       setData((prev) => ({ ...prev, [view]: response }));
       setErrors((prev) => ({ ...prev, [view]: null }));
@@ -332,7 +375,7 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
         console.log(`[MatchesProvider] Request aborted for view: ${view}`);
         return null;
       }
-      const errorMessage = (error as Error).message || 'Beklenmeyen hata';
+      const errorMessage = formatErrorMessage(error);
       console.error(`[MatchesProvider] Error loading view ${view}:`, errorMessage);
       setErrors((prev) => ({
         ...prev,
@@ -341,16 +384,19 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       setViewStatus((prev) => ({ ...prev, [view]: 'error' }));
       return null;
     }
-  }, []);
+  }, [locale, timezone, formatErrorMessage]);
 
   useEffect(() => {
     let mounted = true;
     
     async function loadInitial() {
       setInitialLoading(true);
-      await Promise.all([requestView('today'), requestView('tomorrow')]);
+      // Öncelik: bugün görünümü. Yarın görünümü arka planda yüklenecek.
+      await requestView('today');
       if (mounted) {
         setInitialLoading(false);
+        // Fire-and-forget: tomorrow view; hata alsa bile today etkilenmez.
+        requestView('tomorrow');
       }
     }
     
@@ -363,7 +409,7 @@ export function MatchesProvider({ children }: { children: React.ReactNode }) {
       Object.values(pollingIntervals.current).forEach((interval) => clearInterval(interval));
       pollingIntervals.current = {};
     };
-  }, [requestView]);
+  }, [requestView, locale, timezone]); // Re-fetch when locale/timezone changes
 
   const value = useMemo<MatchesContextValue>(
     () => ({
@@ -408,4 +454,3 @@ export function useMatchesContext() {
   }
   return ctx;
 }
-

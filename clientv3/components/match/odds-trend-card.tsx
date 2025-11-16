@@ -3,6 +3,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { SimpleCircularChart } from '@/components/ui/simple-chart';
 import { Icon } from '@/components/ui/icon';
 import { getCardPadding, screenDimensions } from '@/lib/responsive';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type OddsRow = {
   label?: string | null;
@@ -20,6 +21,7 @@ type OddsTrendCardProps = {
 };
 
 export function OddsTrendCard({ title, cards }: OddsTrendCardProps) {
+  const t = useTranslation();
   const parseValue = (value: string): number | null => {
     // Extract number from strings like "1.85 ↑" or "2.10 ↓"
     const match = value.match(/(\d+\.?\d*)/);
@@ -59,7 +61,7 @@ export function OddsTrendCard({ title, cards }: OddsTrendCardProps) {
 
                   return (
                     <View key={rowIdx} style={styles.rowWithChart}>
-                      <Text style={styles.rowLabel}>{row.label || 'Oran'}</Text>
+                      <Text style={styles.rowLabel}>{row.label || t('matchDetail.oddsTrendCard.rowLabel')}</Text>
                       <SimpleCircularChart
                         data={chartData}
                         size={numericValues.length <= 3 ? 100 : 80}
@@ -203,4 +205,3 @@ const getStyles = () => {
 };
 
 const styles = getStyles();
-

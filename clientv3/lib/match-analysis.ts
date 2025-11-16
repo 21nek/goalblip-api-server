@@ -52,6 +52,8 @@ export type KeyInsight = {
   priority: 'high' | 'medium' | 'low';
 };
 
+export type TranslateFn = (key: string, params?: Record<string, string | number>) => string;
+
 /**
  * Parse score string (e.g., "2-1") to goals
  */
@@ -161,7 +163,8 @@ export function compareTeams(
   homeForm: FormData | null,
   awayForm: FormData | null,
   homeTeamName: string | null | undefined,
-  awayTeamName: string | null | undefined
+  awayTeamName: string | null | undefined,
+  translator?: TranslateFn,
 ): TeamComparison | null {
   if (!homeForm?.matches || !awayForm?.matches) return null;
 
@@ -189,13 +192,18 @@ export function compareTeams(
     confidence = 50;
   }
 
+  const translateTeam = (key: string, fallback: string) =>
+    translator ? translator(key) : fallback;
+  const fallbackHomeName = translateTeam('matchDetail.teams.homeFallback', 'Ev Sahibi');
+  const fallbackAwayName = translateTeam('matchDetail.teams.awayFallback', 'Deplasman');
+
   return {
     homeTeam: {
-      name: homeTeamName || 'Ev Sahibi',
+      name: homeTeamName || fallbackHomeName,
       stats: homeStats,
     },
     awayTeam: {
-      name: awayTeamName || 'Deplasman',
+      name: awayTeamName || fallbackAwayName,
       stats: awayStats,
     },
     homeAdvantage,
@@ -212,7 +220,8 @@ export function extractKeyInsights(
   headToHead: HeadToHeadMatch[] | null | undefined,
   detailPredictions: Array<{ confidence?: number | null; title?: string | null }> | null | undefined,
   homeTeamName: string | null | undefined,
-  awayTeamName: string | null | undefined
+  awayTeamName: string | null | undefined,
+  translator?: TranslateFn,
 ): KeyInsight[] {
   const insights: KeyInsight[] = [];
 
@@ -220,6 +229,15 @@ export function extractKeyInsights(
 
   const homeForm = recentForm[0];
   const awayForm = recentForm[1];
+  const translate = (
+    key: string,
+    fallback: string,
+    params?: Record<string, string | number>,
+  ) => (translator ? translator(key, params) : fallback);
+  const resolvedHomeName =
+    homeTeamName || translate('matchDetail.teams.homeGeneric', 'Ev sahibi takım');
+  const resolvedAwayName =
+    awayTeamName || translate('matchDetail.teams.awayGeneric', 'Deplasman takımı');
 
   if (homeForm?.matches && awayForm?.matches) {
     const homeStats = calculateFormStats(homeForm.matches);
@@ -229,13 +247,21 @@ export function extractKeyInsights(
     if (homeStats.winRate >= 80) {
       insights.push({
         type: 'positive',
-        message: `${homeTeamName || 'Ev sahibi takım'} son 5 maçta %${homeStats.winRate.toFixed(0)} galibiyet oranıyla çok iyi formda.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeHighWinRate',
+          `${resolvedHomeName} son 5 maçta %${homeStats.winRate.toFixed(0)} galibiyet oranıyla çok iyi formda.`,
+          { team: resolvedHomeName, winRate: homeStats.winRate.toFixed(0) },
+        ),
         priority: 'high',
       });
     } else if (homeStats.lossRate >= 60) {
       insights.push({
         type: 'warning',
-        message: `${homeTeamName || 'Ev sahibi takım'} son 5 maçta %${homeStats.lossRate.toFixed(0)} mağlubiyet oranıyla zorlanıyor.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeHighLossRate',
+          `${resolvedHomeName} son 5 maçta %${homeStats.lossRate.toFixed(0)} mağlubiyet oranıyla zorlanıyor.`,
+          { team: resolvedHomeName, lossRate: homeStats.lossRate.toFixed(0) },
+        ),
         priority: 'high',
       });
     }
@@ -243,7 +269,11 @@ export function extractKeyInsights(
     if (homeStats.avgGoalsFor >= 2) {
       insights.push({
         type: 'positive',
-        message: `${homeTeamName || 'Ev sahibi takım'} son maçlarda maç başına ortalama ${homeStats.avgGoalsFor.toFixed(1)} gol atıyor.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeHighGoalsFor',
+          `${resolvedHomeName} son maçlarda maç başına ortalama ${homeStats.avgGoalsFor.toFixed(1)} gol atıyor.`,
+          { team: resolvedHomeName, goalsFor: homeStats.avgGoalsFor.toFixed(1) },
+        ),
         priority: 'medium',
       });
     }
@@ -251,7 +281,11 @@ export function extractKeyInsights(
     if (homeStats.avgGoalsAgainst <= 0.5) {
       insights.push({
         type: 'positive',
-        message: `${homeTeamName || 'Ev sahibi takım'} son maçlarda çok az gol yiyor (maç başına ${homeStats.avgGoalsAgainst.toFixed(1)}).`,
+        message: translate(
+          'matchDetail.analysis.insights.homeLowGoalsAgainst',
+          `${resolvedHomeName} son maçlarda çok az gol yiyor (maç başına ${homeStats.avgGoalsAgainst.toFixed(1)}).`,
+          { team: resolvedHomeName, goalsAgainst: homeStats.avgGoalsAgainst.toFixed(1) },
+        ),
         priority: 'medium',
       });
     }
@@ -260,13 +294,21 @@ export function extractKeyInsights(
     if (awayStats.winRate >= 80) {
       insights.push({
         type: 'warning',
-        message: `${awayTeamName || 'Deplasman takımı'} son 5 maçta %${awayStats.winRate.toFixed(0)} galibiyet oranıyla çok iyi formda.`,
+        message: translate(
+          'matchDetail.analysis.insights.awayHighWinRate',
+          `${resolvedAwayName} son 5 maçta %${awayStats.winRate.toFixed(0)} galibiyet oranıyla çok iyi formda.`,
+          { team: resolvedAwayName, winRate: awayStats.winRate.toFixed(0) },
+        ),
         priority: 'high',
       });
     } else if (awayStats.lossRate >= 60) {
       insights.push({
         type: 'positive',
-        message: `${awayTeamName || 'Deplasman takımı'} son 5 maçta %${awayStats.lossRate.toFixed(0)} mağlubiyet oranıyla zorlanıyor.`,
+        message: translate(
+          'matchDetail.analysis.insights.awayHighLossRate',
+          `${resolvedAwayName} son 5 maçta %${awayStats.lossRate.toFixed(0)} mağlubiyet oranıyla zorlanıyor.`,
+          { team: resolvedAwayName, lossRate: awayStats.lossRate.toFixed(0) },
+        ),
         priority: 'medium',
       });
     }
@@ -275,7 +317,11 @@ export function extractKeyInsights(
     if (homeStats.currentStreak === 'win' && homeStats.streakCount >= 3) {
       insights.push({
         type: 'positive',
-        message: `${homeTeamName || 'Ev sahibi takım'} ${homeStats.streakCount} maçtır kazanıyor.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeWinStreak',
+          `${resolvedHomeName} ${homeStats.streakCount} maçtır kazanıyor.`,
+          { team: resolvedHomeName, streak: homeStats.streakCount },
+        ),
         priority: 'high',
       });
     }
@@ -283,7 +329,11 @@ export function extractKeyInsights(
     if (awayStats.currentStreak === 'loss' && awayStats.streakCount >= 3) {
       insights.push({
         type: 'positive',
-        message: `${awayTeamName || 'Deplasman takımı'} ${awayStats.streakCount} maçtır kaybediyor.`,
+        message: translate(
+          'matchDetail.analysis.insights.awayLosingStreak',
+          `${resolvedAwayName} ${awayStats.streakCount} maçtır kaybediyor.`,
+          { team: resolvedAwayName, streak: awayStats.streakCount },
+        ),
         priority: 'medium',
       });
     }
@@ -292,7 +342,11 @@ export function extractKeyInsights(
     if (homeStats.goalDifference > 1 && awayStats.goalDifference < -0.5) {
       insights.push({
         type: 'positive',
-        message: `Gol farkı açısından ${homeTeamName || 'ev sahibi takım'} belirgin avantajlı.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeGoalDifference',
+          `Gol farkı açısından ${resolvedHomeName} belirgin avantajlı.`,
+          { team: resolvedHomeName },
+        ),
         priority: 'medium',
       });
     }
@@ -309,7 +363,11 @@ export function extractKeyInsights(
     if (homeWins >= headToHead.length * 0.6) {
       insights.push({
         type: 'info',
-        message: `Geçmiş karşılaşmalarda ${homeTeamName || 'ev sahibi takım'} üstünlük kurmuş.`,
+        message: translate(
+          'matchDetail.analysis.insights.homeH2HSuperiority',
+          `Geçmiş karşılaşmalarda ${resolvedHomeName} üstünlük kurmuş.`,
+          { team: resolvedHomeName },
+        ),
         priority: 'medium',
       });
     }
@@ -327,7 +385,11 @@ export function extractKeyInsights(
     if (maxConfidence >= 90 && avgConfidence >= 75) {
       insights.push({
         type: 'info',
-        message: `AI tahminleri çok yüksek güven seviyesinde (ortalama %${avgConfidence.toFixed(0)}).`,
+        message: translate(
+          'matchDetail.analysis.insights.aiVeryHighConfidence',
+          `AI tahminleri çok yüksek güven seviyesinde (ortalama %${avgConfidence.toFixed(0)}).`,
+          { avgConfidence: avgConfidence.toFixed(0) },
+        ),
         priority: 'high',
       });
     } else if (maxConfidence >= 95) {
@@ -343,7 +405,18 @@ export function extractKeyInsights(
         
         insights.push({
           type: 'info',
-          message: `"${highConfPred.title}" tahmininin güven seviyesi çok yüksek (%${maxConfidence.toFixed(0)}). En olası sonuç: ${topOutcome?.label || '—'} (%${topOutcome?.valuePercent?.toFixed(0) || 0}).`,
+          message: translate(
+            'matchDetail.analysis.insights.aiSingleHighConfidence',
+            `"${highConfPred.title || ''}" tahmininin güven seviyesi çok yüksek (%${maxConfidence.toFixed(
+              0,
+            )}). En olası sonuç: ${topOutcome?.label || '—'} (%${topOutcome?.valuePercent?.toFixed(0) || 0}).`,
+            {
+              prediction: highConfPred.title || '',
+              confidence: maxConfidence.toFixed(0),
+              outcome: topOutcome?.label || '—',
+              outcomePct: (topOutcome?.valuePercent ?? 0).toFixed(0),
+            },
+          ),
           priority: 'medium',
         });
       }
@@ -361,7 +434,8 @@ export function extractKeyInsights(
  */
 export function getQuickSummary(
   detailPredictions: Array<{ title?: string | null; confidence?: number | null; outcomes?: Array<{ label?: string | null; valuePercent?: number | null }> }> | null | undefined,
-  comparison: TeamComparison | null
+  comparison: TeamComparison | null,
+  translator?: TranslateFn,
 ): {
   mainPrediction: string;
   confidence: number;
@@ -369,17 +443,30 @@ export function getQuickSummary(
   summary: string;
   outcomes?: Array<{ label?: string | null; valuePercent?: number | null }>;
 } | null {
+  const translate = (
+    key: string,
+    fallback: string,
+    params?: Record<string, string | number>,
+  ) => (translator ? translator(key, params) : fallback);
   if (!detailPredictions || detailPredictions.length === 0) {
     if (!comparison) return null;
+    const mainPrediction =
+      comparison.prediction === 'home'
+        ? translate('matchDetail.analysis.quickSummary.home', 'Ev Sahibi')
+        : comparison.prediction === 'away'
+        ? translate('matchDetail.analysis.quickSummary.away', 'Deplasman')
+        : translate('matchDetail.analysis.quickSummary.balanced', 'Dengeli');
+    const summary =
+      comparison.prediction === 'home'
+        ? translate('matchDetail.analysis.quickSummary.homeAdvantage', 'Ev sahibi takım form avantajına sahip')
+        : comparison.prediction === 'away'
+        ? translate('matchDetail.analysis.quickSummary.awayAdvantage', 'Deplasman takımı form avantajına sahip')
+        : translate('matchDetail.analysis.quickSummary.balancedForm', 'İki takım da dengeli formda');
     return {
-      mainPrediction: comparison.prediction === 'home' ? 'Ev Sahibi' : comparison.prediction === 'away' ? 'Deplasman' : 'Dengeli',
+      mainPrediction,
       confidence: comparison.confidence,
       recommendedPick: comparison.prediction === 'home' ? '1' : comparison.prediction === 'away' ? '2' : 'X',
-      summary: comparison.prediction === 'home' 
-        ? 'Ev sahibi takım form avantajına sahip'
-        : comparison.prediction === 'away'
-        ? 'Deplasman takımı form avantajına sahip'
-        : 'İki takım da dengeli formda',
+      summary,
     };
   }
 
@@ -401,24 +488,24 @@ export function getQuickSummary(
 
   const confidence = bestPrediction.confidence || 0;
   const recommendedPick = bestOutcome?.label || '—';
-  const mainPrediction = bestPrediction.title || 'Tahmin';
+  const mainPrediction = bestPrediction.title || translate('common.prediction', 'Tahmin');
 
   let summary = '';
   if (confidence >= 75) {
-    summary = 'Yüksek güven seviyesinde tahmin';
+    summary = translate('matchDetail.analysis.quickSummary.highConfidence', 'Yüksek güven seviyesinde tahmin');
   } else if (confidence >= 60) {
-    summary = 'Orta-yüksek güven seviyesinde tahmin';
+    summary = translate('matchDetail.analysis.quickSummary.mediumHighConfidence', 'Orta-yüksek güven seviyesinde tahmin');
   } else if (confidence >= 50) {
-    summary = 'Dengeli tahmin';
+    summary = translate('matchDetail.analysis.quickSummary.balancedConfidence', 'Dengeli tahmin');
   } else {
-    summary = 'Düşük güven seviyesinde tahmin';
+    summary = translate('matchDetail.analysis.quickSummary.lowConfidence', 'Düşük güven seviyesinde tahmin');
   }
 
   if (comparison) {
     if (comparison.homeAdvantage > 10) {
-      summary += ' • Ev sahibi avantajı var';
+      summary += ` ${translate('matchDetail.analysis.quickSummary.homeAdvantageSuffix', '• Ev sahibi avantajı var')}`;
     } else if (comparison.homeAdvantage < -10) {
-      summary += ' • Deplasman takımı avantajlı';
+      summary += ` ${translate('matchDetail.analysis.quickSummary.awayAdvantageSuffix', '• Deplasman takımı avantajlı')}`;
     }
   }
 
@@ -430,4 +517,3 @@ export function getQuickSummary(
     outcomes: bestPrediction.outcomes,
   };
 }
-

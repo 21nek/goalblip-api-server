@@ -1,5 +1,6 @@
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { MatchDetail, MatchSummary } from '@/types/match';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function AIShortlistCard({ match, detail, loading, onPress }: Props) {
+  const t = useTranslation();
   const highlight =
     detail?.highlightPredictions?.find((item) => !item.locked) ??
     detail?.highlightPredictions?.[0];
@@ -22,11 +24,11 @@ export function AIShortlistCard({ match, detail, loading, onPress }: Props) {
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} disabled={loading}>
       <View style={styles.rowBetween}>
-        <Text style={styles.league}>{match.league || 'Lig'}</Text>
+        <Text style={styles.league}>{match.league || t('common.unknownLeague')}</Text>
         {locked ? <Text style={styles.locked}>🔒</Text> : null}
       </View>
       <Text style={styles.teams}>{match.homeTeam}</Text>
-      <Text style={styles.vs}>vs</Text>
+      <Text style={styles.vs}>{t('match.vs')}</Text>
       <Text style={styles.teams}>{match.awayTeam}</Text>
       <View style={styles.predictionBox}>
         {loading ? (
@@ -34,15 +36,15 @@ export function AIShortlistCard({ match, detail, loading, onPress }: Props) {
         ) : hasPrediction ? (
           <>
             <Text style={styles.predictionLabel}>
-              {highlight?.title || 'Tahmin bekleniyor'}
+              {highlight?.title || t('home.aiShortlist.predictionPending')}
             </Text>
-            <Text style={styles.predictionValue}>{highlight?.pickCode || 'N/A'}</Text>
+            <Text style={styles.predictionValue}>{highlight?.pickCode || t('common.unknown')}</Text>
             {successText ? <Text style={styles.predictionMeta}>{successText}</Text> : null}
           </>
         ) : (
           <>
-            <Text style={styles.predictionLabel}>AI tahmini yok</Text>
-            <Text style={styles.predictionMeta}>Bu maç için analiz henüz hazır değil.</Text>
+            <Text style={styles.predictionLabel}>{t('home.aiShortlist.noPredictionTitle')}</Text>
+            <Text style={styles.predictionMeta}>{t('home.aiShortlist.noPredictionMessage')}</Text>
           </>
         )}
       </View>
@@ -107,4 +109,3 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
 });
-

@@ -1,7 +1,8 @@
 import { Stack } from 'expo-router';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
-import { SplashScreen } from 'expo-router';
-import { useEffect } from 'react';
+import { SplashScreen, useRouter, useSegments } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { LocaleProvider, useLocale } from '@/providers/locale-provider';
 import { MatchesProvider } from '@/providers/matches-provider';
 
 // Global error handler
@@ -18,6 +19,46 @@ errorUtils?.setGlobalHandler?.((error, isFatal) => {
   console.error('[GlobalError]', isFatal ? 'FATAL' : 'NON_FATAL', error.message, error.stack);
   previousHandler?.(error, isFatal);
 });
+
+function RootLayoutContent() {
+  const { initialSetupCompleted } = useLocale();
+  const router = useRouter();
+  const segments = useSegments();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    // Check if we need to show initial setup
+    if (!initialSetupCompleted && !isNavigating) {
+      const currentRoute = segments[0];
+      if (currentRoute !== 'initial-setup') {
+        setIsNavigating(true);
+        router.replace('/initial-setup');
+      }
+    }
+  }, [initialSetupCompleted, segments, router, isNavigating]);
+
+  return (
+    <Stack
+      initialRouteName="index"
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: '#050814' },
+        // No animations - instant transitions
+        animation: 'none',
+        // Disable gestures for instant feel
+        gestureEnabled: false,
+        // Optimize performance
+        freezeOnBlur: false,
+      }}
+    >
+      <Stack.Screen name="initial-setup" />
+      <Stack.Screen name="index" />
+      <Stack.Screen name="favorites" />
+      <Stack.Screen name="profile" />
+      <Stack.Screen name="matches/[matchId]" />
+    </Stack>
+  );
+}
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -38,26 +79,11 @@ export default function RootLayout() {
   // }
 
   return (
-    <MatchesProvider>
-      <Stack
-        initialRouteName="index"
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: '#050814' },
-          // No animations - instant transitions
-          animation: 'none',
-          // Disable gestures for instant feel
-          gestureEnabled: false,
-          // Optimize performance
-          freezeOnBlur: false,
-        }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="favorites" />
-        <Stack.Screen name="profile" />
-        <Stack.Screen name="matches/[matchId]" />
-      </Stack>
-    </MatchesProvider>
+    <LocaleProvider>
+      <MatchesProvider>
+        <RootLayoutContent />
+      </MatchesProvider>
+    </LocaleProvider>
   );
 }
 

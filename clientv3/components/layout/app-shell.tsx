@@ -1,8 +1,10 @@
 import { usePathname, useRouter } from 'expo-router';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
+import logoSquare from '@/assets/logo_square.png';
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -15,6 +17,7 @@ type AppShellProps = {
 export function AppShell({ children, title, showBackButton = false, rightSlot, showBottomNav = true }: AppShellProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslation();
 
   const SafeAreaWrapper = Platform.OS === 'web' ? View : SafeAreaView;
   const safeAreaProps = Platform.OS === 'web' 
@@ -28,7 +31,6 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
           <TouchableOpacity
             style={styles.iconButton}
             onPress={() => {
-              // Check if we can go back, otherwise go to home
               if (router.canGoBack()) {
                 router.back();
               } else {
@@ -36,23 +38,22 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
               }
             }}
             accessibilityRole="button"
-            accessibilityLabel="Geri dön"
+            accessibilityLabel={t('common.back')}
           >
             <Icon name="arrow-back" size={20} color={colors.accent} />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            style={styles.iconButton}
+            style={styles.logoButton}
             onPress={() => {
-              // If already on home, do nothing (prevent unnecessary navigation)
               if (pathname !== '/') {
                 router.push('/');
               }
             }}
             accessibilityRole="button"
-            accessibilityLabel="Ana sayfa"
+            accessibilityLabel={t('common.home')}
           >
-            <Icon name="football" size={22} color={colors.accent} />
+            <Image source={logoSquare} style={styles.logoImage} resizeMode="contain" />
           </TouchableOpacity>
         )}
         
@@ -61,7 +62,7 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
           {title ? <Text style={styles.subtitle}>{title}</Text> : null}
         </View>
         
-        {rightSlot || <View style={styles.iconButton} />}
+        {rightSlot ? <View style={styles.rightSlot}>{rightSlot}</View> : null}
       </View>
       
       {children}
@@ -74,10 +75,11 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
 }
 
 function BottomNavigation({ pathname, router }: { pathname: string; router: any }) {
+  const t = useTranslation();
   const tabs = [
-    { path: '/', label: 'Anasayfa', icon: 'football' as const },
-    { path: '/favorites', label: 'Favoriler', icon: 'star' as const },
-    { path: '/profile', label: 'Profil', icon: 'information-circle' as const },
+    { path: '/', label: t('common.home'), icon: 'football' as const },
+    { path: '/favorites', label: t('common.favorites'), icon: 'star' as const },
+    { path: '/profile', label: t('common.profile'), icon: 'information-circle' as const },
   ];
 
   return (
@@ -141,7 +143,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgSecondary,
     ...shadows.subtle,
   },
+  logoButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 36,
+    height: 36,
+  },
   brandBlock: {
+    flex: 1,
     alignItems: 'center',
   },
   brand: {
@@ -153,6 +166,9 @@ const styles = StyleSheet.create({
   subtitle: {
     ...typography.caption,
     color: colors.textTertiary,
+  },
+  rightSlot: {
+    marginLeft: spacing.sm,
   },
   bottomNav: {
     flexDirection: 'row',
@@ -179,4 +195,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

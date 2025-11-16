@@ -1,16 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/ui/empty-state';
-import { colors, spacing } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
+import { spacing } from '@/lib/theme';
 
 export default function FavoritesScreen() {
+  const t = useTranslation();
+
   return (
-    <AppShell title="Favoriler">
+    <AppShell title={t('favoritesScreen.title')}>
       <View style={styles.container}>
         <EmptyState
           icon="star"
-          title="Favori Maç Yok"
-          message="Henüz favorilere eklenmiş maç bulunmuyor.\n\nMaç kartlarındaki yıldız ikonuna tıklayarak maçları favorilerinize ekleyebilirsiniz."
+          title={t('favoritesScreen.emptyTitle')}
+          message={t('favoritesScreen.emptyMessage')}
         />
       </View>
     </AppShell>
@@ -23,4 +26,3 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xxxl * 2,
   },
 });
-

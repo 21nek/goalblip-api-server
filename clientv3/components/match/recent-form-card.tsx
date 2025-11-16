@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type RecentFormMatch = {
   result?: string | null;
@@ -15,6 +16,7 @@ type RecentFormCardProps = {
 };
 
 export function RecentFormCard({ title, matches }: RecentFormCardProps) {
+  const t = useTranslation();
   if (!matches || matches.length === 0) {
     return null;
   }
@@ -27,14 +29,13 @@ export function RecentFormCard({ title, matches }: RecentFormCardProps) {
   };
 
   const getResultLabel = (result: string | null | undefined) => {
-    if (result === 'W') return 'G';
-    if (result === 'L') return 'M';
-    if (result === 'D') return 'B';
-    return '—';
+    if (result === 'W') return t('matchDetail.recentFormCard.resultLabels.win');
+    if (result === 'L') return t('matchDetail.recentFormCard.resultLabels.loss');
+    if (result === 'D') return t('matchDetail.recentFormCard.resultLabels.draw');
+    return t('matchDetail.recentFormCard.resultLabels.unknown');
   };
 
-  // Clean title (remove emoji if present)
-  const cleanTitle = title.replace(/📈\s*/, '').trim();
+  const cleanTitle = getLocalizedTitle(title, t);
 
   return (
     <View style={styles.container}>
@@ -123,3 +124,25 @@ const styles = StyleSheet.create({
   },
 });
 
+function getLocalizedTitle(rawTitle: string, t: ReturnType<typeof useTranslation>): string {
+  if (!rawTitle) return t('matchDetail.recentFormCard.titleFallback');
+  const cleaned = rawTitle.replace(/📈/g, '').trim();
+  if (!cleaned) return t('matchDetail.recentFormCard.titleFallback');
+  const normalized = cleaned
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  if (normalized.includes('ev') && normalized.includes('sahibi')) {
+    return t('matchDetail.recentFormCard.homeTitle');
+  }
+  if (normalized.includes('deplasman')) {
+    return t('matchDetail.recentFormCard.awayTitle');
+  }
+  if (normalized.includes('home')) {
+    return t('matchDetail.recentFormCard.homeTitle');
+  }
+  if (normalized.includes('away') || normalized.includes('visitante') || normalized.includes('visitor')) {
+    return t('matchDetail.recentFormCard.awayTitle');
+  }
+  return cleaned;
+}

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { ProgressBar } from '@/components/ui/progress-bar';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
 
 type GoalAnalysisCardProps = {
@@ -19,15 +20,16 @@ type GoalAnalysisCardProps = {
 };
 
 export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: GoalAnalysisCardProps) {
+  const t = useTranslation();
   const totalAvgGoals = homeTeam.stats.avgGoalsFor + awayTeam.stats.avgGoalsFor;
   const totalAvgConceded = homeTeam.stats.avgGoalsAgainst + awayTeam.stats.avgGoalsAgainst;
   const expectedGoals = (totalAvgGoals + totalAvgConceded) / 2;
 
   const getExpectedGoalsText = () => {
-    if (expectedGoals >= 3) return 'Yüksek gol beklentisi';
-    if (expectedGoals >= 2) return 'Orta-yüksek gol beklentisi';
-    if (expectedGoals >= 1.5) return 'Orta gol beklentisi';
-    return 'Düşük gol beklentisi';
+    if (expectedGoals >= 3) return t('matchDetail.goalAnalysisCard.expectation.high');
+    if (expectedGoals >= 2) return t('matchDetail.goalAnalysisCard.expectation.mediumHigh');
+    if (expectedGoals >= 1.5) return t('matchDetail.goalAnalysisCard.expectation.medium');
+    return t('matchDetail.goalAnalysisCard.expectation.low');
   };
 
   const getExpectedGoalsColor = () => {
@@ -39,17 +41,17 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Gol Analizi</Text>
+      <Text style={styles.title}>{t('matchDetail.goalAnalysisCard.title')}</Text>
 
       <View style={styles.summaryRow}>
         <View style={styles.summaryItem}>
-          <Text style={styles.summaryLabel}>Beklenen Gol</Text>
+          <Text style={styles.summaryLabel}>{t('matchDetail.goalAnalysisCard.summary.expectedGoals')}</Text>
           <Text style={[styles.summaryValue, { color: getExpectedGoalsColor() }]}>
             {expectedGoals.toFixed(1)}
           </Text>
         </View>
         <View style={styles.summaryItem}>
-          <Text style={styles.summaryLabel}>Tahmin</Text>
+          <Text style={styles.summaryLabel}>{t('matchDetail.goalAnalysisCard.summary.prediction')}</Text>
           <Text style={[styles.summaryText, { color: getExpectedGoalsColor() }]}>
             {getExpectedGoalsText()}
           </Text>
@@ -61,13 +63,13 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
           <Text style={styles.teamName}>{homeTeam.name}</Text>
           <View style={styles.goalStats}>
             <View style={styles.goalStat}>
-              <Text style={styles.goalLabel}>Gol Ort.</Text>
+              <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgGoals')}</Text>
               <Text style={[styles.goalValue, { color: colors.success }]}>
                 {homeTeam.stats.avgGoalsFor.toFixed(1)}
               </Text>
             </View>
             <View style={styles.goalStat}>
-              <Text style={styles.goalLabel}>Yenilen</Text>
+              <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgConceded')}</Text>
               <Text style={[styles.goalValue, { color: colors.error }]}>
                 {homeTeam.stats.avgGoalsAgainst.toFixed(1)}
               </Text>
@@ -76,20 +78,20 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
         </View>
 
         <View style={styles.vsContainer}>
-          <Text style={styles.vsText}>VS</Text>
+          <Text style={styles.vsText}>{t('match.vs').toUpperCase()}</Text>
         </View>
 
         <View style={styles.teamColumn}>
           <Text style={styles.teamName}>{awayTeam.name}</Text>
           <View style={styles.goalStats}>
             <View style={styles.goalStat}>
-              <Text style={styles.goalLabel}>Gol Ort.</Text>
+              <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgGoals')}</Text>
               <Text style={[styles.goalValue, { color: colors.success }]}>
                 {awayTeam.stats.avgGoalsFor.toFixed(1)}
               </Text>
             </View>
             <View style={styles.goalStat}>
-              <Text style={styles.goalLabel}>Yenilen</Text>
+              <Text style={styles.goalLabel}>{t('matchDetail.goalAnalysisCard.teamStats.avgConceded')}</Text>
               <Text style={[styles.goalValue, { color: colors.error }]}>
                 {awayTeam.stats.avgGoalsAgainst.toFixed(1)}
               </Text>
@@ -101,7 +103,7 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
       {overUnderPrediction && (
         <View style={styles.overUnderContainer}>
           <View style={styles.overUnderHeader}>
-            <Text style={styles.overUnderLabel}>Alt/Üst Tahmini</Text>
+            <Text style={styles.overUnderLabel}>{t('matchDetail.goalAnalysisCard.teamStats.overUnderLabel')}</Text>
             <Text style={styles.overUnderValue}>{overUnderPrediction.label}</Text>
           </View>
           <ProgressBar
@@ -111,7 +113,7 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
             color={getExpectedGoalsColor()}
           />
           <Text style={styles.overUnderConfidence}>
-            Güven: %{overUnderPrediction.valuePercent.toFixed(0)}
+            {t('matchDetail.goalAnalysisCard.teamStats.confidence')}: %{overUnderPrediction.valuePercent.toFixed(0)}
           </Text>
         </View>
       )}
@@ -228,4 +230,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

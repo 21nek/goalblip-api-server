@@ -21,18 +21,22 @@ import { LeagueHeader } from '@/components/home/league-header';
 import { FilterSection } from '@/components/home/filter-section';
 import { LeagueSelectionModal } from '@/components/home/league-selection-modal';
 import { useMatches } from '@/hooks/useMatches';
-import { computeLeagueStats } from '@/lib/match-helpers';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useLocale } from '@/providers/locale-provider';
 import { colors, spacing, borderRadius, typography } from '@/lib/theme';
 import type { MatchSummary } from '@/types/match';
 
 const ALL_LEAGUES = 'ALL';
+const UNKNOWN_LEAGUE_KEY = '__unknown__';
 
 type ListItem = 
-  | { type: 'league'; league: string }
+  | { type: 'league'; key: string; label: string }
   | { type: 'match'; match: MatchSummary };
 
 export default function HomeScreen() {
   const router = useRouter();
+  const t = useTranslation();
+  const { locale } = useLocale();
   const { today, tomorrow, initialLoading, getMatchDetail, getOrFetchMatchDetail, errors, refreshView } = useMatches();
   const [view, setView] = useState<'today' | 'tomorrow'>('today');
   const [search, setSearch] = useState('');
@@ -45,13 +49,21 @@ export default function HomeScreen() {
   const error = errors[view];
 
   // Compute league stats
-  const leagueStats = useMemo(() => computeLeagueStats(current), [current]);
+  const unknownLeagueLabel = t('common.unknownLeague');
   const leagueCounts = useMemo(() => {
-    return leagueStats.map((stat) => ({
-      name: stat.league,
-      total: stat.matches.length,
-    }));
-  }, [leagueStats]);
+    const base = current?.matches ?? [];
+    const map = base.reduce<Record<string, { key: string; name: string; total: number }>>(
+      (acc, match) => {
+        const key = match.league || UNKNOWN_LEAGUE_KEY;
+        const name = match.league || unknownLeagueLabel;
+        acc[key] = acc[key] || { key, name, total: 0 };
+        acc[key].total += 1;
+        return acc;
+      },
+      {},
+    );
+    return Object.values(map).sort((a, b) => b.total - a.total);
+  }, [current?.matches, unknownLeagueLabel]);
 
   // Filter matches
   const filteredMatches = useMemo(() => {
@@ -84,7 +96,9 @@ export default function HomeScreen() {
     
     // League filter
     if (selectedLeagues.length > 0) {
-      matches = matches.filter((match) => selectedLeagues.includes(match.league || 'Lig Bilinmiyor'));
+      matches = matches.filter((match) =>
+        selectedLeagues.includes(match.league || UNKNOWN_LEAGUE_KEY),
+      );
     }
     
     // Search filter
@@ -100,25 +114,29 @@ export default function HomeScreen() {
 
   // Group matches by league
   const groupedMatches = useMemo(() => {
-    const grouped: Record<string, MatchSummary[]> = {};
+    const grouped: Record<string, { label: string; matches: MatchSummary[] }> = {};
     filteredMatches.forEach((match) => {
-      const league = match.league || 'Lig Bilinmiyor';
-      if (!grouped[league]) {
-        grouped[league] = [];
+      const key = match.league || UNKNOWN_LEAGUE_KEY;
+      const label = match.league || unknownLeagueLabel;
+      if (!grouped[key]) {
+        grouped[key] = { label, matches: [] };
       }
-      grouped[league].push(match);
+      grouped[key].matches.push(match);
     });
     return grouped;
-  }, [filteredMatches]);
+  }, [filteredMatches, unknownLeagueLabel]);
 
   // Create list items (league headers + matches)
   const listItems = useMemo<ListItem[]>(() => {
     const items: ListItem[] = [];
-    const leagues = Object.keys(groupedMatches).sort();
+    const leagues = Object.keys(groupedMatches).sort((a, b) =>
+      groupedMatches[a].label.localeCompare(groupedMatches[b].label),
+    );
     
-    leagues.forEach((league) => {
-      items.push({ type: 'league', league });
-      groupedMatches[league].forEach((match) => {
+    leagues.forEach((key) => {
+      const entry = groupedMatches[key];
+      items.push({ type: 'league', key, label: entry.label });
+      entry.matches.forEach((match) => {
         items.push({ type: 'match', match });
       });
     });
@@ -220,17 +238,19 @@ export default function HomeScreen() {
   const metaInfo = useMemo(() => {
     if (!current) return null;
     const date = new Date(current.dataDate);
-    const time = current.scrapedAt ? new Date(current.scrapedAt).toLocaleTimeString('tr-TR', { 
+    const time = current.scrapedAt ? new Date(current.scrapedAt).toLocaleTimeString(locale, { 
       hour: '2-digit', 
       minute: '2-digit' 
     }) : null;
-    return `${date.toLocaleDateString('tr-TR', { weekday: 'short', day: 'numeric', month: 'short' })}${time ? ` • ${time}` : ''}`;
-  }, [current]);
+    return `${date.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' })}${
+      time ? ` • ${time}` : ''
+    }`;
+  }, [current, locale]);
 
   // Render list item
   const renderItem = useCallback(({ item }: { item: ListItem }) => {
     if (item.type === 'league') {
-      return <LeagueHeader league={item.league} />;
+      return <LeagueHeader league={item.label} />;
     }
     
     const match = item.match;
@@ -271,7 +291,7 @@ export default function HomeScreen() {
           activeOpacity={0.7}
         >
           <Text style={[styles.tabText, view === 'today' && styles.tabTextActive]}>
-            Bugün
+            {t('home.today')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -280,7 +300,7 @@ export default function HomeScreen() {
           activeOpacity={0.7}
         >
           <Text style={[styles.tabText, view === 'tomorrow' && styles.tabTextActive]}>
-            Yarın
+            {t('home.tomorrow')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -332,15 +352,15 @@ export default function HomeScreen() {
         <View style={styles.errorContainer}>
           <EmptyState
             icon="warning"
-            title="Veri Yüklenemedi"
-            message={`${error}\n\nLütfen internet bağlantınızı kontrol edin ve tekrar deneyin.`}
+            title={t('home.dataLoadError')}
+            message={`${error}\n\n${t('home.dataLoadErrorMessage')}`}
             action={
               <TouchableOpacity
                 style={styles.retryButton}
                 onPress={handleRefresh}
                 activeOpacity={0.7}
               >
-                <Text style={styles.retryButtonText}>Tekrar Dene</Text>
+                <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
               </TouchableOpacity>
             }
           />
@@ -356,20 +376,20 @@ export default function HomeScreen() {
           {listHeader}
           <EmptyState
             icon="search"
-            title="Maç Bulunamadı"
-                    message={
-                      search || selectedLeagues.length
-                        ? 'Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.'
-                        : 'Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!'
-                    }
-                    action={
-                      (search || selectedLeagues.length) && (
+            title={t('home.noMatches')}
+            message={
+              search || selectedLeagues.length
+                ? t('home.noMatchesFiltered')
+                : t('home.noMatchesMessage')
+            }
+            action={
+              (search || selectedLeagues.length) && (
                 <TouchableOpacity
                   style={styles.retryButton}
                   onPress={clearFilters}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.retryButtonText}>Filtreleri Temizle</Text>
+                  <Text style={styles.retryButtonText}>{t('home.clearFilters')}</Text>
                 </TouchableOpacity>
               )
             }
@@ -380,7 +400,7 @@ export default function HomeScreen() {
           data={listItems}
           keyExtractor={(item, index) => {
             if (item.type === 'league') {
-              return `league-${item.league}-${index}`;
+              return `league-${item.key}-${index}`;
             }
             return `match-${item.match.matchId}-${index}`;
           }}
@@ -400,7 +420,7 @@ export default function HomeScreen() {
               colors={[colors.accent]}
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              title="Yenileniyor..."
+              title={t('home.refreshing')}
               titleColor={colors.textTertiary}
             />
           }

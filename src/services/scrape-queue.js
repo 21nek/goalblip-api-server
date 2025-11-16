@@ -1,5 +1,8 @@
 import { scrapeMatchDetail } from '../scrapers/golsinyali/match-detail.js';
 import { saveMatchDetail } from './match-storage.js';
+import { DEFAULT_TIMEZONE } from '../config/timezones.js';
+import { toUtcFromLocal } from '../utils/datetime.js';
+import { normalizeLocale } from '../config/locales.js';
 
 const DEFAULT_CONCURRENCY = Number(
   process.env.MATCH_DETAIL_SCRAPE_CONCURRENCY ?? process.env.SCRAPE_CONCURRENCY ?? 2,
@@ -39,6 +42,9 @@ class TaskQueue {
         id: task.id,
         enqueuedAt: task.enqueuedAt,
         label: task.metadata.label ?? null,
+        locale: task.metadata.locale ?? null,
+        view: task.metadata.view ?? null,
+        date: task.metadata.date ?? null,
       })),
     };
   }
@@ -53,8 +59,9 @@ class TaskQueue {
     }
     this.activeCount += 1;
     const label = task.metadata.label ?? task.id;
+    const metaInfo = buildMetadataSummary(task.metadata);
     this.logger?.info?.(
-      `[scrape-queue] starting ${label} (active: ${this.activeCount}/${this.concurrency})`,
+      `[scrape-queue] starting ${label}${metaInfo} (active: ${this.activeCount}/${this.concurrency})`,
     );
     Promise.resolve()
       .then(() => task.fn())
@@ -64,7 +71,7 @@ class TaskQueue {
       .finally(() => {
         this.activeCount -= 1;
         this.logger?.info?.(
-          `[scrape-queue] finished ${label} (active: ${this.activeCount}/${this.concurrency})`,
+          `[scrape-queue] finished ${label}${metaInfo} (active: ${this.activeCount}/${this.concurrency})`,
         );
         this.#process();
       });
@@ -74,13 +81,18 @@ class TaskQueue {
 const matchDetailQueue = new TaskQueue();
 
 export function enqueueMatchDetailScrape(params) {
+  const normalizedLocale = normalizeLocale(params.locale || 'tr');
   const { matchId } = params;
   const labelDate = params.dataDate ?? 'unknown';
+  const viewLabel = params.viewContext ?? params.view ?? 'manual';
   const metadata = {
-    label: `match:${matchId}@${labelDate}`,
+    label: `match:${matchId}@${labelDate} [${normalizedLocale}/${viewLabel}]`,
+    locale: normalizedLocale,
+    view: viewLabel,
+    date: labelDate,
   };
   const { taskId, queuePosition } = matchDetailQueue.enqueue(async () => {
-    const scraped = await scrapeMatchDetail(params);
+    const scraped = await scrapeMatchDetail({ ...params, locale: normalizedLocale });
     const resolvedDate = params.dataDate ?? scraped.dataDate ?? currentIsoDate();
     const viewContext = params.viewContext ?? params.view ?? scraped.viewContext ?? 'manual';
     const enrichedDetail = {
@@ -89,6 +101,22 @@ export function enqueueMatchDetailScrape(params) {
       viewContext,
       sourceListScrapedAt: scraped.sourceListScrapedAt ?? params.sourceListScrapedAt ?? null,
     };
+
+    if (enrichedDetail.scoreboard && resolvedDate) {
+      const kickoffText = enrichedDetail.scoreboard.kickoff || '';
+      const match = typeof kickoffText === 'string' ? kickoffText.match(/(\d{1,2}:\d{2})/) : null;
+      const kickoffTime = match ? match[1] : null;
+      const kickoffIsoUtc =
+        kickoffTime && resolvedDate
+          ? toUtcFromLocal(resolvedDate, kickoffTime, DEFAULT_TIMEZONE)
+          : null;
+      enrichedDetail.scoreboard = {
+        ...enrichedDetail.scoreboard,
+        kickoffTimezone: enrichedDetail.scoreboard.kickoffTimezone || `(${DEFAULT_TIMEZONE})`,
+        kickoffIsoUtc: kickoffIsoUtc ?? enrichedDetail.scoreboard.kickoffIsoUtc ?? null,
+      };
+    }
+
     await saveMatchDetail(enrichedDetail);
   }, metadata);
 
@@ -106,4 +134,18 @@ function currentIsoDate() {
     month: '2-digit',
     day: '2-digit',
   }).format(new Date());
+}
+
+function buildMetadataSummary(metadata = {}) {
+  const parts = [];
+  if (metadata.locale) {
+    parts.push(`locale=${metadata.locale}`);
+  }
+  if (metadata.view) {
+    parts.push(`view=${metadata.view}`);
+  }
+  if (metadata.date) {
+    parts.push(`date=${metadata.date}`);
+  }
+  return parts.length ? ` (${parts.join(', ')})` : '';
 }

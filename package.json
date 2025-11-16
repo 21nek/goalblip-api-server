@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "scrape:matches": "node src/cli/scrape-golsinyali-matches.js",
     "scrape:detail": "node src/cli/scrape-golsinyali-match-detail.js",
+    "scrape:all-locales": "node src/scripts/refresh-golsinyali-lists.js",
+    "data:migrate:locale": "node src/scripts/migrate-data-locale.js",
     "data:sample": "node src/scripts/generate-sample-data.js",
     "gui": "node src/gui/server.js",
     "server": "node src/server/index.js",

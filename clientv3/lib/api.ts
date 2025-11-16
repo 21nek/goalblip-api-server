@@ -6,7 +6,8 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   
   // Match detail için timeout - artık 202 dönebilir, bu yüzden daha kısa timeout yeterli
   const isMatchDetail = path.includes('/api/match/');
-  const timeoutMs = isMatchDetail ? 15000 : 20000; // Match detail: 15s (202 hızlı döner), diğerleri: 20s
+  // Liste isteklerinde Puppeteer bazen 20sn'yi aşabiliyor; biraz daha geniş tut.
+  const timeoutMs = isMatchDetail ? 15000 : 45000; // Match detail: 15s, listeler: 45s
   
   try {
     console.log('[API] Fetching:', target);
@@ -72,7 +73,12 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
         const message = await response.text().catch(() => 'Unknown error');
         const errorMsg = message || `API error ${response.status}`;
         console.error('[API] Error:', response.status, errorMsg);
-        throw new Error(errorMsg);
+        const apiError = new Error(errorMsg);
+        apiError.name = 'API_ERROR';
+        (apiError as any).code = 'API_ERROR';
+        (apiError as any).status = response.status;
+        (apiError as any).meta = { url: target };
+        throw apiError;
       }
       
       const data = await response.json();
@@ -89,51 +95,75 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
     }
   } catch (error) {
     if (error instanceof TypeError) {
-      const errorMsg = error.message;
-      console.error('[API] Network error:', errorMsg, 'URL:', target);
-      
-      // Daha açıklayıcı hata mesajları
-      if (errorMsg.includes('Failed to fetch') || errorMsg.includes('Network request failed')) {
-        throw new Error(
-          `API'ye bağlanılamıyor. Lütfen kontrol edin:\n` +
-          `1. API sunucusu çalışıyor mu? (http://localhost:4000)\n` +
-          `2. Mobil cihazda iseniz IP adresini kullanın: export EXPO_PUBLIC_API_BASE_URL=http://192.168.1.XXX:4000\n` +
-          `3. URL: ${target}`
-        );
-      }
-      throw new Error(`Bağlantı hatası: ${errorMsg}. URL: ${target}`);
+      console.error('[API] Network error:', error.message, 'URL:', target);
+      const networkError = new Error(error.message);
+      networkError.name = 'NETWORK_ERROR';
+      (networkError as any).code = 'NETWORK_ERROR';
+      (networkError as any).meta = { url: target };
+      throw networkError;
     }
     
     if (error instanceof Error && error.name === 'AbortError') {
       console.error('[API] Request timeout:', target);
-      throw new Error(
-        `İstek zaman aşımına uğradı (${timeoutMs}ms). URL: ${target}\n` +
-        `Lütfen kontrol edin:\n` +
-        `1. API sunucusu çalışıyor mu? (http://192.168.1.106:4000)\n` +
-        `2. Mobil cihaz ve bilgisayar aynı WiFi ağında mı?\n` +
-        `3. Firewall API portunu engelliyor mu? (4000)`
-      );
+      const timeoutError = new Error('Request timeout');
+      timeoutError.name = 'REQUEST_TIMEOUT';
+      (timeoutError as any).code = 'REQUEST_TIMEOUT';
+      (timeoutError as any).meta = { timeoutMs, url: target };
+      throw timeoutError;
     }
     
+    if (error instanceof Error) {
+      const fallback = error;
+      if (!(fallback as any).code) {
+        (fallback as any).code = fallback.name || 'UNKNOWN_ERROR';
+      }
+      throw fallback;
+    }
+
     throw error;
   }
 }
 
 export function fetchMatchList(
   view: 'today' | 'tomorrow' = 'today',
-  init?: RequestInit
+  init?: RequestInit,
+  options?: { locale?: string; timezone?: string }
 ): Promise<MatchListResponse> {
-  const params = new URLSearchParams({ view, locale: 'tr' });
+  const params = new URLSearchParams({ view });
+  
+  // Add locale (default to 'tr' if not provided)
+  const locale = options?.locale || 'tr';
+  params.append('locale', locale);
+  
+  // Add timezone (use IANA ID)
+  if (options?.timezone) {
+    params.append('timezone', options.timezone);
+  }
+  
   return fetchJson<MatchListResponse>(`/api/matches?${params.toString()}`, init);
 }
 
 export function fetchMatchDetail(
   matchId: number | string,
   init?: RequestInit,
-  options?: { date?: string; view?: 'today' | 'tomorrow' | 'manual' }
+  options?: { 
+    date?: string; 
+    view?: 'today' | 'tomorrow' | 'manual';
+    locale?: string;
+    timezone?: string;
+  }
 ): Promise<MatchDetail | MatchDetailPendingResponse> {
   let url = `/api/match/${matchId}`;
   const params = new URLSearchParams();
+  
+  // Add locale (default to 'tr' if not provided)
+  const locale = options?.locale || 'tr';
+  params.append('locale', locale);
+  
+  // Add timezone (use IANA ID)
+  if (options?.timezone) {
+    params.append('timezone', options.timezone);
+  }
   
   if (options?.date) {
     params.append('date', options.date);
@@ -148,4 +178,3 @@ export function fetchMatchDetail(
   
   return fetchJson<MatchDetail | MatchDetailPendingResponse>(url, init);
 }
-

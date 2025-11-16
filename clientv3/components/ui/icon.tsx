@@ -19,7 +19,9 @@ type IconName =
   | 'chevron-right'
   | 'check'
   | 'arrow-up'
-  | 'arrow-down';
+  | 'arrow-down'
+  | 'settings'
+  | 'time';
 
 type IconProps = {
   name: IconName;
@@ -47,6 +49,8 @@ const iconMap: Record<IconName, { library: 'Ionicons' | 'MaterialIcons'; iconNam
   check: { library: 'Ionicons', iconName: 'checkmark' },
   'arrow-up': { library: 'Ionicons', iconName: 'arrow-up' },
   'arrow-down': { library: 'Ionicons', iconName: 'arrow-down' },
+  settings: { library: 'Ionicons', iconName: 'settings' },
+  time: { library: 'Ionicons', iconName: 'time' },
 };
 
 export function Icon({ name, size = 24, color = colors.textPrimary, style }: IconProps) {

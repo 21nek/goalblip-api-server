@@ -3,6 +3,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { SimpleCircularChart } from '@/components/ui/simple-chart';
 import { getCardPadding, screenDimensions } from '@/lib/responsive';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
 
 type VisualComparisonCardProps = {
@@ -17,34 +18,35 @@ type VisualComparisonCardProps = {
 };
 
 export function VisualComparisonCard({ homeTeam, awayTeam }: VisualComparisonCardProps) {
+  const t = useTranslation();
   const metrics = [
     {
-      label: 'Form Skoru',
+      label: t('matchDetail.visualComparisonCard.metrics.formScore'),
       homeValue: homeTeam.stats.formScore,
       awayValue: awayTeam.stats.formScore,
       maxValue: 100,
       unit: '/100',
     },
     {
-      label: 'Kazanma %',
+      label: t('matchDetail.visualComparisonCard.metrics.winRate'),
       homeValue: homeTeam.stats.winRate,
       awayValue: awayTeam.stats.winRate,
       maxValue: 100,
       unit: '%',
     },
     {
-      label: 'Gol Ortalaması',
+      label: t('matchDetail.visualComparisonCard.metrics.avgGoals'),
       homeValue: homeTeam.stats.avgGoalsFor,
       awayValue: awayTeam.stats.avgGoalsFor,
       maxValue: Math.max(homeTeam.stats.avgGoalsFor, awayTeam.stats.avgGoalsFor, 3),
-      unit: ' gol/maç',
+      unit: t('matchDetail.visualComparisonCard.units.goalsPerMatch'),
     },
     {
-      label: 'Savunma',
-      homeValue: 100 - (homeTeam.stats.avgGoalsAgainst * 20), // Invert: less goals = higher score
-      awayValue: 100 - (awayTeam.stats.avgGoalsAgainst * 20),
+      label: t('matchDetail.visualComparisonCard.metrics.defense'),
+      homeValue: 100 - homeTeam.stats.avgGoalsAgainst * 20,
+      awayValue: 100 - awayTeam.stats.avgGoalsAgainst * 20,
       maxValue: 100,
-      unit: ' (az gol = iyi)',
+      unit: t('matchDetail.visualComparisonCard.units.defenseHint'),
       showOriginal: true,
       homeOriginal: homeTeam.stats.avgGoalsAgainst,
       awayOriginal: awayTeam.stats.avgGoalsAgainst,
@@ -61,8 +63,8 @@ export function VisualComparisonCard({ homeTeam, awayTeam }: VisualComparisonCar
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Performans Karşılaştırması</Text>
-      <Text style={styles.subtitle}>İki takımın metriklerini görsel olarak karşılaştırın</Text>
+      <Text style={styles.title}>{t('matchDetail.visualComparisonCard.title')}</Text>
+      <Text style={styles.subtitle}>{t('matchDetail.visualComparisonCard.subtitle')}</Text>
 
       <View style={styles.metricsContainer}>
         {metrics.map((metric, index) => {
@@ -254,4 +256,3 @@ const getStyles = () => {
 };
 
 const styles = getStyles();
-

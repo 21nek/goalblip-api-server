@@ -15,15 +15,23 @@ import {
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Avatar } from '@/components/ui/avatar';
+import { Icon } from '@/components/ui/icon';
 import { useMatches } from '@/hooks/useMatches';
 import { useTeamAssets } from '@/hooks/useTeamAssets';
+import { useTranslation } from '@/hooks/useTranslation';
+import { useLocale } from '@/providers/locale-provider';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
+import { timeSince } from '@/lib/match-helpers';
+import { getStatusKey, STATUS_TRANSLATION_KEYS } from '@/lib/status-labels';
 import type { MatchSummary } from '@/types/match';
 
 const ALL = 'ALL';
+const UNKNOWN_LEAGUE_KEY = '__unknown__';
 
 export default function MatchesScreen() {
   const router = useRouter();
+  const t = useTranslation();
+  const { locale } = useLocale();
   const { getViewData, initialLoading, refreshView, viewStatus, errors } = useMatches();
   const [view, setView] = useState<'today' | 'tomorrow'>('today');
   const [search, setSearch] = useState('');
@@ -35,19 +43,22 @@ export default function MatchesScreen() {
   const loading = initialLoading && !current;
   const error = errors[view];
 
+  const unknownLeagueLabel = t('common.unknownLeague');
+
   const leagueCounts = useMemo(() => {
     const base = current?.matches ?? [];
-    const counts = base.reduce<Record<string, { name: string; total: number }>>(
+    const counts = base.reduce<Record<string, { key: string; name: string; total: number }>>(
       (acc, match) => {
-        const key = match.league || 'Lig Bilinmiyor';
-        acc[key] = acc[key] || { name: key, total: 0 };
+        const key = match.league || UNKNOWN_LEAGUE_KEY;
+        const name = match.league || unknownLeagueLabel;
+        acc[key] = acc[key] || { key, name, total: 0 };
         acc[key].total += 1;
         return acc;
       },
       {}
     );
     return Object.values(counts).sort((a, b) => b.total - a.total);
-  }, [current?.matches]);
+  }, [current?.matches, unknownLeagueLabel]);
 
   const data = useMemo(() => {
     if (!current?.matches) return [];
@@ -80,7 +91,7 @@ export default function MatchesScreen() {
     // League filter
     if (selectedLeagues.length) {
       base = base.filter((match) =>
-        selectedLeagues.includes(match.league || 'Lig Bilinmiyor')
+        selectedLeagues.includes(match.league || UNKNOWN_LEAGUE_KEY)
       );
     }
     
@@ -117,15 +128,23 @@ export default function MatchesScreen() {
     setSearch('');
   }
 
+  const formattedLastRefresh = lastRefreshTime
+    ? timeSince(lastRefreshTime.toISOString(), { translator: t })
+    : null;
+  const lastRefreshClock = lastRefreshTime
+    ? new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(lastRefreshTime)
+    : null;
+
   return (
-    <AppShell title="Fikstür">
+    <AppShell title={t('matchesScreen.title')}>
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTop}>
-            <Text style={styles.title}>Maç Fikstürü</Text>
+            <Text style={styles.title}>{t('matchesScreen.title')}</Text>
             {lastRefreshTime && (
               <Text style={styles.lastRefresh}>
-                Son güncelleme: {lastRefreshTime.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}
+                {t('matchesScreen.lastRefresh')}: {lastRefreshClock}
+                {formattedLastRefresh ? ` • ${formattedLastRefresh}` : ''}
               </Text>
             )}
           </View>
@@ -138,7 +157,9 @@ export default function MatchesScreen() {
               activeOpacity={0.7}
             >
                 <Text style={[styles.tabText, view === item && styles.tabTextActive]}>
-                  {item === 'today' ? 'Bugün' : 'Yarın'}
+                  {item === 'today'
+                    ? t('matchesScreen.tabs.today')
+                    : t('matchesScreen.tabs.tomorrow')}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -157,16 +178,16 @@ export default function MatchesScreen() {
             activeOpacity={0.7}
           >
             <Text style={[styles.chipText, !selectedLeagues.length && styles.chipTextActive]}>
-              Tüm ligler
+              {t('matchesScreen.allLeagues')}
             </Text>
           </TouchableOpacity>
           {leagueCounts.map((entry) => {
-            const active = selectedLeagues.includes(entry.name);
+            const active = selectedLeagues.includes(entry.key);
             return (
               <TouchableOpacity
-                key={entry.name}
+                key={entry.key}
                 style={[styles.chip, active && styles.chipActive]}
-                onPress={() => toggleLeague(entry.name)}
+                onPress={() => toggleLeague(entry.key)}
                 activeOpacity={0.7}
               >
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>
@@ -182,7 +203,7 @@ export default function MatchesScreen() {
             <Icon name="search" size={20} color={colors.textTertiary} />
           </View>
           <TextInput
-            placeholder="Takım veya lig ara"
+            placeholder={t('matchesScreen.searchPlaceholder')}
             placeholderTextColor={colors.textTertiary}
             value={search}
             onChangeText={setSearch}
@@ -199,21 +220,21 @@ export default function MatchesScreen() {
         {selectedLeagues.length || search ? (
           <TouchableOpacity onPress={clearFilters} style={styles.clearFilter}>
             <Icon name="close-circle" size={16} color={colors.accent} />
-            <Text style={styles.clearFilterText}>Filtreleri temizle</Text>
+            <Text style={styles.clearFilterText}>{t('matchesScreen.clearFilters')}</Text>
           </TouchableOpacity>
         ) : null}
         
         {loading ? (
           <View style={styles.loading}>
             <ActivityIndicator color={colors.accent} size="large" />
-            <Text style={styles.loadingText}>Maçlar yükleniyor...</Text>
+            <Text style={styles.loadingText}>{t('matchesScreen.loading')}</Text>
           </View>
         ) : error ? (
           <View style={styles.errorContainer}>
             <EmptyState
               icon="warning"
-              title="Veri Yüklenemedi"
-              message={`${error}\n\nLütfen internet bağlantınızı kontrol edin ve tekrar deneyin.`}
+              title={t('home.dataLoadError')}
+              message={`${error}\n\n${t('home.dataLoadErrorMessage')}`}
               action={
                 <TouchableOpacity
                   style={styles.retryButton}
@@ -224,7 +245,7 @@ export default function MatchesScreen() {
                   }}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.retryButtonText}>Tekrar Dene</Text>
+                  <Text style={styles.retryButtonText}>{t('common.retry')}</Text>
                 </TouchableOpacity>
               }
             />
@@ -232,11 +253,11 @@ export default function MatchesScreen() {
         ) : data.length === 0 ? (
           <EmptyState
             icon="search"
-            title="Maç Bulunamadı"
+            title={t('matchesScreen.emptyTitle')}
             message={
               search || selectedLeagues.length
-                ? 'Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.'
-                : 'Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!'
+                ? t('matchesScreen.emptyFiltered')
+                : t('matchesScreen.emptyMessage')
             }
             action={
               (search || selectedLeagues.length) && (
@@ -245,7 +266,7 @@ export default function MatchesScreen() {
                   onPress={clearFilters}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.retryButtonText}>Filtreleri Temizle</Text>
+                  <Text style={styles.retryButtonText}>{t('matchesScreen.clearFilters')}</Text>
                 </TouchableOpacity>
               )
             }
@@ -281,7 +302,7 @@ export default function MatchesScreen() {
                   setRefreshing(false);
                   setLastRefreshTime(new Date());
                 }}
-                title="Yenileniyor..."
+                title={t('home.refreshing')}
                 titleColor={colors.textTertiary}
               />
             }
@@ -295,27 +316,34 @@ export default function MatchesScreen() {
 
 const MatchRow = memo(function MatchRow({ match, onPress }: { match: MatchSummary; onPress: () => void }) {
   const assets = useTeamAssets(match.matchId);
+  const t = useTranslation();
+  const leagueLabel = match.league || t('matchDetail.leagueInfo');
+  const statusKey = getStatusKey(match.statusLabel);
+  const statusLabel = statusKey
+    ? t(STATUS_TRANSLATION_KEYS[statusKey])
+    : match.statusLabel || t('matchesScreen.statusFallback');
+  const vsLabel = t('match.vs');
   return (
     <TouchableOpacity style={styles.matchCard} onPress={onPress} activeOpacity={0.7}>
       <View style={styles.cardHeader}>
         <View style={styles.leagueInfo}>
-          <Text style={styles.league}>{match.league || 'Lig Bilgisi'}</Text>
+          <Text style={styles.league}>{leagueLabel}</Text>
         </View>
-        <Text style={styles.kickoff}>{match.kickoffTime || '--:--'}</Text>
+        <Text style={styles.kickoff}>{match.kickoffTimeDisplay || match.kickoffTime || '--:--'}</Text>
       </View>
       <View style={styles.teamsRow}>
         <View style={styles.teamBlock}>
           <TeamAvatar name={match.homeTeam} logo={assets?.homeLogo} />
           <Text style={styles.team}>{match.homeTeam}</Text>
         </View>
-        <Text style={styles.vs}>vs</Text>
+        <Text style={styles.vs}>{vsLabel}</Text>
         <View style={[styles.teamBlock, styles.teamBlockRight]}>
           <Text style={[styles.team, styles.teamRight]}>{match.awayTeam}</Text>
           <TeamAvatar name={match.awayTeam} logo={assets?.awayLogo} />
         </View>
       </View>
       <View style={styles.statusRow}>
-        <Text style={styles.status}>{match.statusLabel || 'Hazırlık'}</Text>
+        <Text style={styles.status}>{statusLabel}</Text>
         <Text style={styles.matchId}>#{match.matchId}</Text>
       </View>
     </TouchableOpacity>
@@ -566,4 +594,3 @@ const styles = StyleSheet.create({
     height: spacing.md,
   },
 });
-

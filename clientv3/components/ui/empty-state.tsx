@@ -3,7 +3,7 @@ import { colors, spacing, typography, borderRadius, shadows } from '@/lib/theme'
 import { Icon } from './icon';
 
 type EmptyStateProps = {
-  icon?: 'empty' | 'warning' | 'error' | 'search' | 'robot' | 'star';
+  icon?: 'empty' | 'warning' | 'error' | 'search' | 'robot' | 'star' | 'information-circle';
   title: string;
   message?: string;
   action?: React.ReactNode;
@@ -57,4 +57,3 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
 });
-

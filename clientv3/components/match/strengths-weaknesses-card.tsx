@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { Icon } from '@/components/ui/icon';
+import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
 
 type StrengthsWeaknessesCardProps = {
@@ -15,50 +16,59 @@ type StrengthsWeaknessesCardProps = {
 };
 
 export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknessesCardProps) {
+  const t = useTranslation();
   const analyzeTeam = (team: { name: string; stats: FormStats }) => {
     const strengths: string[] = [];
     const weaknesses: string[] = [];
 
     // Form analysis
     if (team.stats.formScore >= 70) {
-      strengths.push('Yüksek form skoru');
+      strengths.push(t('matchDetail.strengthsWeaknessesCard.strengths.formHigh'));
     } else if (team.stats.formScore < 40) {
-      weaknesses.push('Düşük form skoru');
+      weaknesses.push(t('matchDetail.strengthsWeaknessesCard.weaknesses.formLow'));
     }
 
     // Win rate
     if (team.stats.winRate >= 60) {
-      strengths.push('Yüksek kazanma oranı');
+      strengths.push(t('matchDetail.strengthsWeaknessesCard.strengths.winRateHigh'));
     } else if (team.stats.winRate < 30) {
-      weaknesses.push('Düşük kazanma oranı');
+      weaknesses.push(t('matchDetail.strengthsWeaknessesCard.weaknesses.winRateLow'));
     }
 
     // Goal scoring
     if (team.stats.avgGoalsFor >= 2) {
-      strengths.push('Güçlü hücum (gol atma)');
+      strengths.push(t('matchDetail.strengthsWeaknessesCard.strengths.attackStrong'));
     } else if (team.stats.avgGoalsFor < 1) {
-      weaknesses.push('Zayıf hücum (az gol)');
+      weaknesses.push(t('matchDetail.strengthsWeaknessesCard.weaknesses.attackWeak'));
     }
 
     // Defense
     if (team.stats.avgGoalsAgainst <= 0.8) {
-      strengths.push('Güçlü savunma (az gol yeme)');
+      strengths.push(t('matchDetail.strengthsWeaknessesCard.strengths.defenseStrong'));
     } else if (team.stats.avgGoalsAgainst >= 2) {
-      weaknesses.push('Zayıf savunma (çok gol yeme)');
+      weaknesses.push(t('matchDetail.strengthsWeaknessesCard.weaknesses.defenseWeak'));
     }
 
     // Goal difference
     if (team.stats.goalDifference >= 1) {
-      strengths.push('Pozitif gol farkı');
+      strengths.push(t('matchDetail.strengthsWeaknessesCard.strengths.goalDiffPositive'));
     } else if (team.stats.goalDifference <= -1) {
-      weaknesses.push('Negatif gol farkı');
+      weaknesses.push(t('matchDetail.strengthsWeaknessesCard.weaknesses.goalDiffNegative'));
     }
 
     // Streak
     if (team.stats.currentStreak === 'win' && team.stats.streakCount >= 3) {
-      strengths.push(`${team.stats.streakCount} maç kazanma serisi`);
+      strengths.push(
+        t('matchDetail.strengthsWeaknessesCard.strengths.winStreak', {
+          count: team.stats.streakCount,
+        }),
+      );
     } else if (team.stats.currentStreak === 'loss' && team.stats.streakCount >= 3) {
-      weaknesses.push(`${team.stats.streakCount} maç kaybetme serisi`);
+      weaknesses.push(
+        t('matchDetail.strengthsWeaknessesCard.weaknesses.lossStreak', {
+          count: team.stats.streakCount,
+        }),
+      );
     }
 
     return { strengths, weaknesses };
@@ -69,16 +79,16 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Güçlü ve Zayıf Yönler</Text>
-      <Text style={styles.subtitle}>Her takımın performans analizi</Text>
+      <Text style={styles.title}>{t('matchDetail.strengthsWeaknessesCard.title')}</Text>
+      <Text style={styles.subtitle}>{t('matchDetail.strengthsWeaknessesCard.subtitle')}</Text>
 
       <View style={styles.teamsContainer}>
         {/* Home Team */}
         <View style={styles.teamSection}>
           <View style={styles.teamHeader}>
-            <Text style={styles.teamName}>{homeTeam.name}</Text>
+              <Text style={styles.teamName}>{homeTeam.name}</Text>
             <View style={styles.homeBadge}>
-              <Text style={styles.homeBadgeText}>EV</Text>
+              <Text style={styles.homeBadgeText}>{t('matchDetail.teams.homeShort')}</Text>
             </View>
           </View>
 
@@ -86,7 +96,7 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Icon name="checkmark-circle" size={16} color={colors.success} />
-                <Text style={styles.sectionTitle}>Güçlü Yönler</Text>
+                <Text style={styles.sectionTitle}>{t('matchDetail.strengthsWeaknessesCard.strengthsTitle')}</Text>
               </View>
               {homeAnalysis.strengths.map((strength, index) => (
                 <View key={index} style={styles.item}>
@@ -101,7 +111,9 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Icon name="warning" size={16} color={colors.error} />
-                <Text style={[styles.sectionTitle, { color: colors.error }]}>Zayıf Yönler</Text>
+                <Text style={[styles.sectionTitle, { color: colors.error }]}>
+                  {t('matchDetail.strengthsWeaknessesCard.weaknessesTitle')}
+                </Text>
               </View>
               {homeAnalysis.weaknesses.map((weakness, index) => (
                 <View key={index} style={styles.item}>
@@ -113,16 +125,16 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
           )}
 
           {homeAnalysis.strengths.length === 0 && homeAnalysis.weaknesses.length === 0 && (
-            <Text style={styles.noData}>Yeterli veri yok</Text>
+            <Text style={styles.noData}>{t('matchDetail.strengthsWeaknessesCard.noData')}</Text>
           )}
         </View>
 
         {/* Away Team */}
         <View style={styles.teamSection}>
           <View style={styles.teamHeader}>
-            <Text style={styles.teamName}>{awayTeam.name}</Text>
+              <Text style={styles.teamName}>{awayTeam.name}</Text>
             <View style={styles.awayBadge}>
-              <Text style={styles.awayBadgeText}>DEP</Text>
+              <Text style={styles.awayBadgeText}>{t('matchDetail.teams.awayShort')}</Text>
             </View>
           </View>
 
@@ -130,7 +142,7 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Icon name="checkmark-circle" size={16} color={colors.success} />
-                <Text style={styles.sectionTitle}>Güçlü Yönler</Text>
+                <Text style={styles.sectionTitle}>{t('matchDetail.strengthsWeaknessesCard.strengthsTitle')}</Text>
               </View>
               {awayAnalysis.strengths.map((strength, index) => (
                 <View key={index} style={styles.item}>
@@ -145,7 +157,9 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Icon name="warning" size={16} color={colors.error} />
-                <Text style={[styles.sectionTitle, { color: colors.error }]}>Zayıf Yönler</Text>
+                <Text style={[styles.sectionTitle, { color: colors.error }]}>
+                  {t('matchDetail.strengthsWeaknessesCard.weaknessesTitle')}
+                </Text>
               </View>
               {awayAnalysis.weaknesses.map((weakness, index) => (
                 <View key={index} style={styles.item}>
@@ -157,7 +171,7 @@ export function StrengthsWeaknessesCard({ homeTeam, awayTeam }: StrengthsWeaknes
           )}
 
           {awayAnalysis.strengths.length === 0 && awayAnalysis.weaknesses.length === 0 && (
-            <Text style={styles.noData}>Yeterli veri yok</Text>
+            <Text style={styles.noData}>{t('matchDetail.strengthsWeaknessesCard.noData')}</Text>
           )}
         </View>
       </View>
@@ -275,4 +289,3 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
 });
-

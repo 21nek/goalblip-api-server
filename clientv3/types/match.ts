@@ -2,7 +2,10 @@ export type MatchSummary = {
   order: number;
   matchId: number;
   league: string | null;
-  kickoffTime: string | null;
+  kickoffTime: string | null; // Legacy - use kickoffTimeDisplay
+  kickoffIsoUtc?: string | null; // Canonical UTC time
+  kickoffTimezone?: string | null; // IANA timezone (e.g., "Europe/Istanbul")
+  kickoffTimeDisplay?: string | null; // Formatted time for current timezone
   statusLabel: string | null;
   homeTeam: string;
   homeSideCode?: string | null;
@@ -14,6 +17,8 @@ export type MatchListResponse = {
   view: 'today' | 'tomorrow';
   dataDate: string;
   locale: string;
+  timezone?: string; // IANA timezone (e.g., "Europe/Istanbul")
+  timezoneId?: string; // Preset ID (e.g., "ISTANBUL")
   url: string;
   scrapedAt: string;
   totalMatches: number;
@@ -29,6 +34,8 @@ export type MatchDetailPendingResponse = {
 
 export type MatchDetail = {
   locale: string;
+  timezone?: string; // IANA timezone (e.g., "Europe/Istanbul")
+  timezoneId?: string; // Preset ID (e.g., "ISTANBUL")
   matchId: number;
   url: string;
   scrapedAt: string;
@@ -42,8 +49,10 @@ export type MatchDetail = {
     homeTeam?: { name?: string | null; score?: number | null; logo?: string | null };
     awayTeam?: { name?: string | null; score?: number | null; logo?: string | null };
     halftimeScore?: string | null;
-    kickoff?: string | null;
-    kickoffTimezone?: string | null;
+    kickoff?: string | null; // Legacy - use kickoffTimeDisplay
+    kickoffIsoUtc?: string | null; // Canonical UTC time
+    kickoffTimezone?: string | null; // IANA timezone (e.g., "Europe/Istanbul")
+    kickoffTimeDisplay?: string | null; // Formatted time for current timezone
     info?: string[] | null;
   };
   highlightPredictions?: Array<{
