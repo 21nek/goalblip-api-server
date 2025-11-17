@@ -20,6 +20,7 @@ type FilterSectionProps = {
   activeFiltersCount: number;
   onClearFilters: () => void;
   onOpenLeagueModal: () => void;
+  onOpenFilterSortModal: () => void;
 };
 
 export const FilterSection = memo(function FilterSection({
@@ -31,6 +32,7 @@ export const FilterSection = memo(function FilterSection({
   activeFiltersCount,
   onClearFilters,
   onOpenLeagueModal,
+  onOpenFilterSortModal,
 }: FilterSectionProps) {
   const t = useTranslation();
   const styles = getStyles(selectedLeagues.length > 0);
@@ -85,6 +87,26 @@ export const FilterSection = memo(function FilterSection({
             ) : (
               <Text style={styles.leagueButtonSubtext}>{t('filter.allLeagues')}</Text>
             )}
+          </View>
+        </View>
+        <Icon name="chevron-right" size={20} color={colors.textTertiary} />
+      </TouchableOpacity>
+
+      {/* Filter & Sort Settings Button */}
+      <TouchableOpacity
+        style={styles.filterSortButton}
+        onPress={onOpenFilterSortModal}
+        activeOpacity={0.7}
+      >
+        <View style={styles.filterSortButtonContent}>
+          <Icon
+            name="settings"
+            size={20}
+            color={colors.textSecondary}
+          />
+          <View style={styles.filterSortButtonTextContainer}>
+            <Text style={styles.filterSortButtonLabel}>{t('filter.filterSortSettings')}</Text>
+            <Text style={styles.filterSortButtonSubtext}>{t('filter.filterSortSettingsDescription')}</Text>
           </View>
         </View>
         <Icon name="chevron-right" size={20} color={colors.textTertiary} />
@@ -202,6 +224,39 @@ const getStyles = (hasSelections: boolean) => {
     fontWeight: '500',
   },
   leagueButtonSubtext: {
+    ...typography.caption,
+    color: colors.textTertiary,
+  },
+  filterSortButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.bgSecondary,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginHorizontal: containerPadding,
+    marginBottom: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    minHeight: 56,
+    ...shadows.subtle,
+  },
+  filterSortButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  filterSortButtonTextContainer: {
+    marginLeft: spacing.md,
+    flex: 1,
+  },
+  filterSortButtonLabel: {
+    ...typography.body,
+    color: colors.textPrimary,
+    fontWeight: '600',
+    marginBottom: spacing.xs / 2,
+  },
+  filterSortButtonSubtext: {
     ...typography.caption,
     color: colors.textTertiary,
   },

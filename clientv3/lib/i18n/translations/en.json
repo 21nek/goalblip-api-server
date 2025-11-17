@@ -23,7 +23,13 @@
       "hours": "{count}h",
       "days": "{count}d"
     },
-    "settings": "Settings"
+    "settings": "Settings",
+    "menu": "Menu"
+  },
+  "drawer": {
+    "title": "Matches",
+    "searchPrompt": "Search Matches",
+    "searchPromptDescription": "Search for matches by typing team or league name"
   },
   "home": {
     "today": "Today",
@@ -35,6 +41,7 @@
     "refreshing": "Refreshing...",
     "dataLoadError": "Failed to Load Data",
     "dataLoadErrorMessage": "Please check your internet connection and try again.",
+    "loadingMore": "Loading more...",
     "topLeagues": {
       "matches": "{count} matches",
       "firstMatch": "First kickoff {time}",
@@ -53,7 +60,25 @@
     "leaguesSelected": "{count} leagues selected",
     "clearAll": "Clear All",
     "all": "All",
-    "matches": "matches"
+    "matches": "matches",
+    "filterSortSettings": "Filter Settings",
+    "filterSortSettingsDescription": "Sorting and view options"
+  },
+  "filterSort": {
+    "title": "Filters & Sort",
+    "tabs": {
+      "filters": "Filters",
+      "sort": "Sort",
+      "view": "View"
+    },
+    "sortByLeague": "By League",
+    "sortByTime": "By Time",
+    "sortByDate": "By Date",
+    "sortByTeam": "By Team Name",
+    "viewGrouped": "Group by League",
+    "viewGroupedDescription": "Show matches under league headers",
+    "viewFlat": "Flat List",
+    "viewFlatDescription": "Show all matches without league headers"
   },
   "match": {
     "live": "Live",
@@ -384,7 +409,8 @@
   "favoritesScreen": {
     "title": "Favorites",
     "emptyTitle": "No Favorite Matches",
-    "emptyMessage": "You haven't added any matches to favorites yet.\n\nTap the star icon on match cards to add them here."
+    "emptyMessage": "You haven't added any matches to favorites yet.\n\nTap the star icon on match cards to add them here.",
+    "loading": "Loading..."
   },
   "errors": {
     "timeout": "The request timed out. Please check your connection and try again.",

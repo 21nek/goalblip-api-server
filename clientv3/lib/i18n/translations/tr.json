@@ -23,7 +23,13 @@
       "hours": "{count} sa",
       "days": "{count} g"
     },
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "menu": "Menü"
+  },
+  "drawer": {
+    "title": "Maçlar",
+    "searchPrompt": "Maç Ara",
+    "searchPromptDescription": "Takım veya lig adı yazarak maç arayabilirsiniz"
   },
   "home": {
     "today": "Bugün",
@@ -35,6 +41,7 @@
     "refreshing": "Yenileniyor...",
     "dataLoadError": "Veri Yüklenemedi",
     "dataLoadErrorMessage": "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "loadingMore": "Daha fazla yükleniyor...",
     "topLeagues": {
       "matches": "{count} maç",
       "firstMatch": "İlk maç {time}",
@@ -53,7 +60,25 @@
     "leaguesSelected": "{count} lig seçili",
     "clearAll": "Temizle",
     "all": "Tümü",
-    "matches": "maç"
+    "matches": "maç",
+    "filterSortSettings": "Filtreleme Ayarları",
+    "filterSortSettingsDescription": "Sıralama ve görünüm seçenekleri"
+  },
+  "filterSort": {
+    "title": "Filtreler ve Sıralama",
+    "tabs": {
+      "filters": "Filtreler",
+      "sort": "Sıralama",
+      "view": "Görünüm"
+    },
+    "sortByLeague": "Liglere Göre",
+    "sortByTime": "Saate Göre",
+    "sortByDate": "Tarihe Göre",
+    "sortByTeam": "Takım Adına Göre",
+    "viewGrouped": "Liglere Göre Grupla",
+    "viewGroupedDescription": "Maçları lig başlıkları altında göster",
+    "viewFlat": "Düz Liste",
+    "viewFlatDescription": "Tüm maçları lig başlığı olmadan göster"
   },
   "match": {
     "live": "Canlı",
@@ -384,7 +409,8 @@
   "favoritesScreen": {
     "title": "Favoriler",
     "emptyTitle": "Favori Maç Yok",
-    "emptyMessage": "Henüz favorilere eklenmiş maç bulunmuyor.\n\nMaç kartlarındaki yıldız ikonuna tıklayarak maçları favorilerinize ekleyebilirsiniz."
+    "emptyMessage": "Henüz favorilere eklenmiş maç bulunmuyor.\n\nMaç kartlarındaki yıldız ikonuna tıklayarak maçları favorilerinize ekleyebilirsiniz.",
+    "loading": "Yükleniyor..."
   },
   "errors": {
     "timeout": "İstek zaman aşımına uğradı. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",

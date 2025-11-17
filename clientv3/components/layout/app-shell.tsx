@@ -1,9 +1,11 @@
 import { usePathname, useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { Icon } from '@/components/ui/icon';
 import { useTranslation } from '@/hooks/useTranslation';
+import { DrawerMenu } from '@/components/layout/drawer-menu';
 import logoSquare from '@/assets/logo_square.png';
 
 type AppShellProps = {
@@ -18,6 +20,8 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslation();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const styles = getStyles(showBackButton);
 
   const SafeAreaWrapper = Platform.OS === 'web' ? View : SafeAreaView;
   const safeAreaProps = Platform.OS === 'web' 
@@ -26,55 +30,84 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
   
   return (
     <SafeAreaWrapper style={styles.safeArea} {...safeAreaProps}>
-      <View style={styles.header}>
-        {showBackButton ? (
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => {
-              if (router.canGoBack()) {
-                router.back();
-              } else {
-                router.replace('/');
-              }
-            }}
-            accessibilityRole="button"
-            accessibilityLabel={t('common.back')}
-          >
-            <Icon name="arrow-back" size={20} color={colors.accent} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.logoButton}
-            onPress={() => {
-              if (pathname !== '/') {
-                router.push('/');
-              }
-            }}
-            accessibilityRole="button"
-            accessibilityLabel={t('common.home')}
-          >
-            <Image source={logoSquare} style={styles.logoImage} resizeMode="contain" />
-          </TouchableOpacity>
-        )}
-        
-        <View style={styles.brandBlock}>
-          <Text style={styles.brand}>GoalBlip</Text>
-          {title ? <Text style={styles.subtitle}>{title}</Text> : null}
+      <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <View style={styles.leftSection}>
+            {showBackButton ? (
+              <>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => {
+                    if (router.canGoBack()) {
+                      router.back();
+                    } else {
+                      router.replace('/');
+                    }
+                  }}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.back')}
+                  activeOpacity={0.7}
+                >
+                  <Icon name="arrow-back" size={24} color={colors.textPrimary} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.iconButton, styles.menuButtonWithBack]}
+                  onPress={() => setDrawerVisible(true)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t('common.menu')}
+                  activeOpacity={0.7}
+                >
+                  <Icon name="menu" size={24} color={colors.textPrimary} />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() => setDrawerVisible(true)}
+                accessibilityRole="button"
+                accessibilityLabel={t('common.menu')}
+                activeOpacity={0.7}
+              >
+                <Icon name="menu" size={24} color={colors.textPrimary} />
+              </TouchableOpacity>
+            )}
+          </View>
+          
+          {title ? (
+            <View style={styles.titleContainer}>
+              <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+                {title}
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.centerSection}>
+              <Image source={logoSquare} style={styles.centerLogo} resizeMode="contain" />
+              <Text style={styles.brand}>GoalBlip</Text>
+            </View>
+          )}
+          
+          <View style={styles.rightSection}>
+            {rightSlot ? rightSlot : <View style={styles.rightPlaceholder} />}
+          </View>
         </View>
-        
-        {rightSlot ? <View style={styles.rightSlot}>{rightSlot}</View> : null}
       </View>
       
       {children}
       
       {showBottomNav && (
-        <BottomNavigation pathname={pathname} router={router} />
+        <BottomNavigation pathname={pathname} router={router} styles={styles} />
       )}
+
+      {/* Drawer Menu */}
+      <DrawerMenu
+        visible={drawerVisible}
+        onClose={() => setDrawerVisible(false)}
+      />
     </SafeAreaWrapper>
   );
 }
 
-function BottomNavigation({ pathname, router }: { pathname: string; router: any }) {
+function BottomNavigation({ pathname, router, styles }: { pathname: string; router: any; styles: ReturnType<typeof getStyles> }) {
   const t = useTranslation();
   const tabs = [
     { path: '/', label: t('common.home'), icon: 'football' as const },
@@ -120,19 +153,32 @@ function BottomNavigation({ pathname, router }: { pathname: string; router: any 
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (showBackButton: boolean) => StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.bgPrimary,
   },
+  headerContainer: {
+    backgroundColor: colors.bgSecondary,
+    ...shadows.elevated,
+  },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
-    // Not sticky - scrolls with content
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.md,
+    minHeight: Platform.OS === 'ios' ? 44 : 56,
+    backgroundColor: 'transparent',
+  },
+  leftSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: showBackButton ? 96 : 48,
+    justifyContent: 'flex-start',
+  },
+  menuButtonWithBack: {
+    marginLeft: spacing.xs,
   },
   iconButton: {
     width: 44,
@@ -140,35 +186,48 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.bgSecondary,
-    ...shadows.subtle,
+    backgroundColor: Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.05)' : 'transparent',
   },
-  logoButton: {
-    width: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoImage: {
-    width: 36,
-    height: 36,
-  },
-  brandBlock: {
+  centerSection: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.md,
+  },
+  centerLogo: {
+    width: 32,
+    height: 32,
+    marginBottom: spacing.xs / 2,
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.md,
+  },
+  title: {
+    ...typography.h3,
+    color: colors.textPrimary,
+    fontSize: Platform.OS === 'ios' ? 17 : 18,
+    fontWeight: '700',
+    textAlign: 'center',
+    letterSpacing: Platform.OS === 'ios' ? -0.4 : 0,
   },
   brand: {
-    ...typography.body,
+    ...typography.bodySmall,
     color: colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
-  subtitle: {
-    ...typography.caption,
-    color: colors.textTertiary,
+  rightSection: {
+    width: 48,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
-  rightSlot: {
-    marginLeft: spacing.sm,
+  rightPlaceholder: {
+    width: 44,
+    height: 44,
   },
   bottomNav: {
     flexDirection: 'row',
@@ -195,3 +254,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+const styles = getStyles(false);

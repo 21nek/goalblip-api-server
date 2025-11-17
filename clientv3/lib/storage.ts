@@ -1,10 +1,9 @@
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Simple storage abstraction for web and native
+// Storage abstraction for web and native
 // For web: uses localStorage
-// For native: uses a simple in-memory store (can be replaced with AsyncStorage later)
-
-const storage: Record<string, string> = {};
+// For native: uses AsyncStorage (persistent storage)
 
 export async function getItem(key: string): Promise<string | null> {
   if (Platform.OS === 'web') {
@@ -15,8 +14,13 @@ export async function getItem(key: string): Promise<string | null> {
       return null;
     }
   }
-  // Native: use in-memory storage for now
-  return storage[key] || null;
+  // Native: use AsyncStorage
+  try {
+    return await AsyncStorage.getItem(key);
+  } catch (error) {
+    console.error('[Storage] Failed to get item:', error);
+    return null;
+  }
 }
 
 export async function setItem(key: string, value: string): Promise<void> {
@@ -28,8 +32,12 @@ export async function setItem(key: string, value: string): Promise<void> {
     }
     return;
   }
-  // Native: use in-memory storage for now
-  storage[key] = value;
+  // Native: use AsyncStorage
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (error) {
+    console.error('[Storage] Failed to set item:', error);
+  }
 }
 
 export async function removeItem(key: string): Promise<void> {
@@ -41,7 +49,11 @@ export async function removeItem(key: string): Promise<void> {
     }
     return;
   }
-  // Native: use in-memory storage for now
-  delete storage[key];
+  // Native: use AsyncStorage
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (error) {
+    console.error('[Storage] Failed to remove item:', error);
+  }
 }
 

@@ -4,6 +4,7 @@ import { SplashScreen, useRouter, useSegments } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { LocaleProvider, useLocale } from '@/providers/locale-provider';
 import { MatchesProvider } from '@/providers/matches-provider';
+import { FavoritesProvider } from '@/providers/favorites-provider';
 
 // Global error handler
 const errorUtils = (globalThis as {
@@ -45,13 +46,20 @@ function RootLayoutContent() {
         contentStyle: { backgroundColor: '#050814' },
         // No animations - instant transitions
         animation: 'none',
-        // Disable gestures for instant feel
-        gestureEnabled: false,
+        // Enable swipe gesture on both iOS and Android
+        // iOS: native behavior, Android: some users prefer it
+        gestureEnabled: true,
         // Optimize performance
         freezeOnBlur: false,
       }}
     >
-      <Stack.Screen name="initial-setup" />
+      <Stack.Screen 
+        name="initial-setup"
+        options={{
+          // Disable swipe back on initial setup (user must complete it)
+          gestureEnabled: false,
+        }}
+      />
       <Stack.Screen name="index" />
       <Stack.Screen name="favorites" />
       <Stack.Screen name="settings" />
@@ -80,9 +88,11 @@ export default function RootLayout() {
 
   return (
     <LocaleProvider>
-      <MatchesProvider>
-        <RootLayoutContent />
-      </MatchesProvider>
+      <FavoritesProvider>
+        <MatchesProvider>
+          <RootLayoutContent />
+        </MatchesProvider>
+      </FavoritesProvider>
     </LocaleProvider>
   );
 }

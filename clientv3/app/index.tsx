@@ -10,6 +10,7 @@ import {
   View,
   Platform,
   ViewToken,
+  Animated,
 } from 'react-native';
 import { getContainerPadding } from '@/lib/responsive';
 
@@ -19,6 +20,7 @@ import { Skeleton, SkeletonCard } from '@/components/ui/skeleton';
 import { MatchCard } from '@/components/home/match-card';
 import { LeagueHeader } from '@/components/home/league-header';
 import { FilterSection } from '@/components/home/filter-section';
+import { FilterSortModal, type SortOption, type ViewOption } from '@/components/home/filter-sort-modal';
 import { LeagueSelectionModal } from '@/components/home/league-selection-modal';
 import { useMatches } from '@/hooks/useMatches';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -43,6 +45,12 @@ export default function HomeScreen() {
   const [selectedLeagues, setSelectedLeagues] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [leagueModalVisible, setLeagueModalVisible] = useState(false);
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [sortOption, setSortOption] = useState<SortOption>('league');
+  const [viewOption, setViewOption] = useState<ViewOption>('grouped');
+  const [itemsToShow, setItemsToShow] = useState(20);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   const current = view === 'today' ? today : tomorrow;
   const loading = initialLoading && !current;
@@ -65,7 +73,7 @@ export default function HomeScreen() {
     return Object.values(map).sort((a, b) => b.total - a.total);
   }, [current?.matches, unknownLeagueLabel]);
 
-  // Filter matches
+  // Filter and sort matches
   const filteredMatches = useMemo(() => {
     if (!current?.matches) return [];
     
@@ -109,11 +117,52 @@ export default function HomeScreen() {
       );
     }
     
+    // Sort matches based on sortOption
+    matches = [...matches].sort((a, b) => {
+      switch (sortOption) {
+        case 'time': {
+          // Sort by kickoff time (use kickoffTimeDisplay or kickoffIsoUtc)
+          const timeA = a.kickoffIsoUtc ? new Date(a.kickoffIsoUtc).getTime() : 0;
+          const timeB = b.kickoffIsoUtc ? new Date(b.kickoffIsoUtc).getTime() : 0;
+          return timeA - timeB;
+        }
+        case 'date': {
+          // Sort by date then time
+          const dateA = a.kickoffIsoUtc ? new Date(a.kickoffIsoUtc) : new Date(0);
+          const dateB = b.kickoffIsoUtc ? new Date(b.kickoffIsoUtc) : new Date(0);
+          const dateDiff = dateA.getTime() - dateB.getTime();
+          if (dateDiff !== 0) return dateDiff;
+          // If same date, sort by time
+          return dateA.getTime() - dateB.getTime();
+        }
+        case 'team': {
+          // Sort alphabetically by home team name
+          const nameA = (a.homeTeam || '').toLowerCase();
+          const nameB = (b.homeTeam || '').toLowerCase();
+          return nameA.localeCompare(nameB);
+        }
+        case 'league':
+        default: {
+          // Sort by league name first, then by time within league
+          const leagueA = (a.league || unknownLeagueLabel).toLowerCase();
+          const leagueB = (b.league || unknownLeagueLabel).toLowerCase();
+          const leagueDiff = leagueA.localeCompare(leagueB);
+          if (leagueDiff !== 0) return leagueDiff;
+          // If same league, sort by time
+          const timeA = a.kickoffIsoUtc ? new Date(a.kickoffIsoUtc).getTime() : 0;
+          const timeB = b.kickoffIsoUtc ? new Date(b.kickoffIsoUtc).getTime() : 0;
+          return timeA - timeB;
+        }
+      }
+    });
+    
     return matches;
-  }, [current?.matches, current?.dataDate, view, selectedLeagues, search]);
+  }, [current?.matches, current?.dataDate, view, selectedLeagues, search, sortOption, unknownLeagueLabel]);
 
-  // Group matches by league
+  // Group matches by league (only if viewOption is 'grouped')
   const groupedMatches = useMemo(() => {
+    if (viewOption === 'flat') return {};
+    
     const grouped: Record<string, { label: string; matches: MatchSummary[] }> = {};
     filteredMatches.forEach((match) => {
       const key = match.league || UNKNOWN_LEAGUE_KEY;
@@ -124,25 +173,44 @@ export default function HomeScreen() {
       grouped[key].matches.push(match);
     });
     return grouped;
-  }, [filteredMatches, unknownLeagueLabel]);
+  }, [filteredMatches, unknownLeagueLabel, viewOption]);
 
-  // Create list items (league headers + matches)
-  const listItems = useMemo<ListItem[]>(() => {
+  // Create list items (league headers + matches or flat list)
+  const allListItems = useMemo<ListItem[]>(() => {
     const items: ListItem[] = [];
-    const leagues = Object.keys(groupedMatches).sort((a, b) =>
-      groupedMatches[a].label.localeCompare(groupedMatches[b].label),
-    );
     
-    leagues.forEach((key) => {
-      const entry = groupedMatches[key];
-      items.push({ type: 'league', key, label: entry.label });
-      entry.matches.forEach((match) => {
+    if (viewOption === 'flat') {
+      // Flat list - no league headers
+      filteredMatches.forEach((match) => {
         items.push({ type: 'match', match });
       });
-    });
+    } else {
+      // Grouped by league
+      const leagues = Object.keys(groupedMatches).sort((a, b) =>
+        groupedMatches[a].label.localeCompare(groupedMatches[b].label),
+      );
+      
+      leagues.forEach((key) => {
+        const entry = groupedMatches[key];
+        items.push({ type: 'league', key, label: entry.label });
+        entry.matches.forEach((match) => {
+          items.push({ type: 'match', match });
+        });
+      });
+    }
     
     return items;
-  }, [groupedMatches]);
+  }, [groupedMatches, filteredMatches, viewOption]);
+
+  // Paginated list items
+  const listItems = useMemo(() => {
+    return allListItems.slice(0, itemsToShow);
+  }, [allListItems, itemsToShow]);
+
+  // Reset pagination when filters/sort/view changes
+  useEffect(() => {
+    setItemsToShow(20);
+  }, [search, selectedLeagues, sortOption, viewOption, view]);
 
   // Get active filters count
   const activeFiltersCount = selectedLeagues.length;
@@ -180,9 +248,50 @@ export default function HomeScreen() {
     setLeagueModalVisible(false);
   }, []);
 
+  // Handle filter sort modal
+  const handleOpenFilterSortModal = useCallback(() => {
+    setFilterModalVisible(true);
+  }, []);
+
+  const handleCloseFilterSortModal = useCallback(() => {
+    setFilterModalVisible(false);
+  }, []);
+
   const handleSelectAllLeagues = useCallback(() => {
     setSelectedLeagues([]);
   }, []);
+
+  // Load more items
+  const handleLoadMore = useCallback(() => {
+    if (isLoadingMore || itemsToShow >= allListItems.length) {
+      return;
+    }
+
+    setIsLoadingMore(true);
+    
+    // Fade out animation
+    Animated.timing(fadeAnim, {
+      toValue: 0.3,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      // Load more items
+      setItemsToShow((prev) => Math.min(prev + 20, allListItems.length));
+      
+      // Fade in animation after a short delay
+      setTimeout(() => {
+        setIsLoadingMore(false);
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }).start();
+      }, 100);
+    });
+  }, [isLoadingMore, itemsToShow, allListItems.length, fadeAnim]);
+
+  // Check if there are more items to load
+  const hasMore = itemsToShow < allListItems.length;
 
   // Prefetch details for visible matches - when user sees a match, start loading its detail
   const prefetchedIds = useRef<Set<string>>(new Set()); // Key format: `${matchId}:${date}`
@@ -323,10 +432,11 @@ export default function HomeScreen() {
           activeFiltersCount={activeFiltersCount}
           onClearFilters={clearFilters}
           onOpenLeagueModal={handleOpenLeagueModal}
+          onOpenFilterSortModal={handleOpenFilterSortModal}
         />
       </View>
     </View>
-  ), [view, metaInfo, search, leagueCounts, selectedLeagues, activeFiltersCount, handleOpenLeagueModal]);
+  ), [view, metaInfo, search, leagueCounts, selectedLeagues, activeFiltersCount, handleOpenLeagueModal, handleOpenFilterSortModal]);
 
   // Early returns - AFTER all hooks
   if (loading) {
@@ -406,8 +516,39 @@ export default function HomeScreen() {
           }}
           renderItem={renderItem}
           ListHeaderComponent={listHeader}
+          ListFooterComponent={
+            hasMore ? (
+              <Animated.View
+                style={[
+                  styles.loadMoreContainer,
+                  {
+                    opacity: fadeAnim,
+                    transform: [
+                      {
+                        translateY: fadeAnim.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [20, 0],
+                        }),
+                      },
+                    ],
+                  },
+                ]}
+              >
+                {isLoadingMore ? (
+                  <View style={styles.loadingMore}>
+                    <ActivityIndicator size="small" color={colors.accent} />
+                    <Text style={styles.loadingMoreText}>{t('home.loadingMore')}</Text>
+                  </View>
+                ) : (
+                  <View style={styles.loadMorePlaceholder} />
+                )}
+              </Animated.View>
+            ) : null
+          }
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig.current}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
           contentContainerStyle={styles.listContent}
           style={styles.list}
           initialNumToRender={15}
@@ -436,7 +577,22 @@ export default function HomeScreen() {
         selectedLeagues={selectedLeagues}
         onToggleLeague={toggleLeague}
         onSelectAll={handleSelectAllLeagues}
-        onClearAll={clearFilters}
+        onClearAll={() => setSelectedLeagues([])}
+      />
+
+      {/* Filter & Sort Modal */}
+      <FilterSortModal
+        visible={filterModalVisible}
+        onClose={handleCloseFilterSortModal}
+        leagues={leagueCounts}
+        selectedLeagues={selectedLeagues}
+        onToggleLeague={toggleLeague}
+        onSelectAllLeagues={handleSelectAllLeagues}
+        onClearAllLeagues={() => setSelectedLeagues([])}
+        sortOption={sortOption}
+        onSortChange={setSortOption}
+        viewOption={viewOption}
+        onViewChange={setViewOption}
       />
     </AppShell>
   );
@@ -514,6 +670,23 @@ const getStyles = () => {
       paddingBottom: spacing.xxxl * 2.5,
       paddingTop: spacing.sm,
       paddingHorizontal: containerPadding,
+    },
+    loadMoreContainer: {
+      paddingVertical: spacing.lg,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    loadingMore: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    loadingMoreText: {
+      ...typography.bodySmall,
+      color: colors.textSecondary,
+    },
+    loadMorePlaceholder: {
+      height: spacing.lg,
     },
   });
 };

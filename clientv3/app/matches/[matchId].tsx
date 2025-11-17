@@ -357,10 +357,7 @@ if (formattedLastUpdatedAt) {
 }
 
   return (
-    <AppShell
-      showBackButton
-      
-    >
+    <AppShell>
       <ScrollView
         contentContainerStyle={getStyles().container}
         showsVerticalScrollIndicator={false}

@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { memo, useRef, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
 import { Avatar } from '@/components/ui/avatar';
 import { Icon } from '@/components/ui/icon';
 import { useTeamAssets } from '@/hooks/useTeamAssets';
@@ -12,6 +12,7 @@ import type { MatchSummary, MatchDetail } from '@/types/match';
 import { AIProbabilityBars } from './ai-probability-bars';
 import { useLocale } from '@/providers/locale-provider';
 import { formatTimeOnly } from '@/lib/datetime';
+import { useFavorites } from '@/providers/favorites-provider';
 
 type MatchCardProps = {
   match: MatchSummary;
@@ -22,6 +23,7 @@ type MatchCardProps = {
 export const MatchCard = memo(function MatchCard({ match, detail, onPress }: MatchCardProps) {
   const t = useTranslation();
   const { locale, timezone, timeFormat } = useLocale();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const assets = useTeamAssets(match.matchId);
   const statusKey = getStatusKey(match.statusLabel);
   const statusText = statusKey
@@ -29,6 +31,41 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
     : match.statusLabel || t('match.statusLabels.live');
   const isLive = isLiveStatus(match.statusLabel);
   const hasScore = detail?.scoreboard?.homeTeam?.score !== null && detail?.scoreboard?.awayTeam?.score !== null;
+  const favorite = isFavorite(match.matchId);
+  
+  // Animation for favorite button
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const rotationAnim = useRef(new Animated.Value(0)).current;
+  
+  // Animate when favorite status changes
+  useEffect(() => {
+    if (favorite) {
+      // Bounce animation when added to favorites
+      Animated.sequence([
+        Animated.parallel([
+          Animated.spring(scaleAnim, {
+            toValue: 1.3,
+            useNativeDriver: true,
+            tension: 300,
+            friction: 4,
+          }),
+          Animated.timing(rotationAnim, {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
+          }),
+        ]),
+        Animated.spring(scaleAnim, {
+          toValue: 1,
+          useNativeDriver: true,
+          tension: 300,
+          friction: 4,
+        }),
+      ]).start(() => {
+        rotationAnim.setValue(0);
+      });
+    }
+  }, [favorite, scaleAnim, rotationAnim]);
   
   // Get recent form
   const homeForm = formatRecentForm(detail?.recentForm, match.homeTeam);
@@ -60,8 +97,34 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
             <Text style={styles.timeText}>{kickoffLabel}</Text>
           </View>
         )}
-        <TouchableOpacity style={styles.bookmarkButton} activeOpacity={0.7}>
-          <Icon name="star" size={20} color={colors.textTertiary} />
+        <TouchableOpacity
+          style={styles.bookmarkButton}
+          activeOpacity={0.7}
+          onPress={(e) => {
+            e.stopPropagation();
+            toggleFavorite(match);
+          }}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Animated.View
+            style={{
+              transform: [
+                { scale: scaleAnim },
+                {
+                  rotate: rotationAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ['0deg', '15deg'],
+                  }),
+                },
+              ],
+            }}
+          >
+            <Icon
+              name="star"
+              size={20}
+              color={favorite ? colors.accent : colors.textTertiary}
+            />
+          </Animated.View>
         </TouchableOpacity>
       </View>
 

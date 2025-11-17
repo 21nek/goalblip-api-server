@@ -21,7 +21,8 @@ type IconName =
   | 'arrow-up'
   | 'arrow-down'
   | 'settings'
-  | 'time';
+  | 'time'
+  | 'menu';
 
 type IconProps = {
   name: IconName;
@@ -51,6 +52,7 @@ const iconMap: Record<IconName, { library: 'Ionicons' | 'MaterialIcons'; iconNam
   'arrow-down': { library: 'Ionicons', iconName: 'arrow-down' },
   settings: { library: 'Ionicons', iconName: 'settings' },
   time: { library: 'Ionicons', iconName: 'time' },
+  menu: { library: 'Ionicons', iconName: 'menu' },
 };
 
 export function Icon({ name, size = 24, color = colors.textPrimary, style }: IconProps) {

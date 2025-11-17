@@ -23,7 +23,13 @@
       "hours": "{count} h",
       "days": "{count} d"
     },
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "menu": "Menú"
+  },
+  "drawer": {
+    "title": "Partidos",
+    "searchPrompt": "Buscar Partidos",
+    "searchPromptDescription": "Busca partidos escribiendo el nombre del equipo o la liga"
   },
   "home": {
     "today": "Hoy",
@@ -35,6 +41,7 @@
     "refreshing": "Actualizando...",
     "dataLoadError": "Error al Cargar Datos",
     "dataLoadErrorMessage": "Por favor verifique su conexión a internet e intente nuevamente.",
+    "loadingMore": "Cargando más...",
     "topLeagues": {
       "matches": "{count} partidos",
       "firstMatch": "Primer partido {time}",
@@ -53,7 +60,25 @@
     "leaguesSelected": "{count} ligas seleccionadas",
     "clearAll": "Limpiar Todo",
     "all": "Todos",
-    "matches": "partidos"
+    "matches": "partidos",
+    "filterSortSettings": "Configuración de Filtros",
+    "filterSortSettingsDescription": "Opciones de ordenamiento y vista"
+  },
+  "filterSort": {
+    "title": "Filtros y Ordenar",
+    "tabs": {
+      "filters": "Filtros",
+      "sort": "Ordenar",
+      "view": "Vista"
+    },
+    "sortByLeague": "Por Liga",
+    "sortByTime": "Por Hora",
+    "sortByDate": "Por Fecha",
+    "sortByTeam": "Por Nombre de Equipo",
+    "viewGrouped": "Agrupar por Liga",
+    "viewGroupedDescription": "Mostrar partidos bajo encabezados de liga",
+    "viewFlat": "Lista Plana",
+    "viewFlatDescription": "Mostrar todos los partidos sin encabezados de liga"
   },
   "match": {
     "live": "En Vivo",
@@ -384,7 +409,8 @@
   "favoritesScreen": {
     "title": "Favoritos",
     "emptyTitle": "Sin Partidos Favoritos",
-    "emptyMessage": "Aún no has agregado partidos a favoritos.\n\nToca el ícono de estrella en las tarjetas de partido para agregarlos aquí."
+    "emptyMessage": "Aún no has agregado partidos a favoritos.\n\nToca el ícono de estrella en las tarjetas de partido para agregarlos aquí.",
+    "loading": "Cargando..."
   },
   "errors": {
     "timeout": "La solicitud excedió el tiempo de espera. Verifique su conexión e intente nuevamente.",
