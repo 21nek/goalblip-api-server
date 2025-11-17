@@ -1290,10 +1290,10 @@ const getStyles = () => {
       letterSpacing: -0.5,
     },
     vsText: {
-      fontSize: isSmall ? 24 : 30,
+      fontSize: isSmall ? 18 : 22,
       color: colors.accent,
-      fontWeight: '900',
-      letterSpacing: 4,
+      fontWeight: '700',
+      letterSpacing: 2,
       textTransform: 'uppercase',
     },
     halftimeScore: {
