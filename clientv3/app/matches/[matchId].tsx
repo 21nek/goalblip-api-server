@@ -2,7 +2,9 @@
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   Image,
+  Platform,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -451,32 +453,129 @@ if (formattedLastUpdatedAt) {
         ) : detail ? (
           <>
             <View style={getStyles().scoreboard}>
-              <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">{scoreboard?.leagueLabel || t('matchDetail.leagueInfo')}</Text>
-              {scoreboard?.statusBadges?.length ? (
-                <View style={getStyles().badgeRow}>
-                  {scoreboard.statusBadges.map((badge, idx) => {
-                    const badgeKey = getStatusKey(badge);
-                    const badgeText = badgeKey ? t(STATUS_TRANSLATION_KEYS[badgeKey]) : badge;
-                    return (
-                      <Text key={`${badge}-${idx}`} style={getStyles().statusBadge} numberOfLines={1}>
-                        {badgeText}
-                      </Text>
-                    );
-                  })}
-                </View>
-              ) : null}
-              <View style={getStyles().teamsRow}>
-                <TeamBlock team={scoreboard?.homeTeam} align="left" />
-                <View style={getStyles().vsContainer}>
-                  <View style={getStyles().vsBadge}>
-                    <Text style={getStyles().vsText}>{t('match.vs').toUpperCase()}</Text>
+              {/* League & Status */}
+              <View style={getStyles().scoreboardHeader}>
+                <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">
+                  {scoreboard?.leagueLabel || t('matchDetail.leagueInfo')}
+                </Text>
+                {scoreboard?.statusBadges?.length ? (
+                  <View style={getStyles().badgeRow}>
+                    {scoreboard.statusBadges.map((badge, idx) => {
+                      const badgeKey = getStatusKey(badge);
+                      const badgeText = badgeKey ? t(STATUS_TRANSLATION_KEYS[badgeKey]) : badge;
+                      const isLive = badgeKey === 'live';
+                      return (
+                        <LiveBadge
+                          key={`${badge}-${idx}`}
+                          text={badgeText}
+                          isLive={isLive}
+                        />
+                      );
+                    })}
                   </View>
-                  {scoreboard?.halftimeScore ? (
-                    <Text style={getStyles().halftimeScore}>{scoreboard.halftimeScore}</Text>
-                  ) : null}
-                </View>
-                <TeamBlock team={scoreboard?.awayTeam} align="right" />
+                ) : null}
               </View>
+
+              {/* Teams & Score */}
+              <View style={getStyles().teamsRow}>
+                {/* Home Team */}
+                <View style={getStyles().teamSection}>
+                  <View style={getStyles().teamColumn}>
+                    <Avatar
+                      name={scoreboard?.homeTeam?.name || ''}
+                      logo={scoreboard?.homeTeam?.logo}
+                      size={screenDimensions.isSmall ? 40 : 48}
+                    />
+                    <Text style={getStyles().teamName} numberOfLines={2}>
+                      {scoreboard?.homeTeam?.name || t('common.unknown')}
+                    </Text>
+                    {(() => {
+                      const homeForm = detail.recentForm?.[0];
+                      const formResults = homeForm?.matches?.slice(0, 5).map((m) => m.result) || [];
+                      return formResults.length > 0 ? (
+                        <View style={getStyles().teamFormContainer}>
+                          {formResults.map((result, idx) => {
+                            const isWin = result === 'W';
+                            const isDraw = result === 'D';
+                            const isLoss = result === 'L';
+                            return (
+                              <Text
+                                key={idx}
+                                style={[
+                                  getStyles().teamFormChar,
+                                  isWin && getStyles().teamFormWin,
+                                  isDraw && getStyles().teamFormDraw,
+                                  isLoss && getStyles().teamFormLoss,
+                                ]}
+                              >
+                                {result || '?'}
+                              </Text>
+                            );
+                          })}
+                        </View>
+                      ) : null;
+                    })()}
+                  </View>
+                </View>
+
+                {/* Score */}
+                <View style={getStyles().scoreSection}>
+                  {scoreboard?.homeTeam?.score !== null && scoreboard?.awayTeam?.score !== null ? (
+                    <>
+                      <Text style={getStyles().score}>
+                        {scoreboard.homeTeam.score} - {scoreboard.awayTeam.score}
+                      </Text>
+                      {scoreboard?.halftimeScore ? (
+                        <Text style={getStyles().halftimeScore}>{scoreboard.halftimeScore}</Text>
+                      ) : null}
+                    </>
+                  ) : (
+                    <Text style={getStyles().vsText}>{t('match.vs')}</Text>
+                  )}
+                </View>
+
+                {/* Away Team */}
+                <View style={[getStyles().teamSection, getStyles().teamSectionRight]}>
+                  <View style={getStyles().teamColumn}>
+                    <Avatar
+                      name={scoreboard?.awayTeam?.name || ''}
+                      logo={scoreboard?.awayTeam?.logo}
+                      size={screenDimensions.isSmall ? 40 : 48}
+                    />
+                    <Text style={getStyles().teamName} numberOfLines={2}>
+                      {scoreboard?.awayTeam?.name || t('common.unknown')}
+                    </Text>
+                    {(() => {
+                      const awayForm = detail.recentForm?.[1];
+                      const formResults = awayForm?.matches?.slice(0, 5).map((m) => m.result) || [];
+                      return formResults.length > 0 ? (
+                        <View style={getStyles().teamFormContainer}>
+                          {formResults.map((result, idx) => {
+                            const isWin = result === 'W';
+                            const isDraw = result === 'D';
+                            const isLoss = result === 'L';
+                            return (
+                              <Text
+                                key={idx}
+                                style={[
+                                  getStyles().teamFormChar,
+                                  isWin && getStyles().teamFormWin,
+                                  isDraw && getStyles().teamFormDraw,
+                                  isLoss && getStyles().teamFormLoss,
+                                ]}
+                              >
+                                {result || '?'}
+                              </Text>
+                            );
+                          })}
+                        </View>
+                      ) : null;
+                    })()}
+                  </View>
+                </View>
+              </View>
+
+              {/* Meta Info */}
               {scoreboardBadges.length ? (
                 <View style={getStyles().metaBadgeRow}>
                   {scoreboardBadges.map((item, idx) => (
@@ -846,19 +945,53 @@ if (formattedLastUpdatedAt) {
   );
 }
 
-function TeamBlock({ team, align }: { team?: TeamInfo; align: 'left' | 'right' }) {
-  const t = useTranslation();
-  const name = team?.name || t('common.unknown');
-  const score = team?.score ?? null;
+function LiveBadge({ text, isLive }: { text: string; isLive: boolean }) {
+  const pulseAnim = useRef(new Animated.Value(1)).current;
   const styles = getStyles();
-  const isSmall = screenDimensions.isSmall;
+
+  useEffect(() => {
+    if (isLive) {
+      const pulse = Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.5,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+        ]),
+      );
+      pulse.start();
+      return () => pulse.stop();
+    }
+  }, [isLive, pulseAnim]);
+
   return (
-    <View style={[styles.teamBlock, align === 'right' && { alignItems: 'flex-end' }]}>
-      <Avatar name={name} logo={team?.logo} size={isSmall ? 56 : 72} />
-      <Text style={styles.teamName} numberOfLines={2} ellipsizeMode="tail">
-        {name}
+    <View style={[styles.statusBadge, isLive && styles.statusBadgeLive]}>
+      {isLive && (
+        <View style={styles.livePulseContainer}>
+          <Animated.View
+            style={[
+              styles.livePulse,
+              {
+                transform: [{ scale: pulseAnim }],
+                opacity: pulseAnim.interpolate({
+                  inputRange: [1, 1.5],
+                  outputRange: [0.75, 0],
+                }),
+              },
+            ]}
+          />
+          <View style={[styles.livePulse, styles.livePulseInner]} />
+        </View>
+      )}
+      <Text style={[styles.statusBadgeText, isLive && styles.statusBadgeTextLive]} numberOfLines={1}>
+        {text}
       </Text>
-      <Text style={styles.teamScore}>{score !== null ? score : '?'}</Text>
     </View>
   );
 }
@@ -1011,64 +1144,165 @@ const getStyles = () => {
     fontWeight: '600',
   },
     scoreboard: {
-      backgroundColor: colors.bgTertiary,
-      borderRadius: borderRadius.xxl,
+      backgroundColor: colors.bgCard,
+      borderRadius: borderRadius.xl,
       padding: cardPadding,
       marginBottom: spacing.lg,
-      ...shadows.elevated,
+      ...shadows.card,
       borderWidth: 1,
       borderColor: colors.border,
     },
-  league: {
-    ...typography.caption,
-    color: colors.textTertiary,
-    textAlign: 'center',
-    marginBottom: spacing.sm,
-  },
-  badgeRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: spacing.md,
-  },
-  statusBadge: {
-    backgroundColor: colors.accent + '22',
-    color: colors.accent,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs / 2,
-    borderRadius: borderRadius.full,
-    ...typography.caption,
-    marginHorizontal: 3,
-  },
-  teamsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: spacing.md,
-  },
-    vsContainer: {
+    scoreboardHeader: {
+      alignItems: 'center',
+      marginBottom: spacing.md,
+    },
+    league: {
+      fontSize: isSmall ? 15 : 17,
+      color: colors.textPrimary,
+      textAlign: 'center',
+      marginBottom: spacing.lg,
+      fontWeight: '700',
+      lineHeight: isSmall ? 21 : 23,
+      letterSpacing: 0.8,
+      paddingHorizontal: spacing.md,
+      backgroundColor: colors.bgTertiary,
+      paddingVertical: spacing.xs + 2,
+      borderRadius: borderRadius.md,
+      alignSelf: 'center',
+    },
+    badgeRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      gap: spacing.xs,
+    },
+    statusBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.xs + 2,
+      borderRadius: borderRadius.full,
+      marginHorizontal: spacing.xs / 2,
+      position: 'relative',
+    },
+    statusBadgeLive: {
+      backgroundColor: colors.accent + '20',
+    },
+    livePulseContainer: {
+      position: 'relative',
+      width: 8,
+      height: 8,
+      marginRight: spacing.xs,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    livePulse: {
+      position: 'absolute',
+      width: 8,
+      height: 8,
+      borderRadius: 4,
+      backgroundColor: colors.accent,
+    },
+    livePulseInner: {
+      opacity: 1,
+    },
+    statusBadgeText: {
+      ...typography.caption,
+      color: colors.textSecondary,
+      fontWeight: '600',
+      fontSize: 11,
+    },
+    statusBadgeTextLive: {
+      color: colors.accent,
+      fontWeight: '700',
+      marginLeft: spacing.sm,
+    },
+    teamsRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      marginVertical: spacing.xl,
+      gap: spacing.md,
+    },
+    teamSection: {
+      flex: 1,
+      alignItems: 'center',
+      minWidth: 0,
+      flexBasis: 0,
+    },
+    teamSectionRight: {
+      alignItems: 'center',
+    },
+    teamColumn: {
+      alignItems: 'center',
+      width: '100%',
+      paddingHorizontal: spacing.xs,
+    },
+    teamName: {
+      color: colors.textPrimary,
+      fontWeight: '600',
+      fontSize: isSmall ? 13 : 15,
+      marginTop: spacing.sm,
+      marginBottom: spacing.xs,
+      lineHeight: isSmall ? 17 : 19,
+      textAlign: 'center',
+      width: '100%',
+      minHeight: isSmall ? 34 : 38,
+    },
+    teamFormContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs / 2,
+      marginTop: spacing.xs / 2,
+    },
+    teamFormChar: {
+      fontSize: 13,
+      fontWeight: '700',
+      fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+      color: colors.textTertiary,
+      minWidth: 16,
+      textAlign: 'center',
+    },
+    teamFormWin: {
+      color: colors.success,
+    },
+    teamFormDraw: {
+      color: colors.warning,
+    },
+    teamFormLoss: {
+      color: colors.error,
+    },
+    scoreSection: {
       alignItems: 'center',
       justifyContent: 'center',
-      marginHorizontal: isSmall ? spacing.sm : spacing.lg,
+      minWidth: isSmall ? 90 : 110,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.xs,
+      flexShrink: 0,
     },
-  vsBadge: {
-    backgroundColor: colors.accent + '22',
-    borderRadius: borderRadius.full,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-    marginBottom: spacing.xs,
-  },
-  vsText: {
-    ...typography.caption,
-    color: colors.accent,
-    fontWeight: '700',
-    fontSize: 11,
-  },
-  halftimeScore: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    fontSize: 11,
-    fontWeight: '500',
-  },
+    score: {
+      color: colors.textPrimary,
+      fontWeight: '700',
+      fontSize: isSmall ? 30 : 38,
+      lineHeight: isSmall ? 38 : 46,
+      marginBottom: spacing.xs / 2,
+      letterSpacing: -0.5,
+    },
+    vsText: {
+      fontSize: isSmall ? 24 : 30,
+      color: colors.accent,
+      fontWeight: '900',
+      letterSpacing: 4,
+      textTransform: 'uppercase',
+    },
+    halftimeScore: {
+      ...typography.caption,
+      color: colors.textTertiary,
+      fontSize: 11,
+      fontWeight: '500',
+      marginTop: spacing.xs / 2,
+    },
   metaBadgeRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',

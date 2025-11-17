@@ -6,6 +6,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { Icon } from '@/components/ui/icon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { DrawerMenu } from '@/components/layout/drawer-menu';
+import { BackgroundPattern } from '@/components/ui/background-pattern';
 import logoSquare from '@/assets/logo_square.png';
 
 type AppShellProps = {
@@ -30,6 +31,8 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
   
   return (
     <SafeAreaWrapper style={styles.safeArea} {...safeAreaProps}>
+      {/* Background Pattern - HTML'deki noktalı efekt */}
+      <BackgroundPattern />
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.leftSection}>

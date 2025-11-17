@@ -43,7 +43,7 @@ function RootLayoutContent() {
       initialRouteName="index"
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: '#050814' },
+        contentStyle: { backgroundColor: '#181818' },
         // No animations - instant transitions
         animation: 'none',
         // Enable swipe gesture on both iOS and Android

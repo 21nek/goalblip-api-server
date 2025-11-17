@@ -2,12 +2,12 @@ import { Platform } from 'react-native';
 
 // Tema renkleri ve sabitler
 export const colors = {
-  // Backgrounds
-  bgPrimary: '#050814',
-  bgSecondary: '#0f172a',
-  bgTertiary: '#111b2f',
-  bgCard: '#0f172a',
-  bgCardHover: '#1a2332',
+  // Backgrounds - Kademeli koyu tonlar (#181818 ve #212121)
+  bgPrimary: '#181818', // Ana arkaplan (daha koyu)
+  bgSecondary: '#212121', // Kartlar, header (daha açık)
+  bgTertiary: 'rgba(255, 255, 255, 0.03)',
+  bgCard: '#212121', // Kart arkaplanı
+  bgCardHover: 'rgba(255, 255, 255, 0.05)',
   
   // Text
   textPrimary: '#f8fafc',
@@ -26,13 +26,13 @@ export const colors = {
   error: '#ef4444',
   info: '#3b82f6',
   
-  // Borders
-  border: '#1e293b',
-  borderLight: '#334155',
+  // Borders - HTML'deki beyaz opacity'leri
+  border: 'rgba(255, 255, 255, 0.1)',
+  borderLight: 'rgba(255, 255, 255, 0.15)',
   
-  // Overlays
-  overlay: 'rgba(5, 8, 20, 0.8)',
-  overlayLight: 'rgba(15, 23, 42, 0.6)',
+  // Overlays - Kademeli koyu tonlar
+  overlay: 'rgba(24, 24, 24, 0.8)', // #181818
+  overlayLight: 'rgba(24, 24, 24, 0.6)', // #181818
 };
 
 export const spacing = {
