@@ -14,7 +14,6 @@
     "back": "Atrás",
     "home": "Inicio",
     "favorites": "Favoritos",
-    "profile": "Perfil",
     "unknownLeague": "Liga Desconocida",
     "unknown": "Desconocido",
     "prediction": "Predicción",
@@ -23,7 +22,8 @@
       "minutes": "{count} min",
       "hours": "{count} h",
       "days": "{count} d"
-    }
+    },
+    "settings": "Ajustes"
   },
   "home": {
     "today": "Hoy",
@@ -176,7 +176,6 @@
         "awayAdvantageSuffix": "• Ventaja para el visitante"
       }
     },
-    "upcomingMatchesEmpty": "No hay próximos partidos disponibles.",
     "upcomingMatchTags": {
       "home": "Local",
       "away": "Visita",
@@ -298,17 +297,59 @@
       }
     },
     "oddsTrendCard": {
-      "rowLabel": "Cuota"
+      "rowLabel": "Cuota",
+      "matchResult": "Resultado del partido",
+      "europeanOdds": "Cuotas europeas",
+      "asianHandicap": "Hándicap asiático",
+      "overUnderLines": "Líneas Más/Menos",
+      "firstHalf": "Primer tiempo",
+      "firstHalfEuropean": "Cuotas europeas 1.er tiempo",
+      "firstHalfAsian": "Hándicap asiático 1.er tiempo",
+      "firstHalfOverUnder": "Más/Menos 1.er tiempo",
+      "openingLine": "Línea inicial",
+      "closingLine": "Línea previa al partido"
+    },
+    "formStatsTitle": "Estadísticas de forma",
+    "predictionLabels": {
+      "matchResult": "Resultado del partido (1X2)",
+      "bothTeamsScore": "Ambos equipos anotan",
+      "totalGoals": "Número de goles",
+      "firstHalfResult": "Resultado del primer tiempo",
+      "firstHalfGoals": "Goles en el primer tiempo",
+      "teamToScore": "Equipo que anota",
+      "asianHandicap": "Hándicap asiático",
+      "overUnderLines": "Líneas Más/Menos",
+      "firstHalfOverUnder": "Más/Menos 1.er tiempo",
+      "firstHalfAsianHandicap": "Hándicap asiático 1.er tiempo"
+    },
+    "outcomeLabels": {
+      "home": "Local",
+      "draw": "Empate",
+      "away": "Visitante",
+      "over": "Más",
+      "under": "Menos",
+      "yes": "Sí",
+      "no": "No",
+      "bttsYes": "Ambos anotan: Sí",
+      "bttsNo": "Ambos anotan: No",
+      "overWithValue": "Más de {value}",
+      "underWithValue": "Menos de {value}",
+      "firstHalfOver": "1.er tiempo Más de {value}",
+      "firstHalfUnder": "1.er tiempo Menos de {value}",
+      "homeWillScore": "El local anota",
+      "awayWillScore": "El visitante anota"
+    },
+    "reanalyze": {
+      "title": "Reanalizar",
+      "description": "Si los datos parecen desactualizados, solicita un nuevo análisis. Disponible cada 15 minutos.",
+      "button": "Solicitar nuevo análisis",
+      "buttonLoading": "Enviando...",
+      "queued": "Solicitud en cola (posición {position}).",
+      "alreadyQueued": "Este partido ya está en la cola de análisis.",
+      "rateLimited": "Espera antes de solicitar otro análisis para este partido.",
+      "nextAllowed": "La siguiente solicitud manual estará disponible el {time}.",
+      "error": "No se pudo solicitar un nuevo análisis."
     }
-  },
-  "profile": {
-    "title": "Perfil",
-    "settings": "Configuración",
-    "language": "Idioma",
-    "timezone": "Zona Horaria",
-    "about": "Acerca de",
-    "version": "GoalBlip v3.0",
-    "subtitle": "Plataforma de análisis de partidos con IA"
   },
   "initialSetup": {
     "welcome": "¡Bienvenido!",
@@ -316,7 +357,8 @@
     "languageSelection": "Selección de Idioma",
     "timezoneSelection": "Zona Horaria",
     "saving": "Guardando...",
-    "continue": "Continuar"
+    "continue": "Continuar",
+    "timeFormatSelection": "Selecciona tu formato de hora preferido"
   },
   "emptyState": {
     "noData": "Sin Datos",
@@ -336,7 +378,8 @@
     "emptyTitle": "No se Encontraron Partidos",
     "emptyMessage": "Aún no hay partidos disponibles para esta vista.\n\n¡Se agregarán nuevos partidos pronto!",
     "emptyFiltered": "No se encontraron partidos que coincidan con sus criterios.\n\nPuede limpiar los filtros e intentar nuevamente.",
-    "statusFallback": "En preparación"
+    "statusFallback": "En preparación",
+    "staleDataWarning": "Mostrando datos del {date}. Esperamos la actualización del día."
   },
   "favoritesScreen": {
     "title": "Favoritos",
@@ -353,9 +396,7 @@
     "localeNames": {
       "tr": "Turco",
       "en": "Inglés",
-      "es": "Español (México)",
-      "es-ES": "Español (España)",
-      "es-AR": "Español (Argentina)"
+      "es": "Español"
     },
     "timezoneLabels": {
       "ISTANBUL": "Estambul (GMT+3)",
@@ -375,6 +416,19 @@
       "DUBAI": "Dubái (GMT+4)",
       "TOKYO": "Tokio (GMT+9)",
       "SYDNEY": "Sídney (GMT+10)"
-    }
+    },
+    "title": "Ajustes",
+    "preferencesSection": "Preferencias",
+    "aboutSection": "Acerca de GoalBlip",
+    "language": "Idioma",
+    "timezone": "Zona horaria",
+    "timeFormat": "Formato de hora",
+    "timeFormatOptions": {
+      "auto": "Auto",
+      "24h": "24 horas",
+      "12h": "12 horas"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Plataforma de análisis de partidos impulsada por IA"
   }
 }

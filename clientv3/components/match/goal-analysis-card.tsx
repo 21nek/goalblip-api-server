@@ -3,6 +3,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { FormStats } from '@/lib/match-analysis';
+import { localizeOutcomeLabel } from '@/lib/i18n/localize-match-data';
 
 type GoalAnalysisCardProps = {
   homeTeam: {
@@ -104,7 +105,9 @@ export function GoalAnalysisCard({ homeTeam, awayTeam, overUnderPrediction }: Go
         <View style={styles.overUnderContainer}>
           <View style={styles.overUnderHeader}>
             <Text style={styles.overUnderLabel}>{t('matchDetail.goalAnalysisCard.teamStats.overUnderLabel')}</Text>
-            <Text style={styles.overUnderValue}>{overUnderPrediction.label}</Text>
+            <Text style={styles.overUnderValue}>
+              {localizeOutcomeLabel(overUnderPrediction.label, t) || overUnderPrediction.label}
+            </Text>
           </View>
           <ProgressBar
             value={overUnderPrediction.valuePercent}

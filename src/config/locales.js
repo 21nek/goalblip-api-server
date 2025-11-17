@@ -1,13 +1,9 @@
 export const DEFAULT_LOCALE = 'tr';
 
-export const SUPPORTED_LOCALES = ['tr', 'en', 'es', 'es-ES', 'es-AR'];
+export const SUPPORTED_LOCALES = ['tr'];
 
 const LOCALE_PATH_MAP = {
   tr: 'tr',
-  en: 'en',
-  es: 'es',
-  'es-ES': 'es-ES',
-  'es-AR': 'es-AR',
 };
 
 export function normalizeLocale(input) {

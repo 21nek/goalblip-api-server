@@ -9,17 +9,28 @@ import {
 } from 'react-native';
 import { AppShell } from '@/components/layout/app-shell';
 import { Icon } from '@/components/ui/icon';
-import { useLocale, SUPPORTED_LOCALES, TIMEZONE_PRESETS, LOCALE_LABEL_KEYS, type Locale } from '@/providers/locale-provider';
+import {
+  useLocale,
+  SUPPORTED_LOCALES,
+  TIMEZONE_PRESETS,
+  LOCALE_LABEL_KEYS,
+  LOCALE_NATIVE_META,
+  type Locale,
+  type TimeFormatPreference,
+} from '@/providers/locale-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { getContainerPadding, screenDimensions } from '@/lib/responsive';
 
+const TIME_FORMAT_OPTIONS: TimeFormatPreference[] = ['auto', '24h', '12h'];
+
 export default function InitialSetupScreen() {
   const router = useRouter();
   const t = useTranslation();
-  const { locale, timezone, setLocale, setTimezone, completeInitialSetup } = useLocale();
+  const { locale, timezone, timeFormat, setLocale, setTimezone, setTimeFormat, completeInitialSetup } = useLocale();
   const [selectedLocale, setSelectedLocale] = useState<Locale>(locale);
   const [selectedTimezone, setSelectedTimezone] = useState<string>(timezone);
+  const [selectedTimeFormat, setSelectedTimeFormat] = useState<TimeFormatPreference>(timeFormat);
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
@@ -28,6 +39,7 @@ export default function InitialSetupScreen() {
       await Promise.all([
         setLocale(selectedLocale),
         setTimezone(selectedTimezone),
+        setTimeFormat(selectedTimeFormat),
         completeInitialSetup(),
       ]);
       // Navigate to home
@@ -62,6 +74,10 @@ export default function InitialSetupScreen() {
           <View style={styles.optionsGrid}>
             {SUPPORTED_LOCALES.map((loc) => {
               const isSelected = selectedLocale === loc;
+              const meta = LOCALE_NATIVE_META[loc];
+              const label = meta
+                ? `${meta.languageWord} · ${meta.nativeName}`
+                : t(LOCALE_LABEL_KEYS[loc]);
 
               return (
                 <TouchableOpacity
@@ -72,7 +88,7 @@ export default function InitialSetupScreen() {
                 >
                   <View style={styles.optionContent}>
                     <Text style={[styles.optionLabel, isSelected && styles.optionLabelSelected]}>
-                      {t(LOCALE_LABEL_KEYS[loc])}
+                      {label}
                     </Text>
                     {isSelected && (
                       <Icon name="check" size={20} color={colors.accent} />
@@ -117,6 +133,31 @@ export default function InitialSetupScreen() {
                       </View>
                     )}
                   </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* Time Format Selection */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('initialSetup.timeFormatSelection')}</Text>
+          <View style={styles.timeFormatRow}>
+            {TIME_FORMAT_OPTIONS.map((option) => {
+              const isSelected = selectedTimeFormat === option;
+              return (
+                <TouchableOpacity
+                  key={option}
+                  style={[styles.timeFormatOption, isSelected && styles.timeFormatOptionSelected]}
+                  onPress={() => setSelectedTimeFormat(option)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={[styles.timeFormatLabel, isSelected && styles.timeFormatLabelSelected]}>
+                    {t(`settings.timeFormatOptions.${option}` as const)}
+                  </Text>
+                  {isSelected && (
+                    <Icon name="check" size={18} color={colors.accent} />
+                  )}
                 </TouchableOpacity>
               );
             })}
@@ -222,6 +263,37 @@ const getStyles = () => {
     timezoneOptionSelected: {
       borderColor: colors.accent,
       backgroundColor: colors.accent + '15',
+    },
+    timeFormatRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginHorizontal: -spacing.xs,
+    },
+    timeFormatOption: {
+      width: isSmall ? '48%' : '30%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.bgSecondary,
+      borderRadius: borderRadius.lg,
+      paddingHorizontal: spacing.lg,
+      paddingVertical: spacing.sm,
+      borderWidth: 2,
+      borderColor: colors.border,
+      margin: spacing.xs,
+      ...shadows.subtle,
+    },
+    timeFormatOptionSelected: {
+      borderColor: colors.accent,
+      backgroundColor: colors.accent + '15',
+    },
+    timeFormatLabel: {
+      ...typography.body,
+      color: colors.textPrimary,
+      fontWeight: '500',
+    },
+    timeFormatLabelSelected: {
+      color: colors.accent,
+      fontWeight: '700',
     },
     timezoneContent: {
       flexDirection: 'row',

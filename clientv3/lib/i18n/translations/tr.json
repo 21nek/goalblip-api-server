@@ -14,7 +14,6 @@
     "back": "Geri",
     "home": "Ana Sayfa",
     "favorites": "Favoriler",
-    "profile": "Profil",
     "unknownLeague": "Lig Bilinmiyor",
     "unknown": "Bilinmiyor",
     "prediction": "Tahmin",
@@ -23,7 +22,8 @@
       "minutes": "{count} dk",
       "hours": "{count} sa",
       "days": "{count} g"
-    }
+    },
+    "settings": "Ayarlar"
   },
   "home": {
     "today": "Bugün",
@@ -176,7 +176,6 @@
         "awayAdvantageSuffix": "• Deplasman takımı avantajlı"
       }
     },
-    "upcomingMatchesEmpty": "Yaklaşan maç bilgisi bulunamadı.",
     "upcomingMatchTags": {
       "home": "Ev",
       "away": "Dep",
@@ -298,17 +297,59 @@
       }
     },
     "oddsTrendCard": {
-      "rowLabel": "Oran"
+      "rowLabel": "Oran",
+      "matchResult": "Maç Sonucu",
+      "europeanOdds": "Avrupa Oranları",
+      "asianHandicap": "Asya Handikap",
+      "overUnderLines": "Alt/Üst Hatları",
+      "firstHalf": "İlk Yarı",
+      "firstHalfEuropean": "İY Avrupa Oranları",
+      "firstHalfAsian": "İY Asya Handikap",
+      "firstHalfOverUnder": "İY Alt/Üst Hatları",
+      "openingLine": "İlk Hat",
+      "closingLine": "Maç Öncesi Hat"
+    },
+    "formStatsTitle": "Form İstatistikleri",
+    "predictionLabels": {
+      "matchResult": "Maç Sonucu (1X2)",
+      "bothTeamsScore": "Karşılıklı Gol",
+      "totalGoals": "Gol Sayısı",
+      "firstHalfResult": "İlk Yarı Sonucu",
+      "firstHalfGoals": "İlk Yarı Gol Sayısı",
+      "teamToScore": "Takım Skoru",
+      "asianHandicap": "Asya Handikap",
+      "overUnderLines": "Alt/Üst Hatları",
+      "firstHalfOverUnder": "İlk Yarı Alt/Üst",
+      "firstHalfAsianHandicap": "İlk Yarı Asya Handikap"
+    },
+    "outcomeLabels": {
+      "home": "Ev Sahibi",
+      "draw": "Beraberlik",
+      "away": "Deplasman",
+      "over": "Üst",
+      "under": "Alt",
+      "yes": "Evet",
+      "no": "Hayır",
+      "bttsYes": "Karşılıklı gol: Evet",
+      "bttsNo": "Karşılıklı gol: Hayır",
+      "overWithValue": "Üst {value}",
+      "underWithValue": "Alt {value}",
+      "firstHalfOver": "İY Üst {value}",
+      "firstHalfUnder": "İY Alt {value}",
+      "homeWillScore": "Ev sahibi gol atar",
+      "awayWillScore": "Deplasman gol atar"
+    },
+    "reanalyze": {
+      "title": "Yeniden Analiz",
+      "description": "Veriler eskimiş görünüyorsa yeni bir analiz isteyebilirsin. Sadece 15 dakikada bir kullanılabilir.",
+      "button": "Yeniden analiz talebi gönder",
+      "buttonLoading": "Gönderiliyor...",
+      "queued": "Talep kuyruğa eklendi (sıra {position}).",
+      "alreadyQueued": "Maç zaten analiz kuyruğunda.",
+      "rateLimited": "Bu maç için yeni talep göndermeden önce lütfen bekle.",
+      "nextAllowed": "Bir sonraki talep {time} tarihinde kullanılabilir.",
+      "error": "Yeniden analiz talebi gönderilemedi."
     }
-  },
-  "profile": {
-    "title": "Profil",
-    "settings": "Ayarlar",
-    "language": "Dil",
-    "timezone": "Saat Dilimi",
-    "about": "Hakkında",
-    "version": "GoalBlip v3.0",
-    "subtitle": "AI destekli maç analiz platformu"
   },
   "initialSetup": {
     "welcome": "Hoş Geldiniz!",
@@ -316,7 +357,8 @@
     "languageSelection": "Dil Seçimi",
     "timezoneSelection": "Saat Dilimi",
     "saving": "Kaydediliyor...",
-    "continue": "Devam Et"
+    "continue": "Devam Et",
+    "timeFormatSelection": "Tercih ettiğin saat formatını seç"
   },
   "emptyState": {
     "noData": "Veri Yok",
@@ -336,7 +378,8 @@
     "emptyTitle": "Maç Bulunamadı",
     "emptyMessage": "Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!",
     "emptyFiltered": "Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.",
-    "statusFallback": "Hazırlık"
+    "statusFallback": "Hazırlık",
+    "staleDataWarning": "Liste {date} tarihli. Yeni maç programı hazır olunca güncellenecek."
   },
   "favoritesScreen": {
     "title": "Favoriler",
@@ -353,9 +396,7 @@
     "localeNames": {
       "tr": "Türkçe",
       "en": "İngilizce",
-      "es": "İspanyolca (Meksika)",
-      "es-ES": "İspanyolca (İspanya)",
-      "es-AR": "İspanyolca (Arjantin)"
+      "es": "İspanyolca"
     },
     "timezoneLabels": {
       "ISTANBUL": "İstanbul (GMT+3)",
@@ -375,6 +416,19 @@
       "DUBAI": "Dubai (GMT+4)",
       "TOKYO": "Tokyo (GMT+9)",
       "SYDNEY": "Sydney (GMT+10)"
-    }
+    },
+    "title": "Ayarlar",
+    "preferencesSection": "Tercihler",
+    "aboutSection": "GoalBlip Hakkında",
+    "language": "Dil",
+    "timezone": "Saat Dilimi",
+    "timeFormat": "Saat Formatı",
+    "timeFormatOptions": {
+      "auto": "Otomatik",
+      "24h": "24 Saat",
+      "12h": "12 Saat"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Yapay zeka destekli maç analiz platformu"
   }
 }

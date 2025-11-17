@@ -10,6 +10,8 @@ import { getCardPadding, screenDimensions } from '@/lib/responsive';
 import { getStatusKey, STATUS_TRANSLATION_KEYS, isLiveStatus } from '@/lib/status-labels';
 import type { MatchSummary, MatchDetail } from '@/types/match';
 import { AIProbabilityBars } from './ai-probability-bars';
+import { useLocale } from '@/providers/locale-provider';
+import { formatTimeOnly } from '@/lib/datetime';
 
 type MatchCardProps = {
   match: MatchSummary;
@@ -19,6 +21,7 @@ type MatchCardProps = {
 
 export const MatchCard = memo(function MatchCard({ match, detail, onPress }: MatchCardProps) {
   const t = useTranslation();
+  const { locale, timezone, timeFormat } = useLocale();
   const assets = useTeamAssets(match.matchId);
   const statusKey = getStatusKey(match.statusLabel);
   const statusText = statusKey
@@ -35,6 +38,11 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
   const aiPredictions = detail?.detailPredictions?.[0]?.outcomes || null;
 
   const styles = getStyles();
+  const kickoffLabel =
+    (match.kickoffIsoUtc && formatTimeOnly(match.kickoffIsoUtc, locale, timezone, timeFormat)) ||
+    match.kickoffTimeDisplay ||
+    match.kickoffTime ||
+    '--:--';
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
@@ -49,7 +57,7 @@ export const MatchCard = memo(function MatchCard({ match, detail, onPress }: Mat
           </View>
         ) : (
           <View style={styles.timeBadge}>
-            <Text style={styles.timeText}>{match.kickoffTimeDisplay || match.kickoffTime || '--:--'}</Text>
+            <Text style={styles.timeText}>{kickoffLabel}</Text>
           </View>
         )}
         <TouchableOpacity style={styles.bookmarkButton} activeOpacity={0.7}>

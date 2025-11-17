@@ -21,9 +21,15 @@ export async function saveMatchList(listData) {
   await writeJsonFile(datedPath, listData);
 
   if (listData.view === 'today') {
-    await writeJsonFile(getListAliasPath('today', { locale }), listData);
+    await writeJsonFile(
+      getListAliasPath('today', { locale }),
+      createListAliasPayload(listData.dataDate, locale),
+    );
   } else if (listData.view === 'tomorrow') {
-    await writeJsonFile(getListAliasPath('tomorrow', { locale }), listData);
+    await writeJsonFile(
+      getListAliasPath('tomorrow', { locale }),
+      createListAliasPayload(listData.dataDate, locale),
+    );
   }
 
   return datedPath;
@@ -45,14 +51,15 @@ export async function loadMatchListByView(view = 'today', { locale } = {}) {
   const normalized = locale ? normalizeLocale(locale) : null;
   if (normalized) {
     const localized = await readJsonFile(getListAliasPath(view, { locale: normalized }));
-    if (localized) {
-      return localized;
+    const resolved = await resolveListAlias(localized, { locale: normalized });
+    if (resolved) {
+      return resolved;
     }
   }
-  // Eski alias dosyaları (locale'siz) için fallback.
-  return readJsonFile(getListAliasPath(view));
+  // Eski alias dosyalar?? (locale'siz) i??in fallback.
+  const legacy = await readJsonFile(getListAliasPath(view));
+  return resolveListAlias(legacy, {});
 }
-
 export async function saveMatchDetail(detail) {
   if (!detail?.matchId) {
     throw new Error('Detay verisi geçersiz: matchId alanı eksik.');
@@ -76,7 +83,14 @@ export async function saveMatchDetail(detail) {
   if (view) {
     const aliasPath = getMatchAliasPath(detail.matchId, view, { locale });
     if (aliasPath) {
-      await writeJsonFile(aliasPath, detail);
+      await writeJsonFile(
+        aliasPath,
+        createMatchAliasPayload({
+          matchId: detail.matchId,
+          locale,
+          dataDate: detail.dataDate,
+        }),
+      );
     }
   }
 
@@ -105,16 +119,21 @@ export async function loadMatchDetail(matchId, { dataDate, view, locale } = {}) 
       const localizedAliasPath = getMatchAliasPath(matchId, view, { locale: normalizedLocale });
       if (localizedAliasPath) {
         const localizedDetail = await readJsonFile(localizedAliasPath);
-        if (localizedDetail) {
-          return localizedDetail;
+        const resolvedLocalized = await resolveMatchAlias(localizedDetail, {
+          matchId,
+          locale: normalizedLocale,
+        });
+        if (resolvedLocalized) {
+          return resolvedLocalized;
         }
       }
     }
     const aliasPath = getMatchAliasPath(matchId, view);
     if (aliasPath) {
       const detail = await readJsonFile(aliasPath);
-      if (detail) {
-        return detail;
+      const resolved = await resolveMatchAlias(detail, { matchId });
+      if (resolved) {
+        return resolved;
       }
     }
   }
@@ -144,9 +163,58 @@ export async function loadMatchDetail(matchId, { dataDate, view, locale } = {}) 
 
   return readJsonFile(getMatchPath(matchId));
 }
-
 async function tryReadAlias(matchId, view, locale) {
   const aliasPath = getMatchAliasPath(matchId, view, { locale });
   if (!aliasPath) return null;
-  return readJsonFile(aliasPath);
+  const payload = await readJsonFile(aliasPath);
+  return resolveMatchAlias(payload, { matchId, locale });
+}
+function createListAliasPayload(date, locale) {
+  return {
+    __aliasRef: true,
+    date,
+    locale,
+  };
+}
+
+function createMatchAliasPayload({ matchId, dataDate, locale }) {
+  return {
+    __matchAliasRef: true,
+    ref: {
+      matchId,
+      dataDate,
+      locale,
+    },
+  };
+}
+
+async function resolveListAlias(payload, { locale }) {
+  if (!payload) {
+    return null;
+  }
+  if (payload.__aliasRef && payload.date) {
+    const effectiveLocale = payload.locale || locale || null;
+    return loadMatchListByDate(payload.date, { locale: effectiveLocale });
+  }
+  if (payload.matches) {
+    return payload;
+  }
+  return null;
+}
+
+async function resolveMatchAlias(payload, { matchId, locale }) {
+  if (!payload) {
+    return null;
+  }
+  if (payload.__matchAliasRef && payload.ref?.dataDate) {
+    const targetLocale = payload.ref.locale || locale || null;
+    return loadMatchDetail(matchId, {
+      dataDate: payload.ref.dataDate,
+      locale: targetLocale,
+    });
+  }
+  if (payload.matchId) {
+    return payload;
+  }
+  return null;
 }

@@ -14,7 +14,6 @@
     "back": "Back",
     "home": "Home",
     "favorites": "Favorites",
-    "profile": "Profile",
     "unknownLeague": "Unknown League",
     "unknown": "Unknown",
     "prediction": "Prediction",
@@ -23,7 +22,8 @@
       "minutes": "{count}m",
       "hours": "{count}h",
       "days": "{count}d"
-    }
+    },
+    "settings": "Settings"
   },
   "home": {
     "today": "Today",
@@ -91,6 +91,7 @@
     "strengthsWeaknesses": "Strengths & Weaknesses",
     "predictionSummary": "Prediction Summary",
     "detailedPredictions": "Detailed Predictions",
+    "formStatsTitle": "Form Statistics",
     "formStats": {
       "winRate": "Win Rate",
       "drawRate": "Draw Rate",
@@ -110,6 +111,35 @@
     "noDetailedAnalysisMessage": "Detailed prediction analysis is not yet available for this match.",
     "predictionsNotAvailable": "Prediction Analysis Not Available",
     "predictionsNotAvailableMessage": "This section is currently only available in Turkish. Other languages will be added soon.",
+    "predictionLabels": {
+      "matchResult": "Match Result (1X2)",
+      "bothTeamsScore": "Both Teams to Score",
+      "totalGoals": "Total Goals",
+      "firstHalfResult": "First Half Result",
+      "firstHalfGoals": "First Half Goals",
+      "teamToScore": "Team to Score",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Over/Under Lines",
+      "firstHalfOverUnder": "1st Half Over/Under",
+      "firstHalfAsianHandicap": "1st Half Asian Handicap"
+    },
+    "outcomeLabels": {
+      "home": "Home Win",
+      "draw": "Draw",
+      "away": "Away Win",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Yes",
+      "no": "No",
+      "bttsYes": "Both teams score: Yes",
+      "bttsNo": "Both teams score: No",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "1st Half Over {value}",
+      "firstHalfUnder": "1st Half Under {value}",
+      "homeWillScore": "Home team to score",
+      "awayWillScore": "Away team to score"
+    },
     "aiAnalysis": "AI Analysis",
     "mainPrediction": "Main Prediction",
     "recommendedPick": "Recommended Pick",
@@ -176,7 +206,6 @@
         "awayAdvantageSuffix": "• Away team advantage"
       }
     },
-    "upcomingMatchesEmpty": "No upcoming matches available.",
     "upcomingMatchTags": {
       "home": "Home",
       "away": "Away",
@@ -298,17 +327,29 @@
       }
     },
     "oddsTrendCard": {
-      "rowLabel": "Odds"
+      "rowLabel": "Odds",
+      "matchResult": "Match Result",
+      "europeanOdds": "European Odds",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Over/Under Lines",
+      "firstHalf": "First Half",
+      "firstHalfEuropean": "1st Half European Odds",
+      "firstHalfAsian": "1st Half Asian Handicap",
+      "firstHalfOverUnder": "1st Half Over/Under",
+      "openingLine": "Opening Line",
+      "closingLine": "Closing Line"
+    },
+    "reanalyze": {
+      "title": "Manual Refresh",
+      "description": "If the stats look outdated, request a fresh scrape. Available once every 15 minutes.",
+      "button": "Request new analysis",
+      "buttonLoading": "Sending...",
+      "queued": "Request queued (position {position}).",
+      "alreadyQueued": "This match is already in the analysis queue.",
+      "rateLimited": "Please wait before requesting another refresh for this match.",
+      "nextAllowed": "Next manual request available at {time}.",
+      "error": "Could not request a new analysis. Please try again later."
     }
-  },
-  "profile": {
-    "title": "Profile",
-    "settings": "Settings",
-    "language": "Language",
-    "timezone": "Time Zone",
-    "about": "About",
-    "version": "GoalBlip v3.0",
-    "subtitle": "AI-powered match analysis platform"
   },
   "initialSetup": {
     "welcome": "Welcome!",
@@ -316,7 +357,8 @@
     "languageSelection": "Language Selection",
     "timezoneSelection": "Time Zone",
     "saving": "Saving...",
-    "continue": "Continue"
+    "continue": "Continue",
+    "timeFormatSelection": "Select your preferred time format"
   },
   "emptyState": {
     "noData": "No Data",
@@ -336,7 +378,8 @@
     "emptyTitle": "No Matches Found",
     "emptyMessage": "No matches available for this view yet.\n\nNew matches will be added soon!",
     "emptyFiltered": "No matches found matching your criteria.\n\nYou can clear the filters and try again.",
-    "statusFallback": "Scheduled"
+    "statusFallback": "Scheduled",
+    "staleDataWarning": "Showing fixtures from {date}. Waiting for the latest data to refresh."
   },
   "favoritesScreen": {
     "title": "Favorites",
@@ -353,9 +396,7 @@
     "localeNames": {
       "tr": "Turkish",
       "en": "English",
-      "es": "Spanish (Mexico)",
-      "es-ES": "Spanish (Spain)",
-      "es-AR": "Spanish (Argentina)"
+      "es": "Spanish"
     },
     "timezoneLabels": {
       "ISTANBUL": "Istanbul (GMT+3)",
@@ -375,6 +416,19 @@
       "DUBAI": "Dubai (GMT+4)",
       "TOKYO": "Tokyo (GMT+9)",
       "SYDNEY": "Sydney (GMT+10)"
-    }
+    },
+    "title": "Settings",
+    "preferencesSection": "Preferences",
+    "aboutSection": "About GoalBlip",
+    "language": "Language",
+    "timezone": "Time Zone",
+    "timeFormat": "Time Format",
+    "timeFormatOptions": {
+      "auto": "Auto",
+      "24h": "24-hour",
+      "12h": "12-hour"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI-powered match analysis platform"
   }
 }

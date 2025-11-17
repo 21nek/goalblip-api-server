@@ -27,7 +27,7 @@ export const TimezoneSelector = memo(function TimezoneSelector() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{t('profile.timezone')}</Text>
+      <Text style={styles.label}>{t('settings.timezone')}</Text>
       <TouchableOpacity
         style={styles.selector}
         onPress={() => setModalVisible(true)}

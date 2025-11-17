@@ -1,17 +1,24 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+﻿import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { getItem, setItem } from '@/lib/storage';
 
 // Supported locales
-export const SUPPORTED_LOCALES = ['tr', 'en', 'es', 'es-ES', 'es-AR'] as const;
+export const SUPPORTED_LOCALES = ['tr', 'en', 'es'] as const;
 export type Locale = typeof SUPPORTED_LOCALES[number];
+
+export type TimeFormatPreference = 'auto' | '24h' | '12h';
 
 export const LOCALE_LABEL_KEYS: Record<Locale, string> = {
   tr: 'settings.localeNames.tr',
   en: 'settings.localeNames.en',
   es: 'settings.localeNames.es',
-  'es-ES': 'settings.localeNames.es-ES',
-  'es-AR': 'settings.localeNames.es-AR',
 };
+
+export const LOCALE_NATIVE_META: Record<Locale, { nativeName: string; languageWord: string }> = {
+  tr: { nativeName: 'T\u00fcrk\u00e7e', languageWord: 'Dil' },
+  en: { nativeName: 'English', languageWord: 'Language' },
+  es: { nativeName: 'Espa\u00f1ol', languageWord: 'Idioma' },
+};
+
 
 // Timezone presets - IANA IDs
 export const TIMEZONE_PRESETS = [
@@ -36,13 +43,15 @@ export const TIMEZONE_PRESETS = [
 
 export type TimezonePreset = typeof TIMEZONE_PRESETS[number];
 
-export const DEFAULT_LOCALE: Locale = 'tr';
-export const DEFAULT_TIMEZONE = 'Europe/Istanbul';
+export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_TIMEZONE = 'Europe/London';
+export const DEFAULT_TIME_FORMAT: TimeFormatPreference = 'auto';
 
 const STORAGE_KEYS = {
   locale: '@goalblip:locale',
   timezone: '@goalblip:timezone',
   initialSetupCompleted: '@goalblip:initialSetupCompleted',
+  timeFormat: '@goalblip:timeFormat',
 };
 
 type LocaleContextValue = {
@@ -52,6 +61,8 @@ type LocaleContextValue = {
   initialSetupCompleted: boolean;
   setLocale: (locale: Locale) => Promise<void>;
   setTimezone: (timezone: string) => Promise<void>;
+  timeFormat: TimeFormatPreference;
+  setTimeFormat: (format: TimeFormatPreference) => Promise<void>;
   completeInitialSetup: () => Promise<void>;
   getTimezonePreset: () => TimezonePreset | null;
 };
@@ -61,7 +72,8 @@ const LocaleContext = createContext<LocaleContextValue | undefined>(undefined);
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
   const [timezone, setTimezoneState] = useState<string>(DEFAULT_TIMEZONE);
-  const [timezoneId, setTimezoneIdState] = useState<string>('ISTANBUL');
+  const [timezoneId, setTimezoneIdState] = useState<string>('LONDON');
+  const [timeFormat, setTimeFormatState] = useState<TimeFormatPreference>(DEFAULT_TIME_FORMAT);
   const [isInitialized, setIsInitialized] = useState(false);
   const [initialSetupCompleted, setInitialSetupCompletedState] = useState(false);
 
@@ -83,10 +95,11 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     
     async function loadPreferences() {
       try {
-        const [savedLocale, savedTimezone, setupCompleted] = await Promise.all([
+        const [savedLocale, savedTimezone, setupCompleted, savedTimeFormat] = await Promise.all([
           getItem(STORAGE_KEYS.locale),
           getItem(STORAGE_KEYS.timezone),
           getItem(STORAGE_KEYS.initialSetupCompleted),
+          getItem(STORAGE_KEYS.timeFormat),
         ]);
         
         if (mounted) {
@@ -106,6 +119,10 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
             }
           }
           
+          if (savedTimeFormat && ['auto', '24h', '12h'].includes(savedTimeFormat)) {
+            setTimeFormatState(savedTimeFormat as TimeFormatPreference);
+          }
+
           // Check if initial setup was completed
           setInitialSetupCompletedState(setupCompleted === 'true');
         }
@@ -163,6 +180,15 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     }
   }, [findTimezonePreset]);
 
+  const setTimeFormat = useCallback(async (format: TimeFormatPreference) => {
+    setTimeFormatState(format);
+    try {
+      await setItem(STORAGE_KEYS.timeFormat, format);
+    } catch (error) {
+      console.error('[LocaleProvider] Failed to save time format:', error);
+    }
+  }, []);
+
   const completeInitialSetup = useCallback(async () => {
     setInitialSetupCompletedState(true);
     try {
@@ -184,10 +210,12 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
       initialSetupCompleted,
       setLocale,
       setTimezone,
+      timeFormat,
+      setTimeFormat,
       completeInitialSetup,
       getTimezonePreset,
     }),
-    [locale, timezone, timezoneId, initialSetupCompleted, setLocale, setTimezone, completeInitialSetup, getTimezonePreset]
+    [locale, timezone, timezoneId, timeFormat, initialSetupCompleted, setLocale, setTimezone, setTimeFormat, completeInitialSetup, getTimezonePreset]
   );
 
   // Don't render children until preferences are loaded
@@ -205,3 +233,4 @@ export function useLocale() {
   }
   return ctx;
 }
+

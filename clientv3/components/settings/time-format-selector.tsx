@@ -1,37 +1,33 @@
 import { memo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Icon } from '@/components/ui/icon';
-import { useLocale, SUPPORTED_LOCALES, LOCALE_LABEL_KEYS, LOCALE_NATIVE_META } from '@/providers/locale-provider';
+import { useLocale, type TimeFormatPreference } from '@/providers/locale-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 
-export const LocaleSelector = memo(function LocaleSelector() {
+const TIME_FORMAT_OPTIONS: TimeFormatPreference[] = ['auto', '24h', '12h'];
+
+export const TimeFormatSelector = memo(function TimeFormatSelector() {
   const t = useTranslation();
-  const { locale, setLocale } = useLocale();
+  const { timeFormat, setTimeFormat } = useLocale();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{t('settings.language')}</Text>
+      <Text style={styles.label}>{t('settings.timeFormat')}</Text>
       <View style={styles.optionsRow}>
-        {SUPPORTED_LOCALES.map((loc) => {
-          const isSelected = locale === loc;
-          const meta = LOCALE_NATIVE_META[loc];
-          const label = meta
-            ? `${meta.languageWord} \u00b7 ${meta.nativeName}`
-            : t(LOCALE_LABEL_KEYS[loc]);
+        {TIME_FORMAT_OPTIONS.map((option) => {
+          const isSelected = timeFormat === option;
           return (
             <TouchableOpacity
-              key={loc}
+              key={option}
               style={[styles.option, isSelected && styles.optionSelected]}
-              onPress={() => setLocale(loc)}
+              onPress={() => setTimeFormat(option)}
               activeOpacity={0.7}
             >
               <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
-                {label}
+                {t(`settings.timeFormatOptions.${option}` as const)}
               </Text>
-              {isSelected && (
-                <Icon name="check" size={16} color={colors.accent} style={styles.checkIcon} />
-              )}
+              {isSelected && <Icon name="check" size={16} color={colors.accent} style={styles.checkIcon} />}
             </TouchableOpacity>
           );
         })}
@@ -64,7 +60,8 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
     borderWidth: 2,
     borderColor: colors.border,
-    minWidth: 100,
+    minWidth: 120,
+    ...shadows.subtle,
   },
   optionSelected: {
     borderColor: colors.accent,

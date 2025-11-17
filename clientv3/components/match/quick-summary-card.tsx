@@ -3,6 +3,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { Icon } from '@/components/ui/icon';
 import { useTranslation } from '@/hooks/useTranslation';
+import { localizeOutcomeLabel, localizePredictionTitle } from '@/lib/i18n/localize-match-data';
 
 type Outcome = {
   label?: string | null;
@@ -42,6 +43,8 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
 
   const confidenceLevel = getConfidenceLevel();
   const topOutcome = sortedOutcomes[0];
+  const localizedMainPrediction = localizePredictionTitle(mainPrediction, t);
+  const localizedRecommendedPick = localizeOutcomeLabel(recommendedPick, t);
 
   return (
     <View style={styles.wrapper}>
@@ -65,7 +68,9 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
         <View style={styles.content}>
         <View style={styles.mainPredictionBox}>
           <Text style={styles.mainPredictionLabel}>{t('matchDetail.mainPrediction')}</Text>
-          <Text style={styles.mainPredictionValue}>{mainPrediction}</Text>
+          <Text style={styles.mainPredictionValue}>
+            {localizedMainPrediction || t('common.prediction')}
+          </Text>
         </View>
 
         {topOutcome && (
@@ -76,7 +81,9 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
             </View>
             <View style={styles.recommendedContent}>
               <View style={[styles.recommendedBadge, { backgroundColor: confidenceLevel.color }]}>
-                <Text style={styles.recommendedBadgeText}>{topOutcome.label || recommendedPick}</Text>
+                <Text style={styles.recommendedBadgeText}>
+                  {localizeOutcomeLabel(topOutcome.label || localizedRecommendedPick, t)}
+                </Text>
               </View>
               <View style={styles.recommendedStats}>
                 <Text style={styles.recommendedPercent}>%{topOutcome.valuePercent?.toFixed(1) || '0'}</Text>
@@ -89,16 +96,16 @@ export function QuickSummaryCard({ mainPrediction, confidence, recommendedPick, 
         {sortedOutcomes.length > 1 && (
           <View style={styles.outcomesContainer}>
             <Text style={styles.outcomesLabel}>{t('matchDetail.allProbabilities')}</Text>
-            {sortedOutcomes.map((outcome, index) => {
-              const percentage = outcome.valuePercent || 0;
-              const isHighest = index === 0;
-              const outcomeColor = percentage >= 50 ? colors.success : percentage >= 30 ? colors.warning : colors.textSecondary;
+                {sortedOutcomes.map((outcome, index) => {
+                  const percentage = outcome.valuePercent || 0;
+                  const isHighest = index === 0;
+                  const outcomeColor = percentage >= 50 ? colors.success : percentage >= 30 ? colors.warning : colors.textSecondary;
               
               return (
                 <View key={index} style={[styles.outcomeRow, isHighest && styles.outcomeRowHighlighted]}>
                   <View style={styles.outcomeInfo}>
                     <Text style={[styles.outcomeLabel, isHighest && styles.outcomeLabelHighlighted]}>
-                      {outcome.label || '—'}
+                      {localizeOutcomeLabel(outcome.label, t) || '—'}
                     </Text>
                     {isHighest && (
                       <View style={[styles.highestBadge, { backgroundColor: outcomeColor + '20' }]}>

@@ -1,5 +1,5 @@
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useState, useCallback, useRef } from 'react';
+﻿import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -13,7 +13,7 @@ import {
 
 import { extractHighlightPredictions } from '@/lib/match-helpers';
 import { useMatches } from '@/hooks/useMatches';
-import { useLocale } from '@/providers/locale-provider';
+import { TIMEZONE_PRESETS, useLocale, type TimeFormatPreference } from '@/providers/locale-provider';
 import { useTranslation } from '@/hooks/useTranslation';
 import { AppShell } from '@/components/layout/app-shell';
 import { ProgressBar } from '@/components/ui/progress-bar';
@@ -43,21 +43,34 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { getContainerPadding, getCardPadding, screenDimensions } from '@/lib/responsive';
 import { getStatusKey, STATUS_TRANSLATION_KEYS } from '@/lib/status-labels';
 import type { MatchDetail } from '@/types/match';
+import {
+  formatUpcomingDateText,
+  localizeOutcomeLabel,
+  localizePredictionTitle,
+} from '@/lib/i18n/localize-match-data';
+import { formatDateTime } from '@/lib/datetime';
+import { requestMatchReanalysis } from '@/lib/api';
 
 const UPCOMING_ROLE_KEY_MAP: Record<string, string> = {
   home: 'matchDetail.upcomingMatchTags.home',
   ev: 'matchDetail.upcomingMatchTags.home',
   evsahibi: 'matchDetail.upcomingMatchTags.home',
+  evsahibitakim: 'matchDetail.upcomingMatchTags.home',
+  hometeam: 'matchDetail.upcomingMatchTags.home',
   local: 'matchDetail.upcomingMatchTags.home',
   casa: 'matchDetail.upcomingMatchTags.home',
   host: 'matchDetail.upcomingMatchTags.home',
   away: 'matchDetail.upcomingMatchTags.away',
   dep: 'matchDetail.upcomingMatchTags.away',
   deplasman: 'matchDetail.upcomingMatchTags.away',
+  deplasmantakimi: 'matchDetail.upcomingMatchTags.away',
+  awayteam: 'matchDetail.upcomingMatchTags.away',
   visitante: 'matchDetail.upcomingMatchTags.away',
   visitor: 'matchDetail.upcomingMatchTags.away',
   neutral: 'matchDetail.upcomingMatchTags.neutral',
   neutr: 'matchDetail.upcomingMatchTags.neutral',
+  neutralteam: 'matchDetail.upcomingMatchTags.neutral',
+  neutraltakim: 'matchDetail.upcomingMatchTags.neutral',
   form: 'matchDetail.upcomingMatchTags.form',
   formda: 'matchDetail.upcomingMatchTags.form',
 };
@@ -76,24 +89,18 @@ function getUpcomingRoleLabel(role: string | null | undefined, t: (key: string, 
   return key ? t(key) : t(DEFAULT_UPCOMING_ROLE_KEY);
 }
 
-function formatDateTime(value: string | null | undefined, locale: string, timezone?: string) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-  try {
-    return new Intl.DateTimeFormat(locale, {
-      dateStyle: 'short',
-      timeStyle: 'short',
-      timeZone: timezone || undefined,
-    }).format(date);
-  } catch {
-    return date.toLocaleString();
-  }
-}
-
-function localizeScoreboardInfo(entry: string, t: (key: string, params?: Record<string, string | number>) => string) {
+function localizeScoreboardInfo(
+  entry: string,
+  t: (key: string, params?: Record<string, string | number>) => string,
+  options?: {
+    locale: string;
+    timezone?: string;
+    kickoffIsoUtc?: string | null;
+    fallbackKickoff?: string | null;
+    timeFormat: TimeFormatPreference;
+  },
+) {
+  if (!entry) return '';
   const normalized = entry
     .toLowerCase()
     .normalize('NFD')
@@ -104,6 +111,15 @@ function localizeScoreboardInfo(entry: string, t: (key: string, params?: Record<
     const label = t('match.lastUpdate');
     return suffix ? `${label}: ${suffix}` : label;
   }
+  if (options?.kickoffIsoUtc && /\d{1,2}[./-]\d{1,2}[./-]\d{2,4}/.test(normalized)) {
+    const formatted = formatDateTime(options.kickoffIsoUtc, options.locale, options.timezone, options.timeFormat);
+    if (formatted) {
+      return formatted;
+    }
+  }
+  if (options?.fallbackKickoff && /\d{1,2}[./-]\d{1,2}/.test(normalized)) {
+    return options.fallbackKickoff;
+  }
   return entry;
 }
 type TeamInfo = { name?: string | null; logo?: string | null; score?: number | null };
@@ -113,7 +129,7 @@ type OddsRow = { label?: string | null; values?: string[] | null };
 export default function MatchDetailScreen() {
   const { matchId, date, view } = useLocalSearchParams<{ matchId: string; date?: string; view?: string }>();
   const router = useRouter();
-  const { locale, timezone } = useLocale();
+  const { locale, timezone, timeFormat, getTimezonePreset } = useLocale();
   const t = useTranslation();
   const { getMatchDetail, getOrFetchMatchDetail, getPendingMatch } = useMatches();
   const numericId = matchId ? Number(matchId) : null;
@@ -129,6 +145,10 @@ export default function MatchDetailScreen() {
   const [error, setError] = useState<string | null>(null);
   const [lastRefreshTime, setLastRefreshTime] = useState<Date | null>(null);
   const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [reanalyzeLoading, setReanalyzeLoading] = useState(false);
+  const [reanalyzeFeedback, setReanalyzeFeedback] = useState<string | null>(null);
+  const [reanalyzeError, setReanalyzeError] = useState<string | null>(null);
+  const [reanalyzeNextAllowedAt, setReanalyzeNextAllowedAt] = useState<string | null>(null);
 
   const fetchDetail = useCallback(async (showLoading = true, retryCount = 0) => {
     if (!numericId) {
@@ -215,18 +235,131 @@ export default function MatchDetailScreen() {
   }, [numericId, dateParam, viewParam]); // matchId, date veya view değiştiğinde yeniden fetch et
 
 const predictions = extractHighlightPredictions(detail, 5, t);
-const scoreboard = detail?.scoreboard;
+  const scoreboard = detail?.scoreboard;
+  const timezonePreset = getTimezonePreset();
+  const fallbackTimezoneLabel = timezonePreset
+    ? t(timezonePreset.labelKey)
+    : timezone;
+  const kickoffTimezoneLabel = (() => {
+    if (!scoreboard) return null;
+    if (scoreboard.kickoffTimezoneId) {
+      const preset = TIMEZONE_PRESETS.find((item) => item.id === scoreboard.kickoffTimezoneId);
+      if (preset) {
+        return t(preset.labelKey);
+      }
+    }
+    if (scoreboard.kickoffTimezone && !/^\s*tr\s*$/i.test(scoreboard.kickoffTimezone.trim())) {
+      return scoreboard.kickoffTimezone;
+    }
+    return fallbackTimezoneLabel;
+  })();
+const kickoffDisplay = (() => {
+  if (!scoreboard) return null;
+  if (scoreboard.kickoffIsoUtc) {
+    const formatted = formatDateTime(scoreboard.kickoffIsoUtc, locale, timezone, timeFormat);
+    if (formatted) {
+      return formatted;
+    }
+  }
+  if (scoreboard.kickoffTimeDisplay) {
+    return scoreboard.kickoffTimeDisplay;
+  }
+  if (scoreboard.kickoff) {
+    return scoreboard.kickoff;
+  }
+  return null;
+})();
+const scoreboardInfoTexts =
+  scoreboard?.info
+    ?.map((info) =>
+      localizeScoreboardInfo(info ?? '', t, {
+        locale,
+        timezone,
+        kickoffIsoUtc: scoreboard.kickoffIsoUtc ?? null,
+        fallbackKickoff: kickoffDisplay,
+        timeFormat,
+      }),
+    )
+    ?.filter((info) => Boolean(info && info.trim())) ?? [];
 const detailPredictions = detail?.detailPredictions ?? [];
 const oddsTrends = detail?.oddsTrends ?? [];
 const upcoming = detail?.upcomingMatches ?? [];
 const formattedLastUpdatedAt = detail?.lastUpdatedAt
-  ? formatDateTime(detail.lastUpdatedAt, locale, timezone)
+  ? formatDateTime(detail.lastUpdatedAt, locale, timezone, timeFormat)
   : null;
+const reanalyzeNextAllowedLabel = useMemo(() => {
+  if (!reanalyzeNextAllowedAt) return null;
+  const formatted = formatDateTime(reanalyzeNextAllowedAt, locale, timezone, timeFormat);
+  if (!formatted) return null;
+  return t('matchDetail.reanalyze.nextAllowed', { time: formatted });
+}, [reanalyzeNextAllowedAt, locale, timezone, timeFormat, t]);
+const isReanalyzeDisabled =
+  reanalyzeLoading ||
+  (reanalyzeNextAllowedAt ? new Date(reanalyzeNextAllowedAt).getTime() > Date.now() : false);
+
+const handleReanalyzeRequest = useCallback(async () => {
+  if (!numericId || reanalyzeLoading) {
+    return;
+  }
+  setReanalyzeLoading(true);
+  setReanalyzeError(null);
+  try {
+    const response = await requestMatchReanalysis(numericId, {
+      locale,
+      date: detail?.dataDate ?? dateParam,
+      view: detail?.viewContext ?? viewParam,
+    });
+    const messageKey = response.alreadyQueued
+      ? 'matchDetail.reanalyze.alreadyQueued'
+      : 'matchDetail.reanalyze.queued';
+    setReanalyzeFeedback(
+      t(messageKey, {
+        position: response.queuePosition ?? 0,
+      }),
+    );
+    if (response.nextAllowedAt) {
+      setReanalyzeNextAllowedAt(response.nextAllowedAt);
+    }
+  } catch (err) {
+    const apiError = err as Error & { status?: number; body?: any };
+    const body = apiError.body;
+    if (body?.nextAllowedAt) {
+      setReanalyzeNextAllowedAt(body.nextAllowedAt);
+    }
+    if (apiError.status === 429) {
+      setReanalyzeError(t('matchDetail.reanalyze.rateLimited'));
+    } else {
+      setReanalyzeError(t('matchDetail.reanalyze.error'));
+    }
+    setReanalyzeFeedback(null);
+  } finally {
+    setReanalyzeLoading(false);
+  }
+}, [numericId, reanalyzeLoading, locale, detail?.dataDate, dateParam, detail?.viewContext, viewParam, t]);
+const scoreboardBadges: Array<{ icon: 'time' | 'information-circle' | 'refresh'; label: string }> = [];
+if (kickoffDisplay) {
+  scoreboardBadges.push({
+    icon: 'time',
+    label: kickoffDisplay,
+  });
+}
+if (kickoffTimezoneLabel) {
+  scoreboardBadges.push({
+    icon: 'information-circle',
+    label: t('matchDetail.scoreboard.timezoneLabel', { timezone: kickoffTimezoneLabel }),
+  });
+}
+if (formattedLastUpdatedAt) {
+  scoreboardBadges.push({
+    icon: 'refresh',
+    label: `${t('match.lastUpdate')}: ${formattedLastUpdatedAt}`,
+  });
+}
 
   return (
     <AppShell
       showBackButton
-      showBottomNav={false}
+      
     >
       <ScrollView
         contentContainerStyle={getStyles().container}
@@ -320,15 +453,6 @@ const formattedLastUpdatedAt = detail?.lastUpdatedAt
           </View>
         ) : detail ? (
           <>
-            {/* Data date badge */}
-            {detail.dataDate && (
-              <View style={getStyles().dataDateBadge}>
-                <Text style={getStyles().dataDateText}>
-                  {t('match.dataDate')}: {new Date(detail.dataDate).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })}
-                  {detail.viewContext && ` • ${detail.viewContext === 'today' ? t('matchDetail.today') : detail.viewContext === 'tomorrow' ? t('matchDetail.tomorrow') : t('matchDetail.manual')}`}
-                </Text>
-              </View>
-            )}
             <View style={getStyles().scoreboard}>
               <Text style={getStyles().league} numberOfLines={1} ellipsizeMode="tail">{scoreboard?.leagueLabel || t('matchDetail.leagueInfo')}</Text>
               {scoreboard?.statusBadges?.length ? (
@@ -356,25 +480,44 @@ const formattedLastUpdatedAt = detail?.lastUpdatedAt
                 </View>
                 <TeamBlock team={scoreboard?.awayTeam} align="right" />
               </View>
-              {scoreboard?.info?.length ? (
-                <View style={getStyles().infoRow}>
-                  {scoreboard.info.map((info, idx) => (
-                    <Text key={idx} style={[getStyles().infoText, idx > 0 && { marginLeft: spacing.xs }]} numberOfLines={1}>
-                      {localizeScoreboardInfo(info ?? '', t)}
-                    </Text>
+              {scoreboardBadges.length ? (
+                <View style={getStyles().metaBadgeRow}>
+                  {scoreboardBadges.map((item, idx) => (
+                    <View key={`${item.label}-${idx}`} style={getStyles().metaBadge}>
+                      <Icon
+                        name={item.icon}
+                        size={14}
+                        color={colors.accent}
+                        style={getStyles().metaBadgeIcon}
+                      />
+                      <Text style={getStyles().metaBadgeText} numberOfLines={1}>
+                        {item.label}
+                      </Text>
+                    </View>
                   ))}
                 </View>
               ) : (
                 <Text style={getStyles().kickoff} numberOfLines={2} ellipsizeMode="tail">
-                  {scoreboard?.kickoffTimeDisplay ||
-                    scoreboard?.kickoff ||
-                    formattedLastUpdatedAt ||
-                    t('matchDetail.scoreboard.kickoffFallback')}
-                  {scoreboard?.kickoffTimezone
-                    ? ` • ${t('matchDetail.scoreboard.timezoneLabel', { timezone: scoreboard.kickoffTimezone })}`
-                    : ''}
+                  {kickoffDisplay || formattedLastUpdatedAt || t('matchDetail.scoreboard.kickoffFallback')}
                 </Text>
               )}
+              {scoreboardInfoTexts.length ? (
+                <View style={getStyles().infoChips}>
+                  {scoreboardInfoTexts.map((info, idx) => (
+                    <View key={`${info}-${idx}`} style={getStyles().infoChip}>
+                      <Icon
+                        name="information-circle"
+                        size={12}
+                        color={colors.textSecondary}
+                        style={{ marginRight: spacing.xs / 2 }}
+                      />
+                      <Text style={getStyles().infoChipText} numberOfLines={1}>
+                        {info}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
             </View>
 
             {/* Quick Summary */}
@@ -558,12 +701,12 @@ const formattedLastUpdatedAt = detail?.lastUpdatedAt
 
             {detail.recentForm && detail.recentForm.length > 0 && (
               <View style={getStyles().section}>
-                <Text style={getStyles().sectionTitle}>{t('matchDetail.formStats')}</Text>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.formStatsTitle')}</Text>
                 {detail.recentForm.map((form, index) => {
                   const stats = calculateFormStats(form.matches || []);
                   const teamName =
                     form.title
-                      ?.replace(/📈\s*/, '')
+                      ?.replace(/^[^A-Za-z0-9]+/, '')
                       .replace(/\s*-\s*Son Form/, '')
                       .trim() || t('matchDetail.teams.formFallback', { index: index + 1 });
                   return (
@@ -633,7 +776,7 @@ const formattedLastUpdatedAt = detail?.lastUpdatedAt
                               {match?.competition || ''}
                             </Text>
                             <Text style={getStyles().upcomingMeta} numberOfLines={1}>
-                              {match?.dateText || ''}
+                              {formatUpcomingDateText(match?.dateText, locale, detail?.dataDate, timezone, timeFormat) || ''}
                             </Text>
                           </View>
                         ))
@@ -660,11 +803,41 @@ const formattedLastUpdatedAt = detail?.lastUpdatedAt
               <Text style={getStyles().sectionTitle}>{t('matchDetail.localInfo')}</Text>
               <View style={getStyles().metaRow}>
                 <Text style={getStyles().metaLabel}>{t('match.lastUpdate')}</Text>
-                <Text style={getStyles().metaValue} numberOfLines={1}>{formattedLastUpdatedAt || '—'}</Text>
+                <Text style={getStyles().metaValue} numberOfLines={1}>{formattedLastUpdatedAt || '?'}</Text>
               </View>
               <View style={getStyles().metaRow}>
                 <Text style={getStyles().metaLabel}>{t('match.dataSource')}</Text>
                 <Text style={getStyles().metaValue}>{t('match.dataSourceValue')}</Text>
+              </View>
+              <View style={getStyles().reanalyzeCard}>
+                <Text style={getStyles().reanalyzeTitle}>{t('matchDetail.reanalyze.title')}</Text>
+                <Text style={getStyles().reanalyzeDescription}>
+                  {t('matchDetail.reanalyze.description')}
+                </Text>
+                <TouchableOpacity
+                  style={[
+                    getStyles().reanalyzeButton,
+                    (isReanalyzeDisabled || reanalyzeLoading) && getStyles().reanalyzeButtonDisabled,
+                  ]}
+                  onPress={handleReanalyzeRequest}
+                  disabled={isReanalyzeDisabled}
+                  activeOpacity={0.8}
+                >
+                  <Text style={getStyles().reanalyzeButtonText}>
+                    {reanalyzeLoading
+                      ? t('matchDetail.reanalyze.buttonLoading')
+                      : t('matchDetail.reanalyze.button')}
+                  </Text>
+                </TouchableOpacity>
+                {reanalyzeFeedback ? (
+                  <Text style={getStyles().reanalyzeSuccess}>{reanalyzeFeedback}</Text>
+                ) : null}
+                {reanalyzeError ? (
+                  <Text style={getStyles().reanalyzeError}>{reanalyzeError}</Text>
+                ) : null}
+                {reanalyzeNextAllowedLabel ? (
+                  <Text style={getStyles().reanalyzeCooldown}>{reanalyzeNextAllowedLabel}</Text>
+                ) : null}
               </View>
             </View>
           </>
@@ -688,7 +861,7 @@ function TeamBlock({ team, align }: { team?: TeamInfo; align: 'left' | 'right' }
       <Text style={styles.teamName} numberOfLines={2} ellipsizeMode="tail">
         {name}
       </Text>
-      <Text style={styles.teamScore}>{score !== null ? score : '—'}</Text>
+      <Text style={styles.teamScore}>{score !== null ? score : '?'}</Text>
     </View>
   );
 }
@@ -704,11 +877,12 @@ function PredictionDetail({
 }) {
   const styles = getStyles();
   const t = useTranslation();
+  const localizedTitle = localizePredictionTitle(title, t) || t('common.prediction');
   return (
     <View style={styles.detailedPrediction}>
       <View style={styles.detailedHeader}>
         <Text style={styles.predictionTitle} numberOfLines={1} ellipsizeMode="tail">
-          {title || t('common.prediction')}
+          {localizedTitle}
         </Text>
         {confidence ? (
           <View style={styles.confidenceBadge}>
@@ -719,7 +893,7 @@ function PredictionDetail({
       {outcomes?.map((outcome, idx) => (
         <ProgressBar
           key={`${outcome?.label}-${idx}`}
-          label={outcome?.label || t('common.unknown')}
+          label={localizeOutcomeLabel(outcome?.label, t) || t('common.unknown')}
           value={outcome?.valuePercent ?? 0}
           max={100}
           showValue={true}
@@ -740,8 +914,8 @@ function OddsCard({ title, rows }: { title?: string | null; rows?: OddsRow[] }) 
   if (!rows?.length) return null;
   
   const parseTrend = (value: string) => {
-    if (value.includes('↑')) return { direction: 'up', color: colors.success };
-    if (value.includes('↓')) return { direction: 'down', color: colors.error };
+    if (value.includes('^')) return { direction: 'up', color: colors.success };
+    if (value.includes('v')) return { direction: 'down', color: colors.error };
     return { direction: 'neutral', color: colors.textSecondary };
   };
 
@@ -808,19 +982,7 @@ const getStyles = () => {
     flex: 1,
     paddingTop: 40,
   },
-  dataDateBadge: {
-    backgroundColor: colors.bgTertiary,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: borderRadius.md,
-    marginBottom: spacing.md,
-    alignItems: 'center',
-  },
-  dataDateText: {
-    ...typography.caption,
-    color: colors.textTertiary,
-    fontSize: 12,
-  },
+
   retryButton: {
     backgroundColor: colors.accent,
     paddingHorizontal: 24,
@@ -910,23 +1072,55 @@ const getStyles = () => {
     fontSize: 11,
     fontWeight: '500',
   },
+  metaBadgeRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: spacing.md,
+  },
+  metaBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgSecondary,
+    borderRadius: borderRadius.full,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    marginHorizontal: spacing.xs / 2,
+    marginBottom: spacing.xs,
+  },
+  metaBadgeIcon: {
+    marginRight: spacing.xs / 2,
+  },
+  metaBadgeText: {
+    ...typography.caption,
+    color: colors.textTertiary,
+    fontWeight: '600',
+  },
   kickoff: {
     ...typography.caption,
     color: colors.textMuted,
     textAlign: 'center',
     marginTop: spacing.md,
   },
-  infoRow: {
+  infoChips: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: spacing.md,
+    marginTop: spacing.sm,
   },
-  infoText: {
+  infoChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgTertiary,
+    borderRadius: borderRadius.full,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    marginHorizontal: spacing.xs / 2,
+    marginBottom: spacing.xs,
+  },
+  infoChipText: {
     ...typography.caption,
     color: colors.textTertiary,
-    textAlign: 'center',
   },
   teamBlock: {
     flex: 1,
@@ -1186,7 +1380,62 @@ const getStyles = () => {
       ...typography.caption,
       color: colors.textSecondary,
     },
+  reanalyzeCard: {
+    marginTop: spacing.lg,
+    padding: spacing.md,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.bgSecondary,
+  },
+  reanalyzeTitle: {
+    ...typography.body,
+    color: colors.textPrimary,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+  reanalyzeDescription: {
+    ...typography.caption,
+    color: colors.textTertiary,
+    marginBottom: spacing.sm,
+  },
+  reanalyzeButton: {
+    backgroundColor: colors.accent,
+    borderRadius: borderRadius.full,
+    paddingVertical: spacing.sm + 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  reanalyzeButtonDisabled: {
+    opacity: 0.6,
+  },
+  reanalyzeButtonText: {
+    ...typography.bodySmall,
+    color: colors.bgPrimary,
+    fontWeight: '700',
+  },
+  reanalyzeSuccess: {
+    ...typography.caption,
+    color: colors.accent,
+    marginTop: spacing.sm,
+  },
+  reanalyzeError: {
+    ...typography.caption,
+    color: colors.error,
+    marginTop: spacing.sm,
+  },
+  reanalyzeCooldown: {
+    ...typography.caption,
+    color: colors.textTertiary,
+    marginTop: spacing.xs,
+  },
   });
 };
 
 const styles = getStyles();
+
+
+
+
+
+

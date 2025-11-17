@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography } from '@/lib/theme';
+import { useTranslation } from '@/hooks/useTranslation';
+import { localizeOutcomeLabel } from '@/lib/i18n/localize-match-data';
 import type { MatchDetail } from '@/types/match';
 
 type AIProbabilityBarsProps = {
@@ -8,6 +10,7 @@ type AIProbabilityBarsProps = {
 };
 
 export const AIProbabilityBars = memo(function AIProbabilityBars({ outcomes }: AIProbabilityBarsProps) {
+  const t = useTranslation();
   if (!outcomes || outcomes.length === 0) return null;
 
   // Find the highest probability
@@ -18,7 +21,7 @@ export const AIProbabilityBars = memo(function AIProbabilityBars({ outcomes }: A
       {outcomes.map((outcome, index) => {
         const percent = outcome.valuePercent || 0;
         const isHighest = percent === maxPercent && percent > 0;
-        const label = outcome.label || '—';
+        const label = localizeOutcomeLabel(outcome.label, t) || '—';
 
         return (
           <View key={index} style={styles.barContainer}>

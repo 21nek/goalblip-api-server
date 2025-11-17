@@ -24,6 +24,7 @@ import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme'
 import { timeSince } from '@/lib/match-helpers';
 import { getStatusKey, STATUS_TRANSLATION_KEYS } from '@/lib/status-labels';
 import type { MatchSummary } from '@/types/match';
+import { formatDateTime, formatTimeOnly } from '@/lib/datetime';
 
 const ALL = 'ALL';
 const UNKNOWN_LEAGUE_KEY = '__unknown__';
@@ -31,7 +32,7 @@ const UNKNOWN_LEAGUE_KEY = '__unknown__';
 export default function MatchesScreen() {
   const router = useRouter();
   const t = useTranslation();
-  const { locale } = useLocale();
+  const { locale, timezone, timeFormat } = useLocale();
   const { getViewData, initialLoading, refreshView, viewStatus, errors } = useMatches();
   const [view, setView] = useState<'today' | 'tomorrow'>('today');
   const [search, setSearch] = useState('');
@@ -42,6 +43,26 @@ export default function MatchesScreen() {
   const current = getViewData(view);
   const loading = initialLoading && !current;
   const error = errors[view];
+
+  const isTodayDataStale = useMemo(() => {
+    if (view !== 'today' || !current?.dataDate) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dataDate = new Date(current.dataDate);
+    if (Number.isNaN(dataDate.getTime())) {
+      return false;
+    }
+    dataDate.setHours(0, 0, 0, 0);
+    return dataDate < today;
+  }, [view, current?.dataDate]);
+
+  const staleDateLabel = useMemo(() => {
+    if (!current?.dataDate) return null;
+    return (
+      formatDateTime(current.dataDate, locale, timezone, timeFormat, { dateStyle: 'long' }) ??
+      current.dataDate
+    );
+  }, [current?.dataDate, locale, timezone, timeFormat]);
 
   const unknownLeagueLabel = t('common.unknownLeague');
 
@@ -65,27 +86,12 @@ export default function MatchesScreen() {
     
     let base = current.matches;
     
-    // Date filter: For "today" view, filter out all matches if dataDate is from previous days
-    // API doesn't auto-delete old data, so we need to filter on client side
-    if (view === 'today' && current.dataDate) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const dataDate = new Date(current.dataDate);
-      dataDate.setHours(0, 0, 0, 0);
-      
-      // If dataDate is older than today, filter out ALL matches
-      // This prevents showing yesterday's matches as today's matches
-      if (dataDate < today) {
-        console.warn('[MatchesScreen] Filtering out stale data:', {
-          dataDate: current.dataDate,
-          today: today.toISOString().split('T')[0],
-          view,
-          originalMatchCount: base.length
-        });
-        
-        // Filter out all matches from previous days
-        base = [];
-      }
+    if (view === 'today' && isTodayDataStale) {
+      console.warn('[MatchesScreen] Showing stale data for today view', {
+        dataDate: current.dataDate,
+        view,
+        matchCount: base.length,
+      });
     }
     
     // League filter
@@ -104,7 +110,7 @@ export default function MatchesScreen() {
     }
     
     return base;
-  }, [current, view, search, selectedLeagues]);
+  }, [current, view, search, selectedLeagues, isTodayDataStale]);
 
   function toggleLeague(league: string) {
     if (league === ALL) {
@@ -132,7 +138,7 @@ export default function MatchesScreen() {
     ? timeSince(lastRefreshTime.toISOString(), { translator: t })
     : null;
   const lastRefreshClock = lastRefreshTime
-    ? new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(lastRefreshTime)
+    ? formatDateTime(lastRefreshTime, locale, timezone, timeFormat, { hour: '2-digit', minute: '2-digit' })
     : null;
 
   return (
@@ -164,6 +170,13 @@ export default function MatchesScreen() {
               </TouchableOpacity>
             ))}
           </View>
+          {view === 'today' && isTodayDataStale && current?.dataDate ? (
+            <Text style={styles.staleWarning}>
+              {t('matchesScreen.staleDataWarning', {
+                date: staleDateLabel || current.dataDate,
+              })}
+            </Text>
+          ) : null}
         </View>
 
         <ScrollView 
@@ -317,19 +330,25 @@ export default function MatchesScreen() {
 const MatchRow = memo(function MatchRow({ match, onPress }: { match: MatchSummary; onPress: () => void }) {
   const assets = useTeamAssets(match.matchId);
   const t = useTranslation();
+  const { locale, timezone, timeFormat } = useLocale();
   const leagueLabel = match.league || t('matchDetail.leagueInfo');
   const statusKey = getStatusKey(match.statusLabel);
   const statusLabel = statusKey
     ? t(STATUS_TRANSLATION_KEYS[statusKey])
     : match.statusLabel || t('matchesScreen.statusFallback');
   const vsLabel = t('match.vs');
+  const kickoffLabel =
+    (match.kickoffIsoUtc && formatTimeOnly(match.kickoffIsoUtc, locale, timezone, timeFormat)) ||
+    match.kickoffTimeDisplay ||
+    match.kickoffTime ||
+    '--:--';
   return (
     <TouchableOpacity style={styles.matchCard} onPress={onPress} activeOpacity={0.7}>
       <View style={styles.cardHeader}>
         <View style={styles.leagueInfo}>
           <Text style={styles.league}>{leagueLabel}</Text>
         </View>
-        <Text style={styles.kickoff}>{match.kickoffTimeDisplay || match.kickoffTime || '--:--'}</Text>
+        <Text style={styles.kickoff}>{kickoffLabel}</Text>
       </View>
       <View style={styles.teamsRow}>
         <View style={styles.teamBlock}>
@@ -461,6 +480,11 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.bgPrimary,
     fontWeight: '600',
+  },
+  staleWarning: {
+    ...typography.caption,
+    color: colors.warning,
+    marginTop: spacing.sm,
   },
   loading: {
     flex: 1,

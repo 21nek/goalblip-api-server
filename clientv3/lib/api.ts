@@ -1,5 +1,10 @@
 import { API_BASE_URL } from './config';
-import type { MatchDetail, MatchDetailPendingResponse, MatchListResponse } from '@/types/match';
+import type {
+  MatchDetail,
+  MatchDetailPendingResponse,
+  MatchListResponse,
+  MatchReanalysisResponse,
+} from '@/types/match';
 
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   const target = path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
@@ -70,14 +75,24 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       }
       
       if (!response.ok) {
-        const message = await response.text().catch(() => 'Unknown error');
-        const errorMsg = message || `API error ${response.status}`;
+        let rawBody = '';
+        let parsedBody: any = null;
+        try {
+          rawBody = await response.text();
+          if (rawBody) {
+            parsedBody = JSON.parse(rawBody);
+          }
+        } catch {
+          parsedBody = null;
+        }
+        const errorMsg = parsedBody?.error || rawBody || `API error ${response.status}`;
         console.error('[API] Error:', response.status, errorMsg);
         const apiError = new Error(errorMsg);
         apiError.name = 'API_ERROR';
-        (apiError as any).code = 'API_ERROR';
+        (apiError as any).code = parsedBody?.code || 'API_ERROR';
         (apiError as any).status = response.status;
         (apiError as any).meta = { url: target };
+        (apiError as any).body = parsedBody ?? rawBody;
         throw apiError;
       }
       
@@ -177,4 +192,26 @@ export function fetchMatchDetail(
   }
   
   return fetchJson<MatchDetail | MatchDetailPendingResponse>(url, init);
+}
+
+export function requestMatchReanalysis(
+  matchId: number | string,
+  options?: {
+    locale?: string;
+    date?: string;
+    view?: 'today' | 'tomorrow' | 'manual';
+  },
+): Promise<MatchReanalysisResponse> {
+  const body: Record<string, string> = {};
+  body.locale = options?.locale || 'tr';
+  if (options?.date) {
+    body.date = options.date;
+  }
+  if (options?.view) {
+    body.view = options.view;
+  }
+  return fetchJson<MatchReanalysisResponse>(`/api/match/${matchId}/reanalyze`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
 }

@@ -2,17 +2,18 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AppShell } from '@/components/layout/app-shell';
 import { LocaleSelector } from '@/components/settings/locale-selector';
 import { TimezoneSelector } from '@/components/settings/timezone-selector';
+import { TimeFormatSelector } from '@/components/settings/time-format-selector';
 import { Icon } from '@/components/ui/icon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { colors, spacing, borderRadius, typography } from '@/lib/theme';
 import { getContainerPadding } from '@/lib/responsive';
 
-export default function ProfileScreen() {
+export default function SettingsScreen() {
   const t = useTranslation();
   const styles = getStyles();
 
   return (
-    <AppShell title={t('profile.title')}>
+    <AppShell title={t('settings.title')}>
       <ScrollView
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
@@ -20,24 +21,25 @@ export default function ProfileScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Icon name="settings" size={24} color={colors.accent} />
-            <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
+            <Text style={styles.sectionTitle}>{t('settings.preferencesSection')}</Text>
           </View>
           
           <View style={styles.settingsCard}>
             <LocaleSelector />
             <TimezoneSelector />
+            <TimeFormatSelector />
           </View>
         </View>
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Icon name="information-circle" size={24} color={colors.accent} />
-            <Text style={styles.sectionTitle}>{t('profile.about')}</Text>
+            <Text style={styles.sectionTitle}>{t('settings.aboutSection')}</Text>
           </View>
           
           <View style={styles.infoCard}>
-            <Text style={styles.infoText}>{t('profile.version')}</Text>
-            <Text style={styles.infoSubtext}>{t('profile.subtitle')}</Text>
+            <Text style={styles.infoText}>{t('settings.version')}</Text>
+            <Text style={styles.infoSubtext}>{t('settings.subtitle')}</Text>
           </View>
         </View>
       </ScrollView>

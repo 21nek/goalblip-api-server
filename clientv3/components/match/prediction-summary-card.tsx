@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { useTranslation } from '@/hooks/useTranslation';
+import { localizeOutcomeLabel, localizePredictionTitle } from '@/lib/i18n/localize-match-data';
 
 type Prediction = {
   title?: string | null;
@@ -48,7 +49,9 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
           return (
             <View key={index} style={styles.predictionItem}>
               <View style={styles.predictionHeader}>
-                <Text style={styles.predictionTitle}>{prediction.title || t('common.prediction')}</Text>
+                <Text style={styles.predictionTitle}>
+                  {localizePredictionTitle(prediction.title, t) || t('common.prediction')}
+                </Text>
                 <View style={[styles.confidenceBadge, { backgroundColor: confidenceColor + '20' }]}>
                   <Text style={[styles.confidenceText, { color: confidenceColor }]}>
                     %{confidence.toFixed(0)}
@@ -60,7 +63,9 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
                 <View style={styles.outcomeRow}>
                   <Text style={styles.outcomeLabel}>{t('matchDetail.recommended')}</Text>
                   <View style={[styles.outcomeBadge, { backgroundColor: confidenceColor }]}>
-                    <Text style={styles.outcomeText}>{topOutcome.label}</Text>
+                    <Text style={styles.outcomeText}>
+                      {localizeOutcomeLabel(topOutcome.label, t)}
+                    </Text>
                   </View>
                   <Text style={styles.outcomePercent}>%{topOutcome.valuePercent?.toFixed(0)}</Text>
                 </View>
@@ -79,7 +84,9 @@ export function PredictionSummaryCard({ predictions }: PredictionSummaryCardProp
                 <View style={styles.allOutcomes}>
                   {prediction.outcomes.map((outcome, idx) => (
                     <View key={idx} style={styles.outcomeChip}>
-                      <Text style={styles.outcomeChipLabel}>{outcome.label}</Text>
+                      <Text style={styles.outcomeChipLabel}>
+                        {localizeOutcomeLabel(outcome.label, t)}
+                      </Text>
                       <Text style={styles.outcomeChipValue}>%{outcome.valuePercent?.toFixed(0)}</Text>
                     </View>
                   ))}

@@ -6,6 +6,7 @@ export type MatchSummary = {
   kickoffIsoUtc?: string | null; // Canonical UTC time
   kickoffTimezone?: string | null; // IANA timezone (e.g., "Europe/Istanbul")
   kickoffTimeDisplay?: string | null; // Formatted time for current timezone
+  kickoffTimezoneId?: string | null; // Preset ID (e.g., "ISTANBUL")
   statusLabel: string | null;
   homeTeam: string;
   homeSideCode?: string | null;
@@ -53,6 +54,7 @@ export type MatchDetail = {
     kickoffIsoUtc?: string | null; // Canonical UTC time
     kickoffTimezone?: string | null; // IANA timezone (e.g., "Europe/Istanbul")
     kickoffTimeDisplay?: string | null; // Formatted time for current timezone
+    kickoffTimezoneId?: string | null; // Preset ID (e.g., "ISTANBUL")
     info?: string[] | null;
   };
   highlightPredictions?: Array<{
@@ -105,5 +107,15 @@ export type MatchDetail = {
     awayTeam?: string | null;
     score?: string | null;
   }>;
+};
+
+export type MatchReanalysisResponse = {
+  status: 'pending' | 'processing';
+  message?: string;
+  matchId: number | string;
+  queuePosition?: number;
+  alreadyQueued?: boolean;
+  nextAllowedAt?: string | null;
+  intervalMs?: number;
 };
 

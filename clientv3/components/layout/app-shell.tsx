@@ -79,7 +79,7 @@ function BottomNavigation({ pathname, router }: { pathname: string; router: any 
   const tabs = [
     { path: '/', label: t('common.home'), icon: 'football' as const },
     { path: '/favorites', label: t('common.favorites'), icon: 'star' as const },
-    { path: '/profile', label: t('common.profile'), icon: 'information-circle' as const },
+    { path: '/settings', label: t('common.settings'), icon: 'settings' as const },
   ];
 
   return (
