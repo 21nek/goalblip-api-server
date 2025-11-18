@@ -138,11 +138,11 @@ const translations = {
         'howItWorks.title': '¿Cómo Funciona?',
         'howItWorks.subtitle': '¡Exploremos Juntos!',
         'howItWorks.step1.title': 'Recopilación y Procesamiento de Datos',
-        'howItWorks.step1.description': 'GoalBlip recopila información importante como partidos pasados, clasificaciones de liga y diversas estadísticas de equipos de fútbol escaneando internet. Estos datos incluyen detalles de partidos, estadísticas de equipos e información de jugadores.',
+        'howItWorks.step1.description': 'GoalBlip recopila información importante como partidos pasados, clasificaciones de liga y varias estadísticas de equipos de fútbol escaneando internet. Estos datos incluyen detalles de partidos, estadísticas de equipos e información de jugadores.',
         'howItWorks.step2.title': 'Análisis de Datos',
-        'howItWorks.step2.description': 'Los datos recopilados son procesados por los potentes motores de análisis de GoalBlip. Se tienen en cuenta varios factores como el rendimiento en casa y fuera, estado de rendimiento reciente y condiciones de salud de los jugadores.',
+        'howItWorks.step2.description': 'Los datos recopilados son procesados por los potentes motores de análisis de GoalBlip. Se tienen en cuenta varios factores como el rendimiento en casa y fuera, el estado de rendimiento reciente y las condiciones de salud de los jugadores.',
         'howItWorks.step3.title': 'Análisis y Creación de Tablas',
-        'howItWorks.step3.description': 'Los datos analizados se procesan utilizando varios algoritmos y modelos, y se crean análisis detallados como resultados potenciales de partidos y tablas de rendimiento.',
+        'howItWorks.step3.description': 'Los datos analizados se procesan utilizando varios algoritmos y modelos, y se crean análisis detallados como posibles resultados de partidos y tablas de rendimiento.',
         'howItWorks.step4.title': 'Interacción del Usuario',
         'howItWorks.step4.description': 'Los usuarios pueden ver directamente los resultados de las tablas detalladas preparadas por GoalBlip o acceder a vistas personalizadas haciendo sus propios análisis.',
         'features.title': 'Características',
@@ -151,13 +151,13 @@ const translations = {
         'features.feature2.title': 'Comparaciones de Equipos',
         'features.feature2.description': 'Rendimiento reciente de equipos, estado de forma y comparaciones',
         'features.feature3.title': 'Seguimiento de Favoritos',
-        'features.feature3.description': 'Guarda tus partidos favoritos y accede fácilmente',
+        'features.feature3.description': 'Guarda tus partidos favoritos y accede a ellos fácilmente',
         'features.feature4.title': 'Soporte Multiidioma',
         'features.feature4.description': 'Turco, Inglés, Español, Alemán',
         'features.feature5.title': 'Interfaz Moderna',
-        'features.feature5.description': 'Diseño amigable y responsive',
+        'features.feature5.description': 'Diseño fácil de usar y responsivo',
         'features.feature6.title': 'Datos en Tiempo Real',
-        'features.feature6.description': 'Información y estadísticas de partidos actualizadas instantáneamente',
+        'features.feature6.description': 'Información y estadísticas de partidos actualizadas al instante',
         'whyGoalblip.title': 'El Análisis de Partidos Puede Ser Muy Agotador',
         'whyGoalblip.description': 'Ya no necesitas pasar horas analizando; GoalBlip acelera tu proceso de toma de decisiones proporcionando información basada en datos. Ahorra tiempo y energía utilizando el poder de la inteligencia artificial en lugar de lidiar con conjuntos de datos complejos y estadísticas.',
         'whyGoalblip.benefit1': 'Recopilación y procesamiento automático de datos',
@@ -172,11 +172,11 @@ const translations = {
         'dataAnalysis.item2.title': 'Algoritmos de Análisis Potentes',
         'dataAnalysis.item2.description': 'Procesamiento de datos avanzado y análisis estadístico',
         'dataAnalysis.item3.title': 'Interfaz Fácil de Usar',
-        'dataAnalysis.item3.description': 'Visualizaciones fáciles de usar y comprensibles',
+        'dataAnalysis.item3.description': 'Fácil de usar y visualizaciones comprensibles',
         'dataAnalysis.item4.title': 'Actualizaciones Continuas',
         'dataAnalysis.item4.description': 'Datos más actualizados y sistema en constante evolución',
         'cta.title': '¡Pruébalo Gratis Ahora!',
-        'cta.subtitle': 'Descargar de App Store y Play Store',
+        'cta.subtitle': 'Descargar desde App Store y Play Store',
         'cta.appStore': 'Descargar en App Store',
         'cta.playStore': 'Obtener en Play Store',
         'footer.description': 'Sigue de cerca el mundo del fútbol. Análisis y estadísticas con IA.',
@@ -191,33 +191,33 @@ const translations = {
     },
     de: {
         'nav.home': 'Startseite',
-        'nav.privacy': 'Datenschutz',
-        'nav.support': 'Unterstützung',
+        'nav.privacy': 'Datenschutzrichtlinie',
+        'nav.support': 'Support',
         'hero.subtitle': 'KI-gestützte Analyse und Statistiken für Fußballspiele',
         'hero.description': 'Verfolgen Sie die Fußballwelt genau. Treffen Sie fundierte Entscheidungen mit detaillierten Spielanalysen, Teamleistungsstatistiken und umfassenden Daten.',
         'hero.appStore': 'Im App Store herunterladen',
-        'hero.playStore': 'Bei Play Store herunterladen',
-        'hero.scrollDown': 'Nach Unten Scrollen',
-        'howItWorks.title': 'Wie Es Funktioniert?',
-        'howItWorks.subtitle': 'Lasst Uns Gemeinsam Entdecken!',
+        'hero.playStore': 'Im Play Store herunterladen',
+        'hero.scrollDown': 'Nach unten scrollen',
+        'howItWorks.title': 'Wie funktioniert es?',
+        'howItWorks.subtitle': 'Lass uns zusammen erkunden!',
         'howItWorks.step1.title': 'Datenerfassung und -verarbeitung',
-        'howItWorks.step1.description': 'GoalBlip sammelt wichtige Informationen wie vergangene Spiele, Ligastände und verschiedene Statistiken von Fußballmannschaften durch Scannen des Internets. Diese Daten umfassen Spieldetails, Teamstatistiken und Spielerinformationen.',
+        'howItWorks.step1.description': 'GoalBlip sammelt wichtige Informationen wie vergangene Spiele, Ligatabellen und verschiedene Statistiken von Fußballmannschaften durch das Scannen des Internets. Diese Daten umfassen Spieldetails, Teamstatistiken und Spielerinformationen.',
         'howItWorks.step2.title': 'Datenanalyse',
-        'howItWorks.step2.description': 'Die gesammelten Daten werden von GoalBlips leistungsstarken Analysemotoren verarbeitet. Verschiedene Faktoren wie Heim- und Auswärtsleistung, aktueller Leistungsstatus und Gesundheitszustände der Spieler werden berücksichtigt.',
+        'howItWorks.step2.description': 'Die gesammelten Daten werden von den leistungsstarken Analysemotoren von GoalBlip verarbeitet. Verschiedene Faktoren wie Heim- und Auswärtsleistung, aktuelle Leistungsstatus und Spielergesundheitszustände werden berücksichtigt.',
         'howItWorks.step3.title': 'Analyse und Tabellenerstellung',
-        'howItWorks.step3.description': 'Die analysierten Daten werden mit verschiedenen Algorithmen und Modellen verarbeitet, und detaillierte Analysen wie potenzielle Spielergebnisse und Leistungstabellen werden erstellt.',
+        'howItWorks.step3.description': 'Die analysierten Daten werden mit verschiedenen Algorithmen und Modellen verarbeitet, und detaillierte Analysen wie mögliche Spielergebnisse und Leistungstabellen werden erstellt.',
         'howItWorks.step4.title': 'Benutzerinteraktion',
-        'howItWorks.step4.description': 'Benutzer können Ergebnisse direkt aus den von GoalBlip vorbereiteten detaillierten Tabellen anzeigen oder durch eigene Analysen auf angepasste Ansichten zugreifen.',
+        'howItWorks.step4.description': 'Benutzer können Ergebnisse direkt aus den detaillierten Tabellen ansehen, die von GoalBlip vorbereitet wurden, oder durch eigene Analysen auf angepasste Ansichten zugreifen.',
         'features.title': 'Funktionen',
         'features.feature1.title': 'Detaillierte Spielanalyse',
         'features.feature1.description': 'Umfassende Statistiken und Leistungsmetriken für jedes Spiel',
         'features.feature2.title': 'Teamvergleiche',
         'features.feature2.description': 'Aktuelle Leistung von Teams, Formstatus und Vergleiche',
-        'features.feature3.title': 'Favoriten-Tracking',
-        'features.feature3.description': 'Speichern Sie Ihre Lieblingsspiele und greifen Sie einfach darauf zu',
+        'features.feature3.title': 'Favoritenverfolgung',
+        'features.feature3.description': 'Speichern Sie Ihre Lieblingsspiele und greifen Sie leicht darauf zu',
         'features.feature4.title': 'Mehrsprachige Unterstützung',
         'features.feature4.description': 'Türkisch, Englisch, Spanisch, Deutsch',
-        'features.feature5.title': 'Moderne Oberfläche',
+        'features.feature5.title': 'Moderne Benutzeroberfläche',
         'features.feature5.description': 'Benutzerfreundliches, responsives Design',
         'features.feature6.title': 'Echtzeitdaten',
         'features.feature6.description': 'Sofort aktualisierte Spielinformationen und Statistiken',
@@ -235,17 +235,17 @@ const translations = {
         'dataAnalysis.item2.title': 'Leistungsstarke Analysealgorithmen',
         'dataAnalysis.item2.description': 'Fortschrittliche Datenverarbeitung und statistische Analyse',
         'dataAnalysis.item3.title': 'Benutzerfreundliche Oberfläche',
-        'dataAnalysis.item3.description': 'Einfach zu bedienende und verständliche Visualisierungen',
+        'dataAnalysis.item3.description': 'Einfach zu bedienen und verständliche Visualisierungen',
         'dataAnalysis.item4.title': 'Kontinuierliche Updates',
-        'dataAnalysis.item4.description': 'Aktuellste Daten und sich ständig weiterentwickelndes System',
-        'cta.title': 'Probieren Sie Es Jetzt Kostenlos!',
-        'cta.subtitle': 'Aus App Store und Play Store herunterladen',
+        'dataAnalysis.item4.description': 'Aktuellste Daten und sich kontinuierlich entwickelndes System',
+        'cta.title': 'Jetzt Kostenlos Ausprobieren!',
+        'cta.subtitle': 'Von App Store und Play Store herunterladen',
         'cta.appStore': 'Im App Store herunterladen',
-        'cta.playStore': 'Bei Play Store herunterladen',
+        'cta.playStore': 'Im Play Store herunterladen',
         'footer.description': 'Verfolgen Sie die Fußballwelt genau. KI-gestützte Analyse und Statistiken.',
         'footer.quickLinks': 'Schnelllinks',
-        'footer.privacy': 'Datenschutz',
-        'footer.support': 'Unterstützung',
+        'footer.privacy': 'Datenschutzrichtlinie',
+        'footer.support': 'Support',
         'footer.contact': 'Kontakt',
         'footer.legal': 'Rechtliches',
         'footer.terms': 'Nutzungsbedingungen',
@@ -253,6 +253,139 @@ const translations = {
         'footer.copyright': '© 2025 GoalBlip. Alle Rechte vorbehalten.'
     }
 };
+
+// How It Works Page Animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll animations for phase sections
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const phaseObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.phase-section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        phaseObserver.observe(section);
+    });
+
+    // Progress circle animations
+    const progressObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const circle = entry.target;
+                const percent = parseInt(circle.getAttribute('data-percent'));
+                const degrees = (percent / 100) * 360;
+                
+                circle.style.background = `conic-gradient(
+                    var(--color-accent) 0deg,
+                    var(--color-accent) ${degrees}deg,
+                    rgba(203, 224, 67, 0.1) ${degrees}deg,
+                    rgba(203, 224, 67, 0.1) 360deg
+                )`;
+                
+                progressObserver.unobserve(circle);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.progress-circle').forEach(circle => {
+        progressObserver.observe(circle);
+    });
+
+    // Counter animation for stats
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const statNumber = entry.target;
+                const target = statNumber.textContent;
+                
+                if (target.includes('+')) {
+                    const num = parseInt(target);
+                    animateCounter(statNumber, 0, num, 2000, '+');
+                } else if (target.includes('%')) {
+                    const num = parseFloat(target);
+                    animateCounter(statNumber, 0, num, 2000, '%');
+                } else {
+                    const num = parseInt(target);
+                    animateCounter(statNumber, 0, num, 2000);
+                }
+                
+                statsObserver.unobserve(statNumber);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-number').forEach(stat => {
+        statsObserver.observe(stat);
+    });
+
+    // Progress bar animation
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) {
+        const updateProgress = () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const progress = (scrollTop / (documentHeight - windowHeight)) * 100;
+            progressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
+        };
+
+        window.addEventListener('scroll', updateProgress);
+        updateProgress();
+    }
+
+    // Parallax effect for phase sections (desktop only)
+    if (window.innerWidth >= 1024) {
+        const parallaxSections = document.querySelectorAll('.phase-section');
+        
+        window.addEventListener('scroll', () => {
+            parallaxSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.1;
+                
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const phaseNumber = section.querySelector('.phase-number');
+                    if (phaseNumber) {
+                        const offset = (rect.top - window.innerHeight / 2) * 0.05;
+                        phaseNumber.style.transform = `translateY(${offset}px)`;
+                    }
+                }
+            });
+        });
+    }
+
+});
+
+function animateCounter(element, start, end, duration, suffix = '') {
+    const range = end - start;
+    const increment = end > start ? 1 : -1;
+    const stepTime = Math.abs(Math.floor(duration / range));
+    let current = start;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (suffix === '%') {
+            element.textContent = current.toFixed(1) + suffix;
+        } else {
+            element.textContent = current + suffix;
+        }
+        
+        if (current === end) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
 
 // Language Management
 let currentLang = localStorage.getItem('lang') || 'tr';

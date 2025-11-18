@@ -14,21 +14,15 @@ RewriteRule ^(.*)$ index.php?lang=en [L,QSA]
 # RewriteCond %{HTTP:Accept-Language} ^tr [NC]
 # RewriteRule ^$ /tr/ [R=301,L]
 
-# Language paths: /tr/, /es/, /de/ (en/ handled above)
+# Language paths: /tr/, /es/, /de/, /en/, /zh/, /ja/, /it/ (all languages use prefix for consistency)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(tr|es|de)/?$ index.php?lang=$1 [L,QSA]
+RewriteRule ^(tr|en|es|de|zh|ja|it)/?$ index.php?lang=$1 [L,QSA]
 
-# Language paths with page: /tr/privacy-policy, /en/support, etc.
+# Language paths with page: /tr/privacy-policy, /en/support, /es/support, /de/support, /zh/support, /ja/support, /it/support, etc.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(tr|en|es|de)/([a-z-]+)/?$ $2.php?lang=$1 [L,QSA]
-
-# Direct page access (English default): /privacy-policy → privacy-policy.php?lang=en
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !^/(tr|en|es|de)/
-RewriteRule ^([a-z-]+)/?$ $1.php?lang=en [L,QSA]
+RewriteRule ^(tr|en|es|de|zh|ja|it)/([a-z-]+)/?$ $2.php?lang=$1 [L,QSA]
 
 # Static files (CSS, JS, images) - don't rewrite
 RewriteCond %{REQUEST_FILENAME} -f

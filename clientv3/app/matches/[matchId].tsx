@@ -527,7 +527,8 @@ if (formattedLastUpdatedAt) {
 
                 {/* Score */}
                 <View style={getStyles().scoreSection}>
-                  {scoreboard?.homeTeam?.score !== null && scoreboard?.awayTeam?.score !== null ? (
+                  {typeof scoreboard?.homeTeam?.score === 'number' &&
+                  typeof scoreboard?.awayTeam?.score === 'number' ? (
                     <>
                       <Text style={getStyles().score}>
                         {scoreboard.homeTeam.score} - {scoreboard.awayTeam.score}

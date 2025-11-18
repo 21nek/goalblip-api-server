@@ -6,7 +6,7 @@
  */
 
 // Supported languages
-define('SUPPORTED_LANGS', ['tr', 'en', 'es', 'de']);
+define('SUPPORTED_LANGS', ['tr', 'en', 'es', 'de', 'zh', 'ja', 'it']);
 define('DEFAULT_LANG', 'en'); // English as default for SEO
 
 // Get language from URL parameter (set by .htaccess) or URL path
@@ -90,16 +90,8 @@ function t($key, $default = '') {
 }
 
 // Get language URL (creates /lang/page format)
+// All languages use prefix for consistency: /en/, /tr/, /es/, /de/
 function getLangUrl($lang, $page = '') {
-    // English is default, no language prefix
-    if ($lang === DEFAULT_LANG) {
-        if ($page) {
-            return '/' . $page;
-        }
-        return '/';
-    }
-    
-    // Other languages: /lang/ or /lang/page
     $base = '/' . $lang . '/';
     if ($page) {
         return $base . $page;
@@ -122,6 +114,9 @@ function getCurrentPage() {
     // Get page name
     $page = !empty($segments[0]) ? $segments[0] : '';
     
+    // Remove .php extension if present
+    $page = preg_replace('/\.php$/', '', $page);
+    
     // Map to actual PHP file
     if (empty($page) || $page === 'index') {
         return '';
@@ -131,25 +126,24 @@ function getCurrentPage() {
 }
 
 // Get canonical URL
+// All languages use prefix for consistency: /en/, /tr/, /es/, /de/
 function getCanonicalUrl() {
     global $currentLang;
     $page = getCurrentPage();
-    $baseUrl = 'https://goalblip.com'; // Change to your actual domain
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'goalblip.com';
     $baseUrl = $protocol . '://' . $host;
     
-    if ($currentLang === DEFAULT_LANG) {
-        // English is default, no language prefix
-        return $baseUrl . ($page ? '/' . $page : '');
+    $url = $baseUrl . '/' . $currentLang;
+    if ($page) {
+        $url .= '/' . $page;
     }
-    
-    return $baseUrl . '/' . $currentLang . ($page ? '/' . $page : '');
+    return $url;
 }
 
 // Get alternate language URLs (for hreflang)
+// All languages use prefix for consistency: /en/, /tr/, /es/, /de/
 function getAlternateUrls() {
-    global $currentLang;
     $page = getCurrentPage();
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'goalblip.com';
@@ -157,11 +151,11 @@ function getAlternateUrls() {
     $urls = [];
     
     foreach (SUPPORTED_LANGS as $lang) {
-        if ($lang === DEFAULT_LANG) {
-            $urls[$lang] = $baseUrl . ($page ? '/' . $page : '');
-        } else {
-            $urls[$lang] = $baseUrl . '/' . $lang . ($page ? '/' . $page : '');
+        $url = $baseUrl . '/' . $lang;
+        if ($page) {
+            $url .= '/' . $page;
         }
+        $urls[$lang] = $url;
     }
     
     return $urls;
@@ -172,7 +166,10 @@ $langNames = [
     'tr' => 'Türkçe',
     'en' => 'English',
     'es' => 'Español',
-    'de' => 'Deutsch'
+    'de' => 'Deutsch',
+    'zh' => '中文',
+    'ja' => '日本語',
+    'it' => 'Italiano'
 ];
 
 // Language codes for hreflang
@@ -180,6 +177,9 @@ $langCodes = [
     'tr' => 'tr-TR',
     'en' => 'en-US',
     'es' => 'es-ES',
-    'de' => 'de-DE'
+    'de' => 'de-DE',
+    'zh' => 'zh-CN',
+    'ja' => 'ja-JP',
+    'it' => 'it-IT'
 ];
 ?>

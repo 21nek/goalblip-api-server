@@ -11,7 +11,7 @@ const getApiBaseUrl = (): string => {
   
   // Development: Local IP (sunucuya taşınana kadar)
   // Not: Server'ın gerçek IP'sini kullan (hostname -I ile kontrol et)
-  return 'http://192.168.137.63:4000';
+  return 'http://192.168.1.105:4000';
   
   // Production: Cloudflare HTTPS (sunucuya taşındığında aktif et)
   // if (typeof __DEV__ !== 'undefined' && !__DEV__) {

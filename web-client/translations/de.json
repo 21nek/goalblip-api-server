@@ -25,22 +25,169 @@
   },
   "howItWorks": {
     "title": "Wie Es Funktioniert?",
-    "subtitle": "Lasst Uns Gemeinsam Entdecken!",
+    "subtitle": "Fortgeschrittener KI-gestützter Fußball-Analyse-Motor",
+    "intro": "GoalBlip nutzt modernste Algorithmen des maschinellen Lernens, statistische Modellierung und Echtzeit-Datenverarbeitung, um beispiellose Fußballspiel-Vorhersagen und Einblicke zu liefern. Unsere mehrschichtige Analyse-Pipeline transformiert rohe Spieldaten durch ausgeklügelte Berechnungsmethoden in umsetzbare Intelligenz.",
+    "introStats": {
+      "analysisPhases": "Analysephasen",
+      "mlModels": "ML-Modelle",
+      "features": "Features",
+      "uptime": "Betriebszeit"
+    },
+    "phase1": {
+      "title": "Phase 1: Intelligente Datensammlung und Multi-Quellen-Fusion",
+      "subtitle": "Fortgeschrittene Datensammlungs-Infrastruktur",
+      "description": "Unser verteiltes Datensammlungssystem verwendet intelligentes Web-Scraping, API-Integration und Echtzeit-Datenstreaming, um umfassende Fußballstatistiken aus mehreren autoritativen Quellen zu sammeln. Dieser Multi-Quellen-Fusionsansatz gewährleistet Datenintegrität, Genauigkeit und Redundanz.",
+      "features": {
+        "title": "Schlüsselfähigkeiten:",
+        "feature1": "Echtzeit-Datenstreaming aus mehreren Quellen",
+        "feature1Title": "Echtzeit-Streaming",
+        "feature2": "Intelligente Aggregationsalgorithmen zur Daten-Normalisierung",
+        "feature2Title": "Intelligente Aggregation",
+        "feature3": "Multi-Quellen-Datenfusion mit Konfliktlösung",
+        "feature3Title": "Multi-Quellen-Fusion",
+        "feature4": "Automatisierte Datenqualitätsvalidierung und Anomalieerkennung",
+        "feature4Title": "Qualitätsvalidierung",
+        "feature5": "Verteiltes Caching für hochperformante Datenabfrage",
+        "feature5Title": "Verteiltes Caching"
+      }
+    },
+    "phase2": {
+      "title": "Phase 2: Feature-Engineering und statistische Vorverarbeitung",
+      "subtitle": "Fortgeschrittene Daten-Transformations-Pipeline",
+      "description": "Rohe Spieldaten durchlaufen ausgeklügelte Feature-Engineering-Prozesse, bei denen Hunderte statistischer Features extrahiert, normalisiert und transformiert werden. Unsere Vorverarbeitungs-Pipeline umfasst zeitliche Feature-Extraktion, Team-Form-Analyse, Kopf-an-Kopf-Statistiken und kontextuelle Feature-Generierung.",
+      "features": {
+        "title": "Verarbeitungstechniken:",
+        "feature1": "Zeitliche Feature-Extraktion (gleitende Durchschnitte, Momentum-Indikatoren)",
+        "feature1Title": "Zeitliche Extraktion",
+        "feature2": "Team-Form-Analyse mit gewichteten Leistungsmetriken",
+        "feature2Title": "Form-Analyse",
+        "feature3": "Kopf-an-Kopf-statistische Modellierung mit historischem Kontext",
+        "feature3Title": "Direktvergleich-Modellierung",
+        "feature4": "Kontextuelle Feature-Generierung (Heim/Auswärts, Wetter, Verletzungen)",
+        "feature4Title": "Kontextuelle Features",
+        "feature5": "Dimensionsreduktion und Feature-Selektionsalgorithmen",
+        "feature5Title": "Dimensionsreduktion"
+      }
+    },
+    "phase3": {
+      "title": "Phase 3: Maschinelles Lernen und prädiktive Modellierung",
+      "subtitle": "Ensemble-Methoden und fortgeschrittene Algorithmen",
+      "description": "Unser Vorhersage-Engine verwendet ein Ensemble von Machine-Learning-Modellen, einschließlich Gradient Boosting, neuronalen Netzen und Bayes'schen Inferenzmethoden. Jedes Modell wird mit umfangreichen historischen Daten trainiert und kontinuierlich durch Online-Lernmechanismen verfeinert.",
+      "models": {
+        "title": "Kernmodelle:",
+        "badgeCore": "Kern",
+        "badgeSpecial": "Spezial",
+        "model1": "Gradient Boosting Maschinen (XGBoost, LightGBM) für nichtlineare Mustererkennung",
+        "model1Title": "Gradient Boosting",
+        "model2": "Tiefe neuronale Netze für komplexe Feature-Interaktionen",
+        "model2Title": "Neuronale Netze",
+        "model3": "Bayes'sche Inferenzmodelle für probabilistische Vorhersagen",
+        "model3Title": "Bayes'sche Inferenz",
+        "model4": "Poisson-Verteilungsmodelle zur Schätzung der Torwahrscheinlichkeit",
+        "model4Title": "Poisson-Verteilung",
+        "model5": "Ensemble-Methoden, die mehrere Modelle für robuste Vorhersagen kombinieren",
+        "model5Title": "Ensemble-Methoden"
+      },
+      "algorithms": {
+        "title": "Fortgeschrittene Algorithmen:",
+        "algo1": "Monte-Carlo-Simulation für Ergebnis-Wahrscheinlichkeitsverteilung",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Markov-Ketten-Modelle für Spielzustandsübergänge",
+        "algo2Title": "Markov-Kette",
+        "algo3": "Zeitreihenanalyse für Form- und Momentum-Vorhersage",
+        "algo3Title": "Zeitreihen",
+        "algo4": "Anomalieerkennung zur Identifizierung unerwarteter Muster",
+        "algo4Title": "Anomalieerkennung",
+        "algo5": "Verstärkendes Lernen für adaptive Modelloptimierung",
+        "algo5Title": "Verstärkendes Lernen"
+      }
+    },
+    "phase4": {
+      "title": "Phase 4: Konfidenz-Bewertung und Risikobewertung",
+      "subtitle": "Probabilistische Vorhersage-Kalibrierung",
+      "description": "Jede Vorhersage wird von einer ausgeklügelten Konfidenz-Bewertung begleitet, die durch Bayes'sche Kalibrierung, Unsicherheitsquantifizierung und Modellübereinstimmungsanalyse berechnet wird. Unser Konfidenz-Bewertungssystem bietet transparente Risikobewertung für jede Vorhersage.",
+      "scoring": {
+        "title": "Konfidenz-Metriken:",
+        "metric1": "Bayes'sche Konfidenzintervalle für Vorhersagezuverlässigkeit",
+        "metric1Title": "Bayes'sche Konfidenz",
+        "metric2": "Modellübereinstimmungs-Scores (Konsens unter Ensemble-Modellen)",
+        "metric2Title": "Modellübereinstimmung",
+        "metric3": "Unsicherheitsquantifizierung durch Monte-Carlo-Stichproben",
+        "metric3Title": "Unsicherheitsquantifizierung",
+        "metric4": "Historische Genauigkeits-Kalibrierung zur Modellleistungsverfolgung",
+        "metric4Title": "Genauigkeits-Kalibrierung",
+        "metric5": "Risikoadjustierte Bewertung mit konfidenzgewichteten Vorhersagen",
+        "metric5Title": "Risikoadjustierte Bewertung"
+      }
+    },
+    "phase5": {
+      "title": "Phase 5: Echtzeit-Analyse und kontinuierliches Lernen",
+      "subtitle": "Adaptives Intelligenz-System",
+      "description": "Unser System überwacht kontinuierlich Spielergebnisse, vergleicht Vorhersagen mit tatsächlichen Ergebnissen und verfeinert Modelle automatisch durch Online-Lernen. Dieser adaptive Ansatz stellt sicher, dass sich unsere Vorhersagen im Laufe der Zeit verbessern, wenn mehr Daten verfügbar werden.",
+      "learning": {
+        "title": "Lernmechanismen:",
+        "learn1": "Online-Lernen für Echtzeit-Modellaktualisierungen",
+        "learn1Title": "Online-Lernen",
+        "learn2": "Transfer-Lernen über Ligen und Wettbewerbe hinweg",
+        "learn2Title": "Transfer-Lernen",
+        "learn3": "Aktives Lernen zur Identifizierung hochwertiger Trainingsdaten",
+        "learn3Title": "Aktives Lernen",
+        "learn4": "Meta-Lernen für schnelle Anpassung an neue Muster",
+        "learn4Title": "Meta-Lernen",
+        "learn5": "Federiertes Lernen für verteilte Modellverbesserung",
+        "learn5Title": "Federiertes Lernen"
+      }
+    },
+    "phase6": {
+      "title": "Phase 6: Benutzeroberfläche und Visualisierung",
+      "subtitle": "Intelligente Datenpräsentation",
+      "description": "Komplexe analytische Ergebnisse werden durch unsere fortgeschrittene Präsentationsschicht in intuitive Visualisierungen und umsetzbare Einblicke transformiert. Benutzer erhalten klare, interpretierbare Vorhersagen mit unterstützenden Statistiken und Konfidenz-Indikatoren.",
+      "presentation": {
+        "title": "Präsentationsfunktionen:",
+        "pres1": "Interaktive Visualisierungen mit Drill-Down-Fähigkeiten",
+        "pres1Title": "Interaktive Visualisierungen",
+        "pres2": "Konfidenz-Score-Visualisierung und Risikoindikatoren",
+        "pres2Title": "Konfidenz-Visualisierung",
+        "pres3": "Vergleichende Analyse mit historischer Leistung",
+        "pres3Title": "Vergleichende Analyse",
+        "pres4": "Echtzeitaktualisierungen während Live-Spielen",
+        "pres4Title": "Echtzeitaktualisierungen",
+        "pres5": "Anpassbare Ansichten für verschiedene Analyseperspektiven",
+        "pres5Title": "Anpassbare Ansichten"
+      }
+    },
+    "technical": {
+      "title": "Technische Infrastruktur",
+      "subtitle": "Unternehmens-Computing-Architektur",
+      "description": "GoalBlip arbeitet auf einer skalierbaren, verteilten Computing-Infrastruktur, die für Hochleistungsanalysen und Echtzeitverarbeitung konzipiert ist.",
+      "infrastructure": {
+        "title": "Infrastrukturkomponenten:",
+        "comp1": "Verteilte Datenverarbeitung mit horizontaler Skalierung",
+        "comp2": "In-Memory-Computing für Sub-Millisekunden-Abfrageantworten",
+        "comp3": "GPU-beschleunigtes maschinelles Lernen für schnellere Modellschulung",
+        "comp4": "Microservices-Architektur für modulares Systemdesign",
+        "comp5": "Echtzeit-Streaming-Pipeline für Live-Datenverarbeitung"
+      }
+    },
+    "conclusion": {
+      "title": "Das Ergebnis",
+      "description": "Durch diese ausgeklügelte mehrphasige Pipeline transformiert GoalBlip rohe Fußballdaten in hochpräzise, konfidenz-bewertete Vorhersagen. Unser System kombiniert die Kraft von fortgeschrittenem maschinellem Lernen, statistischer Modellierung und Echtzeitverarbeitung, um Einblicke zu liefern, die Benutzern helfen, fundierte Entscheidungen über Fußballspiele zu treffen."
+    },
     "step1": {
       "title": "Datenerfassung und -verarbeitung",
-      "description": "GoalBlip sammelt wichtige Informationen wie vergangene Spiele, Ligastände und verschiedene Statistiken von Fußballmannschaften durch Scannen des Internets. Diese Daten umfassen Spieldetails, Teamstatistiken und Spielerinformationen."
+      "description": "GoalBlip sammelt wichtige Informationen wie vergangene Spiele, Ligatabellen und verschiedene Statistiken von Fußballmannschaften durch das Scannen des Internets. Diese Daten umfassen Spieldetails, Teamstatistiken und Spielerinformationen."
     },
     "step2": {
       "title": "Datenanalyse",
-      "description": "Die gesammelten Daten werden von GoalBlips leistungsstarken Analysemotoren verarbeitet. Verschiedene Faktoren wie Heim- und Auswärtsleistung, aktueller Leistungsstatus und Gesundheitszustände der Spieler werden berücksichtigt."
+      "description": "Die gesammelten Daten werden von den leistungsstarken Analysemotoren von GoalBlip verarbeitet. Verschiedene Faktoren wie Heim- und Auswärtsleistung, aktuelle Leistungsstatus und Spielergesundheitszustände werden berücksichtigt."
     },
     "step3": {
       "title": "Analyse und Tabellenerstellung",
-      "description": "Die analysierten Daten werden mit verschiedenen Algorithmen und Modellen verarbeitet, und detaillierte Analysen wie potenzielle Spielergebnisse und Leistungstabellen werden erstellt."
+      "description": "Die analysierten Daten werden mit verschiedenen Algorithmen und Modellen verarbeitet, und detaillierte Analysen wie mögliche Spielergebnisse und Leistungstabellen werden erstellt."
     },
     "step4": {
       "title": "Benutzerinteraktion",
-      "description": "Benutzer können Ergebnisse direkt aus den von GoalBlip vorbereiteten detaillierten Tabellen anzeigen oder durch eigene Analysen auf angepasste Ansichten zugreifen."
+      "description": "Benutzer können Ergebnisse direkt aus den detaillierten Tabellen ansehen, die von GoalBlip vorbereitet wurden, oder durch eigene Analysen auf angepasste Ansichten zugreifen."
     }
   },
   "features": {

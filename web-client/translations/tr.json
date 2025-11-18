@@ -25,7 +25,154 @@
   },
   "howItWorks": {
     "title": "Nasıl Çalışır?",
-    "subtitle": "Birlikte Keşfedelim!",
+    "subtitle": "Gelişmiş AI Destekli Futbol Analitik Motoru",
+    "intro": "GoalBlip, benzersiz futbol maç tahminleri ve içgörüleri sunmak için en son makine öğrenmesi algoritmaları, istatistiksel modelleme ve gerçek zamanlı veri işlemeyi kullanır. Çok katmanlı analiz hattımız, sofistike hesaplama yöntemleri aracılığıyla ham maç verilerini eyleme dönüştürülebilir istihbarata dönüştürür.",
+    "introStats": {
+      "analysisPhases": "Analiz Fazları",
+      "mlModels": "ML Modelleri",
+      "features": "Özellikler",
+      "uptime": "Çalışma Süresi"
+    },
+    "phase1": {
+      "title": "Faz 1: Akıllı Veri Toplama ve Çok Kaynaklı Füzyon",
+      "subtitle": "Gelişmiş Veri Toplama Altyapısı",
+      "description": "Dağıtılmış veri toplama sistemimiz, birden fazla yetkili kaynaktan kapsamlı futbol istatistiklerini toplamak için akıllı web kazıma, API entegrasyonu ve gerçek zamanlı veri akışı kullanır. Bu çok kaynaklı füzyon yaklaşımı, veri bütünlüğü, doğruluğu ve yedekliliği sağlar.",
+      "features": {
+        "title": "Temel Yetenekler:",
+        "feature1": "Birden fazla kaynaktan gerçek zamanlı veri akışı",
+        "feature1Title": "Gerçek Zamanlı Akış",
+        "feature2": "Veri normalleştirme için akıllı toplama algoritmaları",
+        "feature2Title": "Akıllı Toplama",
+        "feature3": "Çatışma çözümü ile çok kaynaklı veri füzyonu",
+        "feature3Title": "Çok Kaynaklı Füzyon",
+        "feature4": "Otomatik veri kalitesi doğrulama ve anomali tespiti",
+        "feature4Title": "Kalite Doğrulama",
+        "feature5": "Yüksek performanslı veri alımı için dağıtılmış önbellekleme",
+        "feature5Title": "Dağıtılmış Önbellekleme"
+      }
+    },
+    "phase2": {
+      "title": "Faz 2: Özellik Mühendisliği ve İstatistiksel Ön İşleme",
+      "subtitle": "Gelişmiş Veri Dönüşüm Hattı",
+      "description": "Ham maç verileri, yüzlerce istatistiksel özelliğin çıkarıldığı, normalize edildiği ve dönüştürüldüğü sofistike özellik mühendisliği süreçlerinden geçer. Ön işleme hattımız, zamansal özellik çıkarımı, takım form analizi, karşılaşma istatistikleri ve bağlamsal özellik üretimini içerir.",
+      "features": {
+        "title": "İşleme Teknikleri:",
+        "feature1": "Zamansal özellik çıkarımı (kayan ortalamalar, momentum göstergeleri)",
+        "feature1Title": "Zamansal Çıkarım",
+        "feature2": "Ağırlıklı performans metrikleri ile takım form analizi",
+        "feature2Title": "Form Analizi",
+        "feature3": "Tarihsel bağlam ile karşılaşma istatistiksel modelleme",
+        "feature3Title": "Karşılaşma Modelleme",
+        "feature4": "Bağlamsal özellik üretimi (ev/deplasman, hava durumu, sakatlıklar)",
+        "feature4Title": "Bağlamsal Özellikler",
+        "feature5": "Boyut azaltma ve özellik seçim algoritmaları",
+        "feature5Title": "Boyut Azaltma"
+      }
+    },
+    "phase3": {
+      "title": "Faz 3: Makine Öğrenmesi ve Tahmine Dayalı Modelleme",
+      "subtitle": "Topluluk Yöntemleri ve Gelişmiş Algoritmalar",
+      "description": "Tahmin motorumuz, gradyan artırma, sinir ağları ve Bayes çıkarım yöntemleri dahil olmak üzere bir makine öğrenmesi modeli topluluğu kullanır. Her model kapsamlı tarihsel veriler üzerinde eğitilir ve çevrimiçi öğrenme mekanizmaları aracılığıyla sürekli olarak iyileştirilir.",
+      "models": {
+        "title": "Temel Modeller:",
+        "badgeCore": "Temel",
+        "badgeSpecial": "Özel",
+        "model1": "Doğrusal olmayan desen tanıma için Gradient Boosting Makineleri (XGBoost, LightGBM)",
+        "model1Title": "Gradient Boosting",
+        "model2": "Karmaşık özellik etkileşimleri için Derin Sinir Ağları",
+        "model2Title": "Sinir Ağları",
+        "model3": "Olasılıksal tahminler için Bayes Çıkarım Modelleri",
+        "model3Title": "Bayes Çıkarımı",
+        "model4": "Gol atma olasılığı tahmini için Poisson Dağılım Modelleri",
+        "model4Title": "Poisson Dağılımı",
+        "model5": "Sağlam tahminler için birden fazla modeli birleştiren Topluluk Yöntemleri",
+        "model5Title": "Topluluk Yöntemleri"
+      },
+      "algorithms": {
+        "title": "Gelişmiş Algoritmalar:",
+        "algo1": "Sonuç olasılık dağılımı için Monte Carlo Simülasyonu",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Maç durumu geçişleri için Markov Zincir Modelleri",
+        "algo2Title": "Markov Zinciri",
+        "algo3": "Form ve momentum tahmini için Zaman Serisi Analizi",
+        "algo3Title": "Zaman Serisi",
+        "algo4": "Beklenmedik desenleri tanımlamak için Anomali Tespiti",
+        "algo4Title": "Anomali Tespiti",
+        "algo5": "Uyarlanabilir model optimizasyonu için Pekiştirmeli Öğrenme",
+        "algo5Title": "Pekiştirmeli Öğrenme"
+      }
+    },
+    "phase4": {
+      "title": "Faz 4: Güven Skorlama ve Risk Değerlendirmesi",
+      "subtitle": "Olasılıksal Tahmin Kalibrasyonu",
+      "description": "Her tahmin, Bayes kalibrasyonu, belirsizlik nicelleştirme ve model uyum analizi aracılığıyla hesaplanan sofistike bir güven skoru ile birlikte gelir. Güven skorlama sistemimiz, her tahmin için şeffaf risk değerlendirmesi sağlar.",
+      "scoring": {
+        "title": "Güven Metrikleri:",
+        "metric1": "Tahmin güvenilirliği için Bayes Güven Aralıkları",
+        "metric1Title": "Bayes Güveni",
+        "metric2": "Model Uyum Skorları (topluluk modelleri arasında konsensüs)",
+        "metric2Title": "Model Uyumu",
+        "metric3": "Monte Carlo örnekleme ile Belirsizlik Nicelleştirme",
+        "metric3Title": "Belirsizlik Nicelleştirme",
+        "metric4": "Model performans takibi için Tarihsel Doğruluk Kalibrasyonu",
+        "metric4Title": "Doğruluk Kalibrasyonu",
+        "metric5": "Güven ağırlıklı tahminler ile Risk Ayarlı Skorlama",
+        "metric5Title": "Risk Ayarlı Skorlama"
+      }
+    },
+    "phase5": {
+      "title": "Faz 5: Gerçek Zamanlı Analiz ve Sürekli Öğrenme",
+      "subtitle": "Uyarlanabilir Zeka Sistemi",
+      "description": "Sistemimiz sürekli olarak maç sonuçlarını izler, tahminleri gerçek sonuçlarla karşılaştırır ve çevrimiçi öğrenme aracılığıyla modelleri otomatik olarak iyileştirir. Bu uyarlanabilir yaklaşım, daha fazla veri mevcut oldukça tahminlerimizin zamanla iyileşmesini sağlar.",
+      "learning": {
+        "title": "Öğrenme Mekanizmaları:",
+        "learn1": "Gerçek zamanlı model güncellemeleri için Çevrimiçi Öğrenme",
+        "learn1Title": "Çevrimiçi Öğrenme",
+        "learn2": "Ligler ve yarışmalar arasında Transfer Öğrenme",
+        "learn2Title": "Transfer Öğrenme",
+        "learn3": "Yüksek değerli eğitim verilerini tanımlamak için Aktif Öğrenme",
+        "learn3Title": "Aktif Öğrenme",
+        "learn4": "Yeni desenlere hızlı uyum için Meta Öğrenme",
+        "learn4Title": "Meta Öğrenme",
+        "learn5": "Dağıtılmış model iyileştirme için Federatif Öğrenme",
+        "learn5Title": "Federatif Öğrenme"
+      }
+    },
+    "phase6": {
+      "title": "Faz 6: Kullanıcı Arayüzü ve Görselleştirme",
+      "subtitle": "Akıllı Veri Sunumu",
+      "description": "Karmaşık analitik sonuçlar, gelişmiş sunum katmanımız aracılığıyla sezgisel görselleştirmelere ve eyleme dönüştürülebilir içgörülere dönüştürülür. Kullanıcılar, destekleyici istatistikler ve güven göstergeleri ile net, yorumlanabilir tahminler alır.",
+      "presentation": {
+        "title": "Sunum Özellikleri:",
+        "pres1": "Detaylı inceleme yetenekleri ile etkileşimli görselleştirmeler",
+        "pres1Title": "Etkileşimli Görselleştirmeler",
+        "pres2": "Güven skoru görselleştirmesi ve risk göstergeleri",
+        "pres2Title": "Güven Görselleştirmesi",
+        "pres3": "Tarihsel performans ile karşılaştırmalı analiz",
+        "pres3Title": "Karşılaştırmalı Analiz",
+        "pres4": "Canlı maçlar sırasında gerçek zamanlı güncellemeler",
+        "pres4Title": "Gerçek Zamanlı Güncellemeler",
+        "pres5": "Farklı analiz perspektifleri için özelleştirilebilir görünümler",
+        "pres5Title": "Özelleştirilebilir Görünümler"
+      }
+    },
+    "technical": {
+      "title": "Teknik Altyapı",
+      "subtitle": "Kurumsal Düzeyde Hesaplama Mimarisi",
+      "description": "GoalBlip, yüksek performanslı analitik ve gerçek zamanlı işleme için tasarlanmış ölçeklenebilir, dağıtılmış bir hesaplama altyapısı üzerinde çalışır.",
+      "infrastructure": {
+        "title": "Altyapı Bileşenleri:",
+        "comp1": "Yatay ölçeklendirme ile dağıtılmış veri işleme",
+        "comp2": "Milisaniye altı sorgu yanıtları için bellek içi hesaplama",
+        "comp3": "Daha hızlı model eğitimi için GPU Hızlandırmalı Makine Öğrenmesi",
+        "comp4": "Modüler sistem tasarımı için Mikroservis Mimarisi",
+        "comp5": "Canlı veri işleme için gerçek zamanlı akış hattı"
+      }
+    },
+    "conclusion": {
+      "title": "Sonuç",
+      "description": "Bu sofistike çok fazlı hat aracılığıyla, GoalBlip ham futbol verilerini yüksek doğrulukta, güven skorlu tahminlere dönüştürür. Sistemimiz, gelişmiş makine öğrenmesi, istatistiksel modelleme ve gerçek zamanlı işlemenin gücünü birleştirerek, kullanıcıların futbol maçları hakkında bilinçli kararlar vermesine yardımcı olan içgörüler sunar."
+    },
     "step1": {
       "title": "Veri Toplama ve İşleme",
       "description": "GoalBlip, interneti tarayarak futbol takımlarının geçmiş maçları, lig durumu ve çeşitli istatistikler gibi önemli bilgileri toplar. Bu veriler, maçların detaylarını, takım istatistiklerini ve oyuncu bilgilerini içerir."

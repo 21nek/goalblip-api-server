@@ -25,18 +25,165 @@
   },
   "howItWorks": {
     "title": "¿Cómo Funciona?",
-    "subtitle": "¡Exploremos Juntos!",
+    "subtitle": "Motor de Análisis de Fútbol Avanzado con IA",
+    "intro": "GoalBlip aprovecha algoritmos de aprendizaje automático de vanguardia, modelado estadístico y procesamiento de datos en tiempo real para ofrecer predicciones e insights de partidos de fútbol sin precedentes. Nuestro pipeline de análisis multicapa transforma datos brutos de partidos en inteligencia accionable a través de métodos computacionales sofisticados.",
+    "introStats": {
+      "analysisPhases": "Fases de Análisis",
+      "mlModels": "Modelos ML",
+      "features": "Características",
+      "uptime": "Tiempo de Actividad"
+    },
+    "phase1": {
+      "title": "Fase 1: Agregación Inteligente de Datos y Fusión Multi-Fuente",
+      "subtitle": "Infraestructura Avanzada de Recopilación de Datos",
+      "description": "Nuestro sistema de recopilación de datos distribuido emplea web scraping inteligente, integración de API y streaming de datos en tiempo real para agregar estadísticas completas de fútbol desde múltiples fuentes autorizadas. Este enfoque de fusión multi-fuente garantiza integridad, precisión y redundancia de datos.",
+      "features": {
+        "title": "Capacidades Clave:",
+        "feature1": "Streaming de datos en tiempo real desde múltiples fuentes",
+        "feature1Title": "Streaming en Tiempo Real",
+        "feature2": "Algoritmos de agregación inteligente para normalización de datos",
+        "feature2Title": "Agregación Inteligente",
+        "feature3": "Fusión de datos multi-fuente con resolución de conflictos",
+        "feature3Title": "Fusión Multi-Fuente",
+        "feature4": "Validación automática de calidad de datos y detección de anomalías",
+        "feature4Title": "Validación de Calidad",
+        "feature5": "Caché distribuido para recuperación de datos de alto rendimiento",
+        "feature5Title": "Caché Distribuido"
+      }
+    },
+    "phase2": {
+      "title": "Fase 2: Ingeniería de Características y Preprocesamiento Estadístico",
+      "subtitle": "Pipeline Avanzado de Transformación de Datos",
+      "description": "Los datos brutos de partidos pasan por procesos sofisticados de ingeniería de características donde se extraen, normalizan y transforman cientos de características estadísticas. Nuestro pipeline de preprocesamiento incluye extracción de características temporales, análisis de forma del equipo, estadísticas cara a cara y generación de características contextuales.",
+      "features": {
+        "title": "Técnicas de Procesamiento:",
+        "feature1": "Extracción de características temporales (promedios móviles, indicadores de momentum)",
+        "feature1Title": "Extracción Temporal",
+        "feature2": "Análisis de forma del equipo con métricas de rendimiento ponderadas",
+        "feature2Title": "Análisis de Forma",
+        "feature3": "Modelado estadístico cara a cara con contexto histórico",
+        "feature3Title": "Modelado Cara a Cara",
+        "feature4": "Generación de características contextuales (local/visitante, clima, lesiones)",
+        "feature4Title": "Características Contextuales",
+        "feature5": "Algoritmos de reducción de dimensionalidad y selección de características",
+        "feature5Title": "Reducción de Dimensionalidad"
+      }
+    },
+    "phase3": {
+      "title": "Fase 3: Aprendizaje Automático y Modelado Predictivo",
+      "subtitle": "Métodos de Ensemble y Algoritmos Avanzados",
+      "description": "Nuestro motor de predicción emplea un conjunto de modelos de aprendizaje automático que incluyen gradient boosting, redes neuronales y métodos de inferencia bayesiana. Cada modelo se entrena con datos históricos extensos y se refina continuamente a través de mecanismos de aprendizaje en línea.",
+      "models": {
+        "title": "Modelos Principales:",
+        "badgeCore": "Principal",
+        "badgeSpecial": "Especial",
+        "model1": "Máquinas de Gradient Boosting (XGBoost, LightGBM) para reconocimiento de patrones no lineales",
+        "model1Title": "Gradient Boosting",
+        "model2": "Redes Neuronales Profundas para interacciones complejas de características",
+        "model2Title": "Redes Neuronales",
+        "model3": "Modelos de Inferencia Bayesiana para predicciones probabilísticas",
+        "model3Title": "Inferencia Bayesiana",
+        "model4": "Modelos de Distribución de Poisson para estimación de probabilidad de goles",
+        "model4Title": "Distribución de Poisson",
+        "model5": "Métodos de Ensemble que combinan múltiples modelos para predicciones robustas",
+        "model5Title": "Métodos de Ensemble"
+      },
+      "algorithms": {
+        "title": "Algoritmos Avanzados:",
+        "algo1": "Simulación de Monte Carlo para distribución de probabilidad de resultados",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Modelos de Cadena de Markov para transiciones de estado del partido",
+        "algo2Title": "Cadena de Markov",
+        "algo3": "Análisis de Series Temporales para predicción de forma y momentum",
+        "algo3Title": "Series Temporales",
+        "algo4": "Detección de Anomalías para identificar patrones inesperados",
+        "algo4Title": "Detección de Anomalías",
+        "algo5": "Aprendizaje por Refuerzo para optimización adaptativa de modelos",
+        "algo5Title": "Aprendizaje por Refuerzo"
+      }
+    },
+    "phase4": {
+      "title": "Fase 4: Puntuación de Confianza y Evaluación de Riesgos",
+      "subtitle": "Calibración de Predicción Probabilística",
+      "description": "Cada predicción viene acompañada de una puntuación de confianza sofisticada calculada a través de calibración bayesiana, cuantificación de incertidumbre y análisis de acuerdo de modelos. Nuestro sistema de puntuación de confianza proporciona evaluación de riesgos transparente para cada predicción.",
+      "scoring": {
+        "title": "Métricas de Confianza:",
+        "metric1": "Intervalos de Confianza Bayesianos para confiabilidad de predicción",
+        "metric1Title": "Confianza Bayesiana",
+        "metric2": "Puntuaciones de Acuerdo de Modelos (consenso entre modelos de ensemble)",
+        "metric2Title": "Acuerdo de Modelos",
+        "metric3": "Cuantificación de Incertidumbre mediante muestreo de Monte Carlo",
+        "metric3Title": "Cuantificación de Incertidumbre",
+        "metric4": "Calibración de Precisión Histórica para seguimiento de rendimiento del modelo",
+        "metric4Title": "Calibración de Precisión",
+        "metric5": "Puntuación Ajustada al Riesgo con predicciones ponderadas por confianza",
+        "metric5Title": "Puntuación Ajustada al Riesgo"
+      }
+    },
+    "phase5": {
+      "title": "Fase 5: Análisis en Tiempo Real y Aprendizaje Continuo",
+      "subtitle": "Sistema de Inteligencia Adaptativa",
+      "description": "Nuestro sistema monitorea continuamente los resultados de los partidos, compara predicciones con resultados reales y refina automáticamente los modelos a través del aprendizaje en línea. Este enfoque adaptativo asegura que nuestras predicciones mejoren con el tiempo a medida que hay más datos disponibles.",
+      "learning": {
+        "title": "Mecanismos de Aprendizaje:",
+        "learn1": "Aprendizaje en Línea para actualizaciones de modelos en tiempo real",
+        "learn1Title": "Aprendizaje en Línea",
+        "learn2": "Aprendizaje por Transferencia entre ligas y competiciones",
+        "learn2Title": "Aprendizaje por Transferencia",
+        "learn3": "Aprendizaje Activo para identificar datos de entrenamiento de alto valor",
+        "learn3Title": "Aprendizaje Activo",
+        "learn4": "Meta-Aprendizaje para adaptación rápida a nuevos patrones",
+        "learn4Title": "Meta-Aprendizaje",
+        "learn5": "Aprendizaje Federado para mejora distribuida de modelos",
+        "learn5Title": "Aprendizaje Federado"
+      }
+    },
+    "phase6": {
+      "title": "Fase 6: Interfaz de Usuario y Visualización",
+      "subtitle": "Presentación Inteligente de Datos",
+      "description": "Los resultados analíticos complejos se transforman en visualizaciones intuitivas e insights accionables a través de nuestra capa de presentación avanzada. Los usuarios reciben predicciones claras e interpretables con estadísticas de apoyo e indicadores de confianza.",
+      "presentation": {
+        "title": "Características de Presentación:",
+        "pres1": "Visualizaciones interactivas con capacidades de profundización",
+        "pres1Title": "Visualizaciones Interactivas",
+        "pres2": "Visualización de puntuación de confianza e indicadores de riesgo",
+        "pres2Title": "Visualización de Confianza",
+        "pres3": "Análisis comparativo con rendimiento histórico",
+        "pres3Title": "Análisis Comparativo",
+        "pres4": "Actualizaciones en tiempo real durante partidos en vivo",
+        "pres4Title": "Actualizaciones en Tiempo Real",
+        "pres5": "Vistas personalizables para diferentes perspectivas de análisis",
+        "pres5Title": "Vistas Personalizables"
+      }
+    },
+    "technical": {
+      "title": "Infraestructura Técnica",
+      "subtitle": "Arquitectura de Computación de Grado Empresarial",
+      "description": "GoalBlip opera en una infraestructura de computación distribuida y escalable diseñada para análisis de alto rendimiento y procesamiento en tiempo real.",
+      "infrastructure": {
+        "title": "Componentes de Infraestructura:",
+        "comp1": "Procesamiento de Datos Distribuido con escalado horizontal",
+        "comp2": "Computación en Memoria para respuestas de consulta submilisegundo",
+        "comp3": "Aprendizaje Automático Acelerado por GPU para entrenamiento más rápido de modelos",
+        "comp4": "Arquitectura de Microservicios para diseño de sistema modular",
+        "comp5": "Pipeline de Streaming en Tiempo Real para procesamiento de datos en vivo"
+      }
+    },
+    "conclusion": {
+      "title": "El Resultado",
+      "description": "A través de este pipeline sofisticado de múltiples fases, GoalBlip transforma datos brutos de fútbol en predicciones altamente precisas con puntuación de confianza. Nuestro sistema combina el poder del aprendizaje automático avanzado, modelado estadístico y procesamiento en tiempo real para ofrecer insights que ayudan a los usuarios a tomar decisiones informadas sobre partidos de fútbol."
+    },
     "step1": {
       "title": "Recopilación y Procesamiento de Datos",
-      "description": "GoalBlip recopila información importante como partidos pasados, clasificaciones de liga y diversas estadísticas de equipos de fútbol escaneando internet. Estos datos incluyen detalles de partidos, estadísticas de equipos e información de jugadores."
+      "description": "GoalBlip recopila información importante como partidos pasados, clasificaciones de liga y varias estadísticas de equipos de fútbol escaneando internet. Estos datos incluyen detalles de partidos, estadísticas de equipos e información de jugadores."
     },
     "step2": {
       "title": "Análisis de Datos",
-      "description": "Los datos recopilados son procesados por los potentes motores de análisis de GoalBlip. Se tienen en cuenta varios factores como el rendimiento en casa y fuera, estado de rendimiento reciente y condiciones de salud de los jugadores."
+      "description": "Los datos recopilados son procesados por los potentes motores de análisis de GoalBlip. Se tienen en cuenta varios factores como el rendimiento en casa y fuera, el estado de rendimiento reciente y las condiciones de salud de los jugadores."
     },
     "step3": {
       "title": "Análisis y Creación de Tablas",
-      "description": "Los datos analizados se procesan utilizando varios algoritmos y modelos, y se crean análisis detallados como resultados potenciales de partidos y tablas de rendimiento."
+      "description": "Los datos analizados se procesan utilizando varios algoritmos y modelos, y se crean análisis detallados como posibles resultados de partidos y tablas de rendimiento."
     },
     "step4": {
       "title": "Interacción del Usuario",

@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "Home",
+    "howItWorks": "How It Works",
     "privacy": "Privacy Policy",
     "support": "Support"
   },
@@ -24,8 +25,155 @@
     }
   },
   "howItWorks": {
-    "title": "How It Works?",
-    "subtitle": "Let's Explore Together!",
+    "title": "How It Works",
+    "subtitle": "Advanced AI-Powered Football Analytics Engine",
+    "intro": "GoalBlip leverages cutting-edge machine learning algorithms, statistical modeling, and real-time data processing to deliver unparalleled football match predictions and insights. Our multi-layered analysis pipeline transforms raw match data into actionable intelligence through sophisticated computational methods.",
+    "introStats": {
+      "analysisPhases": "Analysis Phases",
+      "mlModels": "ML Models",
+      "features": "Features",
+      "uptime": "Uptime"
+    },
+    "phase1": {
+      "title": "Phase 1: Intelligent Data Aggregation & Multi-Source Fusion",
+      "subtitle": "Advanced Data Collection Infrastructure",
+      "description": "Our distributed data collection system employs intelligent web scraping, API integration, and real-time data streaming to aggregate comprehensive football statistics from multiple authoritative sources. This multi-source fusion approach ensures data completeness, accuracy, and redundancy.",
+      "features": {
+        "title": "Key Capabilities:",
+        "feature1": "Real-time data streaming from multiple sources",
+        "feature1Title": "Real-time Streaming",
+        "feature2": "Intelligent aggregation algorithms for data normalization",
+        "feature2Title": "Intelligent Aggregation",
+        "feature3": "Multi-source data fusion with conflict resolution",
+        "feature3Title": "Multi-Source Fusion",
+        "feature4": "Automated data quality validation and anomaly detection",
+        "feature4Title": "Quality Validation",
+        "feature5": "Distributed caching for high-performance data retrieval",
+        "feature5Title": "Distributed Caching"
+      }
+    },
+    "phase2": {
+      "title": "Phase 2: Feature Engineering & Statistical Preprocessing",
+      "subtitle": "Advanced Data Transformation Pipeline",
+      "description": "Raw match data undergoes sophisticated feature engineering processes where hundreds of statistical features are extracted, normalized, and transformed. Our preprocessing pipeline includes temporal feature extraction, team form analysis, head-to-head statistics, and contextual feature generation.",
+      "features": {
+        "title": "Processing Techniques:",
+        "feature1": "Temporal feature extraction (rolling averages, momentum indicators)",
+        "feature1Title": "Temporal Extraction",
+        "feature2": "Team form analysis with weighted performance metrics",
+        "feature2Title": "Form Analysis",
+        "feature3": "Head-to-head statistical modeling with historical context",
+        "feature3Title": "H2H Modeling",
+        "feature4": "Contextual feature generation (home/away, weather, injuries)",
+        "feature4Title": "Contextual Features",
+        "feature5": "Dimensionality reduction and feature selection algorithms",
+        "feature5Title": "Dimensionality Reduction"
+      }
+    },
+    "phase3": {
+      "title": "Phase 3: Machine Learning & Predictive Modeling",
+      "subtitle": "Ensemble Methods & Advanced Algorithms",
+      "description": "Our prediction engine employs an ensemble of machine learning models including gradient boosting, neural networks, and Bayesian inference methods. Each model is trained on extensive historical data and continuously refined through online learning mechanisms.",
+      "models": {
+        "title": "Core Models:",
+        "badgeCore": "Core",
+        "badgeSpecial": "Special",
+        "model1": "Gradient Boosting Machines (XGBoost, LightGBM) for non-linear pattern recognition",
+        "model1Title": "Gradient Boosting",
+        "model2": "Deep Neural Networks for complex feature interactions",
+        "model2Title": "Neural Networks",
+        "model3": "Bayesian Inference Models for probabilistic predictions",
+        "model3Title": "Bayesian Inference",
+        "model4": "Poisson Distribution Models for goal-scoring probability estimation",
+        "model4Title": "Poisson Distribution",
+        "model5": "Ensemble Methods combining multiple models for robust predictions",
+        "model5Title": "Ensemble Methods"
+      },
+      "algorithms": {
+        "title": "Advanced Algorithms:",
+        "algo1": "Monte Carlo Simulation for outcome probability distribution",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Markov Chain Models for match state transitions",
+        "algo2Title": "Markov Chain",
+        "algo3": "Time Series Analysis for form and momentum prediction",
+        "algo3Title": "Time Series",
+        "algo4": "Anomaly Detection for identifying unexpected patterns",
+        "algo4Title": "Anomaly Detection",
+        "algo5": "Reinforcement Learning for adaptive model optimization",
+        "algo5Title": "Reinforcement Learning"
+      }
+    },
+    "phase4": {
+      "title": "Phase 4: Confidence Scoring & Risk Assessment",
+      "subtitle": "Probabilistic Prediction Calibration",
+      "description": "Each prediction is accompanied by a sophisticated confidence score calculated through Bayesian calibration, uncertainty quantification, and model agreement analysis. Our confidence scoring system provides transparent risk assessment for every prediction.",
+      "scoring": {
+        "title": "Confidence Metrics:",
+        "metric1": "Bayesian Confidence Intervals for prediction reliability",
+        "metric1Title": "Bayesian Confidence",
+        "metric2": "Model Agreement Scores (consensus among ensemble models)",
+        "metric2Title": "Model Agreement",
+        "metric3": "Uncertainty Quantification through Monte Carlo sampling",
+        "metric3Title": "Uncertainty Quantification",
+        "metric4": "Historical Accuracy Calibration for model performance tracking",
+        "metric4Title": "Accuracy Calibration",
+        "metric5": "Risk-Adjusted Scoring with confidence-weighted predictions",
+        "metric5Title": "Risk-Adjusted Scoring"
+      }
+    },
+    "phase5": {
+      "title": "Phase 5: Real-Time Analysis & Continuous Learning",
+      "subtitle": "Adaptive Intelligence System",
+      "description": "Our system continuously monitors match outcomes, compares predictions with actual results, and automatically refines models through online learning. This adaptive approach ensures that our predictions improve over time as more data becomes available.",
+      "learning": {
+        "title": "Learning Mechanisms:",
+        "learn1": "Online Learning for real-time model updates",
+        "learn1Title": "Online Learning",
+        "learn2": "Transfer Learning across leagues and competitions",
+        "learn2Title": "Transfer Learning",
+        "learn3": "Active Learning for identifying high-value training data",
+        "learn3Title": "Active Learning",
+        "learn4": "Meta-Learning for rapid adaptation to new patterns",
+        "learn4Title": "Meta-Learning",
+        "learn5": "Federated Learning for distributed model improvement",
+        "learn5Title": "Federated Learning"
+      }
+    },
+    "phase6": {
+      "title": "Phase 6: User Interface & Visualization",
+      "subtitle": "Intelligent Data Presentation",
+      "description": "Complex analytical results are transformed into intuitive visualizations and actionable insights through our advanced presentation layer. Users receive clear, interpretable predictions with supporting statistics and confidence indicators.",
+      "presentation": {
+        "title": "Presentation Features:",
+        "pres1": "Interactive visualizations with drill-down capabilities",
+        "pres1Title": "Interactive Visualizations",
+        "pres2": "Confidence score visualization and risk indicators",
+        "pres2Title": "Confidence Visualization",
+        "pres3": "Comparative analysis with historical performance",
+        "pres3Title": "Comparative Analysis",
+        "pres4": "Real-time updates during live matches",
+        "pres4Title": "Real-time Updates",
+        "pres5": "Customizable views for different analysis perspectives",
+        "pres5Title": "Customizable Views"
+      }
+    },
+    "technical": {
+      "title": "Technical Infrastructure",
+      "subtitle": "Enterprise-Grade Computing Architecture",
+      "description": "GoalBlip operates on a scalable, distributed computing infrastructure designed for high-performance analytics and real-time processing.",
+      "infrastructure": {
+        "title": "Infrastructure Components:",
+        "comp1": "Distributed Data Processing with horizontal scaling",
+        "comp2": "In-Memory Computing for sub-millisecond query responses",
+        "comp3": "GPU-Accelerated Machine Learning for faster model training",
+        "comp4": "Microservices Architecture for modular system design",
+        "comp5": "Real-Time Streaming Pipeline for live data processing"
+      }
+    },
+    "conclusion": {
+      "title": "The Result",
+      "description": "Through this sophisticated multi-phase pipeline, GoalBlip transforms raw football data into highly accurate, confidence-scored predictions. Our system combines the power of advanced machine learning, statistical modeling, and real-time processing to deliver insights that help users make informed decisions about football matches."
+    },
     "step1": {
       "title": "Data Collection and Processing",
       "description": "GoalBlip collects important information such as past matches, league standings and various statistics of football teams by scanning the internet. This data includes match details, team statistics and player information."
@@ -191,92 +339,195 @@
   },
   "privacy": {
     "lastUpdated": "Last Updated",
+    "effectiveDate": "Effective Date",
     "intro": {
       "title": "Introduction",
-      "text": "GoalBlip (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application."
+      "text": "GoalBlip (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (\"App\") available on Google Play Store and Apple App Store. GoalBlip does not require user accounts, registration, or any personal information - the app works completely anonymously.",
+      "scope": "This Privacy Policy applies to all users of the GoalBlip mobile application, regardless of your location. By using our App, you agree to the collection and use of information in accordance with this policy. No user account or registration is required to use the app.",
+      "compliance": "We comply with applicable data protection laws, including the General Data Protection Regulation (GDPR) for users in the European Economic Area (EEA), the California Consumer Privacy Act (CCPA) for California residents, and the Children's Online Privacy Protection Act (COPPA) for users under 13 years of age."
     },
     "collect": {
       "title": "Information We Collect",
+      "intro": "GoalBlip is designed with privacy in mind. We collect minimal information necessary to provide our service, and all data is stored locally on your device. No user accounts or registration is required - the app works completely anonymously.",
       "local": {
         "title": "Information Stored Locally on Your Device",
-        "intro": "GoalBlip stores the following information only on your device using local storage (AsyncStorage):",
+        "intro": "GoalBlip stores the following information only on your device using secure local storage (AsyncStorage/NSUserDefaults). This data never leaves your device:",
         "favorites": "Favorite Matches",
-        "favoritesDesc": "Match IDs that you mark as favorites",
+        "favoritesDesc": "Match IDs (numeric identifiers) that you mark as favorites for quick access",
         "language": "Language Preference",
-        "languageDesc": "Your selected language (Turkish, English, Spanish, German)",
+        "languageDesc": "Your selected language preference (Turkish, English, Spanish, German) to display the app interface in your preferred language",
         "timezone": "Timezone Preference",
-        "timezoneDesc": "Your selected timezone",
+        "timezoneDesc": "Your selected timezone (e.g., Europe/Istanbul, America/New_York) to display match times in your local time",
         "timeFormat": "Time Format Preference",
-        "timeFormatDesc": "Your preferred time format (12h/24h)",
+        "timeFormatDesc": "Your preferred time format (12-hour or 24-hour format) for displaying match times",
+        "cache": "Cached Match Data",
+        "cacheDesc": "Temporarily cached match details and statistics that you have viewed, stored locally to improve app performance and enable offline access to previously viewed content",
         "important": "Important",
-        "importantDesc": "This information is stored locally on your device and is never transmitted to our servers or any third parties."
+        "importantDesc": "All of the above information is stored exclusively on your device using secure local storage mechanisms provided by your operating system (iOS Keychain/UserDefaults or Android SharedPreferences). This information is never transmitted to our servers, third-party services, or any external systems. It remains on your device until you uninstall the app or manually clear app data."
+      },
+      "network": {
+        "title": "Network Requests",
+        "intro": "When you use GoalBlip, the app makes network requests to our API server to fetch match data and statistics. These requests:",
+        "noPersonal": "Do not include any personal identification information",
+        "noAccount": "Do not require user accounts, registration, or authentication - the app works completely anonymously",
+        "publicData": "Only request publicly available football match data (match IDs, team names, statistics)",
+        "anonymous": "Are completely anonymous - we cannot identify individual users from these requests since there are no user accounts, authentication, or device identifiers sent",
+        "logs": "Server Logs",
+        "logsDesc": "Our API server may log standard HTTP request information (IP address, request timestamp, requested endpoint) for operational and security purposes. These logs do not contain personal information and are automatically deleted after 30 days. IP addresses cannot be used to identify individual users."
       },
       "not": {
         "title": "Information We Do NOT Collect",
-        "intro": "We do NOT collect:",
-        "personal": "Personal identification information (name, email, phone number)",
-        "location": "Location data",
-        "device": "Device identifiers",
-        "analytics": "Usage analytics or tracking data",
-        "identifiable": "Any data that can identify you personally"
+        "intro": "To be completely transparent, we explicitly do NOT collect the following types of information:",
+        "personal": "Personal identification information (name, email address, phone number, physical address, date of birth)",
+        "location": "Precise or approximate location data (GPS coordinates, IP-based location)",
+        "device": "Device identifiers (UDID, IMEI, MAC address, Android ID, Advertising ID)",
+        "analytics": "Usage analytics, app performance metrics, crash reports, or user behavior tracking",
+        "identifiable": "Any data that can personally identify you or link your app usage to your identity",
+        "biometric": "Biometric data (fingerprints, face recognition data)",
+        "contacts": "Contact lists, phone numbers, or address book information",
+        "photos": "Photos, videos, or other media files from your device",
+        "calendar": "Calendar events or appointments",
+        "files": "Files or documents from your device storage"
+      },
+      "permissions": {
+        "title": "App Permissions",
+        "intro": "GoalBlip requests the following permissions, and here's why:",
+        "internet": "Internet Access",
+        "internetDesc": "Required to fetch live match data and statistics from our API server. This is essential for the app's core functionality.",
+        "networkState": "Network State",
+        "networkStateDesc": "Used to check your internet connection status to provide appropriate user feedback (e.g., 'No internet connection' message).",
+        "noOther": "No Other Permissions",
+        "noOtherDesc": "GoalBlip does not request access to your camera, microphone, location, contacts, calendar, storage, or any other sensitive device features."
       }
     },
     "use": {
       "title": "How We Use Your Information",
-      "intro": "The information stored locally on your device is used solely to:",
-      "favorites": "Remember your favorite matches",
-      "preferences": "Maintain your language and timezone preferences",
-      "experience": "Provide a personalized experience within the app"
+      "intro": "The information stored locally on your device is used exclusively for the following purposes:",
+      "favorites": "Remember your favorite matches - to allow you to quickly access matches you've marked as favorites",
+      "preferences": "Maintain your language and timezone preferences - to display the app interface and match times according to your preferences",
+      "cache": "Improve app performance - cached match data allows faster loading of previously viewed content and enables limited offline functionality",
+      "noOther": "We do not use your information for advertising, marketing, analytics, user profiling, or any other commercial purposes. We do not sell, rent, or monetize your data in any way. Since there are no user accounts, we cannot track or link your usage across sessions."
     },
     "storage": {
       "title": "Data Storage and Security",
-      "local": "All data is stored locally on your device using secure local storage",
-      "noTransmit": "No data is transmitted to external servers",
-      "noShare": "No data is shared with third parties",
-      "delete": "You can delete all stored data by uninstalling the app"
+      "intro": "We take data security seriously. Here's how we protect your information:",
+      "local": "All data is stored locally on your device using secure local storage mechanisms provided by your operating system (iOS Keychain/UserDefaults or Android SharedPreferences). These are encrypted and protected by your device's security features.",
+      "noTransmit": "No personal data is transmitted to external servers. Only anonymous requests for publicly available match data are made to our API server.",
+      "noShare": "No data is shared with third parties, advertisers, analytics services, or any other external entities.",
+      "encryption": "Local data is protected by your device's built-in encryption. On iOS, data is stored in encrypted Keychain or UserDefaults. On Android, data is stored in encrypted SharedPreferences.",
+      "retention": "Data Retention",
+      "retentionDesc": "Your locally stored data (favorites, preferences) remains on your device until you uninstall the app or manually clear app data through your device settings. Cached match data is automatically cleared when it becomes outdated or when storage space is needed.",
+      "delete": "You can delete all stored data at any time by: (1) Uninstalling the app, or (2) Clearing app data through your device's Settings > Apps > GoalBlip > Clear Data (Android) or Settings > GoalBlip > Delete App (iOS)."
     },
     "thirdParty": {
-      "title": "Third-Party Services",
-      "intro": "GoalBlip connects to our own API server to fetch match data and statistics. This connection:",
-      "noPersonal": "Does not transmit any personal information",
-      "public": "Only requests publicly available match data",
-      "https": "Uses standard HTTPS encryption (in production)"
+      "title": "Third-Party Services and Data Sharing",
+      "intro": "GoalBlip is designed to minimize third-party dependencies and data sharing:",
+      "api": "Our API Server",
+      "apiDesc": "GoalBlip connects to our own API server (goalblip.com) to fetch match data and statistics. This connection:",
+      "noPersonal": "Does not transmit any personal information, device identifiers, or user-specific data",
+      "public": "Only requests publicly available football match data (match IDs, team names, statistics, league information)",
+      "https": "Uses standard HTTPS encryption to secure all network communications",
+      "anonymous": "Requests are completely anonymous - we cannot identify individual users from API requests since there are no user accounts, authentication, or device identifiers sent",
+      "noThirdParty": "No Third-Party Services",
+      "noThirdPartyDesc": "GoalBlip does not integrate with, share data with, or transmit information to:",
+      "noAnalytics": "Analytics services (Google Analytics, Firebase Analytics, etc.)",
+      "noAds": "Advertising networks or ad serving platforms",
+      "noSocial": "Social media platforms or social login services",
+      "noCrash": "Crash reporting services (Crashlytics, Sentry, etc.)",
+      "noPayment": "Payment processors or financial services",
+      "noCloud": "Cloud storage services (iCloud, Google Drive, Dropbox, etc.)",
+      "noOther": "Any other third-party services, SDKs, or data processors"
     },
     "rights": {
-      "title": "Your Rights",
-      "intro": "You have the right to:",
-      "delete": "Delete all stored data by uninstalling the app",
-      "clear": "Clear app data through your device settings",
-      "stop": "Stop using the app at any time"
+      "title": "Your Privacy Rights",
+      "intro": "Depending on your location, you may have certain rights regarding your personal information. We respect these rights and provide you with the following controls:",
+      "access": "Right to Access",
+      "accessDesc": "You can view all data stored by the app on your device through your device's app settings or by inspecting the app's local storage. Since there are no user accounts, all data is stored locally and you have full access to it.",
+      "delete": "Right to Deletion",
+      "deleteDesc": "You can delete all stored data at any time by uninstalling the app or clearing app data through your device settings (Settings > Apps > GoalBlip > Clear Data on Android, or Settings > GoalBlip > Delete App on iOS).",
+      "correction": "Right to Correction",
+      "correctionDesc": "You can modify your preferences (language, timezone, time format) directly within the app settings at any time.",
+      "portability": "Right to Data Portability",
+      "portabilityDesc": "Since all data is stored locally on your device and there are no user accounts, you have full control and can export or backup your data using your device's backup features (iCloud, Google Drive, etc.).",
+      "objection": "Right to Object",
+      "objectionDesc": "You can stop using the app at any time. Since we don't collect personal data and there are no user accounts, there is no processing to object to. Simply uninstall the app to remove all data.",
+      "withdraw": "Right to Withdraw Consent",
+      "withdrawDesc": "You can withdraw your consent to data processing by uninstalling the app, which will delete all locally stored data. Since there are no user accounts, uninstalling completely removes all your data.",
+      "complaint": "Right to Lodge a Complaint",
+      "complaintDesc": "If you are located in the EEA, you have the right to lodge a complaint with your local data protection authority if you believe we have violated your privacy rights.",
+      "california": "California Privacy Rights (CCPA)",
+      "californiaDesc": "If you are a California resident, you have the right to: (1) Know what personal information is collected, (2) Know whether your personal information is sold or disclosed and to whom, (3) Say no to the sale of personal information, (4) Access your personal information, (5) Request deletion of your personal information. GoalBlip does not sell personal information and collects minimal data as described in this policy."
     },
     "children": {
-      "title": "Children's Privacy",
-      "text": "GoalBlip is not intended for children under the age of 13. We do not knowingly collect information from children."
+      "title": "Children's Privacy (COPPA Compliance)",
+      "intro": "GoalBlip complies with the Children's Online Privacy Protection Act (COPPA) and other applicable laws regarding children's privacy:",
+      "age": "Age Restriction",
+      "ageDesc": "GoalBlip is not intended for, designed for, or directed to children under the age of 13. We do not knowingly collect, use, or disclose personal information from children under 13 years of age.",
+      "verification": "No Age Verification",
+      "verificationDesc": "Since GoalBlip does not require user registration, accounts, or personal information (the app works completely anonymously), we do not implement age verification mechanisms. However, we rely on parents and guardians to ensure children under 13 do not use the app.",
+      "parental": "Parental Controls",
+      "parentalDesc": "If you are a parent or guardian and believe your child under 13 has provided us with information, please contact us immediately at support@goalblip.com. We will take steps to delete such information from our systems, if any exists.",
+      "noCollection": "No Collection from Children",
+      "noCollectionDesc": "Even if a child under 13 uses the app, we do not collect any personal information. All data remains on the device and is never transmitted to our servers."
     },
     "changes": {
       "title": "Changes to This Privacy Policy",
-      "text": "We may update this Privacy Policy from time to time. We will notify you of any changes by updating the \"Last Updated\" date."
+      "intro": "We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational, legal, or regulatory reasons.",
+      "notification": "Notification of Changes",
+      "notificationDesc": "We will notify you of any material changes to this Privacy Policy by:",
+      "dateUpdate": "Updating the \"Last Updated\" date at the top of this policy",
+      "appUpdate": "Including a notice in app updates when significant changes are made",
+      "website": "Posting the updated policy on our website",
+      "review": "We encourage you to review this Privacy Policy periodically to stay informed about how we protect your information.",
+      "continued": "Continued Use",
+      "continuedDesc": "Your continued use of the App after any changes to this Privacy Policy constitutes your acceptance of such changes. If you do not agree with the changes, you should stop using the App and uninstall it."
     },
     "contact": {
       "title": "Contact Us",
-      "text": "If you have questions about this Privacy Policy, please contact us at:",
+      "intro": "If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:",
       "email": "Email",
-      "website": "Website"
+      "emailAddress": "support@goalblip.com",
+      "emailDesc": "We aim to respond to all privacy-related inquiries within 30 days.",
+      "website": "Website",
+      "websiteDesc": "Visit our support page for additional information and resources.",
+      "dataProtection": "Data Protection Officer",
+      "dataProtectionDesc": "For users in the European Economic Area (EEA), if you have concerns about how we handle your data, you can contact us at support@goalblip.com. We will address your concerns in accordance with applicable data protection laws."
+    },
+    "legal": {
+      "title": "Legal Basis and Compliance",
+      "intro": "GoalBlip operates in compliance with applicable data protection and privacy laws:",
+      "gdpr": "GDPR Compliance (European Economic Area)",
+      "gdprDesc": "For users in the EEA, we process data based on your consent (which you provide by using the app) and our legitimate interest in providing the service. Since we collect minimal data (only app preferences stored locally), we comply with GDPR principles of data minimization and purpose limitation. No user accounts or registration is required.",
+      "ccpa": "CCPA Compliance (California)",
+      "ccpaDesc": "For California residents, GoalBlip does not sell personal information (we don't collect personal information to sell). We provide transparency about data collection and respect your privacy rights as outlined in this policy.",
+      "coppa": "COPPA Compliance (United States)",
+      "coppaDesc": "GoalBlip complies with COPPA by not collecting personal information from children under 13 and not directing the app to children under 13.",
+      "international": "International Data Transfers",
+      "internationalDesc": "Since all data is stored locally on your device, we do not transfer personal data across borders, so international data transfer regulations do not apply. Our API server may be located in different jurisdictions, but API requests are anonymous (no user accounts, no personal data) and only request publicly available match data.",
+      "lawEnforcement": "Law Enforcement Requests",
+      "lawEnforcementDesc": "Since we do not collect or store personal information on our servers (no user accounts, no registration), we have no personal data to provide in response to law enforcement requests. Any data stored locally on your device (favorites, preferences) is subject to your device's security and your control. We cannot access this data as it never leaves your device."
     },
     "summary": {
       "title": "Quick Summary",
+      "intro": "At a glance, here's what you need to know about GoalBlip's privacy practices:",
       "what": "What we store",
-      "whatDesc": "Only your favorites and preferences (on your device)",
+      "whatDesc": "Only your favorites, language/timezone preferences, and cached match data (all on your device)",
       "where": "Where it's stored",
-      "whereDesc": "Only on your device",
+      "whereDesc": "Exclusively on your device using secure local storage - never on our servers",
       "who": "Who sees it",
-      "whoDesc": "Only you",
+      "whoDesc": "Only you - we cannot access your device's local storage, and there are no user accounts that would allow us to identify you",
       "thirdParty": "Third parties",
-      "thirdPartyDesc": "None",
-      "tracking": "Tracking",
-      "trackingDesc": "None",
+      "thirdPartyDesc": "None - we do not share data with any third parties, advertisers, or analytics services",
+      "tracking": "Tracking and analytics",
+      "trackingDesc": "None - we do not track your usage, behavior, or collect analytics data. Since there are no user accounts, we cannot track you across sessions or devices",
       "personal": "Personal data",
-      "personalDesc": "None collected"
+      "personalDesc": "None collected - we do not collect any information that can identify you personally. No user accounts, no registration, no personal information required",
+      "ads": "Advertising",
+      "adsDesc": "None - GoalBlip is completely ad-free and does not serve advertisements",
+      "selling": "Data selling",
+      "sellingDesc": "Never - we do not sell, rent, or monetize your data in any way",
+      "security": "Security",
+      "securityDesc": "Your data is protected by your device's built-in encryption and security features"
     }
   },
   "support": {

@@ -61,6 +61,9 @@ $alternateUrls = getAlternateUrls();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha512-dLxUelApnYxpLt6B2BOrf3qnfTYgXTCHs1yKbKBsJ+9ZfT0nm4E0QfF8SLK8GxL/7YyS6Qo5Z4U6fh7dZ3DdgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <link rel="stylesheet" href="/styles.css">
+    <?php if ($currentPage === 'how-it-works'): ?>
+    <link rel="stylesheet" href="/how-it-works.css">
+    <?php endif; ?>
 </head>
 <body>
     <!-- Header -->
@@ -76,7 +79,7 @@ $alternateUrls = getAlternateUrls();
                 
                 <nav class="nav-menu" id="navMenu">
                     <a href="<?php echo getLangUrl($currentLang); ?>"><?php echo t('nav.home'); ?></a>
-                    <a href="<?php echo getLangUrl($currentLang, 'privacy-policy'); ?>"><?php echo t('nav.privacy'); ?></a>
+                    <a href="<?php echo getLangUrl($currentLang, 'how-it-works'); ?>"><?php echo t('nav.howItWorks', 'How It Works'); ?></a>
                     <a href="<?php echo getLangUrl($currentLang, 'support'); ?>"><?php echo t('nav.support'); ?></a>
                 </nav>
 
