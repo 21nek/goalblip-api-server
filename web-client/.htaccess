@@ -1,0 +1,46 @@
+# GoalBlip Web Client - SEO Friendly Multi-language URLs
+
+RewriteEngine On
+
+# Default language (English) - redirect root to /en/ or serve index.php
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ /en/ [R=301,L]
+
+# If accessing /en/ directly, serve index.php
+RewriteCond %{REQUEST_URI} ^/en/?$
+RewriteRule ^(.*)$ index.php?lang=en [L,QSA]
+
+# Language detection from browser (optional, can be disabled)
+# RewriteCond %{HTTP:Accept-Language} ^tr [NC]
+# RewriteRule ^$ /tr/ [R=301,L]
+
+# Language paths: /tr/, /es/, /de/ (en/ handled above)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(tr|es|de)/?$ index.php?lang=$1 [L,QSA]
+
+# Language paths with page: /tr/privacy-policy, /en/support, etc.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(tr|en|es|de)/([a-z-]+)/?$ $2.php?lang=$1 [L,QSA]
+
+# Direct page access (English default): /privacy-policy → privacy-policy.php?lang=en
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(tr|en|es|de)/
+RewriteRule ^([a-z-]+)/?$ $1.php?lang=en [L,QSA]
+
+# Static files (CSS, JS, images) - don't rewrite
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+

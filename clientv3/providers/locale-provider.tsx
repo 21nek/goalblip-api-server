@@ -2,7 +2,7 @@
 import { getItem, setItem } from '@/lib/storage';
 
 // Supported locales
-export const SUPPORTED_LOCALES = ['tr', 'en', 'es'] as const;
+export const SUPPORTED_LOCALES = ['tr', 'en', 'es', 'de'] as const;
 export type Locale = typeof SUPPORTED_LOCALES[number];
 
 export type TimeFormatPreference = 'auto' | '24h' | '12h';
@@ -11,12 +11,14 @@ export const LOCALE_LABEL_KEYS: Record<Locale, string> = {
   tr: 'settings.localeNames.tr',
   en: 'settings.localeNames.en',
   es: 'settings.localeNames.es',
+  de: 'settings.localeNames.de',
 };
 
 export const LOCALE_NATIVE_META: Record<Locale, { nativeName: string; languageWord: string }> = {
   tr: { nativeName: 'T\u00fcrk\u00e7e', languageWord: 'Dil' },
   en: { nativeName: 'English', languageWord: 'Language' },
   es: { nativeName: 'Espa\u00f1ol', languageWord: 'Idioma' },
+  de: { nativeName: 'Deutsch', languageWord: 'Sprache' },
 };
 
 

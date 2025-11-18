@@ -1,0 +1,309 @@
+{
+  "nav": {
+    "home": "Home",
+    "privacy": "Privacy Policy",
+    "support": "Support"
+  },
+  "hero": {
+    "title": "GoalBlip",
+    "subtitle": "AI-Powered Analysis and Statistics for Football Matches",
+    "description": "Follow the football world closely. Make informed decisions with detailed match analyses, team performance statistics and comprehensive data.",
+    "appStore": "Download on App Store",
+    "playStore": "Get it on Play Store",
+    "scrollDown": "Scroll Down",
+    "stat1": "Matches Analyzed Daily",
+    "stat2": "Leagues Tracked",
+    "stat3": "Real-Time Updates",
+    "note": "Free forever. No ads. No tracking.",
+    "mockup": {
+      "title": "Today's Matches",
+      "team1": "Team A",
+      "team2": "Team B",
+      "stat1": "Form: WWDLW",
+      "stat2": "H2H: 3-2-1"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works?",
+    "subtitle": "Let's Explore Together!",
+    "step1": {
+      "title": "Data Collection and Processing",
+      "description": "GoalBlip collects important information such as past matches, league standings and various statistics of football teams by scanning the internet. This data includes match details, team statistics and player information."
+    },
+    "step2": {
+      "title": "Data Analysis",
+      "description": "The collected data is processed by GoalBlip's powerful analysis engines. Various factors such as home and away performance, recent performance status and player health conditions are taken into account."
+    },
+    "step3": {
+      "title": "Analysis and Table Creation",
+      "description": "The analyzed data is processed using various algorithms and models, and detailed analyses such as potential match results and performance tables are created."
+    },
+    "step4": {
+      "title": "User Interaction",
+      "description": "Users can directly view results from the detailed tables prepared by GoalBlip or access customized views by making their own analyses."
+    }
+  },
+  "features": {
+    "title": "Features",
+    "subtitle": "Everything you need for comprehensive football match analysis",
+    "feature1": {
+      "title": "Detailed Match Analysis",
+      "description": "Comprehensive statistics and performance metrics for each match",
+      "detail1": "Match statistics and performance metrics",
+      "detail2": "Team form analysis (last 5 matches)",
+      "detail3": "Head-to-head comparison"
+    },
+    "feature2": {
+      "title": "Team Comparisons",
+      "description": "Recent performance of teams, form status and comparisons",
+      "detail1": "Side-by-side team performance",
+      "detail2": "Recent form visualization",
+      "detail3": "Strength and weakness analysis"
+    },
+    "feature3": {
+      "title": "Favorite Tracking",
+      "description": "Save your favorite matches and access them easily",
+      "detail1": "Save unlimited favorite matches",
+      "detail2": "Quick access from home screen",
+      "detail3": "Sync across devices (coming soon)"
+    },
+    "feature4": {
+      "title": "Multi-Language Support",
+      "description": "Turkish, English, Spanish, German",
+      "detail1": "Turkish, English, Spanish, German",
+      "detail2": "Automatic language detection",
+      "detail3": "More languages coming soon"
+    },
+    "feature5": {
+      "title": "Modern Interface",
+      "description": "User-friendly, responsive design",
+      "detail1": "Dark theme optimized for viewing",
+      "detail2": "Responsive design for all screen sizes",
+      "detail3": "Intuitive navigation"
+    },
+    "feature6": {
+      "title": "Real-Time Data",
+      "description": "Instantly updated match information and statistics",
+      "detail1": "Live match updates",
+      "detail2": "Automatic data refresh",
+      "detail3": "Offline caching support"
+    }
+  },
+  "whyGoalblip": {
+    "title": "Match Analysis Can Sometimes Be Very Tiring",
+    "description": "You no longer need to spend hours analyzing; GoalBlip accelerates your decision-making process by providing data-driven insights. Save your time and energy by using the power of artificial intelligence instead of dealing with complex data sets and statistics.",
+    "benefit1": {
+      "title": "Automated Data Collection",
+      "desc": "No need to manually search for match data. Our system automatically collects and processes information from multiple sources."
+    },
+    "benefit2": {
+      "title": "Advanced Analysis Algorithms",
+      "desc": "Powered by AI and machine learning, our algorithms analyze patterns and provide insights that would take hours to calculate manually."
+    },
+    "benefit3": {
+      "title": "User-Friendly Interface",
+      "desc": "Clean, intuitive design that makes complex data easy to understand. No technical knowledge required."
+    },
+    "benefit4": {
+      "title": "100% Free & Privacy-Focused",
+      "desc": "Completely free with no hidden costs. Your data stays on your device - we don't track or collect personal information."
+    },
+    "stat1": {
+      "value": "1000+",
+      "label": "Matches Analyzed Daily"
+    },
+    "stat2": {
+      "value": "50+",
+      "label": "Leagues Tracked"
+    },
+    "stat3": {
+      "value": "24/7",
+      "label": "Real-Time Updates"
+    },
+    "stat4": {
+      "value": "0",
+      "label": "Data Collected"
+    }
+  },
+  "dataAnalysis": {
+    "title": "Data-Driven Analysis",
+    "item1": {
+      "title": "Wide Data Sources",
+      "description": "Instantly collecting football data worldwide"
+    },
+    "item2": {
+      "title": "Powerful Analysis Algorithms",
+      "description": "Advanced data processing and statistical analysis"
+    },
+    "item3": {
+      "title": "User-Friendly Interface",
+      "description": "Easy to use and understandable visualizations"
+    },
+    "item4": {
+      "title": "Continuous Updates",
+      "description": "Most up-to-date data and continuously evolving system"
+    }
+  },
+  "screenshots": {
+    "title": "See GoalBlip in Action",
+    "subtitle": "Explore the app interface and features",
+    "screen1": "Match List",
+    "screen1Desc": "Browse matches by date and league",
+    "screen2": "Match Analysis",
+    "screen2Desc": "Detailed statistics and insights",
+    "screen3": "Team Comparison",
+    "screen3Desc": "Compare team performance side-by-side"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "Is GoalBlip free?",
+    "a1": "Yes, GoalBlip is completely free to use. There are no premium features, subscriptions, or hidden costs. We believe football analysis should be accessible to everyone.",
+    "q2": "What data does GoalBlip collect?",
+    "a2": "GoalBlip does not collect any personal data. All information (favorites, language preferences, timezone) is stored locally on your device only. We don't track you, and we don't share your data with anyone.",
+    "q3": "Which leagues are supported?",
+    "a3": "GoalBlip tracks over 50 leagues worldwide, including Premier League, La Liga, Serie A, Bundesliga, Ligue 1, and many more. We continuously add new leagues based on user demand.",
+    "q4": "How accurate are the analyses?",
+    "a4": "GoalBlip uses advanced data analysis and AI algorithms to provide comprehensive match statistics. These are analytical insights based on historical data and should not be considered as predictions or guarantees.",
+    "q5": "Do I need an internet connection?",
+    "a5": "An internet connection is required to fetch the latest match data. However, previously viewed matches are cached locally, so you can access them offline.",
+    "q6": "When will the app be available?",
+    "a6": "GoalBlip will be available on the App Store (iOS) and Play Store (Android) soon. Follow us for updates and be among the first to download!",
+    "more": "Have more questions?",
+    "contact": "Contact Support"
+  },
+  "cta": {
+    "title": "Try It Free Now!",
+    "subtitle": "Download from App Store and Play Store",
+    "appStore": "Download on App Store",
+    "playStore": "Get it on Play Store",
+    "note": "Available soon on iOS and Android"
+  },
+  "footer": {
+    "description": "Follow the football world closely. AI-powered analysis and statistics.",
+    "quickLinks": "Quick Links",
+    "privacy": "Privacy Policy",
+    "support": "Support",
+    "contact": "Contact",
+    "legal": "Legal",
+    "terms": "Terms of Service",
+    "language": "Language",
+    "copyright": "© 2025 GoalBlip. All rights reserved."
+  },
+  "privacy": {
+    "lastUpdated": "Last Updated",
+    "intro": {
+      "title": "Introduction",
+      "text": "GoalBlip (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our mobile application."
+    },
+    "collect": {
+      "title": "Information We Collect",
+      "local": {
+        "title": "Information Stored Locally on Your Device",
+        "intro": "GoalBlip stores the following information only on your device using local storage (AsyncStorage):",
+        "favorites": "Favorite Matches",
+        "favoritesDesc": "Match IDs that you mark as favorites",
+        "language": "Language Preference",
+        "languageDesc": "Your selected language (Turkish, English, Spanish, German)",
+        "timezone": "Timezone Preference",
+        "timezoneDesc": "Your selected timezone",
+        "timeFormat": "Time Format Preference",
+        "timeFormatDesc": "Your preferred time format (12h/24h)",
+        "important": "Important",
+        "importantDesc": "This information is stored locally on your device and is never transmitted to our servers or any third parties."
+      },
+      "not": {
+        "title": "Information We Do NOT Collect",
+        "intro": "We do NOT collect:",
+        "personal": "Personal identification information (name, email, phone number)",
+        "location": "Location data",
+        "device": "Device identifiers",
+        "analytics": "Usage analytics or tracking data",
+        "identifiable": "Any data that can identify you personally"
+      }
+    },
+    "use": {
+      "title": "How We Use Your Information",
+      "intro": "The information stored locally on your device is used solely to:",
+      "favorites": "Remember your favorite matches",
+      "preferences": "Maintain your language and timezone preferences",
+      "experience": "Provide a personalized experience within the app"
+    },
+    "storage": {
+      "title": "Data Storage and Security",
+      "local": "All data is stored locally on your device using secure local storage",
+      "noTransmit": "No data is transmitted to external servers",
+      "noShare": "No data is shared with third parties",
+      "delete": "You can delete all stored data by uninstalling the app"
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "intro": "GoalBlip connects to our own API server to fetch match data and statistics. This connection:",
+      "noPersonal": "Does not transmit any personal information",
+      "public": "Only requests publicly available match data",
+      "https": "Uses standard HTTPS encryption (in production)"
+    },
+    "rights": {
+      "title": "Your Rights",
+      "intro": "You have the right to:",
+      "delete": "Delete all stored data by uninstalling the app",
+      "clear": "Clear app data through your device settings",
+      "stop": "Stop using the app at any time"
+    },
+    "children": {
+      "title": "Children's Privacy",
+      "text": "GoalBlip is not intended for children under the age of 13. We do not knowingly collect information from children."
+    },
+    "changes": {
+      "title": "Changes to This Privacy Policy",
+      "text": "We may update this Privacy Policy from time to time. We will notify you of any changes by updating the \"Last Updated\" date."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "text": "If you have questions about this Privacy Policy, please contact us at:",
+      "email": "Email",
+      "website": "Website"
+    },
+    "summary": {
+      "title": "Quick Summary",
+      "what": "What we store",
+      "whatDesc": "Only your favorites and preferences (on your device)",
+      "where": "Where it's stored",
+      "whereDesc": "Only on your device",
+      "who": "Who sees it",
+      "whoDesc": "Only you",
+      "thirdParty": "Third parties",
+      "thirdPartyDesc": "None",
+      "tracking": "Tracking",
+      "trackingDesc": "None",
+      "personal": "Personal data",
+      "personalDesc": "None collected"
+    }
+  },
+  "support": {
+    "description": "Need help? We're here for you. Contact us or check out our frequently asked questions.",
+    "contact": {
+      "title": "Contact Us",
+      "email": "Email",
+      "emailDesc": "Send us an email and we'll get back to you as soon as possible."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "Is GoalBlip free?",
+      "a1": "Yes, GoalBlip is completely free to use. There are no premium features or subscriptions.",
+      "q2": "What data does GoalBlip collect?",
+      "a2": "GoalBlip does not collect any personal data. All information (favorites, language preferences, timezone) is stored locally on your device only.",
+      "q3": "Which languages are supported?",
+      "a3": "GoalBlip currently supports Turkish, English, Spanish, and German. More languages may be added in the future.",
+      "q4": "How do I delete my data?",
+      "a4": "Simply uninstall the app from your device. All locally stored data will be removed. You can also clear app data through your device settings.",
+      "q5": "Where can I download the app?",
+      "a5": "GoalBlip will be available on the App Store (iOS) and Play Store (Android) soon. Stay tuned for updates!",
+      "q6": "How accurate are the match analyses?",
+      "a6": "GoalBlip uses advanced data analysis and AI algorithms to provide comprehensive match statistics. However, these are analytical insights and should not be considered as predictions or guarantees."
+    },
+    "resources": {
+      "title": "Additional Resources"
+    }
+  }
+}
+

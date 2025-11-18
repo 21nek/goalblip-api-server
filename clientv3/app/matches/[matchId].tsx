@@ -42,7 +42,7 @@ import {
   getQuickSummary,
 } from '@/lib/match-analysis';
 import { colors, spacing, borderRadius, typography, shadows } from '@/lib/theme';
-import { getContainerPadding, getCardPadding, screenDimensions } from '@/lib/responsive';
+import { getContainerPadding, getCardPadding, getMaxContentWidth, getResponsiveSpacing, screenDimensions, isMediumScreen } from '@/lib/responsive';
 import { getStatusKey, STATUS_TRANSLATION_KEYS } from '@/lib/status-labels';
 import type { MatchDetail } from '@/types/match';
 import {
@@ -486,9 +486,16 @@ if (formattedLastUpdatedAt) {
                       logo={scoreboard?.homeTeam?.logo}
                       size={screenDimensions.isSmall ? 40 : 48}
                     />
-                    <Text style={getStyles().teamName} numberOfLines={2}>
-                      {scoreboard?.homeTeam?.name || t('common.unknown')}
-                    </Text>
+                    <View style={getStyles().teamNameContainer}>
+                      <Text 
+                        style={getStyles().teamName} 
+                        numberOfLines={2} 
+                        ellipsizeMode="tail"
+                        allowFontScaling={false}
+                      >
+                        {scoreboard?.homeTeam?.name || t('common.unknown')}
+                      </Text>
+                    </View>
                     {(() => {
                       const homeForm = detail.recentForm?.[0];
                       const formResults = homeForm?.matches?.slice(0, 5).map((m) => m.result) || [];
@@ -542,9 +549,16 @@ if (formattedLastUpdatedAt) {
                       logo={scoreboard?.awayTeam?.logo}
                       size={screenDimensions.isSmall ? 40 : 48}
                     />
-                    <Text style={getStyles().teamName} numberOfLines={2}>
-                      {scoreboard?.awayTeam?.name || t('common.unknown')}
-                    </Text>
+                    <View style={getStyles().teamNameContainer}>
+                      <Text 
+                        style={getStyles().teamName} 
+                        numberOfLines={2} 
+                        ellipsizeMode="tail"
+                        allowFontScaling={false}
+                      >
+                        {scoreboard?.awayTeam?.name || t('common.unknown')}
+                      </Text>
+                    </View>
                     {(() => {
                       const awayForm = detail.recentForm?.[1];
                       const formResults = awayForm?.matches?.slice(0, 5).map((m) => m.result) || [];
@@ -1085,11 +1099,18 @@ const getStyles = () => {
   const containerPadding = getContainerPadding();
   const cardPadding = getCardPadding();
   const isSmall = screenDimensions.isSmall;
+  const responsiveMd = getResponsiveSpacing(spacing.md);
+  const responsiveSm = getResponsiveSpacing(spacing.sm);
+  const responsiveLg = getResponsiveSpacing(spacing.lg);
+  const responsiveXs = getResponsiveSpacing(spacing.xs);
   
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.xxxl * 2.5,
       paddingHorizontal: containerPadding,
+      maxWidth: getMaxContentWidth(),
+      alignSelf: 'center',
+      width: '100%',
     },
   loading: {
     padding: spacing.xl,
@@ -1147,28 +1168,32 @@ const getStyles = () => {
       backgroundColor: colors.bgCard,
       borderRadius: borderRadius.xl,
       padding: cardPadding,
-      marginBottom: spacing.lg,
+      marginBottom: getResponsiveSpacing(spacing.lg),
       ...shadows.card,
       borderWidth: 1,
       borderColor: colors.border,
+      width: '100%',
+      alignSelf: 'stretch',
     },
     scoreboardHeader: {
       alignItems: 'center',
       marginBottom: spacing.md,
     },
     league: {
-      fontSize: isSmall ? 15 : 17,
+      fontSize: isSmall ? 13 : 15,
       color: colors.textPrimary,
       textAlign: 'center',
       marginBottom: spacing.lg,
       fontWeight: '700',
-      lineHeight: isSmall ? 21 : 23,
-      letterSpacing: 0.8,
-      paddingHorizontal: spacing.md,
+      lineHeight: isSmall ? 18 : 20,
+      letterSpacing: 0.5,
+      paddingHorizontal: isSmall ? spacing.sm : spacing.md,
       backgroundColor: colors.bgTertiary,
       paddingVertical: spacing.xs + 2,
       borderRadius: borderRadius.md,
       alignSelf: 'center',
+      maxWidth: '95%',
+      flexShrink: 1,
     },
     badgeRow: {
       flexDirection: 'row',
@@ -1180,11 +1205,13 @@ const getStyles = () => {
       flexDirection: 'row',
       alignItems: 'center',
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      paddingHorizontal: spacing.md,
+      paddingHorizontal: isSmall ? spacing.sm : spacing.md,
       paddingVertical: spacing.xs + 2,
       borderRadius: borderRadius.full,
       marginHorizontal: spacing.xs / 2,
       position: 'relative',
+      flexShrink: 1,
+      minWidth: 0,
     },
     statusBadgeLive: {
       backgroundColor: colors.accent + '20',
@@ -1211,7 +1238,8 @@ const getStyles = () => {
       ...typography.caption,
       color: colors.textSecondary,
       fontWeight: '600',
-      fontSize: 11,
+      fontSize: isSmall ? 10 : 11,
+      flexShrink: 1,
     },
     statusBadgeTextLive: {
       color: colors.accent,
@@ -1221,34 +1249,46 @@ const getStyles = () => {
     teamsRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
+      alignItems: 'center',
       marginVertical: spacing.xl,
-      gap: spacing.md,
+      gap: isSmall ? spacing.xs : spacing.sm,
     },
     teamSection: {
       flex: 1,
       alignItems: 'center',
+      justifyContent: 'flex-start',
       minWidth: 0,
       flexBasis: 0,
+      maxWidth: '40%',
     },
     teamSectionRight: {
       alignItems: 'center',
+      justifyContent: 'flex-start',
     },
     teamColumn: {
       alignItems: 'center',
+      justifyContent: 'flex-start',
       width: '100%',
-      paddingHorizontal: spacing.xs,
+      paddingHorizontal: isSmall ? spacing.xs / 2 : spacing.xs,
     },
     teamName: {
       color: colors.textPrimary,
       fontWeight: '600',
-      fontSize: isSmall ? 13 : 15,
-      marginTop: spacing.sm,
-      marginBottom: spacing.xs,
-      lineHeight: isSmall ? 17 : 19,
+      fontSize: isSmall ? 12 : 14,
+      lineHeight: isSmall ? 18 : 20,
       textAlign: 'center',
       width: '100%',
-      minHeight: isSmall ? 34 : 38,
+      includeFontPadding: false,
+      paddingVertical: 0,
+    },
+    teamNameContainer: {
+      width: '100%',
+      minHeight: isSmall ? 38 : 42,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: spacing.sm,
+      marginBottom: spacing.xs,
+      paddingVertical: 2,
     },
     teamFormContainer: {
       flexDirection: 'row',
@@ -1257,11 +1297,11 @@ const getStyles = () => {
       marginTop: spacing.xs / 2,
     },
     teamFormChar: {
-      fontSize: 13,
+      fontSize: isSmall ? 11 : 13,
       fontWeight: '700',
       fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
       color: colors.textTertiary,
-      minWidth: 16,
+      minWidth: isSmall ? 14 : 16,
       textAlign: 'center',
     },
     teamFormWin: {
@@ -1276,30 +1316,31 @@ const getStyles = () => {
     scoreSection: {
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth: isSmall ? 90 : 110,
-      paddingHorizontal: spacing.md,
+      minWidth: isSmall ? 70 : 90,
+      maxWidth: isSmall ? 80 : 100,
+      paddingHorizontal: isSmall ? spacing.xs : spacing.sm,
       paddingTop: spacing.xs,
       flexShrink: 0,
     },
     score: {
       color: colors.textPrimary,
       fontWeight: '700',
-      fontSize: isSmall ? 30 : 38,
-      lineHeight: isSmall ? 38 : 46,
+      fontSize: isSmall ? 26 : 34,
+      lineHeight: isSmall ? 32 : 40,
       marginBottom: spacing.xs / 2,
       letterSpacing: -0.5,
     },
     vsText: {
-      fontSize: isSmall ? 18 : 22,
+      fontSize: isSmall ? 16 : 20,
       color: colors.accent,
       fontWeight: '700',
-      letterSpacing: 2,
+      letterSpacing: 1.5,
       textTransform: 'uppercase',
     },
     halftimeScore: {
       ...typography.caption,
       color: colors.textTertiary,
-      fontSize: 11,
+      fontSize: isSmall ? 10 : 11,
       fontWeight: '500',
       marginTop: spacing.xs / 2,
     },
@@ -1307,17 +1348,20 @@ const getStyles = () => {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: spacing.md,
+    alignItems: 'center',
+      marginTop: responsiveMd,
+    gap: spacing.xs / 2,
   },
   metaBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.bgSecondary,
     borderRadius: borderRadius.full,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: isSmall ? spacing.sm : spacing.md,
     paddingVertical: spacing.xs,
-    marginHorizontal: spacing.xs / 2,
     marginBottom: spacing.xs,
+    flexShrink: 1,
+    minWidth: 0,
   },
   metaBadgeIcon: {
     marginRight: spacing.xs / 2,
@@ -1326,6 +1370,8 @@ const getStyles = () => {
     ...typography.caption,
     color: colors.textTertiary,
     fontWeight: '600',
+    fontSize: isSmall ? 10 : 11,
+    flexShrink: 1,
   },
   kickoff: {
     ...typography.caption,
@@ -1337,21 +1383,26 @@ const getStyles = () => {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: spacing.sm,
+    alignItems: 'center',
+      marginTop: responsiveSm,
+    gap: spacing.xs / 2,
   },
   infoChip: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.bgTertiary,
     borderRadius: borderRadius.full,
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: isSmall ? spacing.xs : spacing.sm,
     paddingVertical: spacing.xs,
-    marginHorizontal: spacing.xs / 2,
     marginBottom: spacing.xs,
+    flexShrink: 1,
+    minWidth: 0,
   },
   infoChipText: {
     ...typography.caption,
     color: colors.textTertiary,
+    fontSize: isSmall ? 10 : 11,
+    flexShrink: 1,
   },
   teamBlock: {
     flex: 1,
@@ -1396,20 +1447,25 @@ const getStyles = () => {
       backgroundColor: colors.bgSecondary,
       borderRadius: borderRadius.xl,
       padding: cardPadding,
-      marginBottom: spacing.md,
+      marginBottom: responsiveMd,
       ...shadows.card,
+      width: '100%',
+      alignSelf: 'stretch',
     },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.md,
+    marginBottom: getResponsiveSpacing(spacing.md),
+    gap: spacing.sm,
   },
     sectionTitle: {
       ...typography.h2,
       color: colors.textPrimary,
       fontWeight: '700',
-      fontSize: isSmall ? 18 : typography.h2.fontSize,
+      fontSize: isSmall ? 16 : isMediumScreen ? 18 : typography.h2.fontSize,
+      lineHeight: isSmall ? 22 : 26,
+      marginBottom: responsiveMd,
     },
   lockedBadge: {
     backgroundColor: colors.warning + '22',
@@ -1425,13 +1481,15 @@ const getStyles = () => {
   predictionCard: {
     backgroundColor: colors.bgTertiary,
     borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+      padding: responsiveLg,
+    marginBottom: getResponsiveSpacing(spacing.md),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
+    width: '100%',
+    gap: spacing.sm,
   },
   predictionCardLocked: {
     opacity: 0.6,
@@ -1440,7 +1498,9 @@ const getStyles = () => {
   },
   predictionContent: {
     flex: 1,
-    marginRight: spacing.md,
+      marginRight: responsiveMd,
+    minWidth: 0,
+    flexShrink: 1,
   },
   predictionHeader: {
     flexDirection: 'row',
@@ -1464,7 +1524,7 @@ const getStyles = () => {
   predictionValue: {
     ...typography.h3,
     color: colors.textPrimary,
-    fontSize: 20,
+    fontSize: isSmall ? 18 : 20,
     fontWeight: '600',
     marginTop: 6,
   },
@@ -1515,15 +1575,17 @@ const getStyles = () => {
   detailedPrediction: {
     backgroundColor: colors.bgTertiary,
     borderRadius: borderRadius.lg,
-    padding: spacing.md + 2,
-    marginBottom: spacing.sm + 2,
+      padding: responsiveMd + 2,
+      marginBottom: responsiveSm + 2,
     ...shadows.subtle,
+    width: '100%',
   },
   detailedHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.sm + 2,
+      marginBottom: responsiveSm + 2,
+    gap: spacing.sm,
   },
   predictionConfidence: {
     ...typography.bodySmall,
@@ -1542,9 +1604,10 @@ const getStyles = () => {
   oddsInnerCard: {
     backgroundColor: colors.bgTertiary,
     borderRadius: borderRadius.md + 2,
-    padding: spacing.md,
-    marginTop: spacing.sm + 2,
+    padding: getResponsiveSpacing(spacing.md),
+    marginTop: getResponsiveSpacing(spacing.sm + 2),
     ...shadows.subtle,
+    width: '100%',
   },
   oddsTitle: {
     ...typography.caption,
@@ -1555,12 +1618,16 @@ const getStyles = () => {
   oddsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.xs,
+    alignItems: 'center',
+      marginBottom: responsiveXs,
+    gap: spacing.xs,
   },
   oddsLabel: {
     ...typography.caption,
     color: colors.textTertiary,
     flex: 1,
+    fontSize: isSmall ? 11 : 12,
+    flexShrink: 1,
   },
   oddsValues: {
     flex: 1,
@@ -1573,6 +1640,8 @@ const getStyles = () => {
     ...typography.caption,
     color: colors.textPrimary,
     fontWeight: '500',
+    fontSize: isSmall ? 11 : 12,
+    flexShrink: 0,
   },
     upcomingCard: {
       width: isSmall ? 180 : 220,
@@ -1601,23 +1670,32 @@ const getStyles = () => {
   metaRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: spacing.sm,
+    alignItems: 'center',
+      marginTop: responsiveSm,
+    gap: spacing.sm,
   },
   metaLabel: {
     ...typography.caption,
     color: colors.textTertiary,
+    fontSize: isSmall ? 11 : 12,
+    flexShrink: 0,
   },
     metaValue: {
       ...typography.caption,
       color: colors.textSecondary,
+      fontSize: isSmall ? 11 : 12,
+      flexShrink: 1,
+      textAlign: 'right',
+      flex: 1,
     },
   reanalyzeCard: {
-    marginTop: spacing.lg,
-    padding: spacing.md,
+      marginTop: responsiveLg,
+    padding: getResponsiveSpacing(spacing.md),
     borderRadius: borderRadius.lg,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.bgSecondary,
+    width: '100%',
   },
   reanalyzeTitle: {
     ...typography.body,
@@ -1633,9 +1711,11 @@ const getStyles = () => {
   reanalyzeButton: {
     backgroundColor: colors.accent,
     borderRadius: borderRadius.full,
-    paddingVertical: spacing.sm + 2,
+      paddingVertical: responsiveSm + 2,
+    paddingHorizontal: spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   reanalyzeButtonDisabled: {
     opacity: 0.6,

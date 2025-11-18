@@ -7,7 +7,8 @@ import { Icon } from '@/components/ui/icon';
 import { useTranslation } from '@/hooks/useTranslation';
 import { DrawerMenu } from '@/components/layout/drawer-menu';
 import { BackgroundPattern } from '@/components/ui/background-pattern';
-import logoSquare from '@/assets/logo_square.png';
+// Logo PNG olarak kullanılıyor (SVG base64 PNG içeriyordu, React Native'de sorun çıkarıyordu)
+const Logo = require('@/assets/logo.png');
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -84,8 +85,11 @@ export function AppShell({ children, title, showBackButton = false, rightSlot, s
             </View>
           ) : (
             <View style={styles.centerSection}>
-              <Image source={logoSquare} style={styles.centerLogo} resizeMode="contain" />
-              <Text style={styles.brand}>GoalBlip</Text>
+              <Image 
+                source={Logo} 
+                style={[styles.centerLogo, { width: 32, height: 32 }]} 
+                resizeMode="contain"
+              />
             </View>
           )}
           
@@ -198,8 +202,6 @@ const getStyles = (showBackButton: boolean) => StyleSheet.create({
     paddingHorizontal: spacing.md,
   },
   centerLogo: {
-    width: 32,
-    height: 32,
     marginBottom: spacing.xs / 2,
   },
   titleContainer: {

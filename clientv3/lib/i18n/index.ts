@@ -1,6 +1,7 @@
 import trTranslations from './translations/tr.json';
 import enTranslations from './translations/en.json';
 import esTranslations from './translations/es.json';
+import deTranslations from './translations/de.json';
 import type { Locale } from '@/providers/locale-provider';
 
 type TranslationKey = string;
@@ -11,8 +12,11 @@ const translations: Record<Locale, typeof trTranslations> = {
   'tr': trTranslations,
   'en': enTranslations,
   'es': esTranslations,
+  'de': deTranslations,
   'es-ES': esTranslations, // Use es.json for es-ES
   'es-AR': esTranslations, // Use es.json for es-AR
+  'de-AT': deTranslations, // Use de.json for de-AT (Austria)
+  'de-CH': deTranslations, // Use de.json for de-CH (Switzerland)
 };
 
 /**

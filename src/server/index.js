@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import os from 'os';
+import rateLimit from 'express-rate-limit';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
 import { findTimezoneById } from '../config/timezones.js';
 import { formatUtcForTimezone } from '../utils/datetime.js';
@@ -39,6 +40,45 @@ app.use(
   }),
 );
 
+// Rate limiting - Public endpoint'ler için
+// Queue zaten scraping'i kontrol ediyor, bu limit sadece aşırı spam'i engellemek için
+const publicRateLimit = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 dakika
+  max: 500, // Her IP için dakikada 500 istek (mobil uygulama scroll için yeterli)
+  message: { error: 'Çok fazla istek. Lütfen bir süre sonra tekrar deneyin.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Trust proxy (Nginx/load balancer arkasındaysa)
+  trustProxy: true,
+});
+
+// Match detail için aynı limit (queue zaten scraping'i kontrol ediyor)
+const matchDetailRateLimit = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 dakika
+  max: 500, // Her IP için dakikada 500 istek
+  message: { error: 'Maç detay istekleri için limit aşıldı. Lütfen bir süre sonra tekrar deneyin.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+  trustProxy: true,
+});
+
+// API Key middleware - Sadece admin endpoint'ler için
+function requireApiKey(req, res, next) {
+  const apiKey = req.headers['x-api-key'];
+  const expectedKey = process.env.API_KEY;
+  
+  // API_KEY env var yoksa, bu middleware'i atla (opsiyonel)
+  if (!expectedKey) {
+    return next();
+  }
+  
+  if (!apiKey || apiKey !== expectedKey) {
+    return res.status(401).json({ error: 'Geçersiz veya eksik API anahtarı.' });
+  }
+  
+  next();
+}
+
 app.use((req, _res, next) => {
   const locale =
     req.query.locale ||
@@ -65,7 +105,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/api/matches', async (req, res, next) => {
+// Public endpoint'ler - Rate limiting var
+app.get('/api/matches', publicRateLimit, async (req, res, next) => {
   try {
     const { date, view = 'today', refresh, locale = 'tr' } = req.query;
     const normalizedLocale = normalizeLocale(typeof locale === 'string' ? locale : 'tr');
@@ -135,7 +176,8 @@ app.get('/api/matches', async (req, res, next) => {
   }
 });
 
-app.post('/api/matches/scrape', async (req, res, next) => {
+// Admin endpoint - API key gerekli
+app.post('/api/matches/scrape', requireApiKey, async (req, res, next) => {
   try {
     const { view = 'today', locale = 'tr', headless = 'new' } = req.body || {};
     const normalizedLocale = normalizeLocale(locale);
@@ -157,7 +199,7 @@ app.post('/api/matches/scrape', async (req, res, next) => {
   }
 });
 
-app.get('/api/matches/:date', async (req, res, next) => {
+app.get('/api/matches/:date', publicRateLimit, async (req, res, next) => {
   try {
     const locale = normalizeLocale(
       typeof req.query.locale === 'string' ? req.query.locale : 'tr',
@@ -210,7 +252,7 @@ app.get('/api/matches/:date', async (req, res, next) => {
     next(error);
   }
 });
-app.get('/api/match/:matchId', async (req, res, next) => {
+app.get('/api/match/:matchId', matchDetailRateLimit, async (req, res, next) => {
   try {
     const { matchId } = req.params;
     const locale = normalizeLocale(req.query.locale || 'tr');
@@ -299,7 +341,8 @@ app.get('/api/match/:matchId', async (req, res, next) => {
   }
 });
 
-app.post('/api/match/:matchId/scrape', async (req, res, next) => {
+// Admin endpoint - API key gerekli
+app.post('/api/match/:matchId/scrape', requireApiKey, async (req, res, next) => {
   try {
     const { matchId } = req.params;
     const {
@@ -477,10 +520,23 @@ function metadataFallback(detail, side) {
   return detail[key] ?? null;
 }
 
+// Error handler - Production'da internal hataları gizle
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({
-    error: err.message || 'Beklenmeyen sunucu hatasÄ±.',
+  console.error('[Error]', {
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    path: req.path,
+    method: req.method,
+  });
+  
+  // Production'da internal hataları gizle
+  const isProduction = process.env.NODE_ENV === 'production';
+  const errorMessage = isProduction && err.status !== 400 && err.status !== 404
+    ? 'Beklenmeyen sunucu hatası.'
+    : (err.message || 'Beklenmeyen sunucu hatası.');
+  
+  res.status(err.status || 500).json({
+    error: errorMessage,
   });
 });
 

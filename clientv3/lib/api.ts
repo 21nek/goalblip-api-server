@@ -11,11 +11,14 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   
   // Match detail için timeout - artık 202 dönebilir, bu yüzden daha kısa timeout yeterli
   const isMatchDetail = path.includes('/api/match/');
-  // Liste isteklerinde Puppeteer bazen 20sn'yi aşabiliyor; biraz daha geniş tut.
-  const timeoutMs = isMatchDetail ? 15000 : 45000; // Match detail: 15s, listeler: 45s
+  // Liste isteklerinde Puppeteer bazen 60sn'yi aşabiliyor; ilk scraping için daha geniş tut.
+  // Rate limit değil, scraping işlemi uzun sürebilir.
+  const timeoutMs = isMatchDetail ? 15000 : 90000; // Match detail: 15s, listeler: 90s (ilk scraping için)
   
   try {
-    console.log('[API] Fetching:', target);
+    if (__DEV__) {
+      console.log('[API] Fetching:', target);
+    }
     const startTime = Date.now();
     
     // Timeout için AbortController kullan (React Native'de AbortSignal.timeout yok)
@@ -65,12 +68,16 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       abortHandlers.forEach(cleanup => cleanup());
     
       const duration = Date.now() - startTime;
-      console.log(`[API] Response received in ${duration}ms:`, response.status, path);
+      if (__DEV__) {
+        console.log(`[API] Response received in ${duration}ms:`, response.status, path);
+      }
       
       // Handle 202 Accepted (pending queue response)
       if (response.status === 202) {
         const data = await response.json();
-        console.log('[API] Pending (202):', path, `(${duration}ms)`, data);
+        if (__DEV__) {
+          console.log('[API] Pending (202):', path, `(${duration}ms)`, data);
+        }
         return data as T;
       }
       
@@ -86,7 +93,9 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
           parsedBody = null;
         }
         const errorMsg = parsedBody?.error || rawBody || `API error ${response.status}`;
-        console.error('[API] Error:', response.status, errorMsg);
+        if (__DEV__) {
+          console.error('[API] Error:', response.status, errorMsg);
+        }
         const apiError = new Error(errorMsg);
         apiError.name = 'API_ERROR';
         (apiError as any).code = parsedBody?.code || 'API_ERROR';
@@ -97,7 +106,9 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
       }
       
       const data = await response.json();
-      console.log('[API] Success:', path, `(${duration}ms)`);
+      if (__DEV__) {
+        console.log('[API] Success:', path, `(${duration}ms)`);
+      }
       return data as T;
     } catch (fetchError) {
       // Fetch hatası oldu, timeout'u ve listener'ları temizle
@@ -110,7 +121,9 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
     }
   } catch (error) {
     if (error instanceof TypeError) {
-      console.error('[API] Network error:', error.message, 'URL:', target);
+      if (__DEV__) {
+        console.error('[API] Network error:', error.message, 'URL:', target);
+      }
       const networkError = new Error(error.message);
       networkError.name = 'NETWORK_ERROR';
       (networkError as any).code = 'NETWORK_ERROR';
@@ -119,7 +132,9 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
     }
     
     if (error instanceof Error && error.name === 'AbortError') {
-      console.error('[API] Request timeout:', target);
+      if (__DEV__) {
+        console.error('[API] Request timeout:', target);
+      }
       const timeoutError = new Error('Request timeout');
       timeoutError.name = 'REQUEST_TIMEOUT';
       (timeoutError as any).code = 'REQUEST_TIMEOUT';

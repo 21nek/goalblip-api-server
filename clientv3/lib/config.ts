@@ -1,10 +1,29 @@
 ﻿// API Base URL
-// Bu kopyada doğrudan lokal IP kullanıyoruz.
-// Sunucu log'unda görünen IP: http://192.168.1.110:4000
-export const API_BASE_URL = 'http://192.168.1.110:4000';
+// Environment variable'dan al, yoksa fallback kullan
+// Development: local IP veya localhost
+// Production: Cloudflare HTTPS URL (https://api.goalblip.com)
 
-// Debug iÃ§in
+const getApiBaseUrl = (): string => {
+  // Expo environment variable (EXPO_PUBLIC_* prefix gerekli)
+  if (typeof process !== 'undefined' && process.env.EXPO_PUBLIC_API_BASE_URL) {
+    return process.env.EXPO_PUBLIC_API_BASE_URL;
+  }
+  
+  // Development: Local IP (sunucuya taşınana kadar)
+  // Not: Server'ın gerçek IP'sini kullan (hostname -I ile kontrol et)
+  return 'http://192.168.137.63:4000';
+  
+  // Production: Cloudflare HTTPS (sunucuya taşındığında aktif et)
+  // if (typeof __DEV__ !== 'undefined' && !__DEV__) {
+  //   return 'https://api.goalblip.com';
+  // }
+};
+
+export const API_BASE_URL = getApiBaseUrl();
+
+// Debug için
 if (typeof __DEV__ !== 'undefined' && __DEV__) {
   console.log('[Config] API Base URL:', API_BASE_URL);
+  console.log('[Config] Environment:', __DEV__ ? 'development' : 'production');
 }
 

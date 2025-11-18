@@ -422,7 +422,8 @@
     "localeNames": {
       "tr": "Turkish",
       "en": "English",
-      "es": "Spanish"
+      "es": "Spanish",
+      "de": "German"
     },
     "timezoneLabels": {
       "ISTANBUL": "Istanbul (GMT+3)",

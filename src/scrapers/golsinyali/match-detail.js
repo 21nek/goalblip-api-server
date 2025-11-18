@@ -61,7 +61,20 @@ export async function scrapeMatchDetail(options = {}) {
     page.setDefaultTimeout?.(navigationTimeoutMs);
 
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
-    await page.waitForSelector('main', { timeout: navigationTimeoutMs });
+    
+    // main elementi bulunamazsa alternatif selector'ları dene
+    try {
+      await page.waitForSelector('main', { timeout: 10000 }); // 10 saniye dene
+    } catch (mainError) {
+      // main bulunamadı, body veya başka bir container'ı bekle
+      try {
+        await page.waitForSelector('body', { timeout: 5000 });
+        logger?.warn?.(`main selector not found for ${matchId}, continuing with body`);
+      } catch (bodyError) {
+        // Hiçbir şey bulunamadı, yine de devam et
+        logger?.warn?.(`No main or body selector found for ${matchId}, continuing anyway`);
+      }
+    }
 
     const detail = await page.evaluate(async (headingConfig) => {
       const text = (node) => (node?.textContent || '').replace(/\s+/g, ' ').trim();
@@ -175,7 +188,10 @@ export async function scrapeMatchDetail(options = {}) {
       const article = pickByType('Article');
       const breadcrumbs = pickByType('BreadcrumbList');
 
-      const scoreboardGrid = document.querySelector('main .grid.grid-cols-3.items-center');
+      // main yoksa body veya doğrudan grid'i ara
+      const scoreboardGrid = document.querySelector('main .grid.grid-cols-3.items-center') 
+        || document.querySelector('body .grid.grid-cols-3.items-center')
+        || document.querySelector('.grid.grid-cols-3.items-center');
       const scoreboardCard =
         scoreboardGrid?.closest('[class*="relative"]') ?? scoreboardGrid?.closest('div');
       const scoreboardHeader =

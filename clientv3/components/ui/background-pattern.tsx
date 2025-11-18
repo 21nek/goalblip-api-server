@@ -1,5 +1,5 @@
-import { Platform, StyleSheet, View } from 'react-native';
-import { Svg, Circle, Defs, Pattern } from 'react-native-svg';
+import { Dimensions, Platform, StyleSheet, View } from 'react-native';
+import { Svg, Circle, Defs, Pattern, Rect } from 'react-native-svg';
 
 export function BackgroundPattern() {
   if (Platform.OS === 'web') {
@@ -23,16 +23,18 @@ export function BackgroundPattern() {
   }
 
   // Native için SVG pattern
+  const { width, height } = Dimensions.get('window');
+  
   return (
     <View style={StyleSheet.absoluteFill} pointerEvents="none">
-      <Svg width="100%" height="100%" style={StyleSheet.absoluteFill}>
+      <Svg width={width} height={height} style={StyleSheet.absoluteFill}>
         <Defs>
           <Pattern id="dotPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
             <Circle cx="1" cy="1" r="1" fill="rgba(255, 255, 255, 0.05)" />
             <Circle cx="25" cy="25" r="1" fill="rgba(255, 255, 255, 0.05)" />
           </Pattern>
         </Defs>
-        <rect width="100%" height="100%" fill="url(#dotPattern)" />
+        <Rect width={width} height={height} fill="url(#dotPattern)" />
       </Svg>
     </View>
   );
