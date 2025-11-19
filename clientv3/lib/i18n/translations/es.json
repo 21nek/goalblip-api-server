@@ -51,7 +51,8 @@
       "predictionPending": "Predicción pendiente",
       "noPredictionTitle": "Sin predicción de IA",
       "noPredictionMessage": "El análisis aún no está listo para este partido."
-    }
+    },
+
   },
   "filter": {
     "searchPlaceholder": "Buscar equipo o liga...",
@@ -374,6 +375,91 @@
       "rateLimited": "Espera antes de solicitar otro análisis para este partido.",
       "nextAllowed": "La siguiente solicitud manual estará disponible el {time}.",
       "error": "No se pudo solicitar un nuevo análisis."
+    },
+    "advancedMetrics": {
+      "title": "Insights Avanzados",
+      "sampleLabel": "Basado en los últimos {matches} partidos",
+      "weightedScore": {
+        "title": "Sistema de Puntuación Ponderado",
+        "description": "Los resultados recientes se ponderan para resaltar la fuerza actual.",
+        "homeLabel": "Puntuación ponderada local",
+        "awayLabel": "Puntuación ponderada visitante"
+      },
+      "momentum": {
+        "title": "Indicador de Momentum",
+        "description": "Momentum del diferencial de goles según los partidos recientes.",
+        "bullish": "Momentum alcista",
+        "neutral": "Momentum neutral",
+        "bearish": "Momentum bajista"
+      },
+      "confidence": {
+        "title": "Combinación de Confianza",
+        "description": "Confianza compuesta que mezcla picks de IA y historial de acierto.",
+        "scoreLabel": "Confianza compuesta",
+        "topPickLabel": "Señal principal",
+        "noPick": "Sin señal disponible"
+      },
+      "poisson": {
+        "title": "Modelo de Goles Poisson",
+        "description": "Distribución aproximada de goles basada en las tasas recientes.",
+        "expectedHeader": "Goles esperados",
+        "goalColumn": "Goles",
+        "homeColumn": "Local",
+        "awayColumn": "Visitante",
+        "goalLabel": "{value} goles",
+        "goalLabelPlus": "3+ goles"
+      },
+      "goalTrend": {
+        "title": "Tendencia de Goles",
+        "description": "Goles anotados vs recibidos recientemente.",
+        "team": "Equipo",
+        "forLabel": "GF",
+        "againstLabel": "GC",
+        "deltaLabel": "Dif"
+      },
+      "confidenceLadder": {
+        "title": "Escalera de Confianza",
+        "description": "Ranking de confianza de las predicciones."
+      },
+      "overUnder": {
+        "title": "Confianza Over/Under",
+        "description": "Probabilidades clave de totales."
+      },
+      "handicap": {
+        "title": "Insight de Hándicap",
+        "description": "Última línea de hándicap asiático."
+      },
+      "halfComparison": {
+        "title": "1. Tiempo vs Final",
+        "description": "Cómo cambia la confianza entre descanso y final.",
+        "halfLabel": "1T %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Señales Clave",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} muestra una clara ventaja de forma (+{value} pts sobre {awayTeam}).",
+        "awayAdvantage": "{awayTeam} llega con mejor forma ponderada (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} presenta momentum ofensivo (+{value}).",
+        "homeBearish": "El momentum de {team} se debilita ({value}).",
+        "awayBullish": "{team} gana impulso positivo (+{value}).",
+        "awayBearish": "{team} entra en fase bajista ({value})."
+      },
+      "confidence": {
+        "high": "La confianza de la IA es alta ({score}%).",
+        "low": "La confianza de la IA es limitada ({score}%).",
+        "topPick": "Señal principal de la IA: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Goles esperados cerca de {goals}; probabilidad alta de partido abierto.",
+        "lowScoring": "Total proyectado alrededor de {goals}; puede ser de pocos goles.",
+        "homeCleanSheet": "Probabilidad de portería en cero para {team}: {percent}%.",
+        "awayCleanSheet": "Probabilidad de portería en cero para {team}: {percent}%."
+      },
+      "sampleSmall": "Solo {matches} partidos recientes disponibles; interpretar con cautela."
     }
   },
   "initialSetup": {

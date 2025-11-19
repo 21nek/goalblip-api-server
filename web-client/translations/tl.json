@@ -1,0 +1,560 @@
+{
+  "nav": {
+    "home": "Home",
+    "howItWorks": "Paano Ito Gumagana",
+    "privacy": "Patakaran sa Privacy",
+    "support": "Suporta"
+  },
+  "hero": {
+    "title": "GoalBlip",
+    "subtitle": "AI-Powered Analysis at Statistics para sa Football Matches",
+    "description": "Sundin nang mabuti ang mundo ng football. Gumawa ng matalinong desisyon gamit ang detalyadong pagsusuri ng mga laban, statistics ng performance ng team at komprehensibong data.",
+    "appStore": "I-download sa App Store",
+    "playStore": "Kunin sa Play Store",
+    "scrollDown": "I-scroll Pababa",
+    "stat1": "Mga Laban na Sinusuri Araw-araw",
+    "stat2": "Mga Liga na Sinusubaybayan",
+    "stat3": "Real-Time Updates",
+    "note": "Libre magpakailanman. Walang ads. Walang tracking.",
+    "mockup": {
+      "title": "Mga Laban Ngayon",
+      "team1": "Team A",
+      "team2": "Team B",
+      "stat1": "Forma: WWDLW",
+      "stat2": "Head-to-Head: 3-2-1"
+    }
+  },
+  "howItWorks": {
+    "title": "Paano Ito Gumagana",
+    "subtitle": "Advanced AI-Powered Football Analytics Engine",
+    "intro": "Ginagamit ng GoalBlip ang pinakabagong machine learning algorithms, statistical modeling, at real-time data processing upang magbigay ng walang kapantay na mga hula at insight sa football matches. Ang aming multi-layered analysis pipeline ay nagbabago ng raw match data sa actionable intelligence sa pamamagitan ng sophisticated computational methods.",
+    "introStats": {
+      "analysisPhases": "Mga Phase ng Analysis",
+      "mlModels": "ML Models",
+      "features": "Mga Feature",
+      "uptime": "Uptime"
+    },
+    "phase1": {
+      "title": "Phase 1: Intelligent Data Aggregation & Multi-Source Fusion",
+      "subtitle": "Advanced Data Collection Infrastructure",
+      "description": "Gumagamit ang aming distributed data collection system ng intelligent web scraping, API integration, at real-time data streaming upang mag-aggregate ng komprehensibong football statistics mula sa maraming mapagkakatiwalaang pinagmumulan. Ang multi-source fusion approach na ito ay nagsisiguro ng data completeness, accuracy, at redundancy.",
+      "features": {
+        "title": "Mga Pangunahing Kakayahan:",
+        "feature1": "Real-time data streaming mula sa maraming pinagmumulan",
+        "feature1Title": "Real-time Streaming",
+        "feature2": "Intelligent aggregation algorithms para sa data normalization",
+        "feature2Title": "Intelligent Aggregation",
+        "feature3": "Multi-source data fusion na may conflict resolution",
+        "feature3Title": "Multi-Source Fusion",
+        "feature4": "Automated data quality validation at anomaly detection",
+        "feature4Title": "Quality Validation",
+        "feature5": "Distributed caching para sa high-performance data retrieval",
+        "feature5Title": "Distributed Caching"
+      }
+    },
+    "phase2": {
+      "title": "Phase 2: Feature Engineering & Statistical Preprocessing",
+      "subtitle": "Advanced Data Transformation Pipeline",
+      "description": "Ang raw match data ay sumasailalim sa sophisticated feature engineering processes kung saan daan-daang statistical features ay nakuha, na-normalize, at na-transform. Kasama sa aming preprocessing pipeline ang temporal feature extraction, team form analysis, head-to-head statistics, at contextual feature generation.",
+      "features": {
+        "title": "Mga Teknik sa Pagproseso:",
+        "feature1": "Temporal feature extraction (rolling averages, momentum indicators)",
+        "feature1Title": "Temporal Extraction",
+        "feature2": "Team form analysis na may weighted performance metrics",
+        "feature2Title": "Form Analysis",
+        "feature3": "Head-to-head statistical modeling na may historical context",
+        "feature3Title": "H2H Modeling",
+        "feature4": "Contextual feature generation (home/away, weather, injuries)",
+        "feature4Title": "Contextual Features",
+        "feature5": "Dimensionality reduction at feature selection algorithms",
+        "feature5Title": "Dimensionality Reduction"
+      }
+    },
+    "phase3": {
+      "title": "Phase 3: Machine Learning & Predictive Modeling",
+      "subtitle": "Ensemble Methods & Advanced Algorithms",
+      "description": "Gumagamit ang aming prediction engine ng ensemble ng machine learning models kabilang ang gradient boosting, neural networks, at Bayesian inference methods. Bawat model ay naka-train sa malawak na historical data at patuloy na pinapino sa pamamagitan ng online learning mechanisms.",
+      "models": {
+        "title": "Mga Core Models:",
+        "badgeCore": "Core",
+        "badgeSpecial": "Special",
+        "model1": "Gradient Boosting Machines (XGBoost, LightGBM) para sa non-linear pattern recognition",
+        "model1Title": "Gradient Boosting",
+        "model2": "Deep Neural Networks para sa complex feature interactions",
+        "model2Title": "Neural Networks",
+        "model3": "Bayesian Inference Models para sa probabilistic predictions",
+        "model3Title": "Bayesian Inference",
+        "model4": "Poisson Distribution Models para sa goal-scoring probability estimation",
+        "model4Title": "Poisson Distribution",
+        "model5": "Ensemble Methods na nagkakombina ng maraming models para sa robust predictions",
+        "model5Title": "Ensemble Methods"
+      },
+      "algorithms": {
+        "title": "Advanced Algorithms:",
+        "algo1": "Monte Carlo Simulation para sa outcome probability distribution",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Markov Chain Models para sa match state transitions",
+        "algo2Title": "Markov Chain",
+        "algo3": "Time Series Analysis para sa form at momentum prediction",
+        "algo3Title": "Time Series",
+        "algo4": "Anomaly Detection para sa pag-identify ng unexpected patterns",
+        "algo4Title": "Anomaly Detection",
+        "algo5": "Reinforcement Learning para sa adaptive model optimization",
+        "algo5Title": "Reinforcement Learning"
+      }
+    },
+    "phase4": {
+      "title": "Phase 4: Confidence Scoring & Risk Assessment",
+      "subtitle": "Probabilistic Prediction Calibration",
+      "description": "Bawat hula ay may kasamang sophisticated confidence score na kinakalkula sa pamamagitan ng Bayesian calibration, uncertainty quantification, at model agreement analysis. Ang aming confidence scoring system ay nagbibigay ng transparent risk assessment para sa bawat hula.",
+      "scoring": {
+        "title": "Mga Confidence Metrics:",
+        "metric1": "Bayesian Confidence Intervals para sa prediction reliability",
+        "metric1Title": "Bayesian Confidence",
+        "metric2": "Model Agreement Scores (consensus sa mga ensemble models)",
+        "metric2Title": "Model Agreement",
+        "metric3": "Uncertainty Quantification sa pamamagitan ng Monte Carlo sampling",
+        "metric3Title": "Uncertainty Quantification",
+        "metric4": "Historical Accuracy Calibration para sa model performance tracking",
+        "metric4Title": "Accuracy Calibration",
+        "metric5": "Risk-Adjusted Scoring na may confidence-weighted predictions",
+        "metric5Title": "Risk-Adjusted Scoring"
+      }
+    },
+    "phase5": {
+      "title": "Phase 5: Real-Time Analysis & Continuous Learning",
+      "subtitle": "Adaptive Intelligence System",
+      "description": "Patuloy na sinusubaybayan ng aming system ang mga resulta ng laban, kinukumpara ang mga hula sa aktwal na resulta, at awtomatikong pinapino ang mga models sa pamamagitan ng online learning. Ang adaptive approach na ito ay nagsisiguro na ang aming mga hula ay bumubuti sa paglipas ng panahon habang mas maraming data ang nagiging available.",
+      "learning": {
+        "title": "Mga Learning Mechanisms:",
+        "learn1": "Online Learning para sa real-time model updates",
+        "learn1Title": "Online Learning",
+        "learn2": "Transfer Learning sa iba't ibang liga at competitions",
+        "learn2Title": "Transfer Learning",
+        "learn3": "Active Learning para sa pag-identify ng high-value training data",
+        "learn3Title": "Active Learning",
+        "learn4": "Meta-Learning para sa mabilis na adaptation sa mga bagong pattern",
+        "learn4Title": "Meta-Learning",
+        "learn5": "Federated Learning para sa distributed model improvement",
+        "learn5Title": "Federated Learning"
+      }
+    },
+    "phase6": {
+      "title": "Phase 6: User Interface & Visualization",
+      "subtitle": "Intelligent Data Presentation",
+      "description": "Ang mga kumplikadong analytical results ay na-transform sa intuitive visualizations at actionable insights sa pamamagitan ng aming advanced presentation layer. Tumanggap ang mga user ng malinaw, na-interpret na mga hula na may supporting statistics at confidence indicators.",
+      "presentation": {
+        "title": "Mga Presentation Features:",
+        "pres1": "Interactive visualizations na may drill-down capabilities",
+        "pres1Title": "Interactive Visualizations",
+        "pres2": "Confidence score visualization at risk indicators",
+        "pres2Title": "Confidence Visualization",
+        "pres3": "Comparative analysis na may historical performance",
+        "pres3Title": "Comparative Analysis",
+        "pres4": "Real-time updates habang live matches",
+        "pres4Title": "Real-time Updates",
+        "pres5": "Customizable views para sa iba't ibang analysis perspectives",
+        "pres5Title": "Customizable Views"
+      }
+    },
+    "technical": {
+      "title": "Technical Infrastructure",
+      "subtitle": "Enterprise-Grade Computing Architecture",
+      "description": "Gumagana ang GoalBlip sa isang scalable, distributed computing infrastructure na dinisenyo para sa high-performance analytics at real-time processing.",
+      "infrastructure": {
+        "title": "Mga Infrastructure Components:",
+        "comp1": "Distributed Data Processing na may horizontal scaling",
+        "comp2": "In-Memory Computing para sa sub-millisecond query responses",
+        "comp3": "GPU-Accelerated Machine Learning para sa mas mabilis na model training",
+        "comp4": "Microservices Architecture para sa modular system design",
+        "comp5": "Real-Time Streaming Pipeline para sa live data processing"
+      }
+    },
+    "conclusion": {
+      "title": "Ang Resulta",
+      "description": "Sa pamamagitan ng sophisticated multi-phase pipeline na ito, binabago ng GoalBlip ang raw football data sa highly accurate, confidence-scored predictions. Pinagsasama ng aming system ang kapangyarihan ng advanced machine learning, statistical modeling, at real-time processing upang magbigay ng insights na tumutulong sa mga user na gumawa ng matalinong desisyon tungkol sa football matches."
+    },
+    "step1": {
+      "title": "Data Collection at Processing",
+      "description": "Kinokolekta ng GoalBlip ang mahahalagang impormasyon tulad ng mga nakaraang laban, league standings at iba't ibang statistics ng football teams sa pamamagitan ng pag-scan sa internet. Kasama sa data na ito ang match details, team statistics at player information."
+    },
+    "step2": {
+      "title": "Data Analysis",
+      "description": "Ang nakolektang data ay pino-proseso ng malakas na analysis engines ng GoalBlip. Iba't ibang mga kadahilanan tulad ng home at away performance, kamakailang performance status at player health conditions ay isinasaalang-alang."
+    },
+    "step3": {
+      "title": "Analysis at Table Creation",
+      "description": "Ang na-analyze na data ay pino-proseso gamit ang iba't ibang algorithms at models, at detalyadong analyses tulad ng potensyal na match results at performance tables ay nililikha."
+    },
+    "step4": {
+      "title": "User Interaction",
+      "description": "Maaaring direktang tingnan ng mga user ang mga resulta mula sa detalyadong tables na inihanda ng GoalBlip o ma-access ang customized views sa pamamagitan ng paggawa ng kanilang sariling analyses."
+    }
+  },
+  "features": {
+    "title": "Mga Feature",
+    "subtitle": "Lahat ng kailangan mo para sa komprehensibong football match analysis",
+    "feature1": {
+      "title": "Detalyadong Match Analysis",
+      "description": "Komprehensibong statistics at performance metrics para sa bawat laban",
+      "detail1": "Match statistics at performance metrics",
+      "detail2": "Team form analysis (huling 5 laban)",
+      "detail3": "Head-to-head comparison"
+    },
+    "feature2": {
+      "title": "Mga Paghahambing ng Team",
+      "description": "Kamakailang performance ng mga team, form status at mga paghahambing",
+      "detail1": "Side-by-side team performance",
+      "detail2": "Visualization ng kamakailang forma",
+      "detail3": "Analysis ng lakas at kahinaan"
+    },
+    "feature3": {
+      "title": "Favorite Tracking",
+      "description": "I-save ang iyong mga paboritong laban at ma-access ang mga ito nang madali",
+      "detail1": "I-save ang walang limitasyong paboritong laban",
+      "detail2": "Mabilis na access mula sa home screen",
+      "detail3": "Sync sa iba't ibang device (malapit na)"
+    },
+    "feature4": {
+      "title": "Multi-Language Support",
+      "description": "Turkish, English, Spanish, German",
+      "detail1": "Turkish, English, Spanish, German",
+      "detail2": "Awtomatikong language detection",
+      "detail3": "Mas maraming wika ang darating"
+    },
+    "feature5": {
+      "title": "Modern Interface",
+      "description": "User-friendly, responsive design",
+      "detail1": "Dark theme na na-optimize para sa pagtingin",
+      "detail2": "Responsive design para sa lahat ng screen sizes",
+      "detail3": "Intuitive navigation"
+    },
+    "feature6": {
+      "title": "Real-Time Data",
+      "description": "Agad na na-update na match information at statistics",
+      "detail1": "Live match updates",
+      "detail2": "Awtomatikong data refresh",
+      "detail3": "Suporta sa offline caching"
+    }
+  },
+  "whyGoalblip": {
+    "title": "Ang Match Analysis ay Maaaring Maging Napakapagod Minsan",
+    "description": "Hindi mo na kailangang gumugol ng oras sa pagsusuri; Pinapabilis ng GoalBlip ang iyong decision-making process sa pamamagitan ng pagbibigay ng data-driven insights. I-save ang iyong oras at enerhiya sa pamamagitan ng paggamit ng kapangyarihan ng artificial intelligence sa halip na harapin ang kumplikadong data sets at statistics.",
+    "benefit1": {
+      "title": "Awtomatikong Data Collection",
+      "desc": "Hindi na kailangang manu-manong maghanap ng match data. Awtomatikong kinokolekta at pino-proseso ng aming system ang impormasyon mula sa maraming pinagmumulan."
+    },
+    "benefit2": {
+      "title": "Advanced Analysis Algorithms",
+      "desc": "Pinapagana ng AI at machine learning, sinusuri ng aming algorithms ang mga pattern at nagbibigay ng insights na aabutin ng oras upang kalkulahin nang manu-mano."
+    },
+    "benefit3": {
+      "title": "User-Friendly Interface",
+      "desc": "Malinis, intuitive design na ginagawang madaling maintindihan ang kumplikadong data. Walang kinakailangang teknikal na kaalaman."
+    },
+    "benefit4": {
+      "title": "100% Libre & Privacy-Focused",
+      "desc": "Ganap na libre na walang nakatagong gastos. Ang iyong data ay nananatili sa iyong device - hindi namin sinusubaybayan o kinokolekta ang personal na impormasyon."
+    },
+    "stat1": {
+      "value": "1000+",
+      "label": "Mga Laban na Sinusuri Araw-araw"
+    },
+    "stat2": {
+      "value": "50+",
+      "label": "Mga Liga na Sinusubaybayan"
+    },
+    "stat3": {
+      "value": "24/7",
+      "label": "Real-Time Updates"
+    },
+    "stat4": {
+      "value": "0",
+      "label": "Data na Nakolekta"
+    }
+  },
+  "dataAnalysis": {
+    "title": "Data-Driven Analysis",
+    "item1": {
+      "title": "Malawak na Data Sources",
+      "description": "Agad na kinokolekta ang football data sa buong mundo"
+    },
+    "item2": {
+      "title": "Malakas na Analysis Algorithms",
+      "description": "Advanced data processing at statistical analysis"
+    },
+    "item3": {
+      "title": "User-Friendly Interface",
+      "description": "Madaling gamitin at maintindihang visualizations"
+    },
+    "item4": {
+      "title": "Patuloy na Updates",
+      "description": "Pinakabagong data at patuloy na umuunlad na system"
+    }
+  },
+  "screenshots": {
+    "title": "Tingnan ang GoalBlip sa Aksyon",
+    "subtitle": "I-explore ang app interface at mga feature",
+    "screen1": "Listahan ng Laban",
+    "screen1Desc": "Mag-browse ng mga laban ayon sa petsa at liga",
+    "screen2": "Match Analysis",
+    "screen2Desc": "Detalyadong statistics at insights",
+    "screen3": "Paghahambing ng Team",
+    "screen3Desc": "Ihambing ang performance ng team nang magkatabi"
+  },
+  "faq": {
+    "title": "Mga Madalas Itanong",
+    "q1": "Libre ba ang GoalBlip?",
+    "a1": "Oo, ganap na libre ang GoalBlip na gamitin. Walang premium features, subscriptions, o nakatagong gastos. Naniniwala kami na ang football analysis ay dapat na accessible sa lahat.",
+    "q2": "Anong data ang kinokolekta ng GoalBlip?",
+    "a2": "Hindi kinokolekta ng GoalBlip ang anumang personal data. Lahat ng impormasyon (mga paborito, language preferences, timezone) ay naka-imbak lamang sa iyong device. Hindi namin sinusubaybayan kayo, at hindi namin ibinabahagi ang inyong data sa sinuman.",
+    "q3": "Aling mga liga ang suportado?",
+    "a3": "Sinusubaybayan ng GoalBlip ang mahigit 50 liga sa buong mundo, kabilang ang Premier League, La Liga, Serie A, Bundesliga, Ligue 1, at marami pa. Patuloy naming idinagdag ang mga bagong liga batay sa demand ng user.",
+    "q4": "Gaano katumpak ang mga analysis?",
+    "a4": "Gumagamit ang GoalBlip ng advanced data analysis at AI algorithms upang magbigay ng komprehensibong match statistics. Ang mga ito ay analytical insights batay sa historical data at hindi dapat ituring bilang mga hula o garantiya.",
+    "q5": "Kailangan ko ba ng internet connection?",
+    "a5": "Kailangan ng internet connection upang makuha ang pinakabagong match data. Gayunpaman, ang mga dating napanood na laban ay naka-cache nang lokal, kaya maaari mong ma-access ang mga ito offline.",
+    "q6": "Kailan magiging available ang app?",
+    "a6": "Magiging available ang GoalBlip sa App Store (iOS) at Play Store (Android) sa lalong madaling panahon. Sundan kami para sa mga update at maging isa sa mga unang mag-download!",
+    "more": "May mas maraming tanong?",
+    "contact": "Makipag-ugnayan sa Suporta"
+  },
+  "cta": {
+    "title": "Subukan Nang Libre Ngayon!",
+    "subtitle": "I-download mula sa App Store at Play Store",
+    "appStore": "I-download sa App Store",
+    "playStore": "Kunin sa Play Store",
+    "note": "Magiging available sa lalong madaling panahon sa iOS at Android"
+  },
+  "footer": {
+    "description": "Sundin nang mabuti ang mundo ng football. AI-powered analysis at statistics.",
+    "quickLinks": "Mabilis na Mga Link",
+    "privacy": "Patakaran sa Privacy",
+    "support": "Suporta",
+    "contact": "Kontak",
+    "legal": "Legal",
+    "terms": "Mga Tuntunin ng Serbisyo",
+    "language": "Wika",
+    "copyright": "© 2025 GoalBlip. Lahat ng karapatan ay nakalaan."
+  },
+  "privacy": {
+    "lastUpdated": "Huling Na-update",
+    "effectiveDate": "Epektibong Petsa",
+    "intro": {
+      "title": "Panimula",
+      "text": "Ang GoalBlip (\"kami\", \"aming\", o \"namin\") ay nakatuon sa pagprotekta ng inyong privacy. Ipinapaliwanag ng Privacy Policy na ito kung paano namin kinokolekta, ginagamit, inihahayag, at pinoprotektahan ang inyong impormasyon kapag ginagamit ninyo ang aming mobile application (\"App\") na available sa Google Play Store at Apple App Store. Hindi nangangailangan ang GoalBlip ng user accounts, registration, o anumang personal na impormasyon - ganap na gumagana ang app nang anonymous.",
+      "scope": "Nalalapat ang Privacy Policy na ito sa lahat ng user ng GoalBlip mobile application, anuman ang inyong lokasyon. Sa pamamagitan ng paggamit ng aming App, sumasang-ayon kayo sa koleksyon at paggamit ng impormasyon alinsunod sa patakarang ito. Walang user account o registration na kinakailangan upang gamitin ang app.",
+      "compliance": "Sumusunod kami sa naaangkop na data protection laws, kabilang ang General Data Protection Regulation (GDPR) para sa mga user sa European Economic Area (EEA), ang California Consumer Privacy Act (CCPA) para sa mga residente ng California, at ang Children's Online Privacy Protection Act (COPPA) para sa mga user na wala pang 13 taong gulang."
+    },
+    "collect": {
+      "title": "Impormasyon na Aming Kinokolekta",
+      "intro": "Ang GoalBlip ay dinisenyo na may pag-iisip sa privacy. Kinokolekta namin ang minimal na impormasyon na kinakailangan upang magbigay ng aming serbisyo, at lahat ng data ay naka-imbak nang lokal sa inyong device. Walang user accounts o registration na kinakailangan - ganap na gumagana ang app nang anonymous.",
+      "local": {
+        "title": "Impormasyon na Naka-imbak Nang Lokal sa Inyong Device",
+        "intro": "Ang GoalBlip ay nag-iimbak ng sumusunod na impormasyon lamang sa inyong device gamit ang secure local storage (AsyncStorage/NSUserDefaults). Hindi kailanman umaalis ang data na ito sa inyong device:",
+        "favorites": "Mga Paboritong Laban",
+        "favoritesDesc": "Match IDs (numeric identifiers) na minarkahan ninyo bilang paborito para sa mabilis na access",
+        "language": "Language Preference",
+        "languageDesc": "Ang inyong napiling language preference (Turkish, English, Spanish, German) upang ipakita ang app interface sa inyong preferred language",
+        "timezone": "Timezone Preference",
+        "timezoneDesc": "Ang inyong napiling timezone (hal., Asia/Manila, America/New_York) upang ipakita ang mga oras ng laban sa inyong lokal na oras",
+        "timeFormat": "Time Format Preference",
+        "timeFormatDesc": "Ang inyong preferred time format (12-hour o 24-hour format) para sa pagpapakita ng mga oras ng laban",
+        "cache": "Cached Match Data",
+        "cacheDesc": "Pansamantalang naka-cache na match details at statistics na napanood ninyo, naka-imbak nang lokal upang mapabuti ang app performance at paganahin ang offline access sa dating napanood na content",
+        "important": "Mahalaga",
+        "importantDesc": "Lahat ng impormasyon sa itaas ay naka-imbak nang eksklusibo sa inyong device gamit ang secure local storage mechanisms na ibinigay ng inyong operating system (iOS Keychain/UserDefaults o Android SharedPreferences). Hindi kailanman naipapadala ang impormasyong ito sa aming servers, third-party services, o anumang external systems. Nananatili ito sa inyong device hanggang sa i-uninstall ninyo ang app o manu-manong i-clear ang app data."
+      },
+      "network": {
+        "title": "Mga Network Requests",
+        "intro": "Kapag ginagamit ninyo ang GoalBlip, gumagawa ang app ng network requests sa aming API server upang makuha ang match data at statistics. Ang mga request na ito:",
+        "noPersonal": "Hindi kasama ang anumang personal identification information",
+        "noAccount": "Hindi nangangailangan ng user accounts, registration, o authentication - ganap na gumagana ang app nang anonymous",
+        "publicData": "Tanging humihingi ng publicly available football match data (match IDs, team names, statistics)",
+        "anonymous": "Ganap na anonymous - hindi namin ma-identify ang indibidwal na user mula sa mga request na ito dahil walang user accounts, authentication, o device identifiers na ipinadala",
+        "logs": "Server Logs",
+        "logsDesc": "Maaaring i-log ng aming API server ang standard HTTP request information (IP address, request timestamp, requested endpoint) para sa operational at security purposes. Ang mga log na ito ay hindi naglalaman ng personal information at awtomatikong tinatanggal pagkatapos ng 30 araw. Ang IP addresses ay hindi maaaring gamitin upang ma-identify ang indibidwal na user."
+      },
+      "not": {
+        "title": "Impormasyon na HINDI Namin Kinokolekta",
+        "intro": "Upang maging ganap na transparent, tahasang HINDI namin kinokolekta ang sumusunod na uri ng impormasyon:",
+        "personal": "Personal identification information (pangalan, email address, numero ng telepono, pisikal na address, petsa ng kapanganakan)",
+        "location": "Tumpak o tinatayang location data (GPS coordinates, IP-based location)",
+        "device": "Device identifiers (UDID, IMEI, MAC address, Android ID, Advertising ID)",
+        "analytics": "Usage analytics, app performance metrics, crash reports, o user behavior tracking",
+        "identifiable": "Anumang data na maaaring personal na ma-identify kayo o i-link ang inyong app usage sa inyong pagkakakilanlan",
+        "biometric": "Biometric data (mga fingerprint, face recognition data)",
+        "contacts": "Mga listahan ng kontak, numero ng telepono, o impormasyon sa address book",
+        "photos": "Mga larawan, video, o iba pang media files mula sa inyong device",
+        "calendar": "Mga event sa kalendaryo o appointments",
+        "files": "Mga file o dokumento mula sa inyong device storage"
+      },
+      "permissions": {
+        "title": "Mga App Permissions",
+        "intro": "Hinihiling ng GoalBlip ang sumusunod na permissions, at narito ang dahilan:",
+        "internet": "Internet Access",
+        "internetDesc": "Kinakailangan upang makuha ang live match data at statistics mula sa aming API server. Mahalaga ito para sa core functionality ng app.",
+        "networkState": "Network State",
+        "networkStateDesc": "Ginagamit upang suriin ang status ng inyong internet connection upang magbigay ng naaangkop na user feedback (hal., mensahe na 'Walang internet connection').",
+        "noOther": "Walang Iba Pang Permissions",
+        "noOtherDesc": "Hindi humihiling ang GoalBlip ng access sa inyong camera, microphone, location, contacts, calendar, storage, o anumang iba pang sensitive device features."
+      }
+    },
+    "use": {
+      "title": "Paano Namin Ginagamit ang Inyong Impormasyon",
+      "intro": "Ang impormasyon na naka-imbak nang lokal sa inyong device ay ginagamit lamang para sa sumusunod na layunin:",
+      "favorites": "Tandaan ang inyong mga paboritong laban - upang payagan kayong mabilis na ma-access ang mga laban na minarkahan ninyo bilang paborito",
+      "preferences": "Panatilihin ang inyong language at timezone preferences - upang ipakita ang app interface at mga oras ng laban alinsunod sa inyong preferences",
+      "cache": "Mapabuti ang app performance - ang cached match data ay nagpapahintulot ng mas mabilis na pag-load ng dating napanood na content at nagpapagana ng limitadong offline functionality",
+      "noOther": "Hindi namin ginagamit ang inyong impormasyon para sa advertising, marketing, analytics, user profiling, o anumang iba pang commercial purposes. Hindi namin ibinebenta, inuupahan, o pinagkakakitaan ang inyong data sa anumang paraan. Dahil walang user accounts, hindi namin ma-track o ma-link ang inyong usage sa iba't ibang session."
+    },
+    "storage": {
+      "title": "Data Storage at Security",
+      "intro": "Seryoso naming tinatrato ang data security. Narito kung paano namin pinoprotektahan ang inyong impormasyon:",
+      "local": "Lahat ng data ay naka-imbak nang lokal sa inyong device gamit ang secure local storage mechanisms na ibinigay ng inyong operating system (iOS Keychain/UserDefaults o Android SharedPreferences). Ang mga ito ay naka-encrypt at pinoprotektahan ng security features ng inyong device.",
+      "noTransmit": "Walang personal data na naipapadala sa external servers. Tanging anonymous requests para sa publicly available match data ang ginagawa sa aming API server.",
+      "noShare": "Walang data na ibinabahagi sa third parties, advertisers, analytics services, o anumang iba pang external entities.",
+      "encryption": "Ang lokal na data ay pinoprotektahan ng built-in encryption ng inyong device. Sa iOS, ang data ay naka-imbak sa encrypted Keychain o UserDefaults. Sa Android, ang data ay naka-imbak sa encrypted SharedPreferences.",
+      "retention": "Data Retention",
+      "retentionDesc": "Ang inyong naka-imbak nang lokal na data (mga paborito, preferences) ay nananatili sa inyong device hanggang sa i-uninstall ninyo ang app o manu-manong i-clear ang app data sa pamamagitan ng inyong device settings. Ang cached match data ay awtomatikong nililinis kapag ito ay naging outdated o kapag kailangan ang storage space.",
+      "delete": "Maaari ninyong tanggalin ang lahat ng naka-imbak na data anumang oras sa pamamagitan ng: (1) Pag-uninstall ng app, o (2) Pag-clear ng app data sa pamamagitan ng Settings ng inyong device > Apps > GoalBlip > Clear Data (Android) o Settings > GoalBlip > Delete App (iOS)."
+    },
+    "thirdParty": {
+      "title": "Third-Party Services at Data Sharing",
+      "intro": "Ang GoalBlip ay dinisenyo upang mabawasan ang third-party dependencies at data sharing:",
+      "api": "Aming API Server",
+      "apiDesc": "Kumokonekta ang GoalBlip sa aming sariling API server (goalblip.com) upang makuha ang match data at statistics. Ang koneksyon na ito:",
+      "noPersonal": "Hindi nagpapadala ng anumang personal information, device identifiers, o user-specific data",
+      "public": "Tanging humihingi ng publicly available football match data (match IDs, team names, statistics, league information)",
+      "https": "Gumagamit ng standard HTTPS encryption upang ma-secure ang lahat ng network communications",
+      "anonymous": "Ang mga request ay ganap na anonymous - hindi namin ma-identify ang indibidwal na user mula sa API requests dahil walang user accounts, authentication, o device identifiers na ipinadala",
+      "noThirdParty": "Walang Third-Party Services",
+      "noThirdPartyDesc": "Hindi nagsasama ang GoalBlip, nagbabahagi ng data, o nagpapadala ng impormasyon sa:",
+      "noAnalytics": "Analytics services (Google Analytics, Firebase Analytics, atbp.)",
+      "noAds": "Advertising networks o ad serving platforms",
+      "noSocial": "Social media platforms o social login services",
+      "noCrash": "Crash reporting services (Crashlytics, Sentry, atbp.)",
+      "noPayment": "Payment processors o financial services",
+      "noCloud": "Cloud storage services (iCloud, Google Drive, Dropbox, atbp.)",
+      "noOther": "Anumang iba pang third-party services, SDKs, o data processors"
+    },
+    "rights": {
+      "title": "Inyong Privacy Rights",
+      "intro": "Depende sa inyong lokasyon, maaaring mayroon kayong ilang karapatan tungkol sa inyong personal na impormasyon. Iginagalang namin ang mga karapatang ito at nagbibigay ng sumusunod na mga kontrol:",
+      "access": "Karapatan sa Access",
+      "accessDesc": "Maaari ninyong tingnan ang lahat ng data na naka-imbak ng app sa inyong device sa pamamagitan ng app settings ng inyong device o sa pamamagitan ng pag-inspeksyon ng local storage ng app. Dahil walang user accounts, lahat ng data ay naka-imbak nang lokal at mayroon kayong buong access dito.",
+      "delete": "Karapatan sa Pagtanggal",
+      "deleteDesc": "Maaari ninyong tanggalin ang lahat ng naka-imbak na data anumang oras sa pamamagitan ng pag-uninstall ng app o pag-clear ng app data sa pamamagitan ng inyong device settings (Settings > Apps > GoalBlip > Clear Data sa Android, o Settings > GoalBlip > Delete App sa iOS).",
+      "correction": "Karapatan sa Pagwawasto",
+      "correctionDesc": "Maaari ninyong baguhin ang inyong preferences (language, timezone, time format) nang direkta sa loob ng app settings anumang oras.",
+      "portability": "Karapatan sa Data Portability",
+      "portabilityDesc": "Dahil lahat ng data ay naka-imbak nang lokal sa inyong device at walang user accounts, mayroon kayong buong kontrol at maaari ninyong i-export o i-backup ang inyong data gamit ang backup features ng inyong device (iCloud, Google Drive, atbp.).",
+      "objection": "Karapatan sa Pagtutol",
+      "objectionDesc": "Maaari ninyong itigil ang paggamit ng app anumang oras. Dahil hindi namin kinokolekta ang personal data at walang user accounts, walang processing na tututulan. Tanggalin lamang ang app upang alisin ang lahat ng data.",
+      "withdraw": "Karapatan sa Pag-withdraw ng Consent",
+      "withdrawDesc": "Maaari ninyong i-withdraw ang inyong consent sa data processing sa pamamagitan ng pag-uninstall ng app, na magtatanggal ng lahat ng naka-imbak nang lokal na data. Dahil walang user accounts, ang pag-uninstall ay ganap na nagtatanggal ng lahat ng inyong data.",
+      "complaint": "Karapatan sa Pag-file ng Reklamo",
+      "complaintDesc": "Kung kayo ay nasa EEA, mayroon kayong karapatan na mag-file ng reklamo sa inyong lokal na data protection authority kung naniniwala kayo na nilabag namin ang inyong privacy rights.",
+      "california": "Mga Karapatan sa Privacy ng California (CCPA)",
+      "californiaDesc": "Kung kayo ay residente ng California, mayroon kayong karapatan na: (1) Malaman kung anong personal information ang kinokolekta, (2) Malaman kung ang inyong personal information ay ibinebenta o inihahayag at sa kanino, (3) Tumanggi sa pagbebenta ng personal information, (4) Ma-access ang inyong personal information, (5) Humiling ng pagtanggal ng inyong personal information. Hindi nagbebenta ang GoalBlip ng personal information at kinokolekta ang minimal data tulad ng inilarawan sa patakarang ito."
+    },
+    "children": {
+      "title": "Privacy ng mga Bata (COPPA Compliance)",
+      "intro": "Sumusunod ang GoalBlip sa Children's Online Privacy Protection Act (COPPA) at iba pang naaangkop na batas tungkol sa privacy ng mga bata:",
+      "age": "Age Restriction",
+      "ageDesc": "Ang GoalBlip ay hindi inilaan, dinisenyo, o nakadirekta sa mga batang wala pang 13 taong gulang. Hindi namin sadyang kinokolekta, ginagamit, o inihahayag ang personal na impormasyon mula sa mga batang wala pang 13 taong gulang.",
+      "verification": "Walang Age Verification",
+      "verificationDesc": "Dahil hindi nangangailangan ang GoalBlip ng user registration, accounts, o personal na impormasyon (ganap na gumagana ang app nang anonymous), hindi namin ipinapatupad ang mga mekanismo ng age verification. Gayunpaman, umaasa kami sa mga magulang at tagapag-alaga upang matiyak na ang mga batang wala pang 13 ay hindi gumagamit ng app.",
+      "parental": "Mga Parental Controls",
+      "parentalDesc": "Kung kayo ay magulang o tagapag-alaga at naniniwala na ang inyong anak na wala pang 13 ay nagbigay sa amin ng impormasyon, mangyaring makipag-ugnayan sa amin kaagad sa support@goalblip.com. Gagawin namin ang mga hakbang upang tanggalin ang naturang impormasyon mula sa aming systems, kung mayroon.",
+      "noCollection": "Walang Koleksyon mula sa mga Bata",
+      "noCollectionDesc": "Kahit na ang isang batang wala pang 13 ay gumagamit ng app, hindi namin kinokolekta ang anumang personal na impormasyon. Lahat ng data ay nananatili sa device at hindi kailanman naipapadala sa aming servers."
+    },
+    "changes": {
+      "title": "Mga Pagbabago sa Privacy Policy na Ito",
+      "intro": "Maaari naming i-update ang Privacy Policy na ito paminsan-minsan upang ipakita ang mga pagbabago sa aming mga kasanayan, teknolohiya, legal requirements, o para sa iba pang operational, legal, o regulatory reasons.",
+      "notification": "Abiso ng Mga Pagbabago",
+      "notificationDesc": "Aabisuhan namin kayo ng anumang materyal na pagbabago sa Privacy Policy na ito sa pamamagitan ng:",
+      "dateUpdate": "Pag-update ng petsa ng \"Huling Na-update\" sa itaas ng patakarang ito",
+      "appUpdate": "Pagkakasama ng abiso sa app updates kapag ginawa ang mga makabuluhang pagbabago",
+      "website": "Pag-post ng na-update na patakaran sa aming website",
+      "review": "Hinihikayat namin kayo na suriin ang Privacy Policy na ito nang pana-panahon upang manatiling nakaalam tungkol sa kung paano namin pinoprotektahan ang inyong impormasyon.",
+      "continued": "Patuloy na Paggamit",
+      "continuedDesc": "Ang inyong patuloy na paggamit ng App pagkatapos ng anumang pagbabago sa Privacy Policy na ito ay bumubuo ng inyong pagtanggap sa naturang pagbabago. Kung hindi kayo sumasang-ayon sa mga pagbabago, dapat ninyong itigil ang paggamit ng App at i-uninstall ito."
+    },
+    "contact": {
+      "title": "Makipag-ugnayan sa Amin",
+      "intro": "Kung mayroon kayong anumang katanungan, alalahanin, o kahilingan tungkol sa Privacy Policy na ito o aming data practices, mangyaring makipag-ugnayan sa amin:",
+      "email": "Email",
+      "emailAddress": "support@goalblip.com",
+      "emailDesc": "Layunin naming tumugon sa lahat ng privacy-related inquiries sa loob ng 30 araw.",
+      "website": "Website",
+      "websiteDesc": "Bisitahin ang aming support page para sa karagdagang impormasyon at resources.",
+      "dataProtection": "Data Protection Officer",
+      "dataProtectionDesc": "Para sa mga user sa European Economic Area (EEA), kung mayroon kayong alalahanin tungkol sa kung paano namin hinahawakan ang inyong data, maaari kayong makipag-ugnayan sa amin sa support@goalblip.com. Haharapin namin ang inyong mga alalahanin alinsunod sa naaangkop na data protection laws."
+    },
+    "legal": {
+      "title": "Legal Basis at Compliance",
+      "intro": "Gumagana ang GoalBlip alinsunod sa naaangkop na data protection at privacy laws:",
+      "gdpr": "GDPR Compliance (European Economic Area)",
+      "gdprDesc": "Para sa mga user sa EEA, pino-proseso namin ang data batay sa inyong consent (na ibinibigay ninyo sa pamamagitan ng paggamit ng app) at aming legitimate interest sa pagbibigay ng serbisyo. Dahil kinokolekta namin ang minimal data (tanging app preferences na naka-imbak nang lokal), sumusunod kami sa GDPR principles ng data minimization at purpose limitation. Walang user accounts o registration na kinakailangan.",
+      "ccpa": "CCPA Compliance (California)",
+      "ccpaDesc": "Para sa mga residente ng California, hindi nagbebenta ang GoalBlip ng personal information (hindi namin kinokolekta ang personal information upang ibenta). Nagbibigay kami ng transparency tungkol sa data collection at iginagalang ang inyong privacy rights tulad ng inilarawan sa patakarang ito.",
+      "coppa": "COPPA Compliance (United States)",
+      "coppaDesc": "Sumusunod ang GoalBlip sa COPPA sa pamamagitan ng hindi pagkolekta ng personal information mula sa mga batang wala pang 13 at hindi pagdidirekta ng app sa mga batang wala pang 13.",
+      "international": "Mga International Data Transfers",
+      "internationalDesc": "Dahil lahat ng data ay naka-imbak nang lokal sa inyong device, hindi namin inililipat ang personal data sa iba't ibang bansa, kaya ang mga regulasyon sa international data transfer ay hindi nalalapat. Ang aming API server ay maaaring matatagpuan sa iba't ibang hurisdiksyon, ngunit ang mga API request ay anonymous (walang user accounts, walang personal data) at tanging humihingi ng publicly available match data.",
+      "lawEnforcement": "Mga Kahilingan ng Law Enforcement",
+      "lawEnforcementDesc": "Dahil hindi namin kinokolekta o ini-imbak ang personal information sa aming servers (walang user accounts, walang registration), walang personal data na maibibigay namin bilang tugon sa mga kahilingan ng law enforcement. Anumang data na naka-imbak nang lokal sa inyong device (mga paborito, preferences) ay napapailalim sa security ng inyong device at inyong kontrol. Hindi namin ma-access ang data na ito dahil hindi ito kailanman umaalis sa inyong device."
+    },
+    "summary": {
+      "title": "Mabilis na Buod",
+      "intro": "Sa isang sulyap, narito ang kailangan ninyong malaman tungkol sa privacy practices ng GoalBlip:",
+      "what": "Ano ang aming ini-imbak",
+      "whatDesc": "Tanging ang inyong mga paborito, language/timezone preferences, at cached match data (lahat sa inyong device)",
+      "where": "Saan ito naka-imbak",
+      "whereDesc": "Eksklusibo sa inyong device gamit ang secure local storage - hindi kailanman sa aming servers",
+      "who": "Sino ang nakakakita",
+      "whoDesc": "Tanging kayo - hindi namin ma-access ang local storage ng inyong device, at walang user accounts na magpapahintulot sa amin na ma-identify kayo",
+      "thirdParty": "Mga third party",
+      "thirdPartyDesc": "Wala - hindi namin ibinabahagi ang data sa anumang third parties, advertisers, o analytics services",
+      "tracking": "Tracking at analytics",
+      "trackingDesc": "Wala - hindi namin sinusubaybayan ang inyong usage, behavior, o kinokolekta ang analytics data. Dahil walang user accounts, hindi namin ma-track kayo sa iba't ibang session o device",
+      "personal": "Personal data",
+      "personalDesc": "Walang nakolekta - hindi namin kinokolekta ang anumang impormasyon na maaaring personal na ma-identify kayo. Walang user accounts, walang registration, walang personal information na kinakailangan",
+      "ads": "Advertising",
+      "adsDesc": "Wala - ang GoalBlip ay ganap na walang ads at hindi naghahatid ng mga advertisement",
+      "selling": "Pagbebenta ng data",
+      "sellingDesc": "Hindi kailanman - hindi namin ibinebenta, inuupahan, o pinagkakakitaan ang inyong data sa anumang paraan",
+      "security": "Security",
+      "securityDesc": "Ang inyong data ay pinoprotektahan ng built-in encryption at security features ng inyong device"
+    }
+  },
+  "support": {
+    "description": "Kailangan ng tulong? Narito kami para sa inyo. Makipag-ugnayan sa amin o tingnan ang aming mga madalas itanong.",
+    "contact": {
+      "title": "Makipag-ugnayan sa Amin",
+      "email": "Email",
+      "emailDesc": "Magpadala sa amin ng email at babalikan namin kayo sa lalong madaling panahon."
+    },
+    "faq": {
+      "title": "Mga Madalas Itanong",
+      "q1": "Libre ba ang GoalBlip?",
+      "a1": "Oo, ganap na libre ang GoalBlip na gamitin. Walang premium features o subscriptions.",
+      "q2": "Anong data ang kinokolekta ng GoalBlip?",
+      "a2": "Hindi kinokolekta ng GoalBlip ang anumang personal data. Lahat ng impormasyon (mga paborito, language preferences, timezone) ay naka-imbak lamang sa iyong device.",
+      "q3": "Aling mga wika ang suportado?",
+      "a3": "Kasulukuyang suportado ng GoalBlip ang Turkish, English, Spanish, at German. Mas maraming wika ang maaaring idagdag sa hinaharap.",
+      "q4": "Paano ko tatanggalin ang aking data?",
+      "a4": "Tanggalin lamang ang app mula sa inyong device. Ang lahat ng naka-imbak nang lokal na data ay tatanggalin. Maaari rin ninyong i-clear ang app data sa pamamagitan ng inyong device settings.",
+      "q5": "Saan ko maaaring i-download ang app?",
+      "a5": "Magiging available ang GoalBlip sa App Store (iOS) at Play Store (Android) sa lalong madaling panahon. Manatiling naka-tune para sa mga update!",
+      "q6": "Gaano katumpak ang mga analysis ng laban?",
+      "a6": "Gumagamit ang GoalBlip ng advanced data analysis at AI algorithms upang magbigay ng komprehensibong match statistics. Gayunpaman, ang mga ito ay analytical insights at hindi dapat ituring bilang mga hula o garantiya."
+    },
+    "resources": {
+      "title": "Karagdagang Resources"
+    }
+  }
+}
+

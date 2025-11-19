@@ -41,7 +41,7 @@ $lang = null;
 $page = null;
 
 // Check if first segment is a language code
-if (!empty($segments[0]) && in_array($segments[0], ['tr', 'en', 'es', 'de', 'zh', 'ja', 'it'])) {
+if (!empty($segments[0]) && in_array($segments[0], ['tr', 'en', 'es', 'de', 'zh', 'ja', 'it', 'ar', 'fr', 'ru', 'nl', 'ko', 'pt', 'id', 'tl'])) {
     $lang = $segments[0];
     $page = !empty($segments[1]) ? $segments[1] : null;
 } else {

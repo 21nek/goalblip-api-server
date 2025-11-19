@@ -6,7 +6,7 @@
  */
 
 // Supported languages
-define('SUPPORTED_LANGS', ['tr', 'en', 'es', 'de', 'zh', 'ja', 'it']);
+define('SUPPORTED_LANGS', ['tr', 'en', 'es', 'de', 'zh', 'ja', 'it', 'ar', 'fr', 'ru', 'nl', 'ko', 'pt', 'id', 'tl']);
 define('DEFAULT_LANG', 'en'); // English as default for SEO
 
 // Get language from URL parameter (set by .htaccess) or URL path
@@ -169,17 +169,35 @@ $langNames = [
     'de' => 'Deutsch',
     'zh' => '中文',
     'ja' => '日本語',
-    'it' => 'Italiano'
+    'it' => 'Italiano',
+    'ar' => 'العربية',
+    'fr' => 'Français',
+    'ru' => 'Русский',
+    'nl' => 'Nederlands',
+    'ko' => '한국어',
+    'pt' => 'Português',
+    'id' => 'Bahasa Indonesia',
+    'tl' => 'Tagalog'
 ];
 
 // Language codes for hreflang
+// Note: zh uses zh-CN (Simplified Chinese) for Mainland China
+// For Taiwan/Hong Kong, zh-TW (Traditional Chinese) could be used, but zh-CN is standard
 $langCodes = [
     'tr' => 'tr-TR',
     'en' => 'en-US',
     'es' => 'es-ES',
     'de' => 'de-DE',
-    'zh' => 'zh-CN',
+    'zh' => 'zh-CN', // Simplified Chinese for Mainland China
     'ja' => 'ja-JP',
-    'it' => 'it-IT'
+    'it' => 'it-IT',
+    'ar' => 'ar-SA',
+    'fr' => 'fr-FR',
+    'ru' => 'ru-RU',
+    'nl' => 'nl-NL',
+    'ko' => 'ko-KR',
+    'pt' => 'pt-BR', // Brazilian Portuguese (more common than pt-PT)
+    'id' => 'id-ID',
+    'tl' => 'tl-PH'
 ];
 ?>

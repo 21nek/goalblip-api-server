@@ -305,6 +305,91 @@
         "weakAway": "{team} have weak away performances."
       }
     },
+    "advancedMetrics": {
+      "title": "Advanced Insights",
+      "sampleLabel": "Based on last {matches} matches",
+      "weightedScore": {
+        "title": "Weighted Score System",
+        "description": "Recent form results are weighted to highlight current strength.",
+        "homeLabel": "Home weighted score",
+        "awayLabel": "Away weighted score"
+      },
+      "momentum": {
+        "title": "Momentum Indicator",
+        "description": "Goal difference momentum derived from recent performances.",
+        "bullish": "Bullish momentum",
+        "neutral": "Neutral momentum",
+        "bearish": "Bearish momentum"
+      },
+      "confidence": {
+        "title": "Confidence Blend",
+        "description": "Composite confidence blending AI picks and success history.",
+        "scoreLabel": "Composite confidence",
+        "topPickLabel": "Top signal",
+        "noPick": "No signal available"
+      },
+      "poisson": {
+        "title": "Poisson Goal Model",
+        "description": "Approximate goal distribution based on recent scoring rates.",
+        "expectedHeader": "Expected goals",
+        "goalColumn": "Goals",
+        "homeColumn": "Home",
+        "awayColumn": "Away",
+        "goalLabel": "{value} goals",
+        "goalLabelPlus": "3+ goals"
+      },
+      "goalTrend": {
+        "title": "Goal Trend",
+        "description": "Recent scoring vs conceding totals.",
+        "team": "Team",
+        "forLabel": "GF",
+        "againstLabel": "GA",
+        "deltaLabel": "Diff"
+      },
+      "confidenceLadder": {
+        "title": "Confidence Ladder",
+        "description": "Prediction confidence ranking."
+      },
+      "overUnder": {
+        "title": "Over/Under Confidence",
+        "description": "Key total goals probabilities."
+      },
+      "handicap": {
+        "title": "Handicap Insight",
+        "description": "Latest Asian handicap line."
+      },
+      "halfComparison": {
+        "title": "1st Half vs Full Time",
+        "description": "How confidence shifts between HT and FT picks.",
+        "halfLabel": "HT %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Key Signals",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} hold a strong form edge (+{value} pts over {awayTeam}).",
+        "awayAdvantage": "{awayTeam} carry the superior weighted form (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} show attacking momentum (+{value} goal momentum).",
+        "homeBearish": "{team} momentum is cooling ({value}).",
+        "awayBullish": "{team} build positive momentum (+{value}).",
+        "awayBearish": "{team} trend downward ({value})."
+      },
+      "confidence": {
+        "high": "AI confidence remains high ({score}%).",
+        "low": "AI confidence is limited ({score}%).",
+        "topPick": "Top AI signal: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Expected goals around {goals}; a high-scoring scenario is likely.",
+        "lowScoring": "Projected total near {goals} goals; low-scoring pattern possible.",
+        "homeCleanSheet": "{team} clean-sheet probability {percent}%.",
+        "awayCleanSheet": "{team} clean-sheet probability {percent}%."
+      },
+      "sampleSmall": "Only {matches} recent matches available—interpret with caution."
+    },
     "strengthsWeaknessesCard": {
       "title": "Strengths & Weaknesses",
       "subtitle": "Performance breakdown per team",

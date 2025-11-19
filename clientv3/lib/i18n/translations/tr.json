@@ -374,6 +374,91 @@
       "rateLimited": "Bu maç için yeni talep göndermeden önce lütfen bekle.",
       "nextAllowed": "Bir sonraki talep {time} tarihinde kullanılabilir.",
       "error": "Yeniden analiz talebi gönderilemedi."
+    },
+    "advancedMetrics": {
+      "title": "Gelişmiş İçgörüler",
+      "sampleLabel": "Son {matches} maça göre",
+      "weightedScore": {
+        "title": "Ağırlıklı Puan Sistemi",
+        "description": "Güncel gücü göstermek için son form sonuçları ağırlıklandırılır.",
+        "homeLabel": "Ev ağırlıklı puanı",
+        "awayLabel": "Deplasman ağırlıklı puanı"
+      },
+      "momentum": {
+        "title": "Momentum Göstergesi",
+        "description": "Son performanslardan elde edilen gol farkı momentumu.",
+        "bullish": "Yükselen momentum",
+        "neutral": "Nötr momentum",
+        "bearish": "Düşen momentum"
+      },
+      "confidence": {
+        "title": "Güven Skoru Kombinasyonu",
+        "description": "AI tahminleri ile başarı geçmişinin birleşik güven skoru.",
+        "scoreLabel": "Bileşik güven skoru",
+        "topPickLabel": "En güçlü sinyal",
+        "noPick": "Sinyal bulunmuyor"
+      },
+      "poisson": {
+        "title": "Poisson Gol Modeli",
+        "description": "Son gol trendlerine göre yaklaşık gol dağılımı.",
+        "expectedHeader": "Beklenen goller",
+        "goalColumn": "Goller",
+        "homeColumn": "Ev",
+        "awayColumn": "Dep",
+        "goalLabel": "{value} gol",
+        "goalLabelPlus": "3+ gol"
+      },
+      "goalTrend": {
+        "title": "Gol Trendi",
+        "description": "Son dönemde atılan/yenen goller.",
+        "team": "Takım",
+        "forLabel": "Attığı",
+        "againstLabel": "Yediği",
+        "deltaLabel": "Fark"
+      },
+      "confidenceLadder": {
+        "title": "Güven Merdiveni",
+        "description": "Tahmin güven sıralaması."
+      },
+      "overUnder": {
+        "title": "Alt/Üst Güveni",
+        "description": "Gol toplamı olasılıkları."
+      },
+      "handicap": {
+        "title": "Handikap Önerisi",
+        "description": "En güncel Asya handikap çizgisi."
+      },
+      "halfComparison": {
+        "title": "İlk Yarı vs Maç Sonu",
+        "description": "Tahmin güveni ilk yarıdan maça nasıl değişiyor.",
+        "halfLabel": "İY %{value}",
+        "fullLabel": "MS %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Öne çıkan sinyaller",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} formda belirgin üstün (+{value} puan {awayTeam} karşısında).",
+        "awayAdvantage": "{awayTeam} daha yüksek ağırlıklı forma sahip (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} hücum momentumunu yükseltiyor (+{value}).",
+        "homeBearish": "{team} momentumu düşüşte ({value}).",
+        "awayBullish": "{team} pozitif momentum yakaladı (+{value}).",
+        "awayBearish": "{team} gerileme eğiliminde ({value})."
+      },
+      "confidence": {
+        "high": "AI güven seviyesi yüksek (%{score}).",
+        "low": "AI güven seviyesi sınırlı (%{score}).",
+        "topPick": "AI’nın öne çıkan sinyali: {pick} (%{score})."
+      },
+      "poisson": {
+        "highScoring": "Beklenen goller {goals} civarı; yüksek skor ihtimali güçlü.",
+        "lowScoring": "Toplam gol beklentisi {goals}; skor düşük kalabilir.",
+        "homeCleanSheet": "{team} için gol yememe olasılığı %{percent}.",
+        "awayCleanSheet": "{team} için gol yememe olasılığı %{percent}."
+      },
+      "sampleSmall": "Yalnızca {matches} maçlık veri mevcut, dikkatli yorumlayın."
     }
   },
   "initialSetup": {

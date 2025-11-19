@@ -1,0 +1,560 @@
+{
+  "nav": {
+    "home": "Início",
+    "howItWorks": "Como Funciona",
+    "privacy": "Política de Privacidade",
+    "support": "Suporte"
+  },
+  "hero": {
+    "title": "GoalBlip",
+    "subtitle": "Análise e Estatísticas de Partidas de Futebol com IA",
+    "description": "Acompanhe o mundo do futebol de perto. Tome decisões informadas com análises detalhadas de partidas, estatísticas de desempenho das equipes e dados abrangentes.",
+    "appStore": "Baixar na App Store",
+    "playStore": "Obter na Play Store",
+    "scrollDown": "Role para baixo",
+    "stat1": "Partidas Analisadas Diariamente",
+    "stat2": "Ligas Rastreadas",
+    "stat3": "Atualizações em Tempo Real",
+    "note": "Grátis para sempre. Sem anúncios. Sem rastreamento.",
+    "mockup": {
+      "title": "Partidas de Hoje",
+      "team1": "Time A",
+      "team2": "Time B",
+      "stat1": "Forma: WWDLW",
+      "stat2": "Confronto: 3-2-1"
+    }
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "subtitle": "Motor de Análise de Futebol Avançado com IA",
+    "intro": "O GoalBlip aproveita algoritmos de aprendizado de máquina de ponta, modelagem estatística e processamento de dados em tempo real para fornecer previsões e insights incomparáveis de partidas de futebol. Nossa pipeline de análise multicamadas transforma dados brutos de partidas em inteligência acionável através de métodos computacionais sofisticados.",
+    "introStats": {
+      "analysisPhases": "Fases de Análise",
+      "mlModels": "Modelos ML",
+      "features": "Recursos",
+      "uptime": "Tempo de Atividade"
+    },
+    "phase1": {
+      "title": "Fase 1: Agregação Inteligente de Dados e Fusão Multi-Fonte",
+      "subtitle": "Infraestrutura Avançada de Coleta de Dados",
+      "description": "Nosso sistema distribuído de coleta de dados emprega web scraping inteligente, integração de API e streaming de dados em tempo real para agregar estatísticas abrangentes de futebol de múltiplas fontes autorizadas. Esta abordagem de fusão multi-fonte garante completude, precisão e redundância dos dados.",
+      "features": {
+        "title": "Capacidades Principais:",
+        "feature1": "Streaming de dados em tempo real de múltiplas fontes",
+        "feature1Title": "Streaming em Tempo Real",
+        "feature2": "Algoritmos de agregação inteligente para normalização de dados",
+        "feature2Title": "Agregação Inteligente",
+        "feature3": "Fusão de dados multi-fonte com resolução de conflitos",
+        "feature3Title": "Fusão Multi-Fonte",
+        "feature4": "Validação automatizada de qualidade de dados e detecção de anomalias",
+        "feature4Title": "Validação de Qualidade",
+        "feature5": "Cache distribuído para recuperação de dados de alto desempenho",
+        "feature5Title": "Cache Distribuído"
+      }
+    },
+    "phase2": {
+      "title": "Fase 2: Engenharia de Características e Pré-processamento Estatístico",
+      "subtitle": "Pipeline Avançado de Transformação de Dados",
+      "description": "Os dados brutos das partidas passam por processos sofisticados de engenharia de características onde centenas de características estatísticas são extraídas, normalizadas e transformadas. Nossa pipeline de pré-processamento inclui extração de características temporais, análise de forma da equipe, estatísticas de confronto direto e geração de características contextuais.",
+      "features": {
+        "title": "Técnicas de Processamento:",
+        "feature1": "Extração de características temporais (médias móveis, indicadores de momentum)",
+        "feature1Title": "Extração Temporal",
+        "feature2": "Análise de forma da equipe com métricas de desempenho ponderadas",
+        "feature2Title": "Análise de Forma",
+        "feature3": "Modelagem estatística de confronto direto com contexto histórico",
+        "feature3Title": "Modelagem de Confronto",
+        "feature4": "Geração de características contextuais (casa/fora, clima, lesões)",
+        "feature4Title": "Características Contextuais",
+        "feature5": "Redução de dimensionalidade e algoritmos de seleção de características",
+        "feature5Title": "Redução de Dimensionalidade"
+      }
+    },
+    "phase3": {
+      "title": "Fase 3: Aprendizado de Máquina e Modelagem Preditiva",
+      "subtitle": "Métodos de Ensemble e Algoritmos Avançados",
+      "description": "Nosso motor de previsão emprega um ensemble de modelos de aprendizado de máquina, incluindo gradient boosting, redes neurais e métodos de inferência bayesiana. Cada modelo é treinado em dados históricos extensos e continuamente refinado através de mecanismos de aprendizado online.",
+      "models": {
+        "title": "Modelos Principais:",
+        "badgeCore": "Principal",
+        "badgeSpecial": "Especial",
+        "model1": "Máquinas de Gradient Boosting (XGBoost, LightGBM) para reconhecimento de padrões não lineares",
+        "model1Title": "Gradient Boosting",
+        "model2": "Redes Neurais Profundas para interações complexas de características",
+        "model2Title": "Redes Neurais",
+        "model3": "Modelos de Inferência Bayesiana para previsões probabilísticas",
+        "model3Title": "Inferência Bayesiana",
+        "model4": "Modelos de Distribuição de Poisson para estimativa de probabilidade de gols",
+        "model4Title": "Distribuição de Poisson",
+        "model5": "Métodos de Ensemble combinando múltiplos modelos para previsões robustas",
+        "model5Title": "Métodos de Ensemble"
+      },
+      "algorithms": {
+        "title": "Algoritmos Avançados:",
+        "algo1": "Simulação de Monte Carlo para distribuição de probabilidade de resultados",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Modelos de Cadeia de Markov para transições de estado da partida",
+        "algo2Title": "Cadeia de Markov",
+        "algo3": "Análise de Séries Temporais para previsão de forma e momentum",
+        "algo3Title": "Séries Temporais",
+        "algo4": "Detecção de Anomalias para identificar padrões inesperados",
+        "algo4Title": "Detecção de Anomalias",
+        "algo5": "Aprendizado por Reforço para otimização adaptativa de modelos",
+        "algo5Title": "Aprendizado por Reforço"
+      }
+    },
+    "phase4": {
+      "title": "Fase 4: Pontuação de Confiança e Avaliação de Risco",
+      "subtitle": "Calibração de Previsão Probabilística",
+      "description": "Cada previsão é acompanhada por uma pontuação de confiança sofisticada calculada através de calibração bayesiana, quantificação de incerteza e análise de concordância de modelos. Nosso sistema de pontuação de confiança fornece avaliação de risco transparente para cada previsão.",
+      "scoring": {
+        "title": "Métricas de Confiança:",
+        "metric1": "Intervalos de Confiança Bayesianos para confiabilidade de previsão",
+        "metric1Title": "Confiança Bayesiana",
+        "metric2": "Pontuações de Concordância de Modelos (consenso entre modelos de ensemble)",
+        "metric2Title": "Concordância de Modelos",
+        "metric3": "Quantificação de Incerteza através de amostragem de Monte Carlo",
+        "metric3Title": "Quantificação de Incerteza",
+        "metric4": "Calibração de Precisão Histórica para rastreamento de desempenho do modelo",
+        "metric4Title": "Calibração de Precisão",
+        "metric5": "Pontuação Ajustada ao Risco com previsões ponderadas por confiança",
+        "metric5Title": "Pontuação Ajustada ao Risco"
+      }
+    },
+    "phase5": {
+      "title": "Fase 5: Análise em Tempo Real e Aprendizado Contínuo",
+      "subtitle": "Sistema de Inteligência Adaptativa",
+      "description": "Nosso sistema monitora continuamente os resultados das partidas, compara previsões com resultados reais e refina automaticamente os modelos através de aprendizado online. Esta abordagem adaptativa garante que nossas previsões melhorem ao longo do tempo à medida que mais dados se tornam disponíveis.",
+      "learning": {
+        "title": "Mecanismos de Aprendizado:",
+        "learn1": "Aprendizado Online para atualizações de modelo em tempo real",
+        "learn1Title": "Aprendizado Online",
+        "learn2": "Aprendizado de Transferência entre ligas e competições",
+        "learn2Title": "Aprendizado de Transferência",
+        "learn3": "Aprendizado Ativo para identificar dados de treinamento de alto valor",
+        "learn3Title": "Aprendizado Ativo",
+        "learn4": "Meta-Aprendizado para adaptação rápida a novos padrões",
+        "learn4Title": "Meta-Aprendizado",
+        "learn5": "Aprendizado Federado para melhoria distribuída de modelos",
+        "learn5Title": "Aprendizado Federado"
+      }
+    },
+    "phase6": {
+      "title": "Fase 6: Interface do Usuário e Visualização",
+      "subtitle": "Apresentação Inteligente de Dados",
+      "description": "Resultados analíticos complexos são transformados em visualizações intuitivas e insights acionáveis através da nossa camada de apresentação avançada. Os usuários recebem previsões claras e interpretáveis com estatísticas de suporte e indicadores de confiança.",
+      "presentation": {
+        "title": "Recursos de Apresentação:",
+        "pres1": "Visualizações interativas com capacidades de detalhamento",
+        "pres1Title": "Visualizações Interativas",
+        "pres2": "Visualização de pontuação de confiança e indicadores de risco",
+        "pres2Title": "Visualização de Confiança",
+        "pres3": "Análise comparativa com desempenho histórico",
+        "pres3Title": "Análise Comparativa",
+        "pres4": "Atualizações em tempo real durante partidas ao vivo",
+        "pres4Title": "Atualizações em Tempo Real",
+        "pres5": "Visualizações personalizáveis para diferentes perspectivas de análise",
+        "pres5Title": "Visualizações Personalizáveis"
+      }
+    },
+    "technical": {
+      "title": "Infraestrutura Técnica",
+      "subtitle": "Arquitetura de Computação de Nível Empresarial",
+      "description": "O GoalBlip opera em uma infraestrutura de computação distribuída e escalável projetada para análises de alto desempenho e processamento em tempo real.",
+      "infrastructure": {
+        "title": "Componentes da Infraestrutura:",
+        "comp1": "Processamento de Dados Distribuído com escalonamento horizontal",
+        "comp2": "Computação em Memória para respostas de consulta submilissegundo",
+        "comp3": "Aprendizado de Máquina Acelerado por GPU para treinamento mais rápido de modelos",
+        "comp4": "Arquitetura de Microsserviços para design de sistema modular",
+        "comp5": "Pipeline de Streaming em Tempo Real para processamento de dados ao vivo"
+      }
+    },
+    "conclusion": {
+      "title": "O Resultado",
+      "description": "Através desta pipeline sofisticada de múltiplas fases, o GoalBlip transforma dados brutos de futebol em previsões altamente precisas com pontuação de confiança. Nosso sistema combina o poder de aprendizado de máquina avançado, modelagem estatística e processamento em tempo real para fornecer insights que ajudam os usuários a tomar decisões informadas sobre partidas de futebol."
+    },
+    "step1": {
+      "title": "Coleta e Processamento de Dados",
+      "description": "O GoalBlip coleta informações importantes, como partidas passadas, classificações de ligas e várias estatísticas de equipes de futebol, escaneando a internet. Esses dados incluem detalhes das partidas, estatísticas das equipes e informações dos jogadores."
+    },
+    "step2": {
+      "title": "Análise de Dados",
+      "description": "Os dados coletados são processados pelos poderosos motores de análise do GoalBlip. Vários fatores, como desempenho em casa e fora, status de desempenho recente e condições de saúde dos jogadores, são levados em consideração."
+    },
+    "step3": {
+      "title": "Análise e Criação de Tabelas",
+      "description": "Os dados analisados são processados usando vários algoritmos e modelos, e análises detalhadas, como resultados potenciais de partidas e tabelas de desempenho, são criadas."
+    },
+    "step4": {
+      "title": "Interação do Usuário",
+      "description": "Os usuários podem visualizar diretamente os resultados das tabelas detalhadas preparadas pelo GoalBlip ou acessar visualizações personalizadas fazendo suas próprias análises."
+    }
+  },
+  "features": {
+    "title": "Recursos",
+    "subtitle": "Tudo que você precisa para análise abrangente de partidas de futebol",
+    "feature1": {
+      "title": "Análise Detalhada de Partidas",
+      "description": "Estatísticas abrangentes e métricas de desempenho para cada partida",
+      "detail1": "Estatísticas de partidas e métricas de desempenho",
+      "detail2": "Análise de forma da equipe (últimas 5 partidas)",
+      "detail3": "Comparação de confronto direto"
+    },
+    "feature2": {
+      "title": "Comparações de Equipes",
+      "description": "Desempenho recente das equipes, status de forma e comparações",
+      "detail1": "Desempenho das equipes lado a lado",
+      "detail2": "Visualização de forma recente",
+      "detail3": "Análise de pontos fortes e fracos"
+    },
+    "feature3": {
+      "title": "Rastreamento de Favoritos",
+      "description": "Salve suas partidas favoritas e acesse-as facilmente",
+      "detail1": "Salve partidas favoritas ilimitadas",
+      "detail2": "Acesso rápido da tela inicial",
+      "detail3": "Sincronização entre dispositivos (em breve)"
+    },
+    "feature4": {
+      "title": "Suporte Multi-idioma",
+      "description": "Turco, Inglês, Espanhol, Alemão",
+      "detail1": "Turco, Inglês, Espanhol, Alemão",
+      "detail2": "Detecção automática de idioma",
+      "detail3": "Mais idiomas em breve"
+    },
+    "feature5": {
+      "title": "Interface Moderna",
+      "description": "Design responsivo e amigável ao usuário",
+      "detail1": "Tema escuro otimizado para visualização",
+      "detail2": "Design responsivo para todos os tamanhos de tela",
+      "detail3": "Navegação intuitiva"
+    },
+    "feature6": {
+      "title": "Dados em Tempo Real",
+      "description": "Informações e estatísticas de partidas atualizadas instantaneamente",
+      "detail1": "Atualizações de partidas ao vivo",
+      "detail2": "Atualização automática de dados",
+      "detail3": "Suporte a cache offline"
+    }
+  },
+  "whyGoalblip": {
+    "title": "A Análise de Partidas Pode Ser Muito Cansativa Às Vezes",
+    "description": "Você não precisa mais passar horas analisando; o GoalBlip acelera seu processo de tomada de decisão fornecendo insights baseados em dados. Economize seu tempo e energia usando o poder da inteligência artificial em vez de lidar com conjuntos de dados e estatísticas complexas.",
+    "benefit1": {
+      "title": "Coleta Automatizada de Dados",
+      "desc": "Não há necessidade de procurar manualmente dados de partidas. Nosso sistema coleta e processa automaticamente informações de múltiplas fontes."
+    },
+    "benefit2": {
+      "title": "Algoritmos de Análise Avançados",
+      "desc": "Alimentados por IA e aprendizado de máquina, nossos algoritmos analisam padrões e fornecem insights que levariam horas para calcular manualmente."
+    },
+    "benefit3": {
+      "title": "Interface Amigável ao Usuário",
+      "desc": "Design limpo e intuitivo que torna dados complexos fáceis de entender. Nenhum conhecimento técnico necessário."
+    },
+    "benefit4": {
+      "title": "100% Grátis e Focado em Privacidade",
+      "desc": "Completamente grátis sem custos ocultos. Seus dados permanecem no seu dispositivo - não rastreamos nem coletamos informações pessoais."
+    },
+    "stat1": {
+      "value": "1000+",
+      "label": "Partidas Analisadas Diariamente"
+    },
+    "stat2": {
+      "value": "50+",
+      "label": "Ligas Rastreadas"
+    },
+    "stat3": {
+      "value": "24/7",
+      "label": "Atualizações em Tempo Real"
+    },
+    "stat4": {
+      "value": "0",
+      "label": "Dados Coletados"
+    }
+  },
+  "dataAnalysis": {
+    "title": "Análise Baseada em Dados",
+    "item1": {
+      "title": "Amplas Fontes de Dados",
+      "description": "Coletando instantaneamente dados de futebol em todo o mundo"
+    },
+    "item2": {
+      "title": "Algoritmos de Análise Poderosos",
+      "description": "Processamento avançado de dados e análise estatística"
+    },
+    "item3": {
+      "title": "Interface Amigável ao Usuário",
+      "description": "Visualizações fáceis de usar e compreensíveis"
+    },
+    "item4": {
+      "title": "Atualizações Contínuas",
+      "description": "Dados mais atualizados e sistema em constante evolução"
+    }
+  },
+  "screenshots": {
+    "title": "Veja o GoalBlip em Ação",
+    "subtitle": "Explore a interface e os recursos do aplicativo",
+    "screen1": "Lista de Partidas",
+    "screen1Desc": "Navegue por partidas por data e liga",
+    "screen2": "Análise de Partida",
+    "screen2Desc": "Estatísticas e insights detalhados",
+    "screen3": "Comparação de Equipes",
+    "screen3Desc": "Compare o desempenho das equipes lado a lado"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "q1": "O GoalBlip é gratuito?",
+    "a1": "Sim, o GoalBlip é completamente gratuito para usar. Não há recursos premium, assinaturas ou custos ocultos. Acreditamos que a análise de futebol deve ser acessível a todos.",
+    "q2": "Quais dados o GoalBlip coleta?",
+    "a2": "O GoalBlip não coleta nenhum dado pessoal. Todas as informações (favoritos, preferências de idioma, fuso horário) são armazenadas localmente apenas no seu dispositivo. Não rastreamos você e não compartilhamos seus dados com ninguém.",
+    "q3": "Quais ligas são suportadas?",
+    "a3": "O GoalBlip rastreia mais de 50 ligas em todo o mundo, incluindo Premier League, La Liga, Serie A, Bundesliga, Ligue 1 e muitas outras. Adicionamos continuamente novas ligas com base na demanda dos usuários.",
+    "q4": "Quão precisas são as análises?",
+    "a4": "O GoalBlip usa análise avançada de dados e algoritmos de IA para fornecer estatísticas abrangentes de partidas. Estas são análises baseadas em dados históricos e não devem ser consideradas como previsões ou garantias.",
+    "q5": "Preciso de uma conexão com a internet?",
+    "a5": "Uma conexão com a internet é necessária para buscar os dados mais recentes das partidas. No entanto, as partidas visualizadas anteriormente são armazenadas em cache localmente, para que você possa acessá-las offline.",
+    "q6": "Quando o aplicativo estará disponível?",
+    "a6": "O GoalBlip estará disponível na App Store (iOS) e Play Store (Android) em breve. Siga-nos para atualizações e seja um dos primeiros a baixar!",
+    "more": "Tem mais perguntas?",
+    "contact": "Entre em Contato com o Suporte"
+  },
+  "cta": {
+    "title": "Experimente Grátis Agora!",
+    "subtitle": "Baixar da App Store e Play Store",
+    "appStore": "Baixar na App Store",
+    "playStore": "Obter na Play Store",
+    "note": "Disponível em breve no iOS e Android"
+  },
+  "footer": {
+    "description": "Acompanhe o mundo do futebol de perto. Análise e estatísticas com IA.",
+    "quickLinks": "Links Rápidos",
+    "privacy": "Política de Privacidade",
+    "support": "Suporte",
+    "contact": "Contato",
+    "legal": "Jurídico",
+    "terms": "Termos de Serviço",
+    "language": "Idioma",
+    "copyright": "© 2025 GoalBlip. Todos os direitos reservados."
+  },
+  "privacy": {
+    "lastUpdated": "Última Atualização",
+    "effectiveDate": "Data de Vigência",
+    "intro": {
+      "title": "Introdução",
+      "text": "O GoalBlip (\"nós\", \"nosso\" ou \"nos\") está comprometido em proteger sua privacidade. Esta Política de Privacidade explica como coletamos, usamos, divulgamos e protegemos suas informações quando você usa nosso aplicativo móvel (\"App\") disponível na Google Play Store e Apple App Store. O GoalBlip não requer contas de usuário, registro ou qualquer informação pessoal - o aplicativo funciona completamente de forma anônima.",
+      "scope": "Esta Política de Privacidade se aplica a todos os usuários do aplicativo móvel GoalBlip, independentemente da sua localização. Ao usar nosso App, você concorda com a coleta e uso de informações de acordo com esta política. Nenhuma conta de usuário ou registro é necessário para usar o aplicativo.",
+      "compliance": "Cumprimos as leis de proteção de dados aplicáveis, incluindo o Regulamento Geral de Proteção de Dados (GDPR) para usuários na Área Econômica Europeia (AEE), a Lei de Privacidade do Consumidor da Califórnia (CCPA) para residentes da Califórnia e a Lei de Proteção da Privacidade Online das Crianças (COPPA) para usuários com menos de 13 anos de idade."
+    },
+    "collect": {
+      "title": "Informações que Coletamos",
+      "intro": "O GoalBlip foi projetado com privacidade em mente. Coletamos informações mínimas necessárias para fornecer nosso serviço, e todos os dados são armazenados localmente no seu dispositivo. Nenhuma conta de usuário ou registro é necessária - o aplicativo funciona completamente de forma anônima.",
+      "local": {
+        "title": "Informações Armazenadas Localmente no Seu Dispositivo",
+        "intro": "O GoalBlip armazena as seguintes informações apenas no seu dispositivo usando armazenamento local seguro (AsyncStorage/NSUserDefaults). Esses dados nunca saem do seu dispositivo:",
+        "favorites": "Partidas Favoritas",
+        "favoritesDesc": "IDs de partidas (identificadores numéricos) que você marca como favoritos para acesso rápido",
+        "language": "Preferência de Idioma",
+        "languageDesc": "Sua preferência de idioma selecionada (Turco, Inglês, Espanhol, Alemão) para exibir a interface do aplicativo no seu idioma preferido",
+        "timezone": "Preferência de Fuso Horário",
+        "timezoneDesc": "Seu fuso horário selecionado (por exemplo, America/Sao_Paulo, America/New_York) para exibir os horários das partidas no seu horário local",
+        "timeFormat": "Preferência de Formato de Hora",
+        "timeFormatDesc": "Seu formato de hora preferido (formato de 12 horas ou 24 horas) para exibir os horários das partidas",
+        "cache": "Dados de Partidas em Cache",
+        "cacheDesc": "Detalhes e estatísticas de partidas temporariamente armazenados em cache que você visualizou, armazenados localmente para melhorar o desempenho do aplicativo e permitir acesso offline ao conteúdo visualizado anteriormente",
+        "important": "Importante",
+        "importantDesc": "Todas as informações acima são armazenadas exclusivamente no seu dispositivo usando mecanismos de armazenamento local seguro fornecidos pelo seu sistema operacional (iOS Keychain/UserDefaults ou Android SharedPreferences). Essas informações nunca são transmitidas para nossos servidores, serviços de terceiros ou quaisquer sistemas externos. Permanecem no seu dispositivo até que você desinstale o aplicativo ou limpe manualmente os dados do aplicativo."
+      },
+      "network": {
+        "title": "Solicitações de Rede",
+        "intro": "Quando você usa o GoalBlip, o aplicativo faz solicitações de rede para nosso servidor de API para buscar dados e estatísticas de partidas. Essas solicitações:",
+        "noPersonal": "Não incluem nenhuma informação de identificação pessoal",
+        "noAccount": "Não requerem contas de usuário, registro ou autenticação - o aplicativo funciona completamente de forma anônima",
+        "publicData": "Apenas solicitam dados de partidas de futebol publicamente disponíveis (IDs de partidas, nomes de equipes, estatísticas)",
+        "anonymous": "São completamente anônimas - não podemos identificar usuários individuais a partir dessas solicitações, pois não há contas de usuário, autenticação ou identificadores de dispositivo enviados",
+        "logs": "Logs do Servidor",
+        "logsDesc": "Nosso servidor de API pode registrar informações padrão de solicitação HTTP (endereço IP, timestamp da solicitação, endpoint solicitado) para fins operacionais e de segurança. Esses logs não contêm informações pessoais e são automaticamente excluídos após 30 dias. Os endereços IP não podem ser usados para identificar usuários individuais."
+      },
+      "not": {
+        "title": "Informações que NÃO Coletamos",
+        "intro": "Para ser completamente transparente, explicitamente NÃO coletamos os seguintes tipos de informações:",
+        "personal": "Informações de identificação pessoal (nome, endereço de e-mail, número de telefone, endereço físico, data de nascimento)",
+        "location": "Dados de localização precisos ou aproximados (coordenadas GPS, localização baseada em IP)",
+        "device": "Identificadores de dispositivo (UDID, IMEI, endereço MAC, Android ID, Advertising ID)",
+        "analytics": "Análises de uso, métricas de desempenho do aplicativo, relatórios de falhas ou rastreamento de comportamento do usuário",
+        "identifiable": "Quaisquer dados que possam identificá-lo pessoalmente ou vincular o uso do aplicativo à sua identidade",
+        "biometric": "Dados biométricos (impressões digitais, dados de reconhecimento facial)",
+        "contacts": "Listas de contatos, números de telefone ou informações da agenda de endereços",
+        "photos": "Fotos, vídeos ou outros arquivos de mídia do seu dispositivo",
+        "calendar": "Eventos de calendário ou compromissos",
+        "files": "Arquivos ou documentos do armazenamento do seu dispositivo"
+      },
+      "permissions": {
+        "title": "Permissões do Aplicativo",
+        "intro": "O GoalBlip solicita as seguintes permissões, e aqui está o porquê:",
+        "internet": "Acesso à Internet",
+        "internetDesc": "Necessário para buscar dados e estatísticas de partidas ao vivo do nosso servidor de API. Isso é essencial para a funcionalidade principal do aplicativo.",
+        "networkState": "Estado da Rede",
+        "networkStateDesc": "Usado para verificar o status da sua conexão com a internet para fornecer feedback apropriado ao usuário (por exemplo, mensagem 'Sem conexão com a internet').",
+        "noOther": "Nenhuma Outra Permissão",
+        "noOtherDesc": "O GoalBlip não solicita acesso à sua câmera, microfone, localização, contatos, calendário, armazenamento ou quaisquer outros recursos sensíveis do dispositivo."
+      }
+    },
+    "use": {
+      "title": "Como Usamos Suas Informações",
+      "intro": "As informações armazenadas localmente no seu dispositivo são usadas exclusivamente para os seguintes propósitos:",
+      "favorites": "Lembrar suas partidas favoritas - para permitir que você acesse rapidamente partidas que marcou como favoritas",
+      "preferences": "Manter suas preferências de idioma e fuso horário - para exibir a interface do aplicativo e os horários das partidas de acordo com suas preferências",
+      "cache": "Melhorar o desempenho do aplicativo - dados de partidas em cache permitem carregamento mais rápido do conteúdo visualizado anteriormente e permitem funcionalidade offline limitada",
+      "noOther": "Não usamos suas informações para publicidade, marketing, análises, criação de perfil de usuário ou quaisquer outros propósitos comerciais. Não vendemos, alugamos ou monetizamos seus dados de forma alguma. Como não há contas de usuário, não podemos rastrear ou vincular seu uso entre sessões."
+    },
+    "storage": {
+      "title": "Armazenamento e Segurança de Dados",
+      "intro": "Levamos a segurança de dados a sério. Aqui está como protegemos suas informações:",
+      "local": "Todos os dados são armazenados localmente no seu dispositivo usando mecanismos de armazenamento local seguro fornecidos pelo seu sistema operacional (iOS Keychain/UserDefaults ou Android SharedPreferences). Estes são criptografados e protegidos pelos recursos de segurança do seu dispositivo.",
+      "noTransmit": "Nenhum dado pessoal é transmitido para servidores externos. Apenas solicitações anônimas para dados de partidas publicamente disponíveis são feitas ao nosso servidor de API.",
+      "noShare": "Nenhum dado é compartilhado com terceiros, anunciantes, serviços de análise ou quaisquer outras entidades externas.",
+      "encryption": "Os dados locais são protegidos pela criptografia integrada do seu dispositivo. No iOS, os dados são armazenados em Keychain criptografado ou UserDefaults. No Android, os dados são armazenados em SharedPreferences criptografado.",
+      "retention": "Retenção de Dados",
+      "retentionDesc": "Seus dados armazenados localmente (favoritos, preferências) permanecem no seu dispositivo até que você desinstale o aplicativo ou limpe manualmente os dados do aplicativo através das configurações do seu dispositivo. Os dados de partidas em cache são automaticamente limpos quando ficam desatualizados ou quando o espaço de armazenamento é necessário.",
+      "delete": "Você pode excluir todos os dados armazenados a qualquer momento: (1) Desinstalando o aplicativo, ou (2) Limpando os dados do aplicativo através das Configurações do seu dispositivo > Apps > GoalBlip > Limpar Dados (Android) ou Configurações > GoalBlip > Excluir App (iOS)."
+    },
+    "thirdParty": {
+      "title": "Serviços de Terceiros e Compartilhamento de Dados",
+      "intro": "O GoalBlip foi projetado para minimizar dependências de terceiros e compartilhamento de dados:",
+      "api": "Nosso Servidor de API",
+      "apiDesc": "O GoalBlip se conecta ao nosso próprio servidor de API (goalblip.com) para buscar dados e estatísticas de partidas. Esta conexão:",
+      "noPersonal": "Não transmite nenhuma informação pessoal, identificadores de dispositivo ou dados específicos do usuário",
+      "public": "Apenas solicita dados de partidas de futebol publicamente disponíveis (IDs de partidas, nomes de equipes, estatísticas, informações de ligas)",
+      "https": "Usa criptografia HTTPS padrão para proteger todas as comunicações de rede",
+      "anonymous": "As solicitações são completamente anônimas - não podemos identificar usuários individuais a partir de solicitações de API, pois não há contas de usuário, autenticação ou identificadores de dispositivo enviados",
+      "noThirdParty": "Nenhum Serviço de Terceiros",
+      "noThirdPartyDesc": "O GoalBlip não se integra com, compartilha dados com ou transmite informações para:",
+      "noAnalytics": "Serviços de análise (Google Analytics, Firebase Analytics, etc.)",
+      "noAds": "Redes de publicidade ou plataformas de veiculação de anúncios",
+      "noSocial": "Plataformas de mídia social ou serviços de login social",
+      "noCrash": "Serviços de relatório de falhas (Crashlytics, Sentry, etc.)",
+      "noPayment": "Processadores de pagamento ou serviços financeiros",
+      "noCloud": "Serviços de armazenamento em nuvem (iCloud, Google Drive, Dropbox, etc.)",
+      "noOther": "Quaisquer outros serviços de terceiros, SDKs ou processadores de dados"
+    },
+    "rights": {
+      "title": "Seus Direitos de Privacidade",
+      "intro": "Dependendo da sua localização, você pode ter certos direitos em relação às suas informações pessoais. Respeitamos esses direitos e fornecemos os seguintes controles:",
+      "access": "Direito de Acesso",
+      "accessDesc": "Você pode visualizar todos os dados armazenados pelo aplicativo no seu dispositivo através das configurações do aplicativo do seu dispositivo ou inspecionando o armazenamento local do aplicativo. Como não há contas de usuário, todos os dados são armazenados localmente e você tem acesso total a eles.",
+      "delete": "Direito de Exclusão",
+      "deleteDesc": "Você pode excluir todos os dados armazenados a qualquer momento desinstalando o aplicativo ou limpando os dados do aplicativo através das configurações do seu dispositivo (Configurações > Apps > GoalBlip > Limpar Dados no Android, ou Configurações > GoalBlip > Excluir App no iOS).",
+      "correction": "Direito de Correção",
+      "correctionDesc": "Você pode modificar suas preferências (idioma, fuso horário, formato de hora) diretamente nas configurações do aplicativo a qualquer momento.",
+      "portability": "Direito à Portabilidade de Dados",
+      "portabilityDesc": "Como todos os dados são armazenados localmente no seu dispositivo e não há contas de usuário, você tem controle total e pode exportar ou fazer backup dos seus dados usando os recursos de backup do seu dispositivo (iCloud, Google Drive, etc.).",
+      "objection": "Direito de Oposição",
+      "objectionDesc": "Você pode parar de usar o aplicativo a qualquer momento. Como não coletamos dados pessoais e não há contas de usuário, não há processamento para se opor. Simplesmente desinstale o aplicativo para remover todos os dados.",
+      "withdraw": "Direito de Retirar Consentimento",
+      "withdrawDesc": "Você pode retirar seu consentimento para processamento de dados desinstalando o aplicativo, o que excluirá todos os dados armazenados localmente. Como não há contas de usuário, desinstalar remove completamente todos os seus dados.",
+      "complaint": "Direito de Apresentar Reclamação",
+      "complaintDesc": "Se você estiver localizado na AEE, tem o direito de apresentar uma reclamação à sua autoridade local de proteção de dados se acreditar que violamos seus direitos de privacidade.",
+      "california": "Direitos de Privacidade da Califórnia (CCPA)",
+      "californiaDesc": "Se você é residente da Califórnia, tem o direito de: (1) Saber quais informações pessoais são coletadas, (2) Saber se suas informações pessoais são vendidas ou divulgadas e para quem, (3) Dizer não à venda de informações pessoais, (4) Acessar suas informações pessoais, (5) Solicitar exclusão de suas informações pessoais. O GoalBlip não vende informações pessoais e coleta dados mínimos conforme descrito nesta política."
+    },
+    "children": {
+      "title": "Privacidade de Crianças (Conformidade COPPA)",
+      "intro": "O GoalBlip cumpre a Lei de Proteção da Privacidade Online das Crianças (COPPA) e outras leis aplicáveis relativas à privacidade de crianças:",
+      "age": "Restrição de Idade",
+      "ageDesc": "O GoalBlip não é destinado, projetado ou direcionado para crianças com menos de 13 anos. Não coletamos, usamos ou divulgamos intencionalmente informações pessoais de crianças com menos de 13 anos.",
+      "verification": "Sem Verificação de Idade",
+      "verificationDesc": "Como o GoalBlip não requer registro de usuário, contas ou informações pessoais (o aplicativo funciona completamente de forma anônima), não implementamos mecanismos de verificação de idade. No entanto, confiamos nos pais e responsáveis para garantir que crianças com menos de 13 anos não usem o aplicativo.",
+      "parental": "Controles dos Pais",
+      "parentalDesc": "Se você é pai ou responsável e acredita que seu filho com menos de 13 anos nos forneceu informações, entre em contato conosco imediatamente em support@goalblip.com. Tomaremos medidas para excluir essas informações de nossos sistemas, se existirem.",
+      "noCollection": "Sem Coleta de Crianças",
+      "noCollectionDesc": "Mesmo que uma criança com menos de 13 anos use o aplicativo, não coletamos nenhuma informação pessoal. Todos os dados permanecem no dispositivo e nunca são transmitidos para nossos servidores."
+    },
+    "changes": {
+      "title": "Alterações nesta Política de Privacidade",
+      "intro": "Podemos atualizar esta Política de Privacidade de tempos em tempos para refletir mudanças em nossas práticas, tecnologia, requisitos legais ou por outras razões operacionais, legais ou regulatórias.",
+      "notification": "Notificação de Alterações",
+      "notificationDesc": "Notificaremos você sobre quaisquer alterações materiais nesta Política de Privacidade:",
+      "dateUpdate": "Atualizando a data \"Última Atualização\" no topo desta política",
+      "appUpdate": "Incluindo um aviso em atualizações do aplicativo quando alterações significativas forem feitas",
+      "website": "Publicando a política atualizada em nosso site",
+      "review": "Encorajamos você a revisar esta Política de Privacidade periodicamente para se manter informado sobre como protegemos suas informações.",
+      "continued": "Uso Continuado",
+      "continuedDesc": "Seu uso continuado do App após quaisquer alterações nesta Política de Privacidade constitui sua aceitação de tais alterações. Se você não concordar com as alterações, deve parar de usar o App e desinstalá-lo."
+    },
+    "contact": {
+      "title": "Entre em Contato",
+      "intro": "Se você tiver dúvidas, preocupações ou solicitações sobre esta Política de Privacidade ou nossas práticas de dados, entre em contato conosco:",
+      "email": "E-mail",
+      "emailAddress": "support@goalblip.com",
+      "emailDesc": "Nosso objetivo é responder a todas as consultas relacionadas à privacidade dentro de 30 dias.",
+      "website": "Site",
+      "websiteDesc": "Visite nossa página de suporte para informações e recursos adicionais.",
+      "dataProtection": "Oficial de Proteção de Dados",
+      "dataProtectionDesc": "Para usuários na Área Econômica Europeia (AEE), se você tiver preocupações sobre como lidamos com seus dados, pode entrar em contato conosco em support@goalblip.com. Abordaremos suas preocupações de acordo com as leis de proteção de dados aplicáveis."
+    },
+    "legal": {
+      "title": "Base Legal e Conformidade",
+      "intro": "O GoalBlip opera em conformidade com as leis de proteção de dados e privacidade aplicáveis:",
+      "gdpr": "Conformidade GDPR (Área Econômica Europeia)",
+      "gdprDesc": "Para usuários na AEE, processamos dados com base no seu consentimento (que você fornece usando o aplicativo) e nosso interesse legítimo em fornecer o serviço. Como coletamos dados mínimos (apenas preferências do aplicativo armazenadas localmente), cumprimos os princípios do GDPR de minimização de dados e limitação de propósito. Nenhuma conta de usuário ou registro é necessária.",
+      "ccpa": "Conformidade CCPA (Califórnia)",
+      "ccpaDesc": "Para residentes da Califórnia, o GoalBlip não vende informações pessoais (não coletamos informações pessoais para vender). Fornecemos transparência sobre a coleta de dados e respeitamos seus direitos de privacidade conforme descrito nesta política.",
+      "coppa": "Conformidade COPPA (Estados Unidos)",
+      "coppaDesc": "O GoalBlip cumpre a COPPA não coletando informações pessoais de crianças com menos de 13 anos e não direcionando o aplicativo para crianças com menos de 13 anos.",
+      "international": "Transferências Internacionais de Dados",
+      "internationalDesc": "Como todos os dados são armazenados localmente no seu dispositivo, não transferimos dados pessoais através de fronteiras, então as regulamentações de transferência internacional de dados não se aplicam. Nosso servidor de API pode estar localizado em diferentes jurisdições, mas as solicitações de API são anônimas (sem contas de usuário, sem dados pessoais) e apenas solicitam dados de partidas publicamente disponíveis.",
+      "lawEnforcement": "Solicitações de Aplicação da Lei",
+      "lawEnforcementDesc": "Como não coletamos ou armazenamos informações pessoais em nossos servidores (sem contas de usuário, sem registro), não temos dados pessoais para fornecer em resposta a solicitações de aplicação da lei. Quaisquer dados armazenados localmente no seu dispositivo (favoritos, preferências) estão sujeitos à segurança do seu dispositivo e ao seu controle. Não podemos acessar esses dados, pois nunca saem do seu dispositivo."
+    },
+    "summary": {
+      "title": "Resumo Rápido",
+      "intro": "Em resumo, aqui está o que você precisa saber sobre as práticas de privacidade do GoalBlip:",
+      "what": "O que armazenamos",
+      "whatDesc": "Apenas seus favoritos, preferências de idioma/fuso horário e dados de partidas em cache (tudo no seu dispositivo)",
+      "where": "Onde está armazenado",
+      "whereDesc": "Exclusivamente no seu dispositivo usando armazenamento local seguro - nunca em nossos servidores",
+      "who": "Quem vê",
+      "whoDesc": "Apenas você - não podemos acessar o armazenamento local do seu dispositivo, e não há contas de usuário que nos permitam identificá-lo",
+      "thirdParty": "Terceiros",
+      "thirdPartyDesc": "Nenhum - não compartilhamos dados com terceiros, anunciantes ou serviços de análise",
+      "tracking": "Rastreamento e análises",
+      "trackingDesc": "Nenhum - não rastreamos seu uso, comportamento ou coletamos dados de análise. Como não há contas de usuário, não podemos rastreá-lo entre sessões ou dispositivos",
+      "personal": "Dados pessoais",
+      "personalDesc": "Nenhum coletado - não coletamos nenhuma informação que possa identificá-lo pessoalmente. Sem contas de usuário, sem registro, nenhuma informação pessoal necessária",
+      "ads": "Publicidade",
+      "adsDesc": "Nenhum - o GoalBlip é completamente livre de anúncios e não veicula publicidade",
+      "selling": "Venda de dados",
+      "sellingDesc": "Nunca - não vendemos, alugamos ou monetizamos seus dados de forma alguma",
+      "security": "Segurança",
+      "securityDesc": "Seus dados são protegidos pela criptografia e recursos de segurança integrados do seu dispositivo"
+    }
+  },
+  "support": {
+    "description": "Precisa de ajuda? Estamos aqui para você. Entre em contato conosco ou confira nossas perguntas frequentes.",
+    "contact": {
+      "title": "Entre em Contato",
+      "email": "E-mail",
+      "emailDesc": "Envie-nos um e-mail e retornaremos o mais rápido possível."
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "q1": "O GoalBlip é gratuito?",
+      "a1": "Sim, o GoalBlip é completamente gratuito para usar. Não há recursos premium ou assinaturas.",
+      "q2": "Quais dados o GoalBlip coleta?",
+      "a2": "O GoalBlip não coleta nenhum dado pessoal. Todas as informações (favoritos, preferências de idioma, fuso horário) são armazenadas localmente apenas no seu dispositivo.",
+      "q3": "Quais idiomas são suportados?",
+      "a3": "O GoalBlip atualmente suporta Turco, Inglês, Espanhol e Alemão. Mais idiomas podem ser adicionados no futuro.",
+      "q4": "Como excluo meus dados?",
+      "a4": "Simplesmente desinstale o aplicativo do seu dispositivo. Todos os dados armazenados localmente serão removidos. Você também pode limpar os dados do aplicativo através das configurações do seu dispositivo.",
+      "q5": "Onde posso baixar o aplicativo?",
+      "a5": "O GoalBlip estará disponível na App Store (iOS) e Play Store (Android) em breve. Fique atento para atualizações!",
+      "q6": "Quão precisas são as análises de partidas?",
+      "a6": "O GoalBlip usa análise avançada de dados e algoritmos de IA para fornecer estatísticas abrangentes de partidas. No entanto, estas são análises e não devem ser consideradas como previsões ou garantias."
+    },
+    "resources": {
+      "title": "Recursos Adicionais"
+    }
+  }
+}
+

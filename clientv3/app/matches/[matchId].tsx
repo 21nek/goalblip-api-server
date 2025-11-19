@@ -51,6 +51,10 @@ import {
   localizePredictionTitle,
 } from '@/lib/i18n/localize-match-data';
 import { formatDateTime } from '@/lib/datetime';
+import {
+  buildAdvancedMetrics,
+  generateInsightSentences,
+} from '@/lib/advanced-insights';
 import { requestMatchReanalysis } from '@/lib/api';
 
 const UPCOMING_ROLE_KEY_MAP: Record<string, string> = {
@@ -289,6 +293,22 @@ const upcoming = detail?.upcomingMatches ?? [];
 const formattedLastUpdatedAt = detail?.lastUpdatedAt
   ? formatDateTime(detail.lastUpdatedAt, locale, timezone, timeFormat)
   : null;
+const advancedMetrics = useMemo(() => (detail ? buildAdvancedMetrics(detail) : null), [detail]);
+const weightedScoreInsights = advancedMetrics?.weightedScore;
+const momentumInsights = advancedMetrics?.momentum;
+const confidenceBlend = advancedMetrics?.confidenceBlend;
+const poissonEstimates = advancedMetrics?.poisson;
+const goalTrends = advancedMetrics?.goalTrends;
+const confidenceLadder = advancedMetrics?.confidenceLadder ?? [];
+const overUnderLadder = advancedMetrics?.overUnderLadder ?? [];
+const handicapInsight = advancedMetrics?.handicapInsight ?? null;
+const halfComparison = advancedMetrics?.halfComparison ?? null;
+const insightSentences = useMemo(
+  () => (detail && advancedMetrics ? generateInsightSentences(detail, advancedMetrics) : []),
+  [detail, advancedMetrics],
+);
+const homeTeamLabel = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+const awayTeamLabel = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 const reanalyzeNextAllowedLabel = useMemo(() => {
   if (!reanalyzeNextAllowedAt) return null;
   const formatted = formatDateTime(reanalyzeNextAllowedAt, locale, timezone, timeFormat);
@@ -689,7 +709,47 @@ if (formattedLastUpdatedAt) {
               ) : null;
             })()}
 
-            {/* Visual Comparison */}
+            {insightSentences && insightSentences.length ? (
+              <View style={getStyles().section}>
+                <Text style={getStyles().sectionTitle}>{t('matchDetail.insightSentences.title')}</Text>
+                <View style={getStyles().insightList}>
+                  {insightSentences.map((insight, idx) => {
+                    const toneStyle =
+                      insight.tone === 'positive'
+                        ? getStyles().insightPositive
+                        : insight.tone === 'warning'
+                        ? getStyles().insightWarning
+                        : getStyles().insightInfo;
+                    const iconName =
+                      insight.tone === 'positive'
+                        ? 'trending-up'
+                        : insight.tone === 'warning'
+                        ? 'warning'
+                        : 'information-circle';
+                    const iconColor =
+                      insight.tone === 'positive'
+                        ? colors.success
+                        : insight.tone === 'warning'
+                        ? colors.warning
+                        : colors.textSecondary;
+                    const params = { ...(insight.params || {}) };
+                    if (params.pick) {
+                      params.pick = localizePredictionTitle(String(params.pick), t);
+                    }
+                    return (
+                      <View key={`${insight.translationKey}-${idx}`} style={[getStyles().insightItem, toneStyle]}>
+                        <Icon name={iconName} size={16} color={iconColor} style={getStyles().insightIcon} />
+                        <Text style={getStyles().insightText}>
+                          {t(insight.translationKey, params as Record<string, string | number>)}
+                        </Text>
+                      </View>
+                    );
+                  })}
+                </View>
+              </View>
+            ) : null}
+
+            {/* Risk Analysis */}
             {(() => {
               const homeForm = detail.recentForm?.[0] || null;
               const awayForm = detail.recentForm?.[1] || null;
@@ -702,10 +762,378 @@ if (formattedLastUpdatedAt) {
 
               return (
                 <View style={getStyles().section}>
-                  <VisualComparisonCard
+                  <RiskAnalysisCard
                     homeTeam={{ name: homeTeamName, stats: homeStats }}
                     awayTeam={{ name: awayTeamName, stats: awayStats }}
                   />
+                </View>
+              );
+            })()}
+
+            {(() => {
+              const showWeighted =
+                Boolean(weightedScoreInsights?.home !== null || weightedScoreInsights?.away !== null);
+              const showMomentum =
+                Boolean(momentumInsights?.home !== null || momentumInsights?.away !== null);
+              const showConfidence = Boolean(confidenceBlend);
+              const showPoisson = Boolean(poissonEstimates);
+              if (!showWeighted && !showMomentum && !showConfidence && !showPoisson) {
+                return null;
+              }
+              const renderMetricBar = (score: number | null | undefined) => (
+                <View style={getStyles().metricBarTrack}>
+                  <View
+                    style={[
+                      getStyles().metricBarFill,
+                      { width: `${Math.max(0, Math.min(100, score || 0))}%` },
+                    ]}
+                  />
+                </View>
+              );
+              const formatMomentumLabel = (value: number | null | undefined) => {
+                const descriptor = getMomentumDescriptor(value);
+                if (!descriptor) return null;
+                return t(`matchDetail.advancedMetrics.momentum.${descriptor}`);
+              };
+              const formatGoalBucket = (bucket: string) =>
+                bucket === '3+'
+                  ? t('matchDetail.advancedMetrics.poisson.goalLabelPlus')
+                  : t('matchDetail.advancedMetrics.poisson.goalLabel', { value: bucket });
+              const sampleLabel =
+                weightedScoreInsights?.sampleSize && weightedScoreInsights.sampleSize > 0
+                  ? t('matchDetail.advancedMetrics.sampleLabel', {
+                      matches: weightedScoreInsights.sampleSize,
+                    })
+                  : null;
+
+              return (
+                <View style={getStyles().section}>
+                  <Text style={getStyles().sectionTitle}>{t('matchDetail.advancedMetrics.title')}</Text>
+
+                  {showWeighted ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.weightedScore.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.weightedScore.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().metricRow}>
+                        <View style={getStyles().metricLabelBlock}>
+                          <Text style={getStyles().metricLabel}>
+                            {t('matchDetail.advancedMetrics.weightedScore.homeLabel')}
+                          </Text>
+                          <Text style={getStyles().metricSubLabel}>{homeTeamLabel}</Text>
+                        </View>
+                        <View style={getStyles().metricValueBlock}>
+                          {renderMetricBar(weightedScoreInsights?.home)}
+                          <Text style={getStyles().metricValue}>
+                            {typeof weightedScoreInsights?.home === 'number'
+                              ? `${weightedScoreInsights.home}%`
+                              : '--'}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={getStyles().metricRow}>
+                        <View style={getStyles().metricLabelBlock}>
+                          <Text style={getStyles().metricLabel}>
+                            {t('matchDetail.advancedMetrics.weightedScore.awayLabel')}
+                          </Text>
+                          <Text style={getStyles().metricSubLabel}>{awayTeamLabel}</Text>
+                        </View>
+                        <View style={getStyles().metricValueBlock}>
+                          {renderMetricBar(weightedScoreInsights?.away)}
+                          <Text style={getStyles().metricValue}>
+                            {typeof weightedScoreInsights?.away === 'number'
+                              ? `${weightedScoreInsights.away}%`
+                              : '--'}
+                          </Text>
+                        </View>
+                      </View>
+                      {sampleLabel ? <Text style={getStyles().metricHint}>{sampleLabel}</Text> : null}
+                    </View>
+                  ) : null}
+
+                  {showMomentum ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.momentum.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.momentum.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().momentumRow}>
+                        <View>
+                          <Text style={getStyles().metricLabel}>{homeTeamLabel}</Text>
+                          <Text style={getStyles().momentumValue}>
+                            {typeof momentumInsights?.home === 'number'
+                              ? `${momentumInsights.home > 0 ? '+' : ''}${momentumInsights.home}`
+                              : '--'}
+                          </Text>
+                        </View>
+                        <View style={getStyles().momentumBadge}>
+                          <Text style={getStyles().momentumBadgeText}>
+                            {formatMomentumLabel(momentumInsights?.home) || '--'}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={getStyles().momentumRow}>
+                        <View>
+                          <Text style={getStyles().metricLabel}>{awayTeamLabel}</Text>
+                          <Text style={getStyles().momentumValue}>
+                            {typeof momentumInsights?.away === 'number'
+                              ? `${momentumInsights.away > 0 ? '+' : ''}${momentumInsights.away}`
+                              : '--'}
+                          </Text>
+                        </View>
+                        <View style={getStyles().momentumBadge}>
+                          <Text style={getStyles().momentumBadgeText}>
+                            {formatMomentumLabel(momentumInsights?.away) || '--'}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {showConfidence ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.confidence.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.confidence.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().confidenceRow}>
+                        <View style={getStyles().confidenceValueBlock}>
+                          <Text style={getStyles().metricLabel}>
+                            {t('matchDetail.advancedMetrics.confidence.scoreLabel')}
+                          </Text>
+                          <Text style={getStyles().confidenceValue}>
+                            {confidenceBlend?.score ? `${confidenceBlend.score}%` : '--'}
+                          </Text>
+                        </View>
+                        <View style={getStyles().confidenceValueBlock}>
+                          <Text style={getStyles().metricLabel}>
+                            {t('matchDetail.advancedMetrics.confidence.topPickLabel')}
+                          </Text>
+                          <Text style={getStyles().metricValue}>
+                            {confidenceBlend?.topPick?.label
+                              ? localizePredictionTitle(confidenceBlend.topPick.label, t)
+                              : t('matchDetail.advancedMetrics.confidence.noPick')}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {showPoisson && poissonEstimates ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.poisson.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.poisson.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().poissonRow}>
+                        <Text style={getStyles().metricLabel}>
+                          {t('matchDetail.advancedMetrics.poisson.expectedHeader')}
+                        </Text>
+                        <View style={getStyles().poissonExpected}>
+                          <Text style={getStyles().poissonExpectedValue}>
+                            {homeTeamLabel}: {poissonEstimates.home.lambda.toFixed(2)} xG
+                          </Text>
+                          <Text style={getStyles().poissonExpectedValue}>
+                            {awayTeamLabel}: {poissonEstimates.away.lambda.toFixed(2)} xG
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={getStyles().poissonTable}>
+                        <View style={getStyles().poissonTableHeader}>
+                          <Text style={getStyles().poissonColumnLabelGoal}>
+                            {t('matchDetail.advancedMetrics.poisson.goalColumn')}
+                          </Text>
+                          <Text style={getStyles().poissonColumnLabelValue}>{homeTeamLabel}</Text>
+                          <Text style={getStyles().poissonColumnLabelValue}>{awayTeamLabel}</Text>
+                        </View>
+                        {poissonEstimates.home.probabilities.map((entry, idx) => {
+                          const awayEntry = poissonEstimates.away.probabilities[idx];
+                          return (
+                            <View key={entry.bucket} style={getStyles().poissonTableRow}>
+                              <Text style={getStyles().poissonRowLabel}>
+                                {formatGoalBucket(entry.bucket)}
+                              </Text>
+                              <Text style={getStyles().poissonRowValue}>{entry.percent}%</Text>
+                              <Text style={getStyles().poissonRowValue}>
+                                {awayEntry ? `${awayEntry.percent}%` : '--'}
+                              </Text>
+                            </View>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {goalTrends && (goalTrends.home || goalTrends.away) ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.goalTrend.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.goalTrend.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().trendTable}>
+                        <View style={getStyles().trendHeader}>
+                          <Text style={getStyles().trendTeam}>{t('matchDetail.advancedMetrics.goalTrend.team')}</Text>
+                          <Text style={getStyles().trendValue}>
+                            {t('matchDetail.advancedMetrics.goalTrend.forLabel')}
+                          </Text>
+                          <Text style={getStyles().trendValue}>
+                            {t('matchDetail.advancedMetrics.goalTrend.againstLabel')}
+                          </Text>
+                          <Text style={getStyles().trendValue}>
+                            {t('matchDetail.advancedMetrics.goalTrend.deltaLabel')}
+                          </Text>
+                        </View>
+                        {[{ label: homeTeamLabel, data: goalTrends.home }, { label: awayTeamLabel, data: goalTrends.away }].map(
+                          (row) =>
+                            row.data && (
+                              <View key={row.label} style={getStyles().trendRow}>
+                                <Text style={getStyles().trendTeam}>{row.label}</Text>
+                                <Text style={getStyles().trendValue}>{row.data.goalsFor}</Text>
+                                <Text style={getStyles().trendValue}>{row.data.goalsAgainst}</Text>
+                                <Text
+                                  style={[
+                                    getStyles().trendValue,
+                                    row.data.delta >= 0 ? getStyles().positiveText : getStyles().negativeText,
+                                  ]}
+                                >
+                                  {row.data.delta >= 0 ? `+${row.data.delta}` : row.data.delta}
+                                </Text>
+                              </View>
+                            ),
+                        )}
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {confidenceLadder.length ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.confidenceLadder.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.confidenceLadder.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().ladderList}>
+                        {confidenceLadder.map((entry, idx) => {
+                          const tone = entry.confidence >= 75 ? colors.success : entry.confidence >= 50 ? colors.warning : colors.error;
+                          return (
+                            <View key={`${entry.title}-${idx}`} style={getStyles().ladderItem}>
+                              <View style={getStyles().ladderInfo}>
+                                <Text style={getStyles().ladderTitle}>
+                                  {localizePredictionTitle(entry.title, t)}
+                                </Text>
+                                <Text style={[getStyles().ladderPercent, { color: tone }]}>
+                                  %{entry.confidence}
+                                </Text>
+                              </View>
+                              <View style={getStyles().metricBarTrack}>
+                                <View style={[getStyles().metricBarFill, { width: `${entry.confidence}%`, backgroundColor: tone }]} />
+                              </View>
+                            </View>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {overUnderLadder.length ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.overUnder.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.overUnder.description')}
+                        </Text>
+                      </View>
+                      <View style={getStyles().overTable}>
+                        {overUnderLadder.map((entry, idx) => (
+                          <View key={`${entry.label}-${idx}`} style={getStyles().overRow}>
+                            <Text style={getStyles().overLabel}>{localizeOutcomeLabel(entry.label, t)}</Text>
+                            <Text
+                              style={[
+                                getStyles().overValue,
+                                entry.isOver ? getStyles().positiveText : getStyles().negativeText,
+                              ]}
+                            >
+                              %{entry.percent}
+                            </Text>
+                          </View>
+                        ))}
+                      </View>
+                    </View>
+                  ) : null}
+
+                  {handicapInsight ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.handicap.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.handicap.description')}
+                        </Text>
+                      </View>
+                      <Text style={getStyles().handicapLabel}>{handicapInsight.label}</Text>
+                      <Text style={getStyles().handicapValue}>{handicapInsight.value}</Text>
+                    </View>
+                  ) : null}
+
+                  {halfComparison?.firstHalf?.length && halfComparison?.fullTime?.length ? (
+                    <View style={getStyles().metricCard}>
+                      <View style={getStyles().metricHeader}>
+                        <Text style={getStyles().metricTitle}>
+                          {t('matchDetail.advancedMetrics.halfComparison.title')}
+                        </Text>
+                        <Text style={getStyles().metricDescription}>
+                          {t('matchDetail.advancedMetrics.halfComparison.description')}
+                        </Text>
+                      </View>
+                      {halfComparison.firstHalf.slice(0, 3).map((entry, idx) => {
+                        const full = halfComparison.fullTime[idx];
+                        return (
+                          <View key={`${entry.label}-${idx}`} style={getStyles().overRow}>
+                            <View style={{ flex: 1 }}>
+                              <Text style={getStyles().ladderTitle}>
+                                {localizePredictionTitle(entry.label, t)}
+                              </Text>
+                              <Text style={getStyles().ladderPercent}>
+                                {t('matchDetail.advancedMetrics.halfComparison.halfLabel', { value: entry.percent })}
+                              </Text>
+                            </View>
+                            {full ? (
+                              <Text style={getStyles().ladderPercent}>
+                                {t('matchDetail.advancedMetrics.halfComparison.fullLabel', { value: full.percent })}
+                              </Text>
+                            ) : null}
+                          </View>
+                        );
+                      })}
+                    </View>
+                  ) : null}
                 </View>
               );
             })()}
@@ -731,21 +1159,6 @@ if (formattedLastUpdatedAt) {
               );
             })()}
 
-            {/* Prediction Summary */}
-            {detailPredictions.length > 0 ? (
-              <View style={getStyles().section}>
-                <PredictionSummaryCard predictions={detailPredictions} />
-              </View>
-            ) : locale !== 'tr' ? (
-              <View style={getStyles().section}>
-                <EmptyState 
-                  icon="information-circle" 
-                  title={t('matchDetail.predictionsNotAvailable')} 
-                  message={t('matchDetail.predictionsNotAvailableMessage')} 
-                />
-              </View>
-            ) : null}
-
             {/* Goal Analysis */}
             {(() => {
               const homeForm = detail.recentForm?.[0] || null;
@@ -757,7 +1170,6 @@ if (formattedLastUpdatedAt) {
               const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
               const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
 
-              // Find Over/Under prediction
               const overUnderPrediction = detailPredictions.find(
                 (p) => p.title?.toLowerCase().includes('alt') || p.title?.toLowerCase().includes('üst')
               )?.outcomes?.[0] || null;
@@ -768,27 +1180,6 @@ if (formattedLastUpdatedAt) {
                     homeTeam={{ name: homeTeamName, stats: homeStats }}
                     awayTeam={{ name: awayTeamName, stats: awayStats }}
                     overUnderPrediction={overUnderPrediction}
-                  />
-                </View>
-              );
-            })()}
-
-            {/* Risk Analysis */}
-            {(() => {
-              const homeForm = detail.recentForm?.[0] || null;
-              const awayForm = detail.recentForm?.[1] || null;
-              if (!homeForm?.matches || !awayForm?.matches) return null;
-
-              const homeStats = calculateFormStats(homeForm.matches);
-              const awayStats = calculateFormStats(awayForm.matches);
-              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
-              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
-
-              return (
-                <View style={getStyles().section}>
-                  <RiskAnalysisCard
-                    homeTeam={{ name: homeTeamName, stats: homeStats }}
-                    awayTeam={{ name: awayTeamName, stats: awayStats }}
                   />
                 </View>
               );
@@ -809,6 +1200,42 @@ if (formattedLastUpdatedAt) {
                 <EmptyState icon="empty" title={t('matchDetail.noDetailedAnalysis')} message={t('matchDetail.noDetailedAnalysisMessage')} />
               )}
             </View>
+
+            {/* Prediction Summary */}
+            {detailPredictions.length > 0 ? (
+              <View style={getStyles().section}>
+                <PredictionSummaryCard predictions={detailPredictions} />
+              </View>
+            ) : locale !== 'tr' ? (
+              <View style={getStyles().section}>
+                <EmptyState 
+                  icon="information-circle" 
+                  title={t('matchDetail.predictionsNotAvailable')} 
+                  message={t('matchDetail.predictionsNotAvailableMessage')} 
+                />
+              </View>
+            ) : null}
+
+            {/* Visual Comparison */}
+            {(() => {
+              const homeForm = detail.recentForm?.[0] || null;
+              const awayForm = detail.recentForm?.[1] || null;
+              if (!homeForm?.matches || !awayForm?.matches) return null;
+
+              const homeStats = calculateFormStats(homeForm.matches);
+              const awayStats = calculateFormStats(awayForm.matches);
+              const homeTeamName = scoreboard?.homeTeam?.name || t('matchDetail.teams.homeFallback');
+              const awayTeamName = scoreboard?.awayTeam?.name || t('matchDetail.teams.awayFallback');
+
+              return (
+                <View style={getStyles().section}>
+                  <VisualComparisonCard
+                    homeTeam={{ name: homeTeamName, stats: homeStats }}
+                    awayTeam={{ name: awayTeamName, stats: awayStats }}
+                  />
+                </View>
+              );
+            })()}
 
             {detail.recentForm && detail.recentForm.length > 0 && (
               <View style={getStyles().section}>
@@ -1741,13 +2168,288 @@ const getStyles = () => {
     color: colors.textTertiary,
     marginTop: spacing.xs,
   },
+  ladderList: {
+    gap: spacing.sm,
+  },
+  ladderItem: {
+    marginBottom: spacing.sm,
+  },
+  ladderInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  ladderTitle: {
+    ...typography.caption,
+    color: colors.textPrimary,
+  },
+  ladderPercent: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    fontWeight: '700',
+  },
+  trendTable: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: borderRadius.md,
+    overflow: 'hidden',
+  },
+  trendHeader: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    backgroundColor: colors.bgSecondary,
+  },
+  trendRow: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  trendTeam: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    flex: 1.5,
+  },
+  trendValue: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    flex: 1,
+    textAlign: 'right',
+  },
+  positiveText: {
+    color: colors.success,
+  },
+  negativeText: {
+    color: colors.error,
+  },
+  overTable: {
+    gap: spacing.xs,
+  },
+  overRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+  },
+  overLabel: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    flex: 1,
+  },
+  overValue: {
+    ...typography.bodySmall,
+    fontWeight: '700',
+  },
+  handicapLabel: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  handicapValue: {
+    ...typography.body,
+    color: colors.textPrimary,
+    fontWeight: '700',
+  },
+  metricCard: {
+    backgroundColor: colors.bgTertiary,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: spacing.md,
+  },
+  metricHeader: {
+    marginBottom: spacing.md,
+  },
+  metricTitle: {
+    ...typography.body,
+    color: colors.textPrimary,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+  metricDescription: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    lineHeight: 18,
+  },
+  metricRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+  },
+  metricLabelBlock: {
+    flex: 1,
+    paddingRight: spacing.md,
+  },
+  metricLabel: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    fontWeight: '600',
+  },
+  metricSubLabel: {
+    ...typography.caption,
+    color: colors.textSecondary,
+  },
+  metricValueBlock: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  metricBarTrack: {
+    width: '100%',
+    height: 8,
+    backgroundColor: colors.bgSecondary,
+    borderRadius: borderRadius.full,
+    overflow: 'hidden',
+    marginBottom: spacing.xs,
+  },
+  metricBarFill: {
+    height: '100%',
+    backgroundColor: colors.accent,
+  },
+  metricValue: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    fontWeight: '600',
+  },
+  metricHint: {
+    ...typography.caption,
+    color: colors.textTertiary,
+    marginTop: spacing.sm,
+  },
+  momentumRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+  },
+  momentumValue: {
+    ...typography.body,
+    color: colors.textPrimary,
+    fontWeight: '700',
+  },
+  momentumBadge: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.full,
+    backgroundColor: colors.bgSecondary,
+  },
+  momentumBadgeText: {
+    ...typography.caption,
+    color: colors.textSecondary,
+  },
+  confidenceRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+    marginTop: spacing.sm,
+  },
+  confidenceValueBlock: {
+    flex: 1,
+    minWidth: 140,
+  },
+  confidenceValue: {
+    ...typography.h2,
+    color: colors.accent,
+    fontWeight: '700',
+  },
+  poissonRow: {
+    marginBottom: spacing.md,
+  },
+  poissonExpected: {
+    marginTop: spacing.xs,
+  },
+  poissonExpectedValue: {
+    ...typography.caption,
+    color: colors.textSecondary,
+  },
+  poissonTable: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: borderRadius.md,
+    overflow: 'hidden',
+    marginTop: spacing.sm,
+  },
+  poissonTableHeader: {
+    flexDirection: 'row',
+    backgroundColor: colors.bgSecondary,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.md,
+  },
+  poissonColumnLabelGoal: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    flex: 1.5,
+    textAlign: 'left',
+  },
+  poissonColumnLabelValue: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    flex: 1,
+    textAlign: 'right',
+  },
+  poissonTableRow: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  poissonRowLabel: {
+    ...typography.caption,
+    color: colors.textSecondary,
+    flex: 1.5,
+    textAlign: 'left',
+  },
+  poissonRowValue: {
+    ...typography.caption,
+    color: colors.textPrimary,
+    flex: 1,
+    textAlign: 'right',
+  },
+  insightList: {
+    gap: spacing.sm,
+  },
+  insightItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.md,
+    borderRadius: borderRadius.lg,
+    borderWidth: 1,
+    backgroundColor: colors.bgSecondary,
+    gap: spacing.sm,
+  },
+  insightIcon: {
+    marginRight: spacing.xs,
+  },
+  insightText: {
+    ...typography.bodySmall,
+    color: colors.textPrimary,
+    flex: 1,
+    lineHeight: 18,
+  },
+  insightPositive: {
+    borderColor: colors.success + '44',
+    backgroundColor: colors.success + '11',
+  },
+  insightWarning: {
+    borderColor: colors.warning + '44',
+    backgroundColor: colors.warning + '11',
+  },
+  insightInfo: {
+    borderColor: colors.border,
+    backgroundColor: colors.bgSecondary,
+  },
   });
 };
 
 const styles = getStyles();
 
-
-
-
-
-
+function getMomentumDescriptor(value: number | null | undefined) {
+  if (typeof value !== 'number') return null;
+  if (value > 25) return 'bullish';
+  if (value < -25) return 'bearish';
+  return 'neutral';
+}
