@@ -42,7 +42,10 @@ export async function scrapeMatchList(options = {}) {
 
   const normalizedLocale = normalizeLocale(locale);
   const targetUrl = buildMatchListUrl(normalizedLocale);
-  const browser = await puppeteer.launch({ headless });
+  const browser = await puppeteer.launch({
+    headless,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
 
   try {
     const page = await browser.newPage();
@@ -63,14 +66,19 @@ export async function scrapeMatchList(options = {}) {
       dataDate,
     });
 
+    const filteredMatches = matches.filter((match) => {
+      if (!match.kickoffIsoUtc) return true;
+      return match.kickoffIsoUtc.slice(0, 10) === dataDate;
+    });
+
     return {
       view,
       dataDate,
       locale: normalizedLocale,
       url: targetUrl,
       scrapedAt: new Date().toISOString(),
-      totalMatches: matches.length,
-      matches,
+      totalMatches: filteredMatches.length,
+      matches: filteredMatches,
     };
   } finally {
     await browser.close();
@@ -150,8 +158,8 @@ async function collectVisibleMatches(page) {
       const infoContainer = metaRow?.querySelector('div');
       const infoTexts = infoContainer
         ? Array.from(infoContainer.querySelectorAll('span'))
-            .map((node) => (node.textContent || '').trim())
-            .filter(Boolean)
+          .map((node) => (node.textContent || '').trim())
+          .filter(Boolean)
         : [];
       const kickoffTime = infoTexts[0] ?? null;
       const statusLabel = infoTexts.slice(1).join(' • ') || null;
@@ -254,22 +262,37 @@ function buildMatchListUrl(locale) {
 
 function computeDataDate(view) {
   const offsetDays = view === 'tomorrow' ? 1 : 0;
-  const target = addDays(new Date(), offsetDays);
-  return formatDate(target, TIME_ZONE);
+  return formatDate(offsetDays, TIME_ZONE);
 }
 
-function addDays(date, days) {
-  const copy = new Date(date);
-  copy.setUTCDate(copy.getUTCDate() + days);
-  return copy;
-}
+function formatDate(offsetDays, timeZone) {
+  const now = new Date();
 
-function formatDate(date, timeZone) {
-  const parts = new Intl.DateTimeFormat('en-CA', {
+  // Get the current date in the target timezone
+  const formatter = new Intl.DateTimeFormat('en-CA', {
     timeZone,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-  }).format(date);
-  return parts;
+  });
+
+  const parts = formatter.formatToParts(now);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+
+  // Create a date object at noon in the target timezone to avoid DST issues
+  let targetDate = new Date(`${year}-${month}-${day}T12:00:00`);
+
+  // Add offset days
+  if (offsetDays !== 0) {
+    targetDate.setDate(targetDate.getDate() + offsetDays);
+  }
+
+  // Format as YYYY-MM-DD
+  const resultYear = targetDate.getFullYear();
+  const resultMonth = String(targetDate.getMonth() + 1).padStart(2, '0');
+  const resultDay = String(targetDate.getDate()).padStart(2, '0');
+
+  return `${resultYear}-${resultMonth}-${resultDay}`;
 }

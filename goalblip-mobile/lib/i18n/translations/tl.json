@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "Naglo-load...",
+    "error": "Error",
+    "retry": "Subukan Muli",
+    "cancel": "Kanselahin",
+    "save": "I-save",
+    "close": "Isara",
+    "search": "Maghanap",
+    "clear": "Linisin",
+    "all": "Lahat",
+    "select": "Pumili",
+    "continue": "Magpatuloy",
+    "back": "Bumalik",
+    "home": "Home",
+    "favorites": "Mga Paborito",
+    "unknownLeague": "Hindi Kilalang Liga",
+    "unknown": "Hindi Kilala",
+    "prediction": "Hula",
+    "time": {
+      "justNow": "ngayon lang",
+      "minutes": "{count}m",
+      "hours": "{count}h",
+      "days": "{count}araw"
+    },
+    "settings": "Mga Setting",
+    "menu": "Menu"
+  },
+  "drawer": {
+    "title": "Mga Laban",
+    "searchPrompt": "Maghanap ng Laban",
+    "searchPromptDescription": "Maghanap ng mga laban sa pamamagitan ng pag-type ng pangalan ng team o liga"
+  },
+  "home": {
+    "today": "Ngayon",
+    "tomorrow": "Bukas",
+    "noMatches": "Walang Nahanap na Laban",
+    "noMatchesMessage": "Walang available na laban para sa view na ito.\n\nMalapit nang maidagdag ang mga bagong laban!",
+    "noMatchesFiltered": "Walang nahanap na laban na tumugma sa iyong search criteria.\n\nMaaari mong linisin ang mga filter at subukan muli.",
+    "clearFilters": "Linisin ang mga Filter",
+    "refreshing": "Nagre-refresh...",
+    "dataLoadError": "Nabigo ang Pag-load ng Data",
+    "dataLoadErrorMessage": "Mangyaring suriin ang iyong internet connection at subukan muli.",
+    "loadingMore": "Naglo-load pa...",
+    "topLeagues": {
+      "matches": "{count} na laban",
+      "firstMatch": "Unang kickoff {time}",
+      "waitingKickoff": "Naghihintay ng kickoff"
+    },
+    "aiShortlist": {
+      "predictionPending": "Naghihintay ang hula",
+      "noPredictionTitle": "Walang AI hula",
+      "noPredictionMessage": "Hindi pa handa ang analysis para sa laban na ito."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Maghanap ng team o liga...",
+    "selectLeague": "Pumili ng Liga",
+    "allLeagues": "Lahat ng liga",
+    "leaguesSelected": "{count} na liga ang napili",
+    "clearAll": "Linisin ang Lahat",
+    "all": "Lahat",
+    "matches": "na laban",
+    "filterSortSettings": "Mga Setting ng Filter",
+    "filterSortSettingsDescription": "Mga opsyon sa pag-sort at view"
+  },
+  "filterSort": {
+    "title": "Mga Filter at Sort",
+    "tabs": {
+      "filters": "Mga Filter",
+      "sort": "Sort",
+      "view": "View"
+    },
+    "sortByLeague": "Ayon sa Liga",
+    "sortByTime": "Ayon sa Oras",
+    "sortByDate": "Ayon sa Petsa",
+    "sortByTeam": "Ayon sa Pangalan ng Team",
+    "viewGrouped": "I-group ayon sa Liga",
+    "viewGroupedDescription": "Ipakita ang mga laban sa ilalim ng league headers",
+    "viewFlat": "Flat List",
+    "viewFlatDescription": "Ipakita ang lahat ng laban nang walang league headers"
+  },
+  "match": {
+    "live": "Live",
+    "vs": "laban",
+    "kickoff": "Malapit nang mag-kickoff",
+    "detailTitle": "Detalye ng Laban",
+    "loadingDetail": "Naglo-load ng detalye ng laban...",
+    "detailError": "Nabigo ang Pag-load ng Detalye ng Laban",
+    "detailErrorMessage": "Mangyaring suriin ang iyong internet connection at subukan muli.",
+    "pendingAnalysis": "Sinusuri",
+    "pendingMessage": "Posisyon sa queue: #{position}\n\nAwtomatikong ma-u-update kapag tapos na ang analysis.",
+    "refresh": "I-refresh",
+    "dataDate": "Petsa ng Data",
+    "lastUpdate": "Huling Update",
+    "dataSource": "Pinagmulan ng Data",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "Live",
+      "scheduled": "Naka-schedule",
+      "finished": "Tapos na",
+      "postponed": "Na-postpone",
+      "canceled": "Na-cancel",
+      "abandoned": "Na-abandon",
+      "delayed": "Na-delay",
+      "halftime": "Half-time",
+      "extraTime": "Extra Time",
+      "penalties": "Penalties"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Mabilis na Buod",
+    "keyInsights": "Mga Pangunahing Insight",
+    "teamComparison": "Paghahambing ng Team",
+    "visualComparison": "Visual Comparison",
+    "strengthsWeaknesses": "Mga Lakas at Kahinaan",
+    "predictionSummary": "Buod ng Hula",
+    "detailedPredictions": "Detalyadong mga Hula",
+    "formStatsTitle": "Mga Statistics ng Forma",
+    "formStats": {
+      "winRate": "Win Rate",
+      "drawRate": "Draw Rate",
+      "lossRate": "Loss Rate",
+      "avgGoalsFor": "Avg Goals For",
+      "avgGoalsAgainst": "Avg Goals Against"
+    },
+    "recentForm": "Mga Detalye ng Kamakailang Forma",
+    "headToHead": "Head to Head",
+    "oddsTrends": "Pagsusuri ng Trend ng Odds",
+    "upcomingMatches": "Mga Darating na Laban",
+    "upcomingMatchesEmpty": "Walang available na darating na laban.",
+    "goalAnalysis": "Pagsusuri ng Goal",
+    "riskAnalysis": "Pagsusuri ng Risk",
+    "localInfo": "Lokal na Impormasyon",
+    "noDetailedAnalysis": "Walang Detalyadong Analysis",
+    "noDetailedAnalysisMessage": "Hindi pa available ang detalyadong analysis ng hula para sa laban na ito.",
+    "predictionsNotAvailable": "Hindi Available ang Analysis ng Hula",
+    "predictionsNotAvailableMessage": "Available lang ang section na ito sa Turkish ngayon. Malapit nang maidagdag ang iba pang wika.",
+    "predictionLabels": {
+      "matchResult": "Resulta ng Laban (1X2)",
+      "bothTeamsScore": "Magkakasabay na Mag-goal ang Dalawang Team",
+      "totalGoals": "Kabuuang Goals",
+      "firstHalfResult": "Resulta ng Unang Half",
+      "firstHalfGoals": "Mga Goal ng Unang Half",
+      "teamToScore": "Team na Mag-goal",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Mga Linya ng Over/Under",
+      "firstHalfOverUnder": "Over/Under ng Unang Half",
+      "firstHalfAsianHandicap": "Asian Handicap ng Unang Half"
+    },
+    "outcomeLabels": {
+      "home": "Panalo sa Home",
+      "draw": "Draw",
+      "away": "Panalo sa Away",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Oo",
+      "no": "Hindi",
+      "bttsYes": "Magkakasabay na mag-goal ang dalawang team: Oo",
+      "bttsNo": "Magkakasabay na mag-goal ang dalawang team: Hindi",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "Over ng Unang Half {value}",
+      "firstHalfUnder": "Under ng Unang Half {value}",
+      "homeWillScore": "Mag-goal ang home team",
+      "awayWillScore": "Mag-goal ang away team"
+    },
+    "aiAnalysis": "AI Analysis",
+    "mainPrediction": "Pangunahing Hula",
+    "recommendedPick": "Inirerekomendang Piliin",
+    "allProbabilities": "Lahat ng Probabilities",
+    "highest": "Pinakamataas",
+    "probability": "probability",
+    "summary": "Buod",
+    "recommended": "Inirerekomenda:",
+    "confidence": {
+      "veryHigh": "Napakataas na Confidence",
+      "high": "Mataas na Confidence",
+      "good": "Magandang Confidence",
+      "medium": "Medium Confidence",
+      "low": "Mababang Confidence"
+    },
+    "invalidMatchId": "Hindi wasto ang match ID",
+    "detailNotFound": "Hindi nahanap ang detalye ng laban.",
+    "reloadFailed": "Nabigo ang reload.",
+    "cacheMessage": "Hindi makuha ang current data, ipinapakita mula sa cache.",
+    "leagueInfo": "Impormasyon sa Liga",
+    "today": "Ngayon",
+    "tomorrow": "Bukas",
+    "manual": "Manual",
+    "scoreboard": {
+      "kickoffFallback": "Malapit nang magsimula ang kickoff",
+      "timezoneLabel": "Lokal na oras: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Home Team",
+      "awayFallback": "Away Team",
+      "homeGeneric": "home team",
+      "awayGeneric": "away team",
+      "formFallback": "Team {index}",
+      "homeShort": "HOME",
+      "awayShort": "AWAY"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "Nasa napakagandang forma ang {team} na may {winRate}% na win rate sa huling 5 na laban.",
+        "homeHighLossRate": "Nahihirapan ang {team} na may {lossRate}% na loss rate sa huling 5 na laban.",
+        "homeHighGoalsFor": "Nag-average ang {team} ng {goalsFor} na goals bawat laban kamakailan.",
+        "homeLowGoalsAgainst": "Kakaunti lang ang na-goal laban sa {team}, {goalsAgainst} lang bawat laban.",
+        "awayHighWinRate": "Nasa napakagandang forma ang {team} na may {winRate}% na win rate sa huling 5 na laban.",
+        "awayHighLossRate": "Nahihirapan ang {team} na may {lossRate}% na loss rate sa huling 5 na laban.",
+        "homeWinStreak": "Nanalo ang {team} ng {streak} na laban nang sunud-sunod.",
+        "awayLosingStreak": "Natalo ang {team} ng {streak} na laban nang sunud-sunod.",
+        "homeGoalDifference": "Malinaw na advantage ang {team} sa goal difference.",
+        "homeH2HSuperiority": "Nangibabaw ang {team} sa kamakailang head-to-head meetings.",
+        "aiVeryHighConfidence": "Napakataas na confidence ang ipinapakita ng AI predictions (average %{avgConfidence}).",
+        "aiSingleHighConfidence": "Napakataas na confidence ang hula na \"{prediction}\" (%{confidence}). Pinaka-malamang na resulta: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Home",
+        "away": "Away",
+        "balanced": "Balanced",
+        "homeAdvantage": "May advantage sa forma ang home team",
+        "awayAdvantage": "May advantage sa forma ang away team",
+        "balancedForm": "Balanced ang forma ng parehong team",
+        "highConfidence": "Mataas na confidence na hula",
+        "mediumHighConfidence": "Medium-high confidence na hula",
+        "balancedConfidence": "Balanced na hula",
+        "lowConfidence": "Mababang confidence na hula",
+        "homeAdvantageSuffix": "• May home advantage",
+        "awayAdvantageSuffix": "• Advantage ng away team"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Home",
+      "away": "Away",
+      "neutral": "Neutral",
+      "form": "Forma"
+    },
+    "teamComparisonCard": {
+      "formScore": "Forma: {score}/100",
+      "advantage": {
+        "home": "Malinaw na advantage ang {team}",
+        "away": "Malinaw na advantage ang {team}",
+        "balanced": "Pareho ang mga team"
+      },
+      "predictionLabel": "Hula",
+      "confidenceLabel": "Confidence",
+      "predictionValues": {
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw",
+        "balanced": "Balanced"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Paghahambing ng Performance",
+      "subtitle": "Visual comparison ng parehong team",
+      "metrics": {
+        "formScore": "Form Score",
+        "winRate": "Win %",
+        "avgGoals": "Avg Goals",
+        "defense": "Defense"
+      },
+      "units": {
+        "goalsPerMatch": " goals/match",
+        "defenseHint": " (mas kaunti ang goals = mas mabuti)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Pagsusuri ng Goal",
+      "summary": {
+        "expectedGoals": "Inaasahang Goals",
+        "prediction": "Hula"
+      },
+      "expectation": {
+        "high": "Mataas na inaasahang goals",
+        "mediumHigh": "Medium-high na inaasahang goals",
+        "medium": "Medium na inaasahang goals",
+        "low": "Mababang inaasahang goals"
+      },
+      "teamStats": {
+        "avgGoals": "Avg Goals",
+        "avgConceded": "Na-goal Laban",
+        "overUnderLabel": "Piliin ang Over/Under",
+        "confidence": "Confidence"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Pagsusuri ng Risk",
+      "riskLevel": {
+        "high": "Mataas na Risk",
+        "medium": "Medium Risk",
+        "low": "Mababang Risk"
+      },
+      "noRisk": "Walang notable na risk factors",
+      "factors": {
+        "highLossRate": "Nahihirapan ang {team} na may {lossRate}% na loss rate sa huling 5 na laban.",
+        "mediumLossRate": "May mga senyales ng pagbaba ng forma ang {team}.",
+        "lossStreak": "Natalo ang {team} ng {streak} na laban nang sunud-sunod.",
+        "lowScoring": "Nahihirapan ang {team} na mag-goal ({goalsFor} goals bawat laban).",
+        "highConceding": "Maraming na-goal laban sa {team} ({goalsAgainst} bawat laban).",
+        "lowFormScore": "Mababa ang form score ng {team} ({formScore}/100).",
+        "mediumFormScore": "Hindi consistent ang forma ng {team}.",
+        "weakAway": "Mahina ang away performances ng {team}."
+      }
+    },
+    "advancedMetrics": {
+      "title": "Mga Advanced Insights",
+      "sampleLabel": "Batay sa huling {matches} na laban",
+      "weightedScore": {
+        "title": "Weighted Score System",
+        "description": "Binibigyan ng timbang ang mga resulta ng kamakailang forma upang i-highlight ang kasalukuyang lakas.",
+        "homeLabel": "Home weighted score",
+        "awayLabel": "Away weighted score"
+      },
+      "momentum": {
+        "title": "Momentum Indicator",
+        "description": "Goal difference momentum na nakuha mula sa kamakailang performances.",
+        "bullish": "Bullish momentum",
+        "neutral": "Neutral momentum",
+        "bearish": "Bearish momentum"
+      },
+      "confidence": {
+        "title": "Confidence Blend",
+        "description": "Composite confidence na nagkakombina ng AI picks at success history.",
+        "scoreLabel": "Composite confidence",
+        "topPickLabel": "Top signal",
+        "noPick": "Walang available na signal"
+      },
+      "poisson": {
+        "title": "Poisson Goal Model",
+        "description": "Tinatayang distribution ng goals batay sa kamakailang scoring rates.",
+        "expectedHeader": "Inaasahang goals",
+        "goalColumn": "Goals",
+        "homeColumn": "Home",
+        "awayColumn": "Away",
+        "goalLabel": "{value} goals",
+        "goalLabelPlus": "3+ goals"
+      },
+      "goalTrend": {
+        "title": "Goal Trend",
+        "description": "Kamakailang scoring vs conceding totals.",
+        "team": "Team",
+        "forLabel": "GF",
+        "againstLabel": "GA",
+        "deltaLabel": "Diff"
+      },
+      "confidenceLadder": {
+        "title": "Confidence Ladder",
+        "description": "Ranking ng confidence ng hula."
+      },
+      "overUnder": {
+        "title": "Over/Under Confidence",
+        "description": "Mga pangunahing probabilities ng total goals."
+      },
+      "handicap": {
+        "title": "Handicap Insight",
+        "description": "Pinakabagong Asian handicap line."
+      },
+      "halfComparison": {
+        "title": "1st Half vs Full Time",
+        "description": "Paano nagbabago ang confidence sa pagitan ng HT at FT picks.",
+        "halfLabel": "HT %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Mga Pangunahing Signal",
+      "weighted": {
+        "homeAdvantage": "Malakas na advantage sa forma ang {homeTeam} (+{value} pts higit sa {awayTeam}).",
+        "awayAdvantage": "Mas mataas na weighted forma ang {awayTeam} (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "Nagpapakita ng attacking momentum ang {team} (+{value} goal momentum).",
+        "homeBearish": "Pumapalamig ang momentum ng {team} ({value}).",
+        "awayBullish": "Bumubuo ng positive momentum ang {team} (+{value}).",
+        "awayBearish": "Pababa ang trend ng {team} ({value})."
+      },
+      "confidence": {
+        "high": "Mataas pa rin ang AI confidence ({score}%).",
+        "low": "Limitado ang AI confidence ({score}%).",
+        "topPick": "Top AI signal: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Mga inaasahang goals sa paligid ng {goals}; malamang na high-scoring scenario.",
+        "lowScoring": "Tinatayang total na malapit sa {goals} goals; posible ang low-scoring pattern.",
+        "homeCleanSheet": "{team} clean-sheet probability {percent}%.",
+        "awayCleanSheet": "{team} clean-sheet probability {percent}%."
+      },
+      "sampleSmall": "May {matches} lang na kamakailang laban na available—mag-ingat sa pag-interpret."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Mga Lakas at Kahinaan",
+      "subtitle": "Breakdown ng performance bawat team",
+      "strengthsTitle": "Mga Lakas",
+      "weaknessesTitle": "Mga Kahinaan",
+      "noData": "Hindi sapat ang data",
+      "strengths": {
+        "formHigh": "Mataas na form score",
+        "winRateHigh": "Malakas na win rate",
+        "attackStrong": "Malakas na atake",
+        "defenseStrong": "Matibay na depensa",
+        "goalDiffPositive": "Positibong goal difference",
+        "winStreak": "{count}-match winning streak"
+      },
+      "weaknesses": {
+        "formLow": "Mababang form score",
+        "winRateLow": "Mababang win rate",
+        "attackWeak": "Mahinang atake",
+        "defenseWeak": "Mahinang depensa",
+        "goalDiffNegative": "Negatibong goal difference",
+        "lossStreak": "{count}-match losing streak"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "W",
+        "draw": "D",
+        "loss": "L",
+        "unknown": "—"
+      },
+      "titleFallback": "Kamakailang Forma",
+      "homeTitle": "Home Forma",
+      "awayTitle": "Away Forma"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Form Score",
+      "goalDifference": "Goal Difference",
+      "homeBadge": "HOME",
+      "awayBadge": "AWAY",
+      "streakLabel": "{count}-match {type} streak",
+      "streakTypes": {
+        "win": "winning",
+        "draw": "drawing",
+        "loss": "losing"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Odds",
+      "matchResult": "Resulta ng Laban",
+      "europeanOdds": "European Odds",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Mga Linya ng Over/Under",
+      "firstHalf": "Unang Half",
+      "firstHalfEuropean": "European Odds ng Unang Half",
+      "firstHalfAsian": "Asian Handicap ng Unang Half",
+      "firstHalfOverUnder": "Over/Under ng Unang Half",
+      "openingLine": "Opening Line",
+      "closingLine": "Closing Line"
+    },
+    "reanalyze": {
+      "title": "Manual Refresh",
+      "description": "Kung mukhang outdated ang stats, mag-request ng fresh scrape. Available isang beses bawat 15 minuto.",
+      "button": "Mag-request ng bagong analysis",
+      "buttonLoading": "Nagse-send...",
+      "queued": "Naka-queue ang request (posisyon {position}).",
+      "alreadyQueued": "Nasa analysis queue na ang laban na ito.",
+      "rateLimited": "Mangyaring maghintay bago mag-request ng ibang refresh para sa laban na ito.",
+      "nextAllowed": "Available ang susunod na manual request sa {time}.",
+      "error": "Hindi ma-request ang bagong analysis. Mangyaring subukan muli mamaya."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Maligayang Pagdating!",
+    "subtitle": "Mangyaring pumili ng iyong preferred na wika at time zone",
+    "languageSelection": "Pagpili ng Wika",
+    "timezoneSelection": "Time Zone",
+    "saving": "Nagse-save...",
+    "continue": "Magpatuloy",
+    "timeFormatSelection": "Pumili ng iyong preferred na time format"
+  },
+  "emptyState": {
+    "noData": "Walang Data",
+    "tryAgain": "Subukan Muli"
+  },
+  "matchesScreen": {
+    "title": "Fixture ng Laban",
+    "lastRefresh": "Huling update",
+    "tabs": {
+      "today": "Ngayon",
+      "tomorrow": "Bukas"
+    },
+    "allLeagues": "Lahat ng liga",
+    "searchPlaceholder": "Maghanap ng team o liga...",
+    "clearFilters": "Linisin ang mga filter",
+    "loading": "Naglo-load ng mga laban...",
+    "emptyTitle": "Walang Nahanap na Laban",
+    "emptyMessage": "Walang available na laban para sa view na ito.\n\nMalapit nang maidagdag ang mga bagong laban!",
+    "emptyFiltered": "Walang nahanap na laban na tumugma sa iyong criteria.\n\nMaaari mong linisin ang mga filter at subukan muli.",
+    "statusFallback": "Naka-schedule",
+    "staleDataWarning": "Ipinapakita ang fixtures mula sa {date}. Naghihintay ng pinakabagong data para i-refresh."
+  },
+  "favoritesScreen": {
+    "title": "Mga Paborito",
+    "emptyTitle": "Walang Paboritong Laban",
+    "emptyMessage": "Wala ka pang naidagdag na laban sa mga paborito.\n\nI-tap ang star icon sa match cards para maidagdag dito.",
+    "loading": "Naglo-load..."
+  },
+  "errors": {
+    "timeout": "Nag-timeout ang request. Mangyaring suriin ang iyong connection at subukan muli.",
+    "network": "Network error. Mangyaring i-verify ang iyong internet connection.",
+    "api": "Pansamantalang hindi available ang server. Mangyaring subukan muli mamaya.",
+    "unknown": "May naganap na hindi inaasahang error."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Turkish",
+      "en": "English",
+      "es": "Spanish",
+      "de": "German",
+      "it": "Italian",
+      "zh-TW": "Traditional Chinese",
+      "zh-CN": "Simplified Chinese",
+      "ja": "Japanese",
+      "id": "Indonesian",
+      "fr": "French",
+      "ru": "Russian",
+      "tl": "Tagalog",
+      "ko": "Korean",
+      "ar": "Arabic",
+      "pt": "Portuguese"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "Istanbul (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "London (GMT+0)",
+      "MADRID": "Madrid (GMT+1)",
+      "BERLIN": "Berlin (GMT+1)",
+      "PARIS": "Paris (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Mexico City (GMT-6)",
+      "BUENOS_AIRES": "Buenos Aires (GMT-3)",
+      "NEW_YORK": "New York (GMT-5)",
+      "LOS_ANGELES": "Los Angeles (GMT-8)",
+      "CHICAGO": "Chicago (GMT-6)",
+      "BOGOTA": "Bogotá (GMT-5)",
+      "LIMA": "Lima (GMT-5)",
+      "SANTIAGO": "Santiago (GMT-4)",
+      "DUBAI": "Dubai (GMT+4)",
+      "TOKYO": "Tokyo (GMT+9)",
+      "SYDNEY": "Sydney (GMT+10)"
+    },
+    "title": "Mga Setting",
+    "preferencesSection": "Mga Kagustuhan",
+    "aboutSection": "Tungkol sa GoalBlip",
+    "language": "Wika",
+    "timezone": "Time Zone",
+    "timeFormat": "Time Format",
+    "timeFormatOptions": {
+      "auto": "Auto",
+      "24h": "24-hour",
+      "12h": "12-hour"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI-powered match analysis platform"
+  }
+}
+

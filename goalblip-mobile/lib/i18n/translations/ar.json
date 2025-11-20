@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "retry": "إعادة المحاولة",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "close": "إغلاق",
+    "search": "بحث",
+    "clear": "مسح",
+    "all": "الكل",
+    "select": "اختر",
+    "continue": "متابعة",
+    "back": "رجوع",
+    "home": "الرئيسية",
+    "favorites": "المفضلة",
+    "unknownLeague": "دوري غير معروف",
+    "unknown": "غير معروف",
+    "prediction": "التنبؤ",
+    "time": {
+      "justNow": "الآن",
+      "minutes": "{count}د",
+      "hours": "{count}س",
+      "days": "{count}ي"
+    },
+    "settings": "الإعدادات",
+    "menu": "القائمة"
+  },
+  "drawer": {
+    "title": "المباريات",
+    "searchPrompt": "البحث عن المباريات",
+    "searchPromptDescription": "ابحث عن المباريات بكتابة اسم الفريق أو الدوري"
+  },
+  "home": {
+    "today": "اليوم",
+    "tomorrow": "غداً",
+    "noMatches": "لم يتم العثور على مباريات",
+    "noMatchesMessage": "لا توجد مباريات متاحة لهذا العرض بعد.\n\nسيتم إضافة مباريات جديدة قريباً!",
+    "noMatchesFiltered": "لم يتم العثور على مباريات تطابق معايير البحث.\n\nيمكنك مسح المرشحات والمحاولة مرة أخرى.",
+    "clearFilters": "مسح المرشحات",
+    "refreshing": "جاري التحديث...",
+    "dataLoadError": "فشل تحميل البيانات",
+    "dataLoadErrorMessage": "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.",
+    "loadingMore": "جاري تحميل المزيد...",
+    "topLeagues": {
+      "matches": "{count} مباراة",
+      "firstMatch": "أول انطلاق {time}",
+      "waitingKickoff": "في انتظار انطلاق المباراة"
+    },
+    "aiShortlist": {
+      "predictionPending": "التنبؤ قيد الانتظار",
+      "noPredictionTitle": "لا يوجد تنبؤ بالذكاء الاصطناعي",
+      "noPredictionMessage": "التحليل غير جاهز بعد لهذه المباراة."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "ابحث عن فريق أو دوري...",
+    "selectLeague": "اختر الدوري",
+    "allLeagues": "جميع الدوريات",
+    "leaguesSelected": "تم اختيار {count} دوري",
+    "clearAll": "مسح الكل",
+    "all": "الكل",
+    "matches": "مباريات",
+    "filterSortSettings": "إعدادات المرشح",
+    "filterSortSettingsDescription": "خيارات الترتيب والعرض"
+  },
+  "filterSort": {
+    "title": "المرشحات والترتيب",
+    "tabs": {
+      "filters": "المرشحات",
+      "sort": "الترتيب",
+      "view": "العرض"
+    },
+    "sortByLeague": "حسب الدوري",
+    "sortByTime": "حسب الوقت",
+    "sortByDate": "حسب التاريخ",
+    "sortByTeam": "حسب اسم الفريق",
+    "viewGrouped": "تجميع حسب الدوري",
+    "viewGroupedDescription": "عرض المباريات تحت رؤوس الأقسام",
+    "viewFlat": "قائمة مسطحة",
+    "viewFlatDescription": "عرض جميع المباريات بدون رؤوس أقسام"
+  },
+  "match": {
+    "live": "مباشر",
+    "vs": "ضد",
+    "kickoff": "انطلاق قريب",
+    "detailTitle": "تفاصيل المباراة",
+    "loadingDetail": "جاري تحميل تفاصيل المباراة...",
+    "detailError": "فشل تحميل تفاصيل المباراة",
+    "detailErrorMessage": "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.",
+    "pendingAnalysis": "جاري التحليل",
+    "pendingMessage": "موضع في الطابور: #{position}\n\nسيتم التحديث تلقائياً عند اكتمال التحليل.",
+    "refresh": "تحديث",
+    "dataDate": "تاريخ البيانات",
+    "lastUpdate": "آخر تحديث",
+    "dataSource": "مصدر البيانات",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "مباشر",
+      "scheduled": "مجدولة",
+      "finished": "انتهت",
+      "postponed": "مؤجلة",
+      "canceled": "ملغاة",
+      "abandoned": "متوقفة",
+      "delayed": "متأخرة",
+      "halftime": "نصف الوقت",
+      "extraTime": "وقت إضافي",
+      "penalties": "ركلات جزاء"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "ملخص سريع",
+    "keyInsights": "رؤى رئيسية",
+    "teamComparison": "مقارنة الفريقين",
+    "visualComparison": "مقارنة بصرية",
+    "strengthsWeaknesses": "نقاط القوة والضعف",
+    "predictionSummary": "ملخص التنبؤ",
+    "detailedPredictions": "تنبؤات مفصلة",
+    "formStatsTitle": "إحصائيات الأداء",
+    "formStats": {
+      "winRate": "معدل الفوز",
+      "drawRate": "معدل التعادل",
+      "lossRate": "معدل الخسارة",
+      "avgGoalsFor": "متوسط الأهداف المسجلة",
+      "avgGoalsAgainst": "متوسط الأهداف المستلمة"
+    },
+    "recentForm": "تفاصيل الأداء الأخير",
+    "headToHead": "المواجهات المباشرة",
+    "oddsTrends": "تحليل اتجاهات الاحتمالات",
+    "upcomingMatches": "المباريات القادمة",
+    "upcomingMatchesEmpty": "لا توجد مباريات قادمة متاحة.",
+    "goalAnalysis": "تحليل الأهداف",
+    "riskAnalysis": "تحليل المخاطر",
+    "localInfo": "معلومات محلية",
+    "noDetailedAnalysis": "لا يوجد تحليل مفصل",
+    "noDetailedAnalysisMessage": "تحليل التنبؤ المفصل غير متاح بعد لهذه المباراة.",
+    "predictionsNotAvailable": "تحليل التنبؤ غير متاح",
+    "predictionsNotAvailableMessage": "هذا القسم متاح حالياً باللغة التركية فقط. سيتم إضافة لغات أخرى قريباً.",
+    "predictionLabels": {
+      "matchResult": "نتيجة المباراة (1X2)",
+      "bothTeamsScore": "تسجيل كلا الفريقين",
+      "totalGoals": "إجمالي الأهداف",
+      "firstHalfResult": "نتيجة الشوط الأول",
+      "firstHalfGoals": "أهداف الشوط الأول",
+      "teamToScore": "الفريق الذي سيسجل",
+      "asianHandicap": "ال handicap الآسيوي",
+      "overUnderLines": "خطوط فوق/تحت",
+      "firstHalfOverUnder": "فوق/تحت الشوط الأول",
+      "firstHalfAsianHandicap": "ال handicap الآسيوي للشوط الأول"
+    },
+    "outcomeLabels": {
+      "home": "فوز الفريق المضيف",
+      "draw": "تعادل",
+      "away": "فوز الفريق الضيف",
+      "over": "فوق",
+      "under": "تحت",
+      "yes": "نعم",
+      "no": "لا",
+      "bttsYes": "تسجيل كلا الفريقين: نعم",
+      "bttsNo": "تسجيل كلا الفريقين: لا",
+      "overWithValue": "فوق {value}",
+      "underWithValue": "تحت {value}",
+      "firstHalfOver": "الشوط الأول فوق {value}",
+      "firstHalfUnder": "الشوط الأول تحت {value}",
+      "homeWillScore": "الفريق المضيف سيسجل",
+      "awayWillScore": "الفريق الضيف سيسجل"
+    },
+    "aiAnalysis": "تحليل الذكاء الاصطناعي",
+    "mainPrediction": "التنبؤ الرئيسي",
+    "recommendedPick": "الاختيار الموصى به",
+    "allProbabilities": "جميع الاحتمالات",
+    "highest": "الأعلى",
+    "probability": "احتمال",
+    "summary": "ملخص",
+    "recommended": "موصى به:",
+    "confidence": {
+      "veryHigh": "ثقة عالية جداً",
+      "high": "ثقة عالية",
+      "good": "ثقة جيدة",
+      "medium": "ثقة متوسطة",
+      "low": "ثقة منخفضة"
+    },
+    "invalidMatchId": "معرف مباراة غير صالح",
+    "detailNotFound": "لم يتم العثور على تفاصيل المباراة.",
+    "reloadFailed": "فشلت إعادة التحميل.",
+    "cacheMessage": "تعذر الحصول على البيانات الحالية، يتم العرض من الذاكرة المؤقتة.",
+    "leagueInfo": "معلومات الدوري",
+    "today": "اليوم",
+    "tomorrow": "غداً",
+    "manual": "يدوي",
+    "scoreboard": {
+      "kickoffFallback": "انطلاق المباراة قادم",
+      "timezoneLabel": "الوقت المحلي: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "الفريق المضيف",
+      "awayFallback": "الفريق الضيف",
+      "homeGeneric": "الفريق المضيف",
+      "awayGeneric": "الفريق الضيف",
+      "formFallback": "الفريق {index}",
+      "homeShort": "مضيف",
+      "awayShort": "ضيف"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} في حالة ممتازة مع معدل فوز {winRate}% في آخر 5 مباريات.",
+        "homeHighLossRate": "{team} يواجه صعوبات مع معدل خسارة {lossRate}% في آخر 5 مباريات.",
+        "homeHighGoalsFor": "{team} يسجل في المتوسط {goalsFor} أهداف في كل مباراة مؤخراً.",
+        "homeLowGoalsAgainst": "{team} يستقبل أهدافاً قليلة جداً، فقط {goalsAgainst} في كل مباراة.",
+        "awayHighWinRate": "{team} في حالة ممتازة مع معدل فوز {winRate}% في آخر 5 مباريات.",
+        "awayHighLossRate": "{team} يواجه صعوبات مع معدل خسارة {lossRate}% في آخر 5 مباريات.",
+        "homeWinStreak": "{team} فاز في {streak} مباريات متتالية.",
+        "awayLosingStreak": "{team} خسر في {streak} مباريات متتالية.",
+        "homeGoalDifference": "{team} يحمل ميزة واضحة في فارق الأهداف.",
+        "homeH2HSuperiority": "{team} هيمن على المواجهات المباشرة الأخيرة.",
+        "aiVeryHighConfidence": "تنبؤات الذكاء الاصطناعي تظهر ثقة عالية جداً (متوسط %{avgConfidence}).",
+        "aiSingleHighConfidence": "تنبؤ \"{prediction}\" لديه ثقة عالية جداً (%{confidence}). النتيجة الأكثر احتمالاً: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "مضيف",
+        "away": "ضيف",
+        "balanced": "متوازن",
+        "homeAdvantage": "الفريق المضيف يحمل ميزة الأداء",
+        "awayAdvantage": "الفريق الضيف يحمل ميزة الأداء",
+        "balancedForm": "كلا الفريقين في حالة متوازنة",
+        "highConfidence": "تنبؤ بثقة عالية",
+        "mediumHighConfidence": "تنبؤ بثقة متوسطة-عالية",
+        "balancedConfidence": "تنبؤ متوازن",
+        "lowConfidence": "تنبؤ بثقة منخفضة",
+        "homeAdvantageSuffix": "• ميزة الفريق المضيف موجودة",
+        "awayAdvantageSuffix": "• ميزة الفريق الضيف"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "مضيف",
+      "away": "ضيف",
+      "neutral": "محايد",
+      "form": "الأداء"
+    },
+    "teamComparisonCard": {
+      "formScore": "الأداء: {score}/100",
+      "advantage": {
+        "home": "{team} يحمل ميزة واضحة",
+        "away": "{team} يحمل ميزة واضحة",
+        "balanced": "الفريقان متعادلان"
+      },
+      "predictionLabel": "التنبؤ",
+      "confidenceLabel": "الثقة",
+      "predictionValues": {
+        "home": "مضيف",
+        "away": "ضيف",
+        "draw": "تعادل",
+        "balanced": "متوازن"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "مقارنة الأداء",
+      "subtitle": "مقارنة بصرية للفرق",
+      "metrics": {
+        "formScore": "نقاط الأداء",
+        "winRate": "معدل الفوز",
+        "avgGoals": "متوسط الأهداف",
+        "defense": "الدفاع"
+      },
+      "units": {
+        "goalsPerMatch": " أهداف/مباراة",
+        "defenseHint": " (أهداف أقل = أفضل)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "تحليل الأهداف",
+      "summary": {
+        "expectedGoals": "الأهداف المتوقعة",
+        "prediction": "التنبؤ"
+      },
+      "expectation": {
+        "high": "توقع أهداف عالي",
+        "mediumHigh": "توقع أهداف متوسط-عالي",
+        "medium": "توقع أهداف متوسط",
+        "low": "توقع أهداف منخفض"
+      },
+      "teamStats": {
+        "avgGoals": "متوسط الأهداف",
+        "avgConceded": "المستلمة",
+        "overUnderLabel": "اختيار فوق/تحت",
+        "confidence": "الثقة"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "تحليل المخاطر",
+      "riskLevel": {
+        "high": "مخاطر عالية",
+        "medium": "مخاطر متوسطة",
+        "low": "مخاطر منخفضة"
+      },
+      "noRisk": "لا توجد عوامل مخاطر ملحوظة",
+      "factors": {
+        "highLossRate": "{team} يواجه صعوبات مع معدل خسارة {lossRate}% في آخر 5 مباريات.",
+        "mediumLossRate": "{team} يظهر علامات انخفاض في الأداء.",
+        "lossStreak": "{team} خسر في {streak} مباريات متتالية.",
+        "lowScoring": "{team} يواجه صعوبة في التسجيل ({goalsFor} أهداف في كل مباراة).",
+        "highConceding": "{team} يستقبل أهدافاً كثيرة ({goalsAgainst} في كل مباراة).",
+        "lowFormScore": "{team} يحمل نقاط أداء منخفضة ({formScore}/100).",
+        "mediumFormScore": "{team} يبقى غير متسق في الأداء.",
+        "weakAway": "{team} لديه أداء ضعيف في المباريات خارج أرضه."
+      }
+    },
+    "advancedMetrics": {
+      "title": "رؤى متقدمة",
+      "sampleLabel": "بناءً على آخر {matches} مباراة",
+      "weightedScore": {
+        "title": "نظام النقاط الموزونة",
+        "description": "نتائج الأداء الأخيرة موزونة لتسليط الضوء على القوة الحالية.",
+        "homeLabel": "نقاط الفريق المضيف الموزونة",
+        "awayLabel": "نقاط الفريق الضيف الموزونة"
+      },
+      "momentum": {
+        "title": "مؤشر الزخم",
+        "description": "زخم فارق الأهداف المستمد من الأداءات الأخيرة.",
+        "bullish": "زخم صاعد",
+        "neutral": "زخم محايد",
+        "bearish": "زخم هابط"
+      },
+      "confidence": {
+        "title": "مزيج الثقة",
+        "description": "ثقة مركبة تمزج اختيارات الذكاء الاصطناعي وتاريخ النجاح.",
+        "scoreLabel": "ثقة مركبة",
+        "topPickLabel": "أفضل إشارة",
+        "noPick": "لا توجد إشارة متاحة"
+      },
+      "poisson": {
+        "title": "نموذج Poisson للأهداف",
+        "description": "توزيع أهداف تقريبي بناءً على معدلات التسجيل الأخيرة.",
+        "expectedHeader": "الأهداف المتوقعة",
+        "goalColumn": "الأهداف",
+        "homeColumn": "مضيف",
+        "awayColumn": "ضيف",
+        "goalLabel": "{value} أهداف",
+        "goalLabelPlus": "3+ أهداف"
+      },
+      "goalTrend": {
+        "title": "اتجاه الأهداف",
+        "description": "إجماليات التسجيل مقابل الاستقبال الأخيرة.",
+        "team": "الفريق",
+        "forLabel": "مسجلة",
+        "againstLabel": "مستلمة",
+        "deltaLabel": "الفرق"
+      },
+      "confidenceLadder": {
+        "title": "سلم الثقة",
+        "description": "ترتيب ثقة التنبؤ."
+      },
+      "overUnder": {
+        "title": "ثقة فوق/تحت",
+        "description": "احتمالات إجمالي الأهداف الرئيسية."
+      },
+      "handicap": {
+        "title": "رؤية handicap",
+        "description": "أحدث خط handicap آسيوي."
+      },
+      "halfComparison": {
+        "title": "الشوط الأول مقابل الوقت الكامل",
+        "description": "كيف تتغير الثقة بين اختيارات الشوط الأول والوقت الكامل.",
+        "halfLabel": "الشوط الأول %{value}",
+        "fullLabel": "الوقت الكامل %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "إشارات رئيسية",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} يحمل ميزة أداء قوية (+{value} نقطة على {awayTeam}).",
+        "awayAdvantage": "{awayTeam} يحمل أداء موزون متفوق (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} يظهر زخماً هجومياً (+{value} زخم أهداف).",
+        "homeBearish": "زخم {team} يبرد ({value}).",
+        "awayBullish": "{team} يبني زخماً إيجابياً (+{value}).",
+        "awayBearish": "{team} يتجه نحو الانخفاض ({value})."
+      },
+      "confidence": {
+        "high": "ثقة الذكاء الاصطناعي تبقى عالية ({score}%).",
+        "low": "ثقة الذكاء الاصطناعي محدودة ({score}%).",
+        "topPick": "أفضل إشارة ذكاء اصطناعي: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "الأهداف المتوقعة حوالي {goals}؛ سيناريو تسجيل عالي محتمل.",
+        "lowScoring": "إجمالي متوقع قريب من {goals} أهداف؛ نمط تسجيل منخفض محتمل.",
+        "homeCleanSheet": "احتمال عدم استقبال {team} أهداف {percent}%.",
+        "awayCleanSheet": "احتمال عدم استقبال {team} أهداف {percent}%."
+      },
+      "sampleSmall": "فقط {matches} مباريات حديثة متاحة—فسر بحذر."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "نقاط القوة والضعف",
+      "subtitle": "تحليل الأداء لكل فريق",
+      "strengthsTitle": "نقاط القوة",
+      "weaknessesTitle": "نقاط الضعف",
+      "noData": "لا توجد بيانات كافية",
+      "strengths": {
+        "formHigh": "نقاط أداء عالية",
+        "winRateHigh": "معدل فوز قوي",
+        "attackStrong": "هجوم قوي",
+        "defenseStrong": "دفاع صلب",
+        "goalDiffPositive": "فارق أهداف إيجابي",
+        "winStreak": "سلسلة فوز {count} مباراة"
+      },
+      "weaknesses": {
+        "formLow": "نقاط أداء منخفضة",
+        "winRateLow": "معدل فوز منخفض",
+        "attackWeak": "هجوم ضعيف",
+        "defenseWeak": "دفاع ضعيف",
+        "goalDiffNegative": "فارق أهداف سلبي",
+        "lossStreak": "سلسلة خسارة {count} مباراة"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "ف",
+        "draw": "ت",
+        "loss": "خ",
+        "unknown": "—"
+      },
+      "titleFallback": "الأداء الأخير",
+      "homeTitle": "أداء الفريق المضيف",
+      "awayTitle": "أداء الفريق الضيف"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "نقاط الأداء",
+      "goalDifference": "فارق الأهداف",
+      "homeBadge": "مضيف",
+      "awayBadge": "ضيف",
+      "streakLabel": "سلسلة {count} مباراة {type}",
+      "streakTypes": {
+        "win": "فوز",
+        "draw": "تعادل",
+        "loss": "خسارة"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "الاحتمالات",
+      "matchResult": "نتيجة المباراة",
+      "europeanOdds": "الاحتمالات الأوروبية",
+      "asianHandicap": "ال handicap الآسيوي",
+      "overUnderLines": "خطوط فوق/تحت",
+      "firstHalf": "الشوط الأول",
+      "firstHalfEuropean": "احتمالات الشوط الأول الأوروبية",
+      "firstHalfAsian": "ال handicap الآسيوي للشوط الأول",
+      "firstHalfOverUnder": "فوق/تحت الشوط الأول",
+      "openingLine": "خط الافتتاح",
+      "closingLine": "خط الإغلاق"
+    },
+    "reanalyze": {
+      "title": "تحديث يدوي",
+      "description": "إذا بدت الإحصائيات قديمة، اطلب كشطاً جديداً. متاح مرة كل 15 دقيقة.",
+      "button": "طلب تحليل جديد",
+      "buttonLoading": "جاري الإرسال...",
+      "queued": "تم إضافة الطلب إلى الطابور (الموضع {position}).",
+      "alreadyQueued": "هذه المباراة موجودة بالفعل في طابور التحليل.",
+      "rateLimited": "يرجى الانتظار قبل طلب تحديث آخر لهذه المباراة.",
+      "nextAllowed": "الطلب اليدوي التالي متاح في {time}.",
+      "error": "تعذر طلب تحليل جديد. يرجى المحاولة مرة أخرى لاحقاً."
+    }
+  },
+  "initialSetup": {
+    "welcome": "مرحباً!",
+    "subtitle": "يرجى اختيار لغتك المفضلة والمنطقة الزمنية",
+    "languageSelection": "اختيار اللغة",
+    "timezoneSelection": "المنطقة الزمنية",
+    "saving": "جاري الحفظ...",
+    "continue": "متابعة",
+    "timeFormatSelection": "اختر تنسيق الوقت المفضل لديك"
+  },
+  "emptyState": {
+    "noData": "لا توجد بيانات",
+    "tryAgain": "حاول مرة أخرى"
+  },
+  "matchesScreen": {
+    "title": "جدول المباريات",
+    "lastRefresh": "آخر تحديث",
+    "tabs": {
+      "today": "اليوم",
+      "tomorrow": "غداً"
+    },
+    "allLeagues": "جميع الدوريات",
+    "searchPlaceholder": "ابحث عن فريق أو دوري...",
+    "clearFilters": "مسح المرشحات",
+    "loading": "جاري تحميل المباريات...",
+    "emptyTitle": "لم يتم العثور على مباريات",
+    "emptyMessage": "لا توجد مباريات متاحة لهذا العرض بعد.\n\nسيتم إضافة مباريات جديدة قريباً!",
+    "emptyFiltered": "لم يتم العثور على مباريات تطابق معاييرك.\n\nيمكنك مسح المرشحات والمحاولة مرة أخرى.",
+    "statusFallback": "مجدولة",
+    "staleDataWarning": "عرض جدول من {date}. في انتظار تحديث أحدث البيانات."
+  },
+  "favoritesScreen": {
+    "title": "المفضلة",
+    "emptyTitle": "لا توجد مباريات مفضلة",
+    "emptyMessage": "لم تقم بإضافة أي مباريات إلى المفضلة بعد.\n\nاضغط على أيقونة النجمة على بطاقات المباريات لإضافتها هنا.",
+    "loading": "جاري التحميل..."
+  },
+  "errors": {
+    "timeout": "انتهت مهلة الطلب. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+    "network": "خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت.",
+    "api": "الخادم غير متاح مؤقتاً. يرجى المحاولة مرة أخرى لاحقاً.",
+    "unknown": "حدث خطأ غير متوقع."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "التركية",
+      "en": "الإنجليزية",
+      "es": "الإسبانية",
+      "de": "الألمانية",
+      "it": "الإيطالية",
+      "zh-TW": "الصينية التقليدية",
+      "zh-CN": "الصينية المبسطة",
+      "ja": "اليابانية",
+      "id": "الإندونيسية",
+      "fr": "الفرنسية",
+      "ru": "الروسية",
+      "tl": "التاغالوغية",
+      "ko": "الكورية",
+      "ar": "العربية",
+      "pt": "البرتغالية"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "إسطنبول (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "لندن (GMT+0)",
+      "MADRID": "مدريد (GMT+1)",
+      "BERLIN": "برلين (GMT+1)",
+      "PARIS": "باريس (GMT+1)",
+      "CIUDAD_DE_MEXICO": "مدينة مكسيكو (GMT-6)",
+      "BUENOS_AIRES": "بوينس آيرس (GMT-3)",
+      "NEW_YORK": "نيويورك (GMT-5)",
+      "LOS_ANGELES": "لوس أنجلوس (GMT-8)",
+      "CHICAGO": "شيكاغو (GMT-6)",
+      "BOGOTA": "بوغوتا (GMT-5)",
+      "LIMA": "ليما (GMT-5)",
+      "SANTIAGO": "سانتياغو (GMT-4)",
+      "DUBAI": "دبي (GMT+4)",
+      "TOKYO": "طوكيو (GMT+9)",
+      "SYDNEY": "سيدني (GMT+10)"
+    },
+    "title": "الإعدادات",
+    "preferencesSection": "التفضيلات",
+    "aboutSection": "حول GoalBlip",
+    "language": "اللغة",
+    "timezone": "المنطقة الزمنية",
+    "timeFormat": "تنسيق الوقت",
+    "timeFormatOptions": {
+      "auto": "تلقائي",
+      "24h": "24 ساعة",
+      "12h": "12 ساعة"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "منصة تحليل المباريات المدعومة بالذكاء الاصطناعي"
+  }
+}
+

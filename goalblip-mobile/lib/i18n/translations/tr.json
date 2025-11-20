@@ -1,0 +1,563 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "retry": "Tekrar Dene",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "close": "Kapat",
+    "search": "Ara",
+    "clear": "Temizle",
+    "all": "Tümü",
+    "select": "Seç",
+    "continue": "Devam Et",
+    "back": "Geri",
+    "home": "Ana Sayfa",
+    "favorites": "Favoriler",
+    "unknownLeague": "Lig Bilinmiyor",
+    "unknown": "Bilinmiyor",
+    "prediction": "Tahmin",
+    "time": {
+      "justNow": "az önce",
+      "minutes": "{count} dk",
+      "hours": "{count} sa",
+      "days": "{count} g"
+    },
+    "settings": "Ayarlar",
+    "menu": "Menü"
+  },
+  "drawer": {
+    "title": "Maçlar",
+    "searchPrompt": "Maç Ara",
+    "searchPromptDescription": "Takım veya lig adı yazarak maç arayabilirsiniz"
+  },
+  "home": {
+    "today": "Bugün",
+    "tomorrow": "Yarın",
+    "noMatches": "Maç Bulunamadı",
+    "noMatchesMessage": "Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!",
+    "noMatchesFiltered": "Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.",
+    "clearFilters": "Filtreleri Temizle",
+    "refreshing": "Yenileniyor...",
+    "dataLoadError": "Veri Yüklenemedi",
+    "dataLoadErrorMessage": "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "loadingMore": "Daha fazla yükleniyor...",
+    "topLeagues": {
+      "matches": "{count} maç",
+      "firstMatch": "İlk maç {time}",
+      "waitingKickoff": "Kickoff bekleniyor"
+    },
+    "aiShortlist": {
+      "predictionPending": "Tahmin bekleniyor",
+      "noPredictionTitle": "AI tahmini yok",
+      "noPredictionMessage": "Bu maç için analiz henüz hazır değil."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Takım veya lig ara...",
+    "selectLeague": "Lig Seç",
+    "allLeagues": "Tüm ligler",
+    "leaguesSelected": "{count} lig seçili",
+    "clearAll": "Temizle",
+    "all": "Tümü",
+    "matches": "maç",
+    "filterSortSettings": "Filtreleme Ayarları",
+    "filterSortSettingsDescription": "Sıralama ve görünüm seçenekleri"
+  },
+  "filterSort": {
+    "title": "Filtreler ve Sıralama",
+    "tabs": {
+      "filters": "Filtreler",
+      "sort": "Sıralama",
+      "view": "Görünüm"
+    },
+    "sortByLeague": "Liglere Göre",
+    "sortByTime": "Saate Göre",
+    "sortByDate": "Tarihe Göre",
+    "sortByTeam": "Takım Adına Göre",
+    "viewGrouped": "Liglere Göre Grupla",
+    "viewGroupedDescription": "Maçları lig başlıkları altında göster",
+    "viewFlat": "Düz Liste",
+    "viewFlatDescription": "Tüm maçları lig başlığı olmadan göster"
+  },
+  "match": {
+    "live": "Canlı",
+    "vs": "vs",
+    "kickoff": "Kickoff yakında",
+    "detailTitle": "Maç Detayı",
+    "loadingDetail": "Maç detayı yükleniyor...",
+    "detailError": "Maç Detayı Yüklenemedi",
+    "detailErrorMessage": "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "detailNotFound": "Maç detayı bulunamadı.",
+    "retryLaterMessage": "Bu maçın verisi henüz hazır değil. Biraz sonra tekrar deneyin veya yeniden analiz isteyin.",
+    "pendingAnalysis": "Analiz Ediliyor",
+    "pendingMessage": "Sıra: #{position}\n\nAnaliz tamamlandığında otomatik olarak güncellenecek.",
+    "refresh": "Yenile",
+    "dataDate": "Veri Tarihi",
+    "lastUpdate": "Son Güncelleme",
+    "dataSource": "Veri Kaynağı",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "Canlı",
+      "scheduled": "Hazırlık",
+      "finished": "Maç Sonu",
+      "postponed": "Ertelendi",
+      "canceled": "İptal",
+      "abandoned": "Yarım Kaldı",
+      "delayed": "Gecikmeli",
+      "halftime": "Devre Arası",
+      "extraTime": "Uzatmalar",
+      "penalties": "Penaltılar"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Hızlı Özet",
+    "keyInsights": "Önemli İçgörüler",
+    "teamComparison": "Takım Karşılaştırması",
+    "visualComparison": "Görsel Karşılaştırma",
+    "strengthsWeaknesses": "Güçlü ve Zayıf Yönler",
+    "predictionSummary": "Tahmin Özeti",
+    "detailedPredictions": "Detaylı Tahminler",
+    "formStats": {
+      "winRate": "Galibiyet Oranı",
+      "drawRate": "Beraberlik Oranı",
+      "lossRate": "Yenilgi Oranı",
+      "avgGoalsFor": "Gol Ort.",
+      "avgGoalsAgainst": "Yenilen"
+    },
+    "recentForm": "Son Form Detayları",
+    "headToHead": "Geçmiş Karşılaşmalar",
+    "oddsTrends": "Oran Trend Analizi",
+    "upcomingMatches": "Yaklaşan Maçlar",
+    "upcomingMatchesEmpty": "Yaklaşan maç bilgisi bulunamadı.",
+    "goalAnalysis": "Gol Analizi",
+    "riskAnalysis": "Risk Analizi",
+    "localInfo": "Yerel Bilgi",
+    "noDetailedAnalysis": "Detaylı Analiz Yok",
+    "noDetailedAnalysisMessage": "Bu maç için detaylı tahmin analizi henüz hazır değil.",
+    "predictionsNotAvailable": "Tahmin Analizi Henüz Hazır Değil",
+    "predictionsNotAvailableMessage": "Bu bölüm şu anda sadece Türkçe dilinde mevcuttur. Yakında diğer diller için de eklenecektir.",
+    "aiAnalysis": "AI Analiz",
+    "mainPrediction": "Ana Tahmin",
+    "recommendedPick": "Önerilen Seçim",
+    "allProbabilities": "Tüm Olasılıklar",
+    "highest": "En Yüksek",
+    "probability": "olasılık",
+    "summary": "Özet",
+    "recommended": "Önerilen:",
+    "confidence": {
+      "veryHigh": "Çok Yüksek Güven",
+      "high": "Yüksek Güven",
+      "good": "İyi Güven",
+      "medium": "Orta Güven",
+      "low": "Düşük Güven"
+    },
+    "invalidMatchId": "Geçersiz maç ID",
+    "detailNotFound": "Maç detayı bulunamadı.",
+    "reloadFailed": "Yeniden yükleme başarısız.",
+    "cacheMessage": "Güncel veri alınamadı, önbellekten gösteriliyor.",
+    "leagueInfo": "Lig Bilgisi",
+    "today": "Bugün",
+    "tomorrow": "Yarın",
+    "manual": "Manuel",
+    "scoreboard": {
+      "kickoffFallback": "Karşılaşma yakında başlıyor",
+      "timezoneLabel": "Yerel saat: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Ev Sahibi",
+      "awayFallback": "Deplasman",
+      "homeGeneric": "Ev sahibi takım",
+      "awayGeneric": "Deplasman takımı",
+      "formFallback": "Takım {index}",
+      "homeShort": "EV",
+      "awayShort": "DEP"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} son 5 maçta %{winRate} galibiyet oranıyla çok iyi formda.",
+        "homeHighLossRate": "{team} son 5 maçta %{lossRate} mağlubiyet oranıyla zorlanıyor.",
+        "homeHighGoalsFor": "{team} son maçlarda maç başına ortalama {goalsFor} gol atıyor.",
+        "homeLowGoalsAgainst": "{team} son maçlarda çok az gol yiyor (maç başına {goalsAgainst}).",
+        "awayHighWinRate": "{team} son 5 maçta %{winRate} galibiyet oranıyla çok iyi formda.",
+        "awayHighLossRate": "{team} son 5 maçta %{lossRate} mağlubiyet oranıyla zorlanıyor.",
+        "homeWinStreak": "{team} {streak} maçtır kazanıyor.",
+        "awayLosingStreak": "{team} {streak} maçtır kaybediyor.",
+        "homeGoalDifference": "Gol farkı açısından {team} belirgin avantajlı.",
+        "homeH2HSuperiority": "Geçmiş karşılaşmalarda {team} üstünlük kurmuş.",
+        "aiVeryHighConfidence": "AI tahminleri çok yüksek güven seviyesinde (ortalama %{avgConfidence}).",
+        "aiSingleHighConfidence": "\"{prediction}\" tahmininin güven seviyesi çok yüksek (%{confidence}). En olası sonuç: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Ev Sahibi",
+        "away": "Deplasman",
+        "balanced": "Dengeli",
+        "homeAdvantage": "Ev sahibi takım form avantajına sahip",
+        "awayAdvantage": "Deplasman takımı form avantajına sahip",
+        "balancedForm": "İki takım da dengeli formda",
+        "highConfidence": "Yüksek güven seviyesinde tahmin",
+        "mediumHighConfidence": "Orta-yüksek güven seviyesinde tahmin",
+        "balancedConfidence": "Dengeli tahmin",
+        "lowConfidence": "Düşük güven seviyesinde tahmin",
+        "homeAdvantageSuffix": "• Ev sahibi avantajı var",
+        "awayAdvantageSuffix": "• Deplasman takımı avantajlı"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Ev",
+      "away": "Dep",
+      "neutral": "Nötr",
+      "form": "Formda"
+    },
+    "teamComparisonCard": {
+      "formScore": "Form: {score}/100",
+      "advantage": {
+        "home": "{team} belirgin avantajlı",
+        "away": "{team} belirgin avantajlı",
+        "balanced": "İki takım da dengeli"
+      },
+      "predictionLabel": "Tahmin",
+      "confidenceLabel": "Güven",
+      "predictionValues": {
+        "home": "Ev Sahibi",
+        "away": "Deplasman",
+        "draw": "Beraberlik",
+        "balanced": "Dengeli"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Performans Karşılaştırması",
+      "subtitle": "Dil ve saat dilimi tercihlerini ayarla.",
+    "privacyPolicy": "Gizlilik Politikas�",
+      "metrics": {
+        "formScore": "Form Skoru",
+        "winRate": "Kazanma %",
+        "avgGoals": "Gol Ortalaması",
+        "defense": "Savunma"
+      },
+      "units": {
+        "goalsPerMatch": " gol/maç",
+        "defenseHint": " (az gol = iyi)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Gol Analizi",
+      "summary": {
+        "expectedGoals": "Beklenen Gol",
+        "prediction": "Tahmin"
+      },
+      "expectation": {
+        "high": "Yüksek gol beklentisi",
+        "mediumHigh": "Orta-yüksek gol beklentisi",
+        "medium": "Orta gol beklentisi",
+        "low": "Düşük gol beklentisi"
+      },
+      "teamStats": {
+        "avgGoals": "Gol Ort.",
+        "avgConceded": "Yenilen",
+        "overUnderLabel": "Alt/Üst Tahmini",
+        "confidence": "Güven"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Risk Analizi",
+      "riskLevel": {
+        "high": "Yüksek Risk",
+        "medium": "Orta Risk",
+        "low": "Düşük Risk"
+      },
+      "noRisk": "Belirgin risk faktörü yok",
+      "factors": {
+        "highLossRate": "{team} son 5 maçta %{lossRate} mağlubiyet oranıyla zorlanıyor.",
+        "mediumLossRate": "{team} son maçlarda form düşüşü yaşıyor.",
+        "lossStreak": "{team} {streak} maçtır kaybediyor.",
+        "lowScoring": "{team} gol bulmakta zorlanıyor (maç başına {goalsFor} gol).",
+        "highConceding": "{team} çok gol yiyor (maç başına {goalsAgainst} gol).",
+        "lowFormScore": "{team} düşük form skoruna sahip ({formScore}/100).",
+        "mediumFormScore": "{team} form istikrarı bulamıyor.",
+        "weakAway": "{team} deplasman performansı zayıf."
+      }
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Güçlü ve Zayıf Yönler",
+      "subtitle": "Dil ve saat dilimi tercihlerini ayarla.",
+    "privacyPolicy": "Gizlilik Politikas�",
+      "strengthsTitle": "Güçlü Yönler",
+      "weaknessesTitle": "Zayıf Yönler",
+      "noData": "Yeterli veri yok",
+      "strengths": {
+        "formHigh": "Yüksek form skoru",
+        "winRateHigh": "Yüksek kazanma oranı",
+        "attackStrong": "Güçlü hücum",
+        "defenseStrong": "Güçlü savunma",
+        "goalDiffPositive": "Pozitif gol farkı",
+        "winStreak": "{count} maçlık kazanma serisi"
+      },
+      "weaknesses": {
+        "formLow": "Düşük form skoru",
+        "winRateLow": "Düşük kazanma oranı",
+        "attackWeak": "Zayıf hücum",
+        "defenseWeak": "Zayıf savunma",
+        "goalDiffNegative": "Negatif gol farkı",
+        "lossStreak": "{count} maçlık kaybetme serisi"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "G",
+        "draw": "B",
+        "loss": "M",
+        "unknown": "—"
+      },
+      "titleFallback": "Son Form",
+      "homeTitle": "Ev Sahibi Formu",
+      "awayTitle": "Deplasman Formu"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Form Skoru",
+      "goalDifference": "Gol Farkı",
+      "homeBadge": "EV",
+      "awayBadge": "DEP",
+      "streakLabel": "{count} maç {type} serisi",
+      "streakTypes": {
+        "win": "kazanma",
+        "draw": "beraberlik",
+        "loss": "mağlubiyet"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Oran",
+      "matchResult": "Maç Sonucu",
+      "europeanOdds": "Avrupa Oranları",
+      "asianHandicap": "Asya Handikap",
+      "overUnderLines": "Alt/Üst Hatları",
+      "firstHalf": "İlk Yarı",
+      "firstHalfEuropean": "İY Avrupa Oranları",
+      "firstHalfAsian": "İY Asya Handikap",
+      "firstHalfOverUnder": "İY Alt/Üst Hatları",
+      "openingLine": "İlk Hat",
+      "closingLine": "Maç Öncesi Hat"
+    },
+    "formStatsTitle": "Form İstatistikleri",
+    "predictionLabels": {
+      "matchResult": "Maç Sonucu (1X2)",
+      "bothTeamsScore": "Karşılıklı Gol",
+      "totalGoals": "Gol Sayısı",
+      "firstHalfResult": "İlk Yarı Sonucu",
+      "firstHalfGoals": "İlk Yarı Gol Sayısı",
+      "teamToScore": "Takım Skoru",
+      "asianHandicap": "Asya Handikap",
+      "overUnderLines": "Alt/Üst Hatları",
+      "firstHalfOverUnder": "İlk Yarı Alt/Üst",
+      "firstHalfAsianHandicap": "İlk Yarı Asya Handikap"
+    },
+    "outcomeLabels": {
+      "home": "Ev Sahibi",
+      "draw": "Beraberlik",
+      "away": "Deplasman",
+      "over": "Üst",
+      "under": "Alt",
+      "yes": "Evet",
+      "no": "Hayır",
+      "bttsYes": "Karşılıklı gol: Evet",
+      "bttsNo": "Karşılıklı gol: Hayır",
+      "overWithValue": "Üst {value}",
+      "underWithValue": "Alt {value}",
+      "firstHalfOver": "İY Üst {value}",
+      "firstHalfUnder": "İY Alt {value}",
+      "homeWillScore": "Ev sahibi gol atar",
+      "awayWillScore": "Deplasman gol atar"
+    },
+    "reanalyze": {
+      "title": "Yeniden Analiz",
+      "description": "Veriler eskimiş görünüyorsa yeni bir analiz isteyebilirsin. Sadece 15 dakikada bir kullanılabilir.",
+      "button": "Yeniden analiz talebi gönder",
+      "buttonLoading": "Gönderiliyor...",
+      "queued": "Talep kuyruğa eklendi (sıra {position}).",
+      "alreadyQueued": "Maç zaten analiz kuyruğunda.",
+      "rateLimited": "Bu maç için yeni talep göndermeden önce lütfen bekle.",
+      "nextAllowed": "Bir sonraki talep {time} tarihinde kullanılabilir.",
+      "error": "Yeniden analiz talebi gönderilemedi."
+    },
+    "advancedMetrics": {
+      "title": "Gelişmiş İçgörüler",
+      "sampleLabel": "Son {matches} maça göre",
+      "weightedScore": {
+        "title": "Ağırlıklı Puan Sistemi",
+        "description": "Güncel gücü göstermek için son form sonuçları ağırlıklandırılır.",
+        "homeLabel": "Ev ağırlıklı puanı",
+        "awayLabel": "Deplasman ağırlıklı puanı"
+      },
+      "momentum": {
+        "title": "Momentum Göstergesi",
+        "description": "Son performanslardan elde edilen gol farkı momentumu.",
+        "bullish": "Yükselen momentum",
+        "neutral": "Nötr momentum",
+        "bearish": "Düşen momentum"
+      },
+      "confidence": {
+        "title": "Güven Skoru Kombinasyonu",
+        "description": "AI tahminleri ile başarı geçmişinin birleşik güven skoru.",
+        "scoreLabel": "Bileşik güven skoru",
+        "topPickLabel": "En güçlü sinyal",
+        "noPick": "Sinyal bulunmuyor"
+      },
+      "poisson": {
+        "title": "Poisson Gol Modeli",
+        "description": "Son gol trendlerine göre yaklaşık gol dağılımı.",
+        "expectedHeader": "Beklenen goller",
+        "goalColumn": "Goller",
+        "homeColumn": "Ev",
+        "awayColumn": "Dep",
+        "goalLabel": "{value} gol",
+        "goalLabelPlus": "3+ gol"
+      },
+      "goalTrend": {
+        "title": "Gol Trendi",
+        "description": "Son dönemde atılan/yenen goller.",
+        "team": "Takım",
+        "forLabel": "Attığı",
+        "againstLabel": "Yediği",
+        "deltaLabel": "Fark"
+      },
+      "confidenceLadder": {
+        "title": "Güven Merdiveni",
+        "description": "Tahmin güven sıralaması."
+      },
+      "overUnder": {
+        "title": "Alt/Üst Güveni",
+        "description": "Gol toplamı olasılıkları."
+      },
+      "handicap": {
+        "title": "Handikap Önerisi",
+        "description": "En güncel Asya handikap çizgisi."
+      },
+      "halfComparison": {
+        "title": "İlk Yarı vs Maç Sonu",
+        "description": "Tahmin güveni ilk yarıdan maça nasıl değişiyor.",
+        "halfLabel": "İY %{value}",
+        "fullLabel": "MS %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Öne çıkan sinyaller",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} formda belirgin üstün (+{value} puan {awayTeam} karşısında).",
+        "awayAdvantage": "{awayTeam} daha yüksek ağırlıklı forma sahip (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} hücum momentumunu yükseltiyor (+{value}).",
+        "homeBearish": "{team} momentumu düşüşte ({value}).",
+        "awayBullish": "{team} pozitif momentum yakaladı (+{value}).",
+        "awayBearish": "{team} gerileme eğiliminde ({value})."
+      },
+      "confidence": {
+        "high": "AI güven seviyesi yüksek (%{score}).",
+        "low": "AI güven seviyesi sınırlı (%{score}).",
+        "topPick": "AI’nın öne çıkan sinyali: {pick} (%{score})."
+      },
+      "poisson": {
+        "highScoring": "Beklenen goller {goals} civarı; yüksek skor ihtimali güçlü.",
+        "lowScoring": "Toplam gol beklentisi {goals}; skor düşük kalabilir.",
+        "homeCleanSheet": "{team} için gol yememe olasılığı %{percent}.",
+        "awayCleanSheet": "{team} için gol yememe olasılığı %{percent}."
+      },
+      "sampleSmall": "Yalnızca {matches} maçlık veri mevcut, dikkatli yorumlayın."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Hoş Geldiniz!",
+    "subtitle": "Dil ve saat dilimi tercihlerini ayarla.",
+    "privacyPolicy": "Gizlilik Politikas�",
+    "languageSelection": "Dil Seçimi",
+    "timezoneSelection": "Saat Dilimi",
+    "saving": "Kaydediliyor...",
+    "continue": "Devam Et",
+    "timeFormatSelection": "Tercih ettiğin saat formatını seç"
+  },
+  "emptyState": {
+    "noData": "Veri Yok",
+    "tryAgain": "Tekrar Dene"
+  },
+  "matchesScreen": {
+    "title": "Maç Fikstürü",
+    "lastRefresh": "Son güncelleme",
+    "tabs": {
+      "today": "Bugün",
+      "tomorrow": "Yarın"
+    },
+    "allLeagues": "Tüm ligler",
+    "searchPlaceholder": "Takım veya lig ara...",
+    "clearFilters": "Filtreleri temizle",
+    "loading": "Maçlar yükleniyor...",
+    "emptyTitle": "Maç Bulunamadı",
+    "emptyMessage": "Bu görünüm için henüz maç yok.\n\nYakında yeni maçlar eklenecek!",
+    "emptyFiltered": "Arama kriterlerinize uygun maç bulunamadı.\n\nFiltreleri temizleyip tekrar deneyebilirsiniz.",
+    "statusFallback": "Hazırlık",
+    "staleDataWarning": "Liste {date} tarihli. Yeni maç programı hazır olunca güncellenecek."
+  },
+  "favoritesScreen": {
+    "title": "Favoriler",
+    "emptyTitle": "Favori Maç Yok",
+    "emptyMessage": "Henüz favorilere eklenmiş maç bulunmuyor.\n\nMaç kartlarındaki yıldız ikonuna tıklayarak maçları favorilerinize ekleyebilirsiniz.",
+    "loading": "Yükleniyor..."
+  },
+  "errors": {
+    "timeout": "İstek zaman aşımına uğradı. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "network": "Ağ bağlantı hatası. Lütfen bağlantınızı kontrol edin.",
+    "api": "Sunucu şu anda yanıt veremiyor. Lütfen daha sonra tekrar deneyin.",
+    "unknown": "Beklenmeyen bir hata oluştu."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Türkçe",
+      "en": "İngilizce",
+      "es": "İspanyolca",
+      "de": "Almanca",
+      "it": "İtalyanca",
+      "zh-TW": "Geleneksel Çince",
+      "zh-CN": "Basitleştirilmiş Çince",
+      "ja": "Japonca",
+      "id": "Endonezce",
+      "fr": "Fransızca",
+      "ru": "Rusça",
+      "tl": "Tagalog",
+      "ko": "Korece",
+      "ar": "Arapça",
+      "pt": "Portekizce"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "İstanbul (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "Londra (GMT+0)",
+      "MADRID": "Madrid (GMT+1)",
+      "BERLIN": "Berlin (GMT+1)",
+      "PARIS": "Paris (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Ciudad de México (GMT-6)",
+      "BUENOS_AIRES": "Buenos Aires (GMT-3)",
+      "NEW_YORK": "New York (GMT-5)",
+      "LOS_ANGELES": "Los Angeles (GMT-8)",
+      "CHICAGO": "Chicago (GMT-6)",
+      "BOGOTA": "Bogotá (GMT-5)",
+      "LIMA": "Lima (GMT-5)",
+      "SANTIAGO": "Santiago (GMT-4)",
+      "DUBAI": "Dubai (GMT+4)",
+      "TOKYO": "Tokyo (GMT+9)",
+      "SYDNEY": "Sydney (GMT+10)"
+    },
+    "title": "Ayarlar",
+    "preferencesSection": "Tercihler",
+    "aboutSection": "GoalBlip Hakkında",
+    "language": "Dil",
+    "timezone": "Saat Dilimi",
+    "timeFormat": "Saat Formatı",
+    "timeFormatOptions": {
+      "auto": "Otomatik",
+      "24h": "24 Saat",
+      "12h": "12 Saat"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Dil ve saat dilimi tercihlerini ayarla.",
+    "privacyPolicy": "Gizlilik Politikas�"
+  }
+}

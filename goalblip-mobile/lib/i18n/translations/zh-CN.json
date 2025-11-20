@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "retry": "重试",
+    "cancel": "取消",
+    "save": "保存",
+    "close": "关闭",
+    "search": "搜索",
+    "clear": "清除",
+    "all": "全部",
+    "select": "选择",
+    "continue": "继续",
+    "back": "返回",
+    "home": "首页",
+    "favorites": "收藏",
+    "unknownLeague": "未知联赛",
+    "unknown": "未知",
+    "prediction": "预测",
+    "time": {
+      "justNow": "刚刚",
+      "minutes": "{count}分钟",
+      "hours": "{count}小时",
+      "days": "{count}天"
+    },
+    "settings": "设置",
+    "menu": "菜单"
+  },
+  "drawer": {
+    "title": "比赛",
+    "searchPrompt": "搜索比赛",
+    "searchPromptDescription": "输入球队或联赛名称搜索比赛"
+  },
+  "home": {
+    "today": "今天",
+    "tomorrow": "明天",
+    "noMatches": "未找到比赛",
+    "noMatchesMessage": "此视图暂无比赛。\n\n新比赛将很快添加！",
+    "noMatchesFiltered": "未找到符合搜索条件的比赛。\n\n您可以清除筛选条件后重试。",
+    "clearFilters": "清除筛选",
+    "refreshing": "刷新中...",
+    "dataLoadError": "数据加载失败",
+    "dataLoadErrorMessage": "请检查您的网络连接后重试。",
+    "loadingMore": "加载更多...",
+    "topLeagues": {
+      "matches": "{count}场比赛",
+      "firstMatch": "首场比赛 {time}",
+      "waitingKickoff": "等待开球"
+    },
+    "aiShortlist": {
+      "predictionPending": "预测待处理",
+      "noPredictionTitle": "无AI预测",
+      "noPredictionMessage": "此场比赛的分析尚未准备好。"
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "搜索球队或联赛...",
+    "selectLeague": "选择联赛",
+    "allLeagues": "所有联赛",
+    "leaguesSelected": "已选择 {count} 个联赛",
+    "clearAll": "清除全部",
+    "all": "全部",
+    "matches": "比赛",
+    "filterSortSettings": "筛选设置",
+    "filterSortSettingsDescription": "排序和视图选项"
+  },
+  "filterSort": {
+    "title": "筛选和排序",
+    "tabs": {
+      "filters": "筛选",
+      "sort": "排序",
+      "view": "视图"
+    },
+    "sortByLeague": "按联赛",
+    "sortByTime": "按时间",
+    "sortByDate": "按日期",
+    "sortByTeam": "按球队名称",
+    "viewGrouped": "按联赛分组",
+    "viewGroupedDescription": "在联赛标题下显示比赛",
+    "viewFlat": "平铺列表",
+    "viewFlatDescription": "无联赛标题显示所有比赛"
+  },
+  "match": {
+    "live": "直播",
+    "vs": "对阵",
+    "kickoff": "即将开球",
+    "detailTitle": "比赛详情",
+    "loadingDetail": "加载比赛详情...",
+    "detailError": "加载比赛详情失败",
+    "detailErrorMessage": "请检查您的网络连接后重试。",
+    "pendingAnalysis": "分析中",
+    "pendingMessage": "队列位置: #{position}\n\n分析完成后将自动更新。",
+    "refresh": "刷新",
+    "dataDate": "数据日期",
+    "lastUpdate": "最后更新",
+    "dataSource": "数据源",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "直播",
+      "scheduled": "已安排",
+      "finished": "已结束",
+      "postponed": "已推迟",
+      "canceled": "已取消",
+      "abandoned": "已中止",
+      "delayed": "已延迟",
+      "halftime": "中场休息",
+      "extraTime": "加时赛",
+      "penalties": "点球大战"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "快速摘要",
+    "keyInsights": "关键洞察",
+    "teamComparison": "球队对比",
+    "visualComparison": "可视化对比",
+    "strengthsWeaknesses": "优势和劣势",
+    "predictionSummary": "预测摘要",
+    "detailedPredictions": "详细预测",
+    "formStatsTitle": "状态统计",
+    "formStats": {
+      "winRate": "胜率",
+      "drawRate": "平局率",
+      "lossRate": "败率",
+      "avgGoalsFor": "平均进球",
+      "avgGoalsAgainst": "平均失球"
+    },
+    "recentForm": "近期状态详情",
+    "headToHead": "历史交锋",
+    "oddsTrends": "赔率趋势分析",
+    "upcomingMatches": "即将进行的比赛",
+    "upcomingMatchesEmpty": "暂无即将进行的比赛。",
+    "goalAnalysis": "进球分析",
+    "riskAnalysis": "风险分析",
+    "localInfo": "本地信息",
+    "noDetailedAnalysis": "无详细分析",
+    "noDetailedAnalysisMessage": "此场比赛的详细预测分析尚不可用。",
+    "predictionsNotAvailable": "预测分析不可用",
+    "predictionsNotAvailableMessage": "此部分目前仅提供土耳其语版本。其他语言将很快添加。",
+    "predictionLabels": {
+      "matchResult": "比赛结果 (1X2)",
+      "bothTeamsScore": "双方进球",
+      "totalGoals": "总进球数",
+      "firstHalfResult": "上半场结果",
+      "firstHalfGoals": "上半场进球",
+      "teamToScore": "进球球队",
+      "asianHandicap": "亚洲让球",
+      "overUnderLines": "大小球盘口",
+      "firstHalfOverUnder": "上半场大小球",
+      "firstHalfAsianHandicap": "上半场亚洲让球"
+    },
+    "outcomeLabels": {
+      "home": "主胜",
+      "draw": "平局",
+      "away": "客胜",
+      "over": "大",
+      "under": "小",
+      "yes": "是",
+      "no": "否",
+      "bttsYes": "双方进球: 是",
+      "bttsNo": "双方进球: 否",
+      "overWithValue": "大 {value}",
+      "underWithValue": "小 {value}",
+      "firstHalfOver": "上半场大 {value}",
+      "firstHalfUnder": "上半场小 {value}",
+      "homeWillScore": "主队将进球",
+      "awayWillScore": "客队将进球"
+    },
+    "aiAnalysis": "AI分析",
+    "mainPrediction": "主要预测",
+    "recommendedPick": "推荐选择",
+    "allProbabilities": "所有概率",
+    "highest": "最高",
+    "probability": "概率",
+    "summary": "摘要",
+    "recommended": "推荐:",
+    "confidence": {
+      "veryHigh": "极高置信度",
+      "high": "高置信度",
+      "good": "良好置信度",
+      "medium": "中等置信度",
+      "low": "低置信度"
+    },
+    "invalidMatchId": "无效的比赛ID",
+    "detailNotFound": "未找到比赛详情。",
+    "reloadFailed": "重新加载失败。",
+    "cacheMessage": "无法获取当前数据，显示缓存内容。",
+    "leagueInfo": "联赛信息",
+    "today": "今天",
+    "tomorrow": "明天",
+    "manual": "手动",
+    "scoreboard": {
+      "kickoffFallback": "即将开球",
+      "timezoneLabel": "本地时间: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "主队",
+      "awayFallback": "客队",
+      "homeGeneric": "主队",
+      "awayGeneric": "客队",
+      "formFallback": "球队 {index}",
+      "homeShort": "主",
+      "awayShort": "客"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} 在最近5场比赛中表现出色，胜率为 {winRate}%。",
+        "homeHighLossRate": "{team} 在最近5场比赛中表现不佳，败率为 {lossRate}%。",
+        "homeHighGoalsFor": "{team} 最近场均进球 {goalsFor} 个。",
+        "homeLowGoalsAgainst": "{team} 失球很少，场均仅 {goalsAgainst} 个。",
+        "awayHighWinRate": "{team} 在最近5场比赛中表现出色，胜率为 {winRate}%。",
+        "awayHighLossRate": "{team} 在最近5场比赛中表现不佳，败率为 {lossRate}%。",
+        "homeWinStreak": "{team} 已连续赢得 {streak} 场比赛。",
+        "awayLosingStreak": "{team} 已连续输掉 {streak} 场比赛。",
+        "homeGoalDifference": "{team} 在净胜球方面具有明显优势。",
+        "homeH2HSuperiority": "{team} 在最近的历史交锋中占据优势。",
+        "aiVeryHighConfidence": "AI预测显示极高的置信度（平均 %{avgConfidence}）。",
+        "aiSingleHighConfidence": "\"{prediction}\" 预测具有极高的置信度 (%{confidence})。最可能的结果: {outcome} (%{outcomePct})。"
+      },
+      "quickSummary": {
+        "home": "主",
+        "away": "客",
+        "balanced": "平衡",
+        "homeAdvantage": "主队占据状态优势",
+        "awayAdvantage": "客队占据状态优势",
+        "balancedForm": "两队状态平衡",
+        "highConfidence": "高置信度预测",
+        "mediumHighConfidence": "中高置信度预测",
+        "balancedConfidence": "平衡预测",
+        "lowConfidence": "低置信度预测",
+        "homeAdvantageSuffix": "• 存在主场优势",
+        "awayAdvantageSuffix": "• 客队优势"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "主",
+      "away": "客",
+      "neutral": "中",
+      "form": "状态"
+    },
+    "teamComparisonCard": {
+      "formScore": "状态: {score}/100",
+      "advantage": {
+        "home": "{team} 具有明显优势",
+        "away": "{team} 具有明显优势",
+        "balanced": "两队势均力敌"
+      },
+      "predictionLabel": "预测",
+      "confidenceLabel": "置信度",
+      "predictionValues": {
+        "home": "主",
+        "away": "客",
+        "draw": "平",
+        "balanced": "平衡"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "表现对比",
+      "subtitle": "两队可视化对比",
+      "metrics": {
+        "formScore": "状态得分",
+        "winRate": "胜率",
+        "avgGoals": "平均进球",
+        "defense": "防守"
+      },
+      "units": {
+        "goalsPerMatch": " 球/场",
+        "defenseHint": " (失球越少越好)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "进球分析",
+      "summary": {
+        "expectedGoals": "预期进球",
+        "prediction": "预测"
+      },
+      "expectation": {
+        "high": "高进球预期",
+        "mediumHigh": "中高进球预期",
+        "medium": "中等进球预期",
+        "low": "低进球预期"
+      },
+      "teamStats": {
+        "avgGoals": "平均进球",
+        "avgConceded": "失球",
+        "overUnderLabel": "大小球选择",
+        "confidence": "置信度"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "风险分析",
+      "riskLevel": {
+        "high": "高风险",
+        "medium": "中等风险",
+        "low": "低风险"
+      },
+      "noRisk": "无明显风险因素",
+      "factors": {
+        "highLossRate": "{team} 在最近5场比赛中表现不佳，败率为 {lossRate}%。",
+        "mediumLossRate": "{team} 显示出状态下滑的迹象。",
+        "lossStreak": "{team} 已连续输掉 {streak} 场比赛。",
+        "lowScoring": "{team} 进球困难（场均 {goalsFor} 球）。",
+        "highConceding": "{team} 失球较多（场均 {goalsAgainst} 球）。",
+        "lowFormScore": "{team} 状态得分较低 ({formScore}/100)。",
+        "mediumFormScore": "{team} 状态不稳定。",
+        "weakAway": "{team} 客场表现较弱。"
+      }
+    },
+    "advancedMetrics": {
+      "title": "高级洞察",
+      "sampleLabel": "基于最近 {matches} 场比赛",
+      "weightedScore": {
+        "title": "加权得分系统",
+        "description": "近期状态结果被加权以突出当前实力。",
+        "homeLabel": "主队加权得分",
+        "awayLabel": "客队加权得分"
+      },
+      "momentum": {
+        "title": "动量指标",
+        "description": "从近期表现得出的净胜球动量。",
+        "bullish": "上升动量",
+        "neutral": "中性动量",
+        "bearish": "下降动量"
+      },
+      "confidence": {
+        "title": "置信度混合",
+        "description": "结合AI选择和成功历史的综合置信度。",
+        "scoreLabel": "综合置信度",
+        "topPickLabel": "顶级信号",
+        "noPick": "无可用信号"
+      },
+      "poisson": {
+        "title": "泊松进球模型",
+        "description": "基于近期进球率的近似进球分布。",
+        "expectedHeader": "预期进球",
+        "goalColumn": "进球",
+        "homeColumn": "主",
+        "awayColumn": "客",
+        "goalLabel": "{value} 球",
+        "goalLabelPlus": "3+ 球"
+      },
+      "goalTrend": {
+        "title": "进球趋势",
+        "description": "近期进球与失球总数。",
+        "team": "球队",
+        "forLabel": "进球",
+        "againstLabel": "失球",
+        "deltaLabel": "差值"
+      },
+      "confidenceLadder": {
+        "title": "置信度阶梯",
+        "description": "预测置信度排名。"
+      },
+      "overUnder": {
+        "title": "大小球置信度",
+        "description": "关键总进球概率。"
+      },
+      "handicap": {
+        "title": "让球洞察",
+        "description": "最新亚洲让球盘口。"
+      },
+      "halfComparison": {
+        "title": "上半场 vs 全场",
+        "description": "上半场和全场选择之间的置信度变化。",
+        "halfLabel": "上半场 %{value}",
+        "fullLabel": "全场 %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "关键信号",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} 具有强大的状态优势（比 {awayTeam} 高 +{value} 分）。",
+        "awayAdvantage": "{awayTeam} 具有更优的加权状态 (+{value})。"
+      },
+      "momentum": {
+        "homeBullish": "{team} 显示出进攻动量 (+{value} 进球动量)。",
+        "homeBearish": "{team} 的动量正在减弱 ({value})。",
+        "awayBullish": "{team} 正在建立积极动量 (+{value})。",
+        "awayBearish": "{team} 呈下降趋势 ({value})。"
+      },
+      "confidence": {
+        "high": "AI置信度保持高位 ({score}%)。",
+        "low": "AI置信度有限 ({score}%)。",
+        "topPick": "顶级AI信号: {pick} ({score}%)。"
+      },
+      "poisson": {
+        "highScoring": "预期进球约 {goals} 个；可能出现高比分情况。",
+        "lowScoring": "预计总数接近 {goals} 球；可能出现低比分模式。",
+        "homeCleanSheet": "{team} 零封概率 {percent}%。",
+        "awayCleanSheet": "{team} 零封概率 {percent}%。"
+      },
+      "sampleSmall": "仅 {matches} 场近期比赛可用—请谨慎解读。"
+    },
+    "strengthsWeaknessesCard": {
+      "title": "优势和劣势",
+      "subtitle": "每队表现分析",
+      "strengthsTitle": "优势",
+      "weaknessesTitle": "劣势",
+      "noData": "数据不足",
+      "strengths": {
+        "formHigh": "高状态得分",
+        "winRateHigh": "强胜率",
+        "attackStrong": "强大进攻",
+        "defenseStrong": "稳固防守",
+        "goalDiffPositive": "正净胜球",
+        "winStreak": "{count} 场连胜"
+      },
+      "weaknesses": {
+        "formLow": "低状态得分",
+        "winRateLow": "低胜率",
+        "attackWeak": "弱进攻",
+        "defenseWeak": "弱防守",
+        "goalDiffNegative": "负净胜球",
+        "lossStreak": "{count} 场连败"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "胜",
+        "draw": "平",
+        "loss": "负",
+        "unknown": "—"
+      },
+      "titleFallback": "近期状态",
+      "homeTitle": "主场状态",
+      "awayTitle": "客场状态"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "状态得分",
+      "goalDifference": "净胜球",
+      "homeBadge": "主",
+      "awayBadge": "客",
+      "streakLabel": "{count} 场 {type} 连胜",
+      "streakTypes": {
+        "win": "胜",
+        "draw": "平",
+        "loss": "负"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "赔率",
+      "matchResult": "比赛结果",
+      "europeanOdds": "欧洲赔率",
+      "asianHandicap": "亚洲让球",
+      "overUnderLines": "大小球盘口",
+      "firstHalf": "上半场",
+      "firstHalfEuropean": "上半场欧洲赔率",
+      "firstHalfAsian": "上半场亚洲让球",
+      "firstHalfOverUnder": "上半场大小球",
+      "openingLine": "开盘盘口",
+      "closingLine": "收盘盘口"
+    },
+    "reanalyze": {
+      "title": "手动刷新",
+      "description": "如果统计数据看起来过时，请请求新的抓取。每15分钟可用一次。",
+      "button": "请求新分析",
+      "buttonLoading": "发送中...",
+      "queued": "请求已排队（位置 {position}）。",
+      "alreadyQueued": "此场比赛已在分析队列中。",
+      "rateLimited": "请等待后再为此场比赛请求另一个刷新。",
+      "nextAllowed": "下次手动请求将在 {time} 可用。",
+      "error": "无法请求新分析。请稍后重试。"
+    }
+  },
+  "initialSetup": {
+    "welcome": "欢迎！",
+    "subtitle": "请选择您偏好的语言和时区",
+    "languageSelection": "语言选择",
+    "timezoneSelection": "时区",
+    "saving": "保存中...",
+    "continue": "继续",
+    "timeFormatSelection": "选择您偏好的时间格式"
+  },
+  "emptyState": {
+    "noData": "无数据",
+    "tryAgain": "重试"
+  },
+  "matchesScreen": {
+    "title": "比赛赛程",
+    "lastRefresh": "最后更新",
+    "tabs": {
+      "today": "今天",
+      "tomorrow": "明天"
+    },
+    "allLeagues": "所有联赛",
+    "searchPlaceholder": "搜索球队或联赛...",
+    "clearFilters": "清除筛选",
+    "loading": "加载比赛中...",
+    "emptyTitle": "未找到比赛",
+    "emptyMessage": "此视图暂无比赛。\n\n新比赛将很快添加！",
+    "emptyFiltered": "未找到符合您条件的比赛。\n\n您可以清除筛选后重试。",
+    "statusFallback": "已安排",
+    "staleDataWarning": "显示 {date} 的赛程。等待最新数据刷新。"
+  },
+  "favoritesScreen": {
+    "title": "收藏",
+    "emptyTitle": "无收藏比赛",
+    "emptyMessage": "您尚未添加任何比赛到收藏。\n\n点击比赛卡片上的星形图标将它们添加到这里。",
+    "loading": "加载中..."
+  },
+  "errors": {
+    "timeout": "请求超时。请检查您的连接后重试。",
+    "network": "网络错误。请验证您的互联网连接。",
+    "api": "服务器暂时不可用。请稍后重试。",
+    "unknown": "发生意外错误。"
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "土耳其语",
+      "en": "英语",
+      "es": "西班牙语",
+      "de": "德语",
+      "it": "意大利语",
+      "zh-TW": "繁体中文",
+      "zh-CN": "简体中文",
+      "ja": "日语",
+      "id": "印度尼西亚语",
+      "fr": "法语",
+      "ru": "俄语",
+      "tl": "他加禄语",
+      "ko": "韩语",
+      "ar": "阿拉伯语",
+      "pt": "葡萄牙语"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "伊斯坦布尔 (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "伦敦 (GMT+0)",
+      "MADRID": "马德里 (GMT+1)",
+      "BERLIN": "柏林 (GMT+1)",
+      "PARIS": "巴黎 (GMT+1)",
+      "CIUDAD_DE_MEXICO": "墨西哥城 (GMT-6)",
+      "BUENOS_AIRES": "布宜诺斯艾利斯 (GMT-3)",
+      "NEW_YORK": "纽约 (GMT-5)",
+      "LOS_ANGELES": "洛杉矶 (GMT-8)",
+      "CHICAGO": "芝加哥 (GMT-6)",
+      "BOGOTA": "波哥大 (GMT-5)",
+      "LIMA": "利马 (GMT-5)",
+      "SANTIAGO": "圣地亚哥 (GMT-4)",
+      "DUBAI": "迪拜 (GMT+4)",
+      "TOKYO": "东京 (GMT+9)",
+      "SYDNEY": "悉尼 (GMT+10)"
+    },
+    "title": "设置",
+    "preferencesSection": "偏好设置",
+    "aboutSection": "关于 GoalBlip",
+    "language": "语言",
+    "timezone": "时区",
+    "timeFormat": "时间格式",
+    "timeFormatOptions": {
+      "auto": "自动",
+      "24h": "24小时制",
+      "12h": "12小时制"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI驱动的比赛分析平台"
+  }
+}
+

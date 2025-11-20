@@ -22,6 +22,19 @@ GoalBlip API sunucusu, [golsinyali.com](https://www.golsinyali.com) kaynağında
 
 ---
 
+## Dok�man Ar�ivi
+Da��t��m, ��r�n ve yol haritas�� notlar�� docs/ alt��nda toplan��r:
+
+- docs/ops/deployment-guide.md – Sunucu kurulum/da��t��m ak��lar�� ve Cloudflare proxy detaylar�� (docs/ops/cloudflare-setup.md).
+- docs/product/product-research.md & docs/product/i18n-cleanup-plan.md – ��r�n gereksinimleri, pazar notlar�� ve i18n refakt�r planlar��.
+- docs/roadmap/todo.md – G�ncel backlog / yap��lacaklar listesi.
+
+Yeni dok�manlar eklerken ayn�� dizin yap��s��n�� kullan��n.
+
+---
+
+
+
 ## Özellikler
 - ⚽️ **Maç listesi kazıma**: `today` ve `tomorrow` görünümleri için sonsuz kaydırmalı listeyi tarar, normalize eder ve sıralar.
 - 📊 **Maç detayı kazıma**: Skor tablosu, öne çıkan tahminler, detaylı tahminler, oran trendleri, yaklaşan maçlar ve structured data bloklarını çıkarır.
@@ -295,3 +308,7 @@ Projede otomatik test bulunmuyor. Aşağıdaki manuel akış önerilir:
 3. GUI sunucusu (`npm run gui`) yalnızca statik dosyaları sunar; gerçek zamanlı değil. API ile birlikte reverse proxy arkasında koştururken yolları ayırın.
 4. `maxScrolls` ve `scrollDelayMs` değerlerini maç yoğunluğuna göre ayarlayın; gereksiz yüksek değerler kazıma süresini uzatırken düşük değerler eksik maçla sonuçlanabilir.
 5. Match detail slug'ları için `homeTeamName`/`awayTeamName` parametreleri kullanmak aksanlı karakterleri normalize ettiği için 404 riskini azaltır.
+
+## Privacy Policy
+GoalBlip uygulamasi ve API altyapisinin gizlilik politikasi icin https://www.goalblip.com/en/privacy-policy adresini kullanabilirsiniz.
+

@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "Memuat...",
+    "error": "Kesalahan",
+    "retry": "Coba Lagi",
+    "cancel": "Batal",
+    "save": "Simpan",
+    "close": "Tutup",
+    "search": "Cari",
+    "clear": "Bersihkan",
+    "all": "Semua",
+    "select": "Pilih",
+    "continue": "Lanjutkan",
+    "back": "Kembali",
+    "home": "Beranda",
+    "favorites": "Favorit",
+    "unknownLeague": "Liga Tidak Dikenal",
+    "unknown": "Tidak Dikenal",
+    "prediction": "Prediksi",
+    "time": {
+      "justNow": "baru saja",
+      "minutes": "{count}m",
+      "hours": "{count}j",
+      "days": "{count}h"
+    },
+    "settings": "Pengaturan",
+    "menu": "Menu"
+  },
+  "drawer": {
+    "title": "Pertandingan",
+    "searchPrompt": "Cari Pertandingan",
+    "searchPromptDescription": "Cari pertandingan dengan mengetik nama tim atau liga"
+  },
+  "home": {
+    "today": "Hari Ini",
+    "tomorrow": "Besok",
+    "noMatches": "Tidak Ada Pertandingan Ditemukan",
+    "noMatchesMessage": "Belum ada pertandingan tersedia untuk tampilan ini.\n\nPertandingan baru akan segera ditambahkan!",
+    "noMatchesFiltered": "Tidak ada pertandingan yang sesuai dengan kriteria pencarian Anda.\n\nAnda dapat membersihkan filter dan mencoba lagi.",
+    "clearFilters": "Bersihkan Filter",
+    "refreshing": "Memperbarui...",
+    "dataLoadError": "Gagal Memuat Data",
+    "dataLoadErrorMessage": "Silakan periksa koneksi internet Anda dan coba lagi.",
+    "loadingMore": "Memuat lebih banyak...",
+    "topLeagues": {
+      "matches": "{count} pertandingan",
+      "firstMatch": "Kickoff pertama {time}",
+      "waitingKickoff": "Menunggu kickoff"
+    },
+    "aiShortlist": {
+      "predictionPending": "Prediksi tertunda",
+      "noPredictionTitle": "Tidak ada prediksi AI",
+      "noPredictionMessage": "Analisis belum siap untuk pertandingan ini."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Cari tim atau liga...",
+    "selectLeague": "Pilih Liga",
+    "allLeagues": "Semua liga",
+    "leaguesSelected": "{count} liga dipilih",
+    "clearAll": "Bersihkan Semua",
+    "all": "Semua",
+    "matches": "pertandingan",
+    "filterSortSettings": "Pengaturan Filter",
+    "filterSortSettingsDescription": "Opsi pengurutan dan tampilan"
+  },
+  "filterSort": {
+    "title": "Filter & Urutkan",
+    "tabs": {
+      "filters": "Filter",
+      "sort": "Urutkan",
+      "view": "Tampilan"
+    },
+    "sortByLeague": "Berdasarkan Liga",
+    "sortByTime": "Berdasarkan Waktu",
+    "sortByDate": "Berdasarkan Tanggal",
+    "sortByTeam": "Berdasarkan Nama Tim",
+    "viewGrouped": "Kelompokkan berdasarkan Liga",
+    "viewGroupedDescription": "Tampilkan pertandingan di bawah header liga",
+    "viewFlat": "Daftar Rata",
+    "viewFlatDescription": "Tampilkan semua pertandingan tanpa header liga"
+  },
+  "match": {
+    "live": "Langsung",
+    "vs": "vs",
+    "kickoff": "Kickoff segera",
+    "detailTitle": "Detail Pertandingan",
+    "loadingDetail": "Memuat detail pertandingan...",
+    "detailError": "Gagal Memuat Detail Pertandingan",
+    "detailErrorMessage": "Silakan periksa koneksi internet Anda dan coba lagi.",
+    "pendingAnalysis": "Menganalisis",
+    "pendingMessage": "Posisi antrian: #{position}\n\nAkan diperbarui secara otomatis saat analisis selesai.",
+    "refresh": "Perbarui",
+    "dataDate": "Tanggal Data",
+    "lastUpdate": "Pembaruan Terakhir",
+    "dataSource": "Sumber Data",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "Langsung",
+      "scheduled": "Dijadwalkan",
+      "finished": "Waktu Penuh",
+      "postponed": "Ditunda",
+      "canceled": "Dibatalkan",
+      "abandoned": "Ditinggalkan",
+      "delayed": "Terlambat",
+      "halftime": "Istirahat",
+      "extraTime": "Perpanjangan Waktu",
+      "penalties": "Adu Penalti"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Ringkasan Cepat",
+    "keyInsights": "Wawasan Utama",
+    "teamComparison": "Perbandingan Tim",
+    "visualComparison": "Perbandingan Visual",
+    "strengthsWeaknesses": "Kekuatan & Kelemahan",
+    "predictionSummary": "Ringkasan Prediksi",
+    "detailedPredictions": "Prediksi Detail",
+    "formStatsTitle": "Statistik Forma",
+    "formStats": {
+      "winRate": "Tingkat Kemenangan",
+      "drawRate": "Tingkat Imbang",
+      "lossRate": "Tingkat Kekalahan",
+      "avgGoalsFor": "Rata-rata Gol Untuk",
+      "avgGoalsAgainst": "Rata-rata Gol Melawan"
+    },
+    "recentForm": "Detail Forma Terkini",
+    "headToHead": "Head to Head",
+    "oddsTrends": "Analisis Tren Odds",
+    "upcomingMatches": "Pertandingan Mendatang",
+    "upcomingMatchesEmpty": "Tidak ada pertandingan mendatang tersedia.",
+    "goalAnalysis": "Analisis Gol",
+    "riskAnalysis": "Analisis Risiko",
+    "localInfo": "Informasi Lokal",
+    "noDetailedAnalysis": "Tidak Ada Analisis Detail",
+    "noDetailedAnalysisMessage": "Analisis prediksi detail belum tersedia untuk pertandingan ini.",
+    "predictionsNotAvailable": "Analisis Prediksi Tidak Tersedia",
+    "predictionsNotAvailableMessage": "Bagian ini saat ini hanya tersedia dalam bahasa Turki. Bahasa lain akan segera ditambahkan.",
+    "predictionLabels": {
+      "matchResult": "Hasil Pertandingan (1X2)",
+      "bothTeamsScore": "Kedua Tim Mencetak Gol",
+      "totalGoals": "Total Gol",
+      "firstHalfResult": "Hasil Babak Pertama",
+      "firstHalfGoals": "Gol Babak Pertama",
+      "teamToScore": "Tim yang Mencetak Gol",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Garis Over/Under",
+      "firstHalfOverUnder": "Over/Under Babak Pertama",
+      "firstHalfAsianHandicap": "Asian Handicap Babak Pertama"
+    },
+    "outcomeLabels": {
+      "home": "Kemenangan Kandang",
+      "draw": "Imbang",
+      "away": "Kemenangan Tandang",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Ya",
+      "no": "Tidak",
+      "bttsYes": "Kedua tim mencetak gol: Ya",
+      "bttsNo": "Kedua tim mencetak gol: Tidak",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "Over Babak Pertama {value}",
+      "firstHalfUnder": "Under Babak Pertama {value}",
+      "homeWillScore": "Tim kandang akan mencetak gol",
+      "awayWillScore": "Tim tandang akan mencetak gol"
+    },
+    "aiAnalysis": "Analisis AI",
+    "mainPrediction": "Prediksi Utama",
+    "recommendedPick": "Pilihan Direkomendasikan",
+    "allProbabilities": "Semua Probabilitas",
+    "highest": "Tertinggi",
+    "probability": "probabilitas",
+    "summary": "Ringkasan",
+    "recommended": "Direkomendasikan:",
+    "confidence": {
+      "veryHigh": "Kepercayaan Sangat Tinggi",
+      "high": "Kepercayaan Tinggi",
+      "good": "Kepercayaan Baik",
+      "medium": "Kepercayaan Sedang",
+      "low": "Kepercayaan Rendah"
+    },
+    "invalidMatchId": "ID pertandingan tidak valid",
+    "detailNotFound": "Detail pertandingan tidak ditemukan.",
+    "reloadFailed": "Memuat ulang gagal.",
+    "cacheMessage": "Tidak dapat memperoleh data saat ini, menampilkan dari cache.",
+    "leagueInfo": "Informasi Liga",
+    "today": "Hari Ini",
+    "tomorrow": "Besok",
+    "manual": "Manual",
+    "scoreboard": {
+      "kickoffFallback": "Kickoff akan segera dimulai",
+      "timezoneLabel": "Waktu lokal: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Tim Kandang",
+      "awayFallback": "Tim Tandang",
+      "homeGeneric": "tim kandang",
+      "awayGeneric": "tim tandang",
+      "formFallback": "Tim {index}",
+      "homeShort": "KANDANG",
+      "awayShort": "TANDANG"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} dalam forma yang sangat baik dengan tingkat kemenangan {winRate}% dalam 5 pertandingan terakhir.",
+        "homeHighLossRate": "{team} mengalami kesulitan dengan tingkat kekalahan {lossRate}% dalam 5 pertandingan terakhir.",
+        "homeHighGoalsFor": "{team} rata-rata mencetak {goalsFor} gol per pertandingan baru-baru ini.",
+        "homeLowGoalsAgainst": "{team} kebobolan sangat sedikit, hanya {goalsAgainst} per pertandingan.",
+        "awayHighWinRate": "{team} dalam forma yang sangat baik dengan tingkat kemenangan {winRate}% dalam 5 pertandingan terakhir.",
+        "awayHighLossRate": "{team} mengalami kesulitan dengan tingkat kekalahan {lossRate}% dalam 5 pertandingan terakhir.",
+        "homeWinStreak": "{team} telah memenangkan {streak} pertandingan berturut-turut.",
+        "awayLosingStreak": "{team} telah kalah {streak} pertandingan berturut-turut.",
+        "homeGoalDifference": "{team} memiliki keuntungan yang jelas dalam selisih gol.",
+        "homeH2HSuperiority": "{team} telah mendominasi pertemuan head-to-head terkini.",
+        "aiVeryHighConfidence": "Prediksi AI menunjukkan kepercayaan yang sangat tinggi (rata-rata %{avgConfidence}).",
+        "aiSingleHighConfidence": "Prediksi \"{prediction}\" memiliki kepercayaan yang sangat tinggi (%{confidence}). Hasil yang paling mungkin: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Kandang",
+        "away": "Tandang",
+        "balanced": "Seimbang",
+        "homeAdvantage": "Tim kandang memiliki keuntungan forma",
+        "awayAdvantage": "Tim tandang memiliki keuntungan forma",
+        "balancedForm": "Kedua tim dalam forma seimbang",
+        "highConfidence": "Prediksi kepercayaan tinggi",
+        "mediumHighConfidence": "Prediksi kepercayaan sedang-tinggi",
+        "balancedConfidence": "Prediksi seimbang",
+        "lowConfidence": "Prediksi kepercayaan rendah",
+        "homeAdvantageSuffix": "• Keuntungan kandang hadir",
+        "awayAdvantageSuffix": "• Keuntungan tim tandang"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Kandang",
+      "away": "Tandang",
+      "neutral": "Netral",
+      "form": "Forma"
+    },
+    "teamComparisonCard": {
+      "formScore": "Forma: {score}/100",
+      "advantage": {
+        "home": "{team} memiliki keuntungan yang jelas",
+        "away": "{team} memiliki keuntungan yang jelas",
+        "balanced": "Tim seimbang"
+      },
+      "predictionLabel": "Prediksi",
+      "confidenceLabel": "Kepercayaan",
+      "predictionValues": {
+        "home": "Kandang",
+        "away": "Tandang",
+        "draw": "Imbang",
+        "balanced": "Seimbang"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Perbandingan Performa",
+      "subtitle": "Perbandingan visual kedua tim",
+      "metrics": {
+        "formScore": "Skor Forma",
+        "winRate": "Tingkat Kemenangan",
+        "avgGoals": "Rata-rata Gol",
+        "defense": "Pertahanan"
+      },
+      "units": {
+        "goalsPerMatch": " gol/pertandingan",
+        "defenseHint": " (semakin sedikit gol = semakin baik)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Analisis Gol",
+      "summary": {
+        "expectedGoals": "Gol yang Diharapkan",
+        "prediction": "Prediksi"
+      },
+      "expectation": {
+        "high": "Ekspektasi gol tinggi",
+        "mediumHigh": "Ekspektasi gol sedang-tinggi",
+        "medium": "Ekspektasi gol sedang",
+        "low": "Ekspektasi gol rendah"
+      },
+      "teamStats": {
+        "avgGoals": "Rata-rata Gol",
+        "avgConceded": "Kebobolan",
+        "overUnderLabel": "Pilihan Over/Under",
+        "confidence": "Kepercayaan"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Analisis Risiko",
+      "riskLevel": {
+        "high": "Risiko Tinggi",
+        "medium": "Risiko Sedang",
+        "low": "Risiko Rendah"
+      },
+      "noRisk": "Tidak ada faktor risiko yang signifikan",
+      "factors": {
+        "highLossRate": "{team} mengalami kesulitan dengan tingkat kekalahan {lossRate}% dalam 5 pertandingan terakhir.",
+        "mediumLossRate": "{team} menunjukkan tanda-tanda penurunan forma.",
+        "lossStreak": "{team} telah kalah {streak} pertandingan berturut-turut.",
+        "lowScoring": "{team} kesulitan mencetak gol ({goalsFor} gol per pertandingan).",
+        "highConceding": "{team} kebobolan banyak gol ({goalsAgainst} per pertandingan).",
+        "lowFormScore": "{team} memiliki skor forma rendah ({formScore}/100).",
+        "mediumFormScore": "{team} tetap tidak konsisten dalam forma.",
+        "weakAway": "{team} memiliki performa tandang yang lemah."
+      }
+    },
+    "advancedMetrics": {
+      "title": "Wawasan Lanjutan",
+      "sampleLabel": "Berdasarkan {matches} pertandingan terakhir",
+      "weightedScore": {
+        "title": "Sistem Skor Tertimbang",
+        "description": "Hasil forma terkini diberi bobot untuk menyoroti kekuatan saat ini.",
+        "homeLabel": "Skor tertimbang kandang",
+        "awayLabel": "Skor tertimbang tandang"
+      },
+      "momentum": {
+        "title": "Indikator Momentum",
+        "description": "Momentum selisih gol yang berasal dari performa terkini.",
+        "bullish": "Momentum bullish",
+        "neutral": "Momentum netral",
+        "bearish": "Momentum bearish"
+      },
+      "confidence": {
+        "title": "Blend Kepercayaan",
+        "description": "Kepercayaan komposit yang menggabungkan pilihan AI dan riwayat kesuksesan.",
+        "scoreLabel": "Kepercayaan komposit",
+        "topPickLabel": "Sinyal teratas",
+        "noPick": "Tidak ada sinyal tersedia"
+      },
+      "poisson": {
+        "title": "Model Gol Poisson",
+        "description": "Distribusi gol perkiraan berdasarkan tingkat pencetakan gol terkini.",
+        "expectedHeader": "Gol yang diharapkan",
+        "goalColumn": "Gol",
+        "homeColumn": "Kandang",
+        "awayColumn": "Tandang",
+        "goalLabel": "{value} gol",
+        "goalLabelPlus": "3+ gol"
+      },
+      "goalTrend": {
+        "title": "Tren Gol",
+        "description": "Total pencetakan vs kebobolan terkini.",
+        "team": "Tim",
+        "forLabel": "GF",
+        "againstLabel": "GA",
+        "deltaLabel": "Selisih"
+      },
+      "confidenceLadder": {
+        "title": "Tangga Kepercayaan",
+        "description": "Peringkat kepercayaan prediksi."
+      },
+      "overUnder": {
+        "title": "Kepercayaan Over/Under",
+        "description": "Probabilitas total gol utama."
+      },
+      "handicap": {
+        "title": "Wawasan Handicap",
+        "description": "Garis Asian handicap terbaru."
+      },
+      "halfComparison": {
+        "title": "Babak Pertama vs Waktu Penuh",
+        "description": "Bagaimana kepercayaan bergeser antara pilihan HT dan FT.",
+        "halfLabel": "HT %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Sinyal Utama",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} memiliki keuntungan forma yang kuat (+{value} poin di atas {awayTeam}).",
+        "awayAdvantage": "{awayTeam} membawa forma tertimbang yang lebih unggul (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} menunjukkan momentum menyerang (+{value} momentum gol).",
+        "homeBearish": "{team} momentum mendingin ({value}).",
+        "awayBullish": "{team} membangun momentum positif (+{value}).",
+        "awayBearish": "{team} cenderung menurun ({value})."
+      },
+      "confidence": {
+        "high": "Kepercayaan AI tetap tinggi ({score}%).",
+        "low": "Kepercayaan AI terbatas ({score}%).",
+        "topPick": "Sinyal AI teratas: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Gol yang diharapkan sekitar {goals}; skenario skor tinggi kemungkinan besar.",
+        "lowScoring": "Total proyeksi mendekati {goals} gol; pola skor rendah mungkin terjadi.",
+        "homeCleanSheet": "{team} probabilitas clean sheet {percent}%.",
+        "awayCleanSheet": "{team} probabilitas clean sheet {percent}%."
+      },
+      "sampleSmall": "Hanya {matches} pertandingan terkini tersedia—interpretasikan dengan hati-hati."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Kekuatan & Kelemahan",
+      "subtitle": "Rincian performa per tim",
+      "strengthsTitle": "Kekuatan",
+      "weaknessesTitle": "Kelemahan",
+      "noData": "Data tidak cukup",
+      "strengths": {
+        "formHigh": "Skor forma tinggi",
+        "winRateHigh": "Tingkat kemenangan kuat",
+        "attackStrong": "Serangan kuat",
+        "defenseStrong": "Pertahanan solid",
+        "goalDiffPositive": "Selisih gol positif",
+        "winStreak": "Kemenangan beruntun {count} pertandingan"
+      },
+      "weaknesses": {
+        "formLow": "Skor forma rendah",
+        "winRateLow": "Tingkat kemenangan rendah",
+        "attackWeak": "Serangan lemah",
+        "defenseWeak": "Pertahanan lemah",
+        "goalDiffNegative": "Selisih gol negatif",
+        "lossStreak": "Kekalahan beruntun {count} pertandingan"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "M",
+        "draw": "S",
+        "loss": "K",
+        "unknown": "—"
+      },
+      "titleFallback": "Forma Terkini",
+      "homeTitle": "Forma Kandang",
+      "awayTitle": "Forma Tandang"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Skor Forma",
+      "goalDifference": "Selisih Gol",
+      "homeBadge": "KANDANG",
+      "awayBadge": "TANDANG",
+      "streakLabel": "Beruntun {count} pertandingan {type}",
+      "streakTypes": {
+        "win": "menang",
+        "draw": "imbang",
+        "loss": "kalah"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Odds",
+      "matchResult": "Hasil Pertandingan",
+      "europeanOdds": "Odds Eropa",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Garis Over/Under",
+      "firstHalf": "Babak Pertama",
+      "firstHalfEuropean": "Odds Eropa Babak Pertama",
+      "firstHalfAsian": "Asian Handicap Babak Pertama",
+      "firstHalfOverUnder": "Over/Under Babak Pertama",
+      "openingLine": "Garis Pembukaan",
+      "closingLine": "Garis Penutupan"
+    },
+    "reanalyze": {
+      "title": "Pembaruan Manual",
+      "description": "Jika statistik terlihat ketinggalan zaman, minta scraping baru. Tersedia sekali setiap 15 menit.",
+      "button": "Minta analisis baru",
+      "buttonLoading": "Mengirim...",
+      "queued": "Permintaan dalam antrian (posisi {position}).",
+      "alreadyQueued": "Pertandingan ini sudah ada dalam antrian analisis.",
+      "rateLimited": "Harap tunggu sebelum meminta pembaruan lain untuk pertandingan ini.",
+      "nextAllowed": "Permintaan manual berikutnya tersedia pada {time}.",
+      "error": "Tidak dapat meminta analisis baru. Silakan coba lagi nanti."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Selamat Datang!",
+    "subtitle": "Silakan pilih bahasa dan zona waktu yang Anda sukai",
+    "languageSelection": "Pemilihan Bahasa",
+    "timezoneSelection": "Zona Waktu",
+    "saving": "Menyimpan...",
+    "continue": "Lanjutkan",
+    "timeFormatSelection": "Pilih format waktu yang Anda sukai"
+  },
+  "emptyState": {
+    "noData": "Tidak Ada Data",
+    "tryAgain": "Coba Lagi"
+  },
+  "matchesScreen": {
+    "title": "Jadwal Pertandingan",
+    "lastRefresh": "Pembaruan terakhir",
+    "tabs": {
+      "today": "Hari Ini",
+      "tomorrow": "Besok"
+    },
+    "allLeagues": "Semua liga",
+    "searchPlaceholder": "Cari tim atau liga...",
+    "clearFilters": "Bersihkan filter",
+    "loading": "Memuat pertandingan...",
+    "emptyTitle": "Tidak Ada Pertandingan Ditemukan",
+    "emptyMessage": "Belum ada pertandingan tersedia untuk tampilan ini.\n\nPertandingan baru akan segera ditambahkan!",
+    "emptyFiltered": "Tidak ada pertandingan yang sesuai dengan kriteria Anda.\n\nAnda dapat membersihkan filter dan mencoba lagi.",
+    "statusFallback": "Dijadwalkan",
+    "staleDataWarning": "Menampilkan jadwal dari {date}. Menunggu data terbaru untuk diperbarui."
+  },
+  "favoritesScreen": {
+    "title": "Favorit",
+    "emptyTitle": "Tidak Ada Pertandingan Favorit",
+    "emptyMessage": "Anda belum menambahkan pertandingan ke favorit.\n\nKetuk ikon bintang pada kartu pertandingan untuk menambahkannya di sini.",
+    "loading": "Memuat..."
+  },
+  "errors": {
+    "timeout": "Permintaan habis waktu. Silakan periksa koneksi Anda dan coba lagi.",
+    "network": "Kesalahan jaringan. Silakan verifikasi koneksi internet Anda.",
+    "api": "Server sementara tidak tersedia. Silakan coba lagi nanti.",
+    "unknown": "Terjadi kesalahan yang tidak terduga."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Turki",
+      "en": "Inggris",
+      "es": "Spanyol",
+      "de": "Jerman",
+      "it": "Italia",
+      "zh-TW": "Tionghoa Tradisional",
+      "zh-CN": "Tionghoa Sederhana",
+      "ja": "Jepang",
+      "id": "Bahasa Indonesia",
+      "fr": "Prancis",
+      "ru": "Rusia",
+      "tl": "Tagalog",
+      "ko": "Korea",
+      "ar": "Arab",
+      "pt": "Portugis"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "Istanbul (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "London (GMT+0)",
+      "MADRID": "Madrid (GMT+1)",
+      "BERLIN": "Berlin (GMT+1)",
+      "PARIS": "Paris (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Kota Meksiko (GMT-6)",
+      "BUENOS_AIRES": "Buenos Aires (GMT-3)",
+      "NEW_YORK": "New York (GMT-5)",
+      "LOS_ANGELES": "Los Angeles (GMT-8)",
+      "CHICAGO": "Chicago (GMT-6)",
+      "BOGOTA": "Bogotá (GMT-5)",
+      "LIMA": "Lima (GMT-5)",
+      "SANTIAGO": "Santiago (GMT-4)",
+      "DUBAI": "Dubai (GMT+4)",
+      "TOKYO": "Tokyo (GMT+9)",
+      "SYDNEY": "Sydney (GMT+10)"
+    },
+    "title": "Pengaturan",
+    "preferencesSection": "Preferensi",
+    "aboutSection": "Tentang GoalBlip",
+    "language": "Bahasa",
+    "timezone": "Zona Waktu",
+    "timeFormat": "Format Waktu",
+    "timeFormatOptions": {
+      "auto": "Otomatis",
+      "24h": "24 jam",
+      "12h": "12 jam"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Platform analisis pertandingan berbasis AI"
+  }
+}
+

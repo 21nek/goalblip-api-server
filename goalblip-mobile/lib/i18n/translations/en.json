@@ -1,0 +1,563 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "search": "Search",
+    "clear": "Clear",
+    "all": "All",
+    "select": "Select",
+    "continue": "Continue",
+    "back": "Back",
+    "home": "Home",
+    "favorites": "Favorites",
+    "unknownLeague": "Unknown League",
+    "unknown": "Unknown",
+    "prediction": "Prediction",
+    "time": {
+      "justNow": "just now",
+      "minutes": "{count}m",
+      "hours": "{count}h",
+      "days": "{count}d"
+    },
+    "settings": "Settings",
+    "menu": "Menu"
+  },
+  "drawer": {
+    "title": "Matches",
+    "searchPrompt": "Search Matches",
+    "searchPromptDescription": "Search for matches by typing team or league name"
+  },
+  "home": {
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "noMatches": "No Matches Found",
+    "noMatchesMessage": "No matches available for this view yet.\n\nNew matches will be added soon!",
+    "noMatchesFiltered": "No matches found matching your search criteria.\n\nYou can clear the filters and try again.",
+    "clearFilters": "Clear Filters",
+    "refreshing": "Refreshing...",
+    "dataLoadError": "Failed to Load Data",
+    "dataLoadErrorMessage": "Please check your internet connection and try again.",
+    "loadingMore": "Loading more...",
+    "topLeagues": {
+      "matches": "{count} matches",
+      "firstMatch": "First kickoff {time}",
+      "waitingKickoff": "Waiting for kickoff"
+    },
+    "aiShortlist": {
+      "predictionPending": "Prediction pending",
+      "noPredictionTitle": "No AI prediction",
+      "noPredictionMessage": "Analysis is not ready yet for this match."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Search team or league...",
+    "selectLeague": "Select League",
+    "allLeagues": "All leagues",
+    "leaguesSelected": "{count} leagues selected",
+    "clearAll": "Clear All",
+    "all": "All",
+    "matches": "matches",
+    "filterSortSettings": "Filter Settings",
+    "filterSortSettingsDescription": "Sorting and view options"
+  },
+  "filterSort": {
+    "title": "Filters & Sort",
+    "tabs": {
+      "filters": "Filters",
+      "sort": "Sort",
+      "view": "View"
+    },
+    "sortByLeague": "By League",
+    "sortByTime": "By Time",
+    "sortByDate": "By Date",
+    "sortByTeam": "By Team Name",
+    "viewGrouped": "Group by League",
+    "viewGroupedDescription": "Show matches under league headers",
+    "viewFlat": "Flat List",
+    "viewFlatDescription": "Show all matches without league headers"
+  },
+  "match": {
+    "live": "Live",
+    "vs": "vs",
+    "kickoff": "Kickoff soon",
+    "detailTitle": "Match Detail",
+    "loadingDetail": "Loading match detail...",
+    "detailError": "Failed to Load Match Detail",
+    "detailErrorMessage": "Please check your internet connection and try again.",
+    "detailNotFound": "Match detail not found.",
+    "retryLaterMessage": "This match data is not ready yet. Please try again later or request a new analysis.",
+    "pendingAnalysis": "Analyzing",
+    "pendingMessage": "Queue position: #{position}\n\nWill update automatically when analysis is complete.",
+    "refresh": "Refresh",
+    "dataDate": "Data Date",
+    "lastUpdate": "Last Update",
+    "dataSource": "Data Source",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "Live",
+      "scheduled": "Scheduled",
+      "finished": "Full Time",
+      "postponed": "Postponed",
+      "canceled": "Canceled",
+      "abandoned": "Abandoned",
+      "delayed": "Delayed",
+      "halftime": "Half-time",
+      "extraTime": "Extra Time",
+      "penalties": "Penalties"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Quick Summary",
+    "keyInsights": "Key Insights",
+    "teamComparison": "Team Comparison",
+    "visualComparison": "Visual Comparison",
+    "strengthsWeaknesses": "Strengths & Weaknesses",
+    "predictionSummary": "Prediction Summary",
+    "detailedPredictions": "Detailed Predictions",
+    "formStatsTitle": "Form Statistics",
+    "formStats": {
+      "winRate": "Win Rate",
+      "drawRate": "Draw Rate",
+      "lossRate": "Loss Rate",
+      "avgGoalsFor": "Avg Goals For",
+      "avgGoalsAgainst": "Avg Goals Against"
+    },
+    "recentForm": "Recent Form Details",
+    "headToHead": "Head to Head",
+    "oddsTrends": "Odds Trend Analysis",
+    "upcomingMatches": "Upcoming Matches",
+    "upcomingMatchesEmpty": "No upcoming matches available.",
+    "goalAnalysis": "Goal Analysis",
+    "riskAnalysis": "Risk Analysis",
+    "localInfo": "Local Information",
+    "noDetailedAnalysis": "No Detailed Analysis",
+    "noDetailedAnalysisMessage": "Detailed prediction analysis is not yet available for this match.",
+    "predictionsNotAvailable": "Prediction Analysis Not Available",
+    "predictionsNotAvailableMessage": "This section is currently only available in Turkish. Other languages will be added soon.",
+    "predictionLabels": {
+      "matchResult": "Match Result (1X2)",
+      "bothTeamsScore": "Both Teams to Score",
+      "totalGoals": "Total Goals",
+      "firstHalfResult": "First Half Result",
+      "firstHalfGoals": "First Half Goals",
+      "teamToScore": "Team to Score",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Over/Under Lines",
+      "firstHalfOverUnder": "1st Half Over/Under",
+      "firstHalfAsianHandicap": "1st Half Asian Handicap"
+    },
+    "outcomeLabels": {
+      "home": "Home Win",
+      "draw": "Draw",
+      "away": "Away Win",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Yes",
+      "no": "No",
+      "bttsYes": "Both teams score: Yes",
+      "bttsNo": "Both teams score: No",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "1st Half Over {value}",
+      "firstHalfUnder": "1st Half Under {value}",
+      "homeWillScore": "Home team to score",
+      "awayWillScore": "Away team to score"
+    },
+    "aiAnalysis": "AI Analysis",
+    "mainPrediction": "Main Prediction",
+    "recommendedPick": "Recommended Pick",
+    "allProbabilities": "All Probabilities",
+    "highest": "Highest",
+    "probability": "probability",
+    "summary": "Summary",
+    "recommended": "Recommended:",
+    "confidence": {
+      "veryHigh": "Very High Confidence",
+      "high": "High Confidence",
+      "good": "Good Confidence",
+      "medium": "Medium Confidence",
+      "low": "Low Confidence"
+    },
+    "invalidMatchId": "Invalid match ID",
+    "detailNotFound": "Match detail not found.",
+    "reloadFailed": "Reload failed.",
+    "cacheMessage": "Unable to get current data, showing from cache.",
+    "leagueInfo": "League Information",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "manual": "Manual",
+    "scoreboard": {
+      "kickoffFallback": "Kickoff is coming up",
+      "timezoneLabel": "Local time: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Home Team",
+      "awayFallback": "Away Team",
+      "homeGeneric": "home team",
+      "awayGeneric": "away team",
+      "formFallback": "Team {index}",
+      "homeShort": "HOME",
+      "awayShort": "AWAY"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} are in excellent form with a {winRate}% win rate over the last 5 matches.",
+        "homeHighLossRate": "{team} are struggling with a {lossRate}% loss rate over the last 5 matches.",
+        "homeHighGoalsFor": "{team} are averaging {goalsFor} goals per match recently.",
+        "homeLowGoalsAgainst": "{team} concede very few goals, only {goalsAgainst} per match.",
+        "awayHighWinRate": "{team} are in excellent form with a {winRate}% win rate over the last 5 matches.",
+        "awayHighLossRate": "{team} are struggling with a {lossRate}% loss rate over the last 5 matches.",
+        "homeWinStreak": "{team} have won {streak} matches in a row.",
+        "awayLosingStreak": "{team} have lost {streak} matches in a row.",
+        "homeGoalDifference": "{team} hold a clear advantage in goal difference.",
+        "homeH2HSuperiority": "{team} have dominated recent head-to-head meetings.",
+        "aiVeryHighConfidence": "AI predictions show very high confidence (average %{avgConfidence}).",
+        "aiSingleHighConfidence": "\"{prediction}\" prediction has extremely high confidence (%{confidence}). Most likely outcome: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Home",
+        "away": "Away",
+        "balanced": "Balanced",
+        "homeAdvantage": "Home team holds the form advantage",
+        "awayAdvantage": "Away team holds the form advantage",
+        "balancedForm": "Both teams are in balanced form",
+        "highConfidence": "High-confidence prediction",
+        "mediumHighConfidence": "Medium-high confidence prediction",
+        "balancedConfidence": "Balanced prediction",
+        "lowConfidence": "Low-confidence prediction",
+        "homeAdvantageSuffix": "• Home advantage present",
+        "awayAdvantageSuffix": "• Away team advantage"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Home",
+      "away": "Away",
+      "neutral": "Neutral",
+      "form": "Form"
+    },
+    "teamComparisonCard": {
+      "formScore": "Form: {score}/100",
+      "advantage": {
+        "home": "{team} hold a clear edge",
+        "away": "{team} hold a clear edge",
+        "balanced": "Teams are evenly matched"
+      },
+      "predictionLabel": "Prediction",
+      "confidenceLabel": "Confidence",
+      "predictionValues": {
+        "home": "Home",
+        "away": "Away",
+        "draw": "Draw",
+        "balanced": "Balanced"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Performance Comparison",
+      "subtitle": "Pick your preferred language and timezone.",
+    "privacyPolicy": "Privacy Policy",
+      "metrics": {
+        "formScore": "Form Score",
+        "winRate": "Win %",
+        "avgGoals": "Avg Goals",
+        "defense": "Defense"
+      },
+      "units": {
+        "goalsPerMatch": " goals/match",
+        "defenseHint": " (fewer goals = better)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Goal Analysis",
+      "summary": {
+        "expectedGoals": "Expected Goals",
+        "prediction": "Prediction"
+      },
+      "expectation": {
+        "high": "High goal expectation",
+        "mediumHigh": "Medium-high goal expectation",
+        "medium": "Medium goal expectation",
+        "low": "Low goal expectation"
+      },
+      "teamStats": {
+        "avgGoals": "Avg Goals",
+        "avgConceded": "Conceded",
+        "overUnderLabel": "Over/Under Pick",
+        "confidence": "Confidence"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Risk Analysis",
+      "riskLevel": {
+        "high": "High Risk",
+        "medium": "Medium Risk",
+        "low": "Low Risk"
+      },
+      "noRisk": "No notable risk factors",
+      "factors": {
+        "highLossRate": "{team} are struggling with a {lossRate}% loss rate in the last 5 matches.",
+        "mediumLossRate": "{team} show signs of a form dip.",
+        "lossStreak": "{team} have lost {streak} matches in a row.",
+        "lowScoring": "{team} struggle to score ({goalsFor} goals per match).",
+        "highConceding": "{team} concede many goals ({goalsAgainst} per match).",
+        "lowFormScore": "{team} carry a low form score ({formScore}/100).",
+        "mediumFormScore": "{team} remain inconsistent in form.",
+        "weakAway": "{team} have weak away performances."
+      }
+    },
+    "advancedMetrics": {
+      "title": "Advanced Insights",
+      "sampleLabel": "Based on last {matches} matches",
+      "weightedScore": {
+        "title": "Weighted Score System",
+        "description": "Recent form results are weighted to highlight current strength.",
+        "homeLabel": "Home weighted score",
+        "awayLabel": "Away weighted score"
+      },
+      "momentum": {
+        "title": "Momentum Indicator",
+        "description": "Goal difference momentum derived from recent performances.",
+        "bullish": "Bullish momentum",
+        "neutral": "Neutral momentum",
+        "bearish": "Bearish momentum"
+      },
+      "confidence": {
+        "title": "Confidence Blend",
+        "description": "Composite confidence blending AI picks and success history.",
+        "scoreLabel": "Composite confidence",
+        "topPickLabel": "Top signal",
+        "noPick": "No signal available"
+      },
+      "poisson": {
+        "title": "Poisson Goal Model",
+        "description": "Approximate goal distribution based on recent scoring rates.",
+        "expectedHeader": "Expected goals",
+        "goalColumn": "Goals",
+        "homeColumn": "Home",
+        "awayColumn": "Away",
+        "goalLabel": "{value} goals",
+        "goalLabelPlus": "3+ goals"
+      },
+      "goalTrend": {
+        "title": "Goal Trend",
+        "description": "Recent scoring vs conceding totals.",
+        "team": "Team",
+        "forLabel": "GF",
+        "againstLabel": "GA",
+        "deltaLabel": "Diff"
+      },
+      "confidenceLadder": {
+        "title": "Confidence Ladder",
+        "description": "Prediction confidence ranking."
+      },
+      "overUnder": {
+        "title": "Over/Under Confidence",
+        "description": "Key total goals probabilities."
+      },
+      "handicap": {
+        "title": "Handicap Insight",
+        "description": "Latest Asian handicap line."
+      },
+      "halfComparison": {
+        "title": "1st Half vs Full Time",
+        "description": "How confidence shifts between HT and FT picks.",
+        "halfLabel": "HT %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Key Signals",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} hold a strong form edge (+{value} pts over {awayTeam}).",
+        "awayAdvantage": "{awayTeam} carry the superior weighted form (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} show attacking momentum (+{value} goal momentum).",
+        "homeBearish": "{team} momentum is cooling ({value}).",
+        "awayBullish": "{team} build positive momentum (+{value}).",
+        "awayBearish": "{team} trend downward ({value})."
+      },
+      "confidence": {
+        "high": "AI confidence remains high ({score}%).",
+        "low": "AI confidence is limited ({score}%).",
+        "topPick": "Top AI signal: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Expected goals around {goals}; a high-scoring scenario is likely.",
+        "lowScoring": "Projected total near {goals} goals; low-scoring pattern possible.",
+        "homeCleanSheet": "{team} clean-sheet probability {percent}%.",
+        "awayCleanSheet": "{team} clean-sheet probability {percent}%."
+      },
+      "sampleSmall": "Only {matches} recent matches available—interpret with caution."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Strengths & Weaknesses",
+      "subtitle": "Pick your preferred language and timezone.",
+    "privacyPolicy": "Privacy Policy",
+      "strengthsTitle": "Strengths",
+      "weaknessesTitle": "Weaknesses",
+      "noData": "Not enough data",
+      "strengths": {
+        "formHigh": "High form score",
+        "winRateHigh": "Strong win rate",
+        "attackStrong": "Potent attack",
+        "defenseStrong": "Solid defense",
+        "goalDiffPositive": "Positive goal difference",
+        "winStreak": "{count}-match winning streak"
+      },
+      "weaknesses": {
+        "formLow": "Low form score",
+        "winRateLow": "Low win rate",
+        "attackWeak": "Weak attack",
+        "defenseWeak": "Weak defense",
+        "goalDiffNegative": "Negative goal difference",
+        "lossStreak": "{count}-match losing streak"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "W",
+        "draw": "D",
+        "loss": "L",
+        "unknown": "—"
+      },
+      "titleFallback": "Recent Form",
+      "homeTitle": "Home Form",
+      "awayTitle": "Away Form"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Form Score",
+      "goalDifference": "Goal Difference",
+      "homeBadge": "HOME",
+      "awayBadge": "AWAY",
+      "streakLabel": "{count}-match {type} streak",
+      "streakTypes": {
+        "win": "winning",
+        "draw": "drawing",
+        "loss": "losing"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Odds",
+      "matchResult": "Match Result",
+      "europeanOdds": "European Odds",
+      "asianHandicap": "Asian Handicap",
+      "overUnderLines": "Over/Under Lines",
+      "firstHalf": "First Half",
+      "firstHalfEuropean": "1st Half European Odds",
+      "firstHalfAsian": "1st Half Asian Handicap",
+      "firstHalfOverUnder": "1st Half Over/Under",
+      "openingLine": "Opening Line",
+      "closingLine": "Closing Line"
+    },
+    "reanalyze": {
+      "title": "Manual Refresh",
+      "description": "If the stats look outdated, request a fresh scrape. Available once every 15 minutes.",
+      "button": "Request new analysis",
+      "buttonLoading": "Sending...",
+      "queued": "Request queued (position {position}).",
+      "alreadyQueued": "This match is already in the analysis queue.",
+      "rateLimited": "Please wait before requesting another refresh for this match.",
+      "nextAllowed": "Next manual request available at {time}.",
+      "error": "Could not request a new analysis. Please try again later."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Welcome!",
+    "subtitle": "Pick your preferred language and timezone.",
+    "privacyPolicy": "Privacy Policy",
+    "languageSelection": "Language Selection",
+    "timezoneSelection": "Time Zone",
+    "saving": "Saving...",
+    "continue": "Continue",
+    "timeFormatSelection": "Select your preferred time format"
+  },
+  "emptyState": {
+    "noData": "No Data",
+    "tryAgain": "Try Again"
+  },
+  "matchesScreen": {
+    "title": "Match Fixture",
+    "lastRefresh": "Last update",
+    "tabs": {
+      "today": "Today",
+      "tomorrow": "Tomorrow"
+    },
+    "allLeagues": "All leagues",
+    "searchPlaceholder": "Search team or league...",
+    "clearFilters": "Clear filters",
+    "loading": "Loading matches...",
+    "emptyTitle": "No Matches Found",
+    "emptyMessage": "No matches available for this view yet.\n\nNew matches will be added soon!",
+    "emptyFiltered": "No matches found matching your criteria.\n\nYou can clear the filters and try again.",
+    "statusFallback": "Scheduled",
+    "staleDataWarning": "Showing fixtures from {date}. Waiting for the latest data to refresh."
+  },
+  "favoritesScreen": {
+    "title": "Favorites",
+    "emptyTitle": "No Favorite Matches",
+    "emptyMessage": "You haven't added any matches to favorites yet.\n\nTap the star icon on match cards to add them here.",
+    "loading": "Loading..."
+  },
+  "errors": {
+    "timeout": "The request timed out. Please check your connection and try again.",
+    "network": "Network error. Please verify your internet connection.",
+    "api": "The server is temporarily unavailable. Please try again later.",
+    "unknown": "An unexpected error occurred."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Turkish",
+      "en": "English",
+      "es": "Spanish",
+      "de": "German",
+      "it": "Italian",
+      "zh-TW": "Traditional Chinese",
+      "zh-CN": "Simplified Chinese",
+      "ja": "Japanese",
+      "id": "Indonesian",
+      "fr": "French",
+      "ru": "Russian",
+      "tl": "Tagalog",
+      "ko": "Korean",
+      "ar": "Arabic",
+      "pt": "Portuguese"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "Istanbul (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "London (GMT+0)",
+      "MADRID": "Madrid (GMT+1)",
+      "BERLIN": "Berlin (GMT+1)",
+      "PARIS": "Paris (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Mexico City (GMT-6)",
+      "BUENOS_AIRES": "Buenos Aires (GMT-3)",
+      "NEW_YORK": "New York (GMT-5)",
+      "LOS_ANGELES": "Los Angeles (GMT-8)",
+      "CHICAGO": "Chicago (GMT-6)",
+      "BOGOTA": "Bogotá (GMT-5)",
+      "LIMA": "Lima (GMT-5)",
+      "SANTIAGO": "Santiago (GMT-4)",
+      "DUBAI": "Dubai (GMT+4)",
+      "TOKYO": "Tokyo (GMT+9)",
+      "SYDNEY": "Sydney (GMT+10)"
+    },
+    "title": "Settings",
+    "preferencesSection": "Preferences",
+    "aboutSection": "About GoalBlip",
+    "language": "Language",
+    "timezone": "Time Zone",
+    "timeFormat": "Time Format",
+    "timeFormatOptions": {
+      "auto": "Auto",
+      "24h": "24-hour",
+      "12h": "12-hour"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Pick your preferred language and timezone.",
+    "privacyPolicy": "Privacy Policy"
+  }
+}

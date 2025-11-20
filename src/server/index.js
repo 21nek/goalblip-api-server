@@ -3,7 +3,7 @@ import cors from 'cors';
 import os from 'os';
 import rateLimit from 'express-rate-limit';
 import { scrapeMatchList } from '../scrapers/golsinyali/match-list.js';
-import { findTimezoneById } from '../config/timezones.js';
+import { findTimezoneById, DEFAULT_TIMEZONE } from '../config/timezones.js';
 import { formatUtcForTimezone } from '../utils/datetime.js';
 import { normalizeLocale } from '../config/locales.js';
 import { isValidView } from '../scrapers/golsinyali/i18n/views.js';
@@ -66,16 +66,16 @@ const matchDetailRateLimit = rateLimit({
 function requireApiKey(req, res, next) {
   const apiKey = req.headers['x-api-key'];
   const expectedKey = process.env.API_KEY;
-  
+
   // API_KEY env var yoksa, bu middleware'i atla (opsiyonel)
   if (!expectedKey) {
     return next();
   }
-  
+
   if (!apiKey || apiKey !== expectedKey) {
     return res.status(401).json({ error: 'Geçersiz veya eksik API anahtarı.' });
   }
-  
+
   next();
 }
 
@@ -105,13 +105,38 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+function getExpectedDateForView(view, timezone = DEFAULT_TIMEZONE) {
+  // Create a date object in the target timezone
+  const now = new Date();
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  // Format parts to get YYYY-MM-DD in target timezone
+  const parts = formatter.formatToParts(now);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+
+  let targetDate = new Date(`${year}-${month}-${day}T12:00:00`); // Noon to avoid DST issues
+
+  if (view === 'tomorrow') {
+    targetDate.setDate(targetDate.getDate() + 1);
+  }
+
+  return targetDate.toISOString().split('T')[0];
+}
+
 // Public endpoint'ler - Rate limiting var
 app.get('/api/matches', publicRateLimit, async (req, res, next) => {
   try {
     const { date, view = 'today', refresh, locale = 'tr' } = req.query;
     const normalizedLocale = normalizeLocale(typeof locale === 'string' ? locale : 'tr');
     if (!isValidView(view)) {
-      res.status(400).json({ error: `GeÃ§ersiz view parametresi: ${view}` });
+      res.status(400).json({ error: `Geçersiz view parametresi: ${view}` });
       return;
     }
     const timezoneParam =
@@ -130,6 +155,15 @@ app.get('/api/matches', publicRateLimit, async (req, res, next) => {
       payload = await loadMatchListByDate(date, { locale: normalizedLocale });
     } else {
       payload = await loadMatchListByView(view, { locale: normalizedLocale });
+
+      // Check if the loaded payload has the correct date for the requested view
+      if (payload) {
+        const expectedDate = getExpectedDateForView(view, DEFAULT_TIMEZONE);
+        if (payload.dataDate !== expectedDate) {
+          console.log(`[api] Stale view detected: ${view} (got ${payload.dataDate}, expected ${expectedDate}). Forcing refresh.`);
+          payload = null;
+        }
+      }
     }
 
     if (!payload && !date) {
@@ -152,15 +186,15 @@ app.get('/api/matches', publicRateLimit, async (req, res, next) => {
 
     const matches = Array.isArray(payload.matches)
       ? payload.matches.map((match) => {
-          const kickoffDisplay =
-            match.kickoffIsoUtc && targetTimezone
-              ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
-              : match.kickoffTime ?? null;
-          return {
-            ...match,
-            kickoffTimeDisplay: kickoffDisplay,
-          };
-        })
+        const kickoffDisplay =
+          match.kickoffIsoUtc && targetTimezone
+            ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
+            : match.kickoffTime ?? null;
+        return {
+          ...match,
+          kickoffTimeDisplay: kickoffDisplay,
+        };
+      })
       : [];
 
     res.json({
@@ -229,15 +263,15 @@ app.get('/api/matches/:date', publicRateLimit, async (req, res, next) => {
 
     const matches = Array.isArray(payload.matches)
       ? payload.matches.map((match) => {
-          const kickoffDisplay =
-            match.kickoffIsoUtc && targetTimezone
-              ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
-              : match.kickoffTime ?? null;
-          return {
-            ...match,
-            kickoffTimeDisplay: kickoffDisplay,
-          };
-        })
+        const kickoffDisplay =
+          match.kickoffIsoUtc && targetTimezone
+            ? formatUtcForTimezone(match.kickoffIsoUtc, targetTimezone)
+            : match.kickoffTime ?? null;
+        return {
+          ...match,
+          kickoffTimeDisplay: kickoffDisplay,
+        };
+      })
       : [];
 
     res.json({
@@ -528,13 +562,13 @@ app.use((err, req, res, next) => {
     path: req.path,
     method: req.method,
   });
-  
+
   // Production'da internal hataları gizle
   const isProduction = process.env.NODE_ENV === 'production';
   const errorMessage = isProduction && err.status !== 400 && err.status !== 404
     ? 'Beklenmeyen sunucu hatası.'
     : (err.message || 'Beklenmeyen sunucu hatası.');
-  
+
   res.status(err.status || 500).json({
     error: errorMessage,
   });

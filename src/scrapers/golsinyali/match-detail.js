@@ -51,7 +51,10 @@ export async function scrapeMatchDetail(options = {}) {
   const targetUrl = buildDetailUrl(normalizedLocale, matchId, fallbackSlug);
   const headingConfig = buildHeadingConfig(normalizedLocale);
 
-  const browser = await puppeteer.launch({ headless });
+  const browser = await puppeteer.launch({
+    headless,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
 
   try {
     const page = await browser.newPage();
@@ -61,7 +64,17 @@ export async function scrapeMatchDetail(options = {}) {
     page.setDefaultTimeout?.(navigationTimeoutMs);
 
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
-    
+
+    // 404 check
+    const pageTitle = await page.title();
+    const bodyText = await page.evaluate(() => document.body.innerText);
+    if (
+      /sayfa bulunamadı|page not found|404/i.test(pageTitle) ||
+      /aradığınız sayfa bulunamadı/i.test(bodyText)
+    ) {
+      throw new Error('Match page not found (404)');
+    }
+
     // main elementi bulunamazsa alternatif selector'ları dene
     try {
       await page.waitForSelector('main', { timeout: 10000 }); // 10 saniye dene
@@ -189,7 +202,7 @@ export async function scrapeMatchDetail(options = {}) {
       const breadcrumbs = pickByType('BreadcrumbList');
 
       // main yoksa body veya doğrudan grid'i ara
-      const scoreboardGrid = document.querySelector('main .grid.grid-cols-3.items-center') 
+      const scoreboardGrid = document.querySelector('main .grid.grid-cols-3.items-center')
         || document.querySelector('body .grid.grid-cols-3.items-center')
         || document.querySelector('.grid.grid-cols-3.items-center');
       const scoreboardCard =
@@ -205,57 +218,57 @@ export async function scrapeMatchDetail(options = {}) {
 
       const scoreboard = scoreboardGrid
         ? (() => {
-            const [homeCol, centerCol, awayCol] = Array.from(scoreboardGrid.children);
-            const centerScores = centerCol
-              ? Array.from(centerCol.querySelectorAll('.text-3xl, .text-5xl')).map((node) =>
-                  text(node),
-                )
-              : [];
-            const halftime = text(
-              centerCol?.querySelector('[class*="text-[10px]"], .text-xs, [class*="text-xs"]'),
-            );
-            const infoChips = scoreboardInfoRow
-              ? Array.from(scoreboardInfoRow.children)
-                  .map((chip) => text(chip))
-                  .filter(Boolean)
-              : [];
-            const kickoffContainer =
-              scoreboardCard?.querySelector('.border-t .text-gray-400') ?? null;
-            const kickoffTimezone = kickoffContainer
-              ? text(kickoffContainer.querySelector('span'))
-              : null;
-            const kickoffTextRaw = kickoffContainer
-              ? text(kickoffContainer).replace(kickoffTimezone || '', '').trim()
-              : null;
-            const kickoffText = kickoffTextRaw
-              ? kickoffTextRaw.replace(/^[^0-9A-Za-z]+/, '').trim()
-              : null;
-            const kickoffIsoUtc = sportsEvent?.startDate || null;
+          const [homeCol, centerCol, awayCol] = Array.from(scoreboardGrid.children);
+          const centerScores = centerCol
+            ? Array.from(centerCol.querySelectorAll('.text-3xl, .text-5xl')).map((node) =>
+              text(node),
+            )
+            : [];
+          const halftime = text(
+            centerCol?.querySelector('[class*="text-[10px]"], .text-xs, [class*="text-xs"]'),
+          );
+          const infoChips = scoreboardInfoRow
+            ? Array.from(scoreboardInfoRow.children)
+              .map((chip) => text(chip))
+              .filter(Boolean)
+            : [];
+          const kickoffContainer =
+            scoreboardCard?.querySelector('.border-t .text-gray-400') ?? null;
+          const kickoffTimezone = kickoffContainer
+            ? text(kickoffContainer.querySelector('span'))
+            : null;
+          const kickoffTextRaw = kickoffContainer
+            ? text(kickoffContainer).replace(kickoffTimezone || '', '').trim()
+            : null;
+          const kickoffText = kickoffTextRaw
+            ? kickoffTextRaw.replace(/^[^0-9A-Za-z]+/, '').trim()
+            : null;
+          const kickoffIsoUtc = sportsEvent?.startDate || null;
 
-            return {
-              leagueLabel: text(scoreboardHeader?.querySelector('.text-gray-300')),
-              statusBadges: Array.from(
-                scoreboardHeader?.querySelectorAll('.px-3.py-1, .px-3.py-1\\.5') || [],
-              )
-                .map((badge) => text(badge))
-                .filter(Boolean),
-              homeTeam: {
-                name: text(homeCol?.querySelector('.text-center')),
-                logo: normalizeUrl(homeCol?.querySelector('img')),
-                score: centerScores[0] ? toNumber(centerScores[0]) : null,
-              },
-              awayTeam: {
-                name: text(awayCol?.querySelector('.text-center')),
-                logo: normalizeUrl(awayCol?.querySelector('img')),
-                score: centerScores[1] ? toNumber(centerScores[1]) : null,
-              },
-              halftimeScore: halftime?.replace(/^Devre:\s*/i, '') || null,
-              info: infoChips,
-              kickoff: kickoffText || null,
-              kickoffTimezone: kickoffTimezone || null,
-              kickoffIsoUtc: kickoffIsoUtc || null,
-            };
-          })()
+          return {
+            leagueLabel: text(scoreboardHeader?.querySelector('.text-gray-300')),
+            statusBadges: Array.from(
+              scoreboardHeader?.querySelectorAll('.px-3.py-1, .px-3.py-1\\.5') || [],
+            )
+              .map((badge) => text(badge))
+              .filter(Boolean),
+            homeTeam: {
+              name: text(homeCol?.querySelector('.text-center')),
+              logo: normalizeUrl(homeCol?.querySelector('img')),
+              score: centerScores[0] ? toNumber(centerScores[0]) : null,
+            },
+            awayTeam: {
+              name: text(awayCol?.querySelector('.text-center')),
+              logo: normalizeUrl(awayCol?.querySelector('img')),
+              score: centerScores[1] ? toNumber(centerScores[1]) : null,
+            },
+            halftimeScore: halftime?.replace(/^Devre:\s*/i, '') || null,
+            info: infoChips,
+            kickoff: kickoffText || null,
+            kickoffTimezone: kickoffTimezone || null,
+            kickoffIsoUtc: kickoffIsoUtc || null,
+          };
+        })()
         : null;
 
       const extractHighlightCard = (card, index) => {
@@ -408,12 +421,12 @@ export async function scrapeMatchDetail(options = {}) {
                 row.querySelector('.flex-1, .flex-auto, .min-w-0') || row.querySelector('div');
               const detailLines = detailWrapper
                 ? Array.from(
-                    detailWrapper.querySelectorAll(
-                      '.text-gray-300, .text-sm.text-gray-300, .truncate, .text-xs.text-gray-500, .text-gray-500.text-xs',
-                    ),
-                  )
-                    .map((node) => text(node))
-                    .filter(Boolean)
+                  detailWrapper.querySelectorAll(
+                    '.text-gray-300, .text-sm.text-gray-300, .truncate, .text-xs.text-gray-500, .text-gray-500.text-xs',
+                  ),
+                )
+                  .map((node) => text(node))
+                  .filter(Boolean)
                 : [];
               const opponent = detailLines.shift() || null;
               const competition = detailLines.shift() || null;
@@ -661,6 +674,10 @@ export async function scrapeMatchDetail(options = {}) {
         lastUpdatedAt: lastUpdated,
       };
     }, headingConfig);
+
+    if (!detail.scoreboard) {
+      throw new Error('Scoreboard could not be extracted. Page structure might have changed or page is invalid.');
+    }
 
     return {
       locale,
