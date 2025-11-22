@@ -21,8 +21,63 @@ SELECTORS.card = `${SELECTORS.list} > div > button`;
 const DEFAULT_SCROLL_DELAY_MS = 120;
 const MAX_SCROLL_ATTEMPTS = 400;
 const TIME_ZONE = 'Europe/Istanbul';
+const ALLOWED_HOST = new URL(BASE_URL).hostname;
+const TRACKING_HOST_PATTERNS = [
+  'google-analytics.com',
+  'analytics.google.com',
+  'googletagmanager.com',
+  'doubleclick.net',
+  'facebook.com',
+  'fbcdn.net',
+  'hotjar.com',
+  'segment.io',
+  'mixpanel.com',
+  'amplitude.com',
+];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function setupRequestInterception(page, logger = console) {
+  await page.setRequestInterception(true);
+  page.on('request', (request) => {
+    const type = request.resourceType();
+    const url = request.url();
+    try {
+      const hostname = new URL(url).hostname;
+      const isAllowedHost = hostname === ALLOWED_HOST || hostname.endsWith('.golsinyali.com');
+
+      // Always drop known tracking hosts
+      if (TRACKING_HOST_PATTERNS.some((pat) => hostname.includes(pat))) {
+        return request.abort();
+      }
+
+      // Allow images from the target host (team logos); block other images/media/fonts/etc.
+      if (['image', 'font', 'media'].includes(type)) {
+        return isAllowedHost ? request.continue() : request.abort();
+      }
+
+      // Stylesheets are optional; keep only first-party to reduce footprint
+      if (type === 'stylesheet') {
+        return isAllowedHost ? request.continue() : request.abort();
+      }
+
+      // Block beacons/prefetch/preflight
+      if (['other', 'beacon', 'prefetch', 'preflight'].includes(type)) {
+        return request.abort();
+      }
+
+      if (type === 'script' || type === 'xhr' || type === 'fetch' || type === 'document') {
+        if (hostname !== ALLOWED_HOST && !hostname.endsWith('.golsinyali.com')) {
+          return request.abort();
+        }
+      }
+      return request.continue();
+    } catch (err) {
+      logger?.warn?.('[scrape] request interception error, continuing', err?.message ?? err);
+      return request.continue();
+    }
+  });
+}
 
 export async function scrapeMatchList(options = {}) {
   const {
@@ -53,6 +108,66 @@ export async function scrapeMatchList(options = {}) {
     await page.setUserAgent(userAgent);
     page.setDefaultNavigationTimeout?.(navigationTimeoutMs);
     page.setDefaultTimeout?.(navigationTimeoutMs);
+    await setupRequestInterception(page, logger);
+
+    await page.evaluateOnNewDocument(() => {
+      // Stub common analytics globals to no-op
+      const noopFn = () => {};
+      const noopObj = new Proxy(
+        {},
+        {
+          get: () => noopFn,
+          set: () => true,
+        },
+      );
+      // @ts-ignore
+      window.dataLayer = [];
+      // @ts-ignore
+      window.gtag = noopFn;
+      // @ts-ignore
+      window.ga = noopFn;
+      // @ts-ignore
+      window.fbq = noopFn;
+      // @ts-ignore
+      window._gaq = [];
+      // Block sendBeacon
+      // @ts-ignore
+      navigator.sendBeacon = noopFn;
+      // Patch fetch/xhr to drop analytics hosts
+      const blockedHosts = [
+        'google-analytics.com',
+        'googletagmanager.com',
+        'doubleclick.net',
+        'facebook.com',
+        'fbcdn.net',
+        'hotjar.com',
+        'segment.io',
+        'mixpanel.com',
+        'amplitude.com',
+      ];
+      const shouldBlock = (url) => {
+        try {
+          const h = new URL(url).hostname;
+          return blockedHosts.some((p) => h.includes(p));
+        } catch {
+          return false;
+        }
+      };
+      const origFetch = window.fetch;
+      // @ts-ignore
+      window.fetch = (...args) => {
+        if (args[0] && shouldBlock(args[0])) return Promise.resolve(new Response(null, { status: 204 }));
+        return origFetch(...args);
+      };
+      const origOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function (...args) {
+        if (args[1] && shouldBlock(args[1])) {
+          // short-circuit send
+          this.send = () => {};
+        }
+        return origOpen.apply(this, args);
+      };
+    });
 
     await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: navigationTimeoutMs });
     await page.waitForSelector(SELECTORS.card, { timeout: navigationTimeoutMs });

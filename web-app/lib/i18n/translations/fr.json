@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "clear": "Effacer",
+    "all": "Tous",
+    "select": "Sélectionner",
+    "continue": "Continuer",
+    "back": "Retour",
+    "home": "Accueil",
+    "favorites": "Favoris",
+    "unknownLeague": "Ligue inconnue",
+    "unknown": "Inconnu",
+    "prediction": "Prédiction",
+    "time": {
+      "justNow": "à l'instant",
+      "minutes": "{count}min",
+      "hours": "{count}h",
+      "days": "{count}j"
+    },
+    "settings": "Paramètres",
+    "menu": "Menu"
+  },
+  "drawer": {
+    "title": "Matchs",
+    "searchPrompt": "Rechercher des matchs",
+    "searchPromptDescription": "Recherchez des matchs en tapant le nom de l'équipe ou de la ligue"
+  },
+  "home": {
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "noMatches": "Aucun match trouvé",
+    "noMatchesMessage": "Aucun match disponible pour cette vue pour le moment.\n\nDe nouveaux matchs seront ajoutés bientôt !",
+    "noMatchesFiltered": "Aucun match trouvé correspondant à vos critères de recherche.\n\nVous pouvez effacer les filtres et réessayer.",
+    "clearFilters": "Effacer les filtres",
+    "refreshing": "Actualisation...",
+    "dataLoadError": "Échec du chargement des données",
+    "dataLoadErrorMessage": "Veuillez vérifier votre connexion Internet et réessayer.",
+    "loadingMore": "Chargement supplémentaire...",
+    "topLeagues": {
+      "matches": "{count} matchs",
+      "firstMatch": "Premier coup d'envoi {time}",
+      "waitingKickoff": "En attente du coup d'envoi"
+    },
+    "aiShortlist": {
+      "predictionPending": "Prédiction en attente",
+      "noPredictionTitle": "Aucune prédiction IA",
+      "noPredictionMessage": "L'analyse n'est pas encore prête pour ce match."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Rechercher une équipe ou une ligue...",
+    "selectLeague": "Sélectionner une ligue",
+    "allLeagues": "Toutes les ligues",
+    "leaguesSelected": "{count} ligues sélectionnées",
+    "clearAll": "Tout effacer",
+    "all": "Tous",
+    "matches": "matchs",
+    "filterSortSettings": "Paramètres de filtre",
+    "filterSortSettingsDescription": "Options de tri et d'affichage"
+  },
+  "filterSort": {
+    "title": "Filtres et tri",
+    "tabs": {
+      "filters": "Filtres",
+      "sort": "Trier",
+      "view": "Vue"
+    },
+    "sortByLeague": "Par ligue",
+    "sortByTime": "Par heure",
+    "sortByDate": "Par date",
+    "sortByTeam": "Par nom d'équipe",
+    "viewGrouped": "Grouper par ligue",
+    "viewGroupedDescription": "Afficher les matchs sous les en-têtes de ligue",
+    "viewFlat": "Liste plate",
+    "viewFlatDescription": "Afficher tous les matchs sans en-têtes de ligue"
+  },
+  "match": {
+    "live": "En direct",
+    "vs": "contre",
+    "kickoff": "Coup d'envoi imminent",
+    "detailTitle": "Détails du match",
+    "loadingDetail": "Chargement des détails du match...",
+    "detailError": "Échec du chargement des détails du match",
+    "detailErrorMessage": "Veuillez vérifier votre connexion Internet et réessayer.",
+    "pendingAnalysis": "Analyse en cours",
+    "pendingMessage": "Position dans la file : #{position}\n\nSera mis à jour automatiquement lorsque l'analyse sera terminée.",
+    "refresh": "Actualiser",
+    "dataDate": "Date des données",
+    "lastUpdate": "Dernière mise à jour",
+    "dataSource": "Source des données",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "En direct",
+      "scheduled": "Programmé",
+      "finished": "Terminé",
+      "postponed": "Reporté",
+      "canceled": "Annulé",
+      "abandoned": "Abandonné",
+      "delayed": "Retardé",
+      "halftime": "Mi-temps",
+      "extraTime": "Prolongations",
+      "penalties": "Tirs au but"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Résumé rapide",
+    "keyInsights": "Aperçus clés",
+    "teamComparison": "Comparaison des équipes",
+    "visualComparison": "Comparaison visuelle",
+    "strengthsWeaknesses": "Forces et faiblesses",
+    "predictionSummary": "Résumé des prédictions",
+    "detailedPredictions": "Prédictions détaillées",
+    "formStatsTitle": "Statistiques de forme",
+    "formStats": {
+      "winRate": "Taux de victoire",
+      "drawRate": "Taux de match nul",
+      "lossRate": "Taux de défaite",
+      "avgGoalsFor": "Moyenne de buts marqués",
+      "avgGoalsAgainst": "Moyenne de buts encaissés"
+    },
+    "recentForm": "Détails de la forme récente",
+    "headToHead": "Face à face",
+    "oddsTrends": "Analyse des tendances des cotes",
+    "upcomingMatches": "Matchs à venir",
+    "upcomingMatchesEmpty": "Aucun match à venir disponible.",
+    "goalAnalysis": "Analyse des buts",
+    "riskAnalysis": "Analyse des risques",
+    "localInfo": "Informations locales",
+    "noDetailedAnalysis": "Aucune analyse détaillée",
+    "noDetailedAnalysisMessage": "L'analyse détaillée des prédictions n'est pas encore disponible pour ce match.",
+    "predictionsNotAvailable": "Analyse des prédictions non disponible",
+    "predictionsNotAvailableMessage": "Cette section n'est actuellement disponible qu'en turc. D'autres langues seront ajoutées prochainement.",
+    "predictionLabels": {
+      "matchResult": "Résultat du match (1X2)",
+      "bothTeamsScore": "Les deux équipes marquent",
+      "totalGoals": "Total des buts",
+      "firstHalfResult": "Résultat de la première mi-temps",
+      "firstHalfGoals": "Buts de la première mi-temps",
+      "teamToScore": "Équipe qui marque",
+      "asianHandicap": "Handicap asiatique",
+      "overUnderLines": "Lignes Over/Under",
+      "firstHalfOverUnder": "Over/Under première mi-temps",
+      "firstHalfAsianHandicap": "Handicap asiatique première mi-temps"
+    },
+    "outcomeLabels": {
+      "home": "Victoire à domicile",
+      "draw": "Match nul",
+      "away": "Victoire à l'extérieur",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Oui",
+      "no": "Non",
+      "bttsYes": "Les deux équipes marquent : Oui",
+      "bttsNo": "Les deux équipes marquent : Non",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "Over première mi-temps {value}",
+      "firstHalfUnder": "Under première mi-temps {value}",
+      "homeWillScore": "L'équipe à domicile marquera",
+      "awayWillScore": "L'équipe à l'extérieur marquera"
+    },
+    "aiAnalysis": "Analyse IA",
+    "mainPrediction": "Prédiction principale",
+    "recommendedPick": "Choix recommandé",
+    "allProbabilities": "Toutes les probabilités",
+    "highest": "Plus élevée",
+    "probability": "probabilité",
+    "summary": "Résumé",
+    "recommended": "Recommandé :",
+    "confidence": {
+      "veryHigh": "Confiance très élevée",
+      "high": "Confiance élevée",
+      "good": "Bonne confiance",
+      "medium": "Confiance moyenne",
+      "low": "Faible confiance"
+    },
+    "invalidMatchId": "ID de match invalide",
+    "detailNotFound": "Détails du match introuvables.",
+    "reloadFailed": "Échec du rechargement.",
+    "cacheMessage": "Impossible d'obtenir les données actuelles, affichage depuis le cache.",
+    "leagueInfo": "Informations sur la ligue",
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "manual": "Manuel",
+    "scoreboard": {
+      "kickoffFallback": "Le coup d'envoi approche",
+      "timezoneLabel": "Heure locale : {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Équipe à domicile",
+      "awayFallback": "Équipe à l'extérieur",
+      "homeGeneric": "équipe à domicile",
+      "awayGeneric": "équipe à l'extérieur",
+      "formFallback": "Équipe {index}",
+      "homeShort": "DOMICILE",
+      "awayShort": "EXTÉRIEUR"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} est en excellente forme avec un taux de victoire de {winRate}% sur les 5 derniers matchs.",
+        "homeHighLossRate": "{team} éprouve des difficultés avec un taux de défaite de {lossRate}% sur les 5 derniers matchs.",
+        "homeHighGoalsFor": "{team} marque en moyenne {goalsFor} buts par match récemment.",
+        "homeLowGoalsAgainst": "{team} encaisse très peu de buts, seulement {goalsAgainst} par match.",
+        "awayHighWinRate": "{team} est en excellente forme avec un taux de victoire de {winRate}% sur les 5 derniers matchs.",
+        "awayHighLossRate": "{team} éprouve des difficultés avec un taux de défaite de {lossRate}% sur les 5 derniers matchs.",
+        "homeWinStreak": "{team} a remporté {streak} matchs consécutifs.",
+        "awayLosingStreak": "{team} a perdu {streak} matchs consécutifs.",
+        "homeGoalDifference": "{team} a un avantage net en différence de buts.",
+        "homeH2HSuperiority": "{team} a dominé les confrontations récentes.",
+        "aiVeryHighConfidence": "Les prédictions IA montrent une confiance très élevée (moyenne %{avgConfidence}).",
+        "aiSingleHighConfidence": "La prédiction « {prediction} » a une confiance extrêmement élevée (%{confidence}). Résultat le plus probable : {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Domicile",
+        "away": "Extérieur",
+        "balanced": "Équilibré",
+        "homeAdvantage": "L'équipe à domicile a l'avantage de la forme",
+        "awayAdvantage": "L'équipe à l'extérieur a l'avantage de la forme",
+        "balancedForm": "Les deux équipes sont en forme équilibrée",
+        "highConfidence": "Prédiction à haute confiance",
+        "mediumHighConfidence": "Prédiction à confiance moyenne-élevée",
+        "balancedConfidence": "Prédiction équilibrée",
+        "lowConfidence": "Prédiction à faible confiance",
+        "homeAdvantageSuffix": "• Avantage à domicile présent",
+        "awayAdvantageSuffix": "• Avantage de l'équipe à l'extérieur"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Domicile",
+      "away": "Extérieur",
+      "neutral": "Neutre",
+      "form": "Forme"
+    },
+    "teamComparisonCard": {
+      "formScore": "Forme : {score}/100",
+      "advantage": {
+        "home": "{team} a un avantage net",
+        "away": "{team} a un avantage net",
+        "balanced": "Les équipes sont à égalité"
+      },
+      "predictionLabel": "Prédiction",
+      "confidenceLabel": "Confiance",
+      "predictionValues": {
+        "home": "Domicile",
+        "away": "Extérieur",
+        "draw": "Match nul",
+        "balanced": "Équilibré"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Comparaison des performances",
+      "subtitle": "Comparaison visuelle des deux équipes",
+      "metrics": {
+        "formScore": "Score de forme",
+        "winRate": "Taux de victoire",
+        "avgGoals": "Moyenne de buts",
+        "defense": "Défense"
+      },
+      "units": {
+        "goalsPerMatch": " buts/match",
+        "defenseHint": " (moins de buts = mieux)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Analyse des buts",
+      "summary": {
+        "expectedGoals": "Buts attendus",
+        "prediction": "Prédiction"
+      },
+      "expectation": {
+        "high": "Attente de buts élevée",
+        "mediumHigh": "Attente de buts moyenne-élevée",
+        "medium": "Attente de buts moyenne",
+        "low": "Attente de buts faible"
+      },
+      "teamStats": {
+        "avgGoals": "Moyenne de buts",
+        "avgConceded": "Encaissés",
+        "overUnderLabel": "Choix Over/Under",
+        "confidence": "Confiance"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Analyse des risques",
+      "riskLevel": {
+        "high": "Risque élevé",
+        "medium": "Risque moyen",
+        "low": "Risque faible"
+      },
+      "noRisk": "Aucun facteur de risque notable",
+      "factors": {
+        "highLossRate": "{team} éprouve des difficultés avec un taux de défaite de {lossRate}% sur les 5 derniers matchs.",
+        "mediumLossRate": "{team} montre des signes de baisse de forme.",
+        "lossStreak": "{team} a perdu {streak} matchs consécutifs.",
+        "lowScoring": "{team} a du mal à marquer ({goalsFor} buts par match).",
+        "highConceding": "{team} encaisse beaucoup de buts ({goalsAgainst} par match).",
+        "lowFormScore": "{team} a un score de forme faible ({formScore}/100).",
+        "mediumFormScore": "{team} reste incohérent en forme.",
+        "weakAway": "{team} a des performances à l'extérieur faibles."
+      }
+    },
+    "advancedMetrics": {
+      "title": "Aperçus avancés",
+      "sampleLabel": "Basé sur les {matches} derniers matchs",
+      "weightedScore": {
+        "title": "Système de score pondéré",
+        "description": "Les résultats de forme récents sont pondérés pour mettre en évidence la force actuelle.",
+        "homeLabel": "Score pondéré à domicile",
+        "awayLabel": "Score pondéré à l'extérieur"
+      },
+      "momentum": {
+        "title": "Indicateur de momentum",
+        "description": "Momentum de différence de buts dérivé des performances récentes.",
+        "bullish": "Momentum haussier",
+        "neutral": "Momentum neutre",
+        "bearish": "Momentum baissier"
+      },
+      "confidence": {
+        "title": "Mélange de confiance",
+        "description": "Confiance composite combinant les choix IA et l'historique de succès.",
+        "scoreLabel": "Confiance composite",
+        "topPickLabel": "Signal principal",
+        "noPick": "Aucun signal disponible"
+      },
+      "poisson": {
+        "title": "Modèle de buts de Poisson",
+        "description": "Distribution approximative des buts basée sur les taux de marque récents.",
+        "expectedHeader": "Buts attendus",
+        "goalColumn": "Buts",
+        "homeColumn": "Domicile",
+        "awayColumn": "Extérieur",
+        "goalLabel": "{value} buts",
+        "goalLabelPlus": "3+ buts"
+      },
+      "goalTrend": {
+        "title": "Tendance des buts",
+        "description": "Totaux de marque vs encaissés récents.",
+        "team": "Équipe",
+        "forLabel": "BP",
+        "againstLabel": "BC",
+        "deltaLabel": "Diff"
+      },
+      "confidenceLadder": {
+        "title": "Échelle de confiance",
+        "description": "Classement de la confiance des prédictions."
+      },
+      "overUnder": {
+        "title": "Confiance Over/Under",
+        "description": "Probabilités clés du total des buts."
+      },
+      "handicap": {
+        "title": "Aperçu du handicap",
+        "description": "Dernière ligne de handicap asiatique."
+      },
+      "halfComparison": {
+        "title": "Première mi-temps vs temps complet",
+        "description": "Comment la confiance change entre les choix de la mi-temps et du temps complet.",
+        "halfLabel": "MT %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Signaux clés",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} a un avantage de forme fort (+{value} pts sur {awayTeam}).",
+        "awayAdvantage": "{awayTeam} porte la forme pondérée supérieure (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} montre un momentum offensif (+{value} momentum de buts).",
+        "homeBearish": "{team} a un momentum qui se refroidit ({value}).",
+        "awayBullish": "{team} construit un momentum positif (+{value}).",
+        "awayBearish": "{team} tend à la baisse ({value})."
+      },
+      "confidence": {
+        "high": "La confiance IA reste élevée ({score}%).",
+        "low": "La confiance IA est limitée ({score}%).",
+        "topPick": "Signal IA principal : {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Buts attendus autour de {goals} ; un scénario à score élevé est probable.",
+        "lowScoring": "Total projeté proche de {goals} buts ; un modèle à score faible est possible.",
+        "homeCleanSheet": "{team} probabilité de clean sheet {percent}%.",
+        "awayCleanSheet": "{team} probabilité de clean sheet {percent}%."
+      },
+      "sampleSmall": "Seulement {matches} matchs récents disponibles — interprétez avec prudence."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Forces et faiblesses",
+      "subtitle": "Répartition des performances par équipe",
+      "strengthsTitle": "Forces",
+      "weaknessesTitle": "Faiblesses",
+      "noData": "Données insuffisantes",
+      "strengths": {
+        "formHigh": "Score de forme élevé",
+        "winRateHigh": "Taux de victoire fort",
+        "attackStrong": "Attaque puissante",
+        "defenseStrong": "Défense solide",
+        "goalDiffPositive": "Différence de buts positive",
+        "winStreak": "Série de {count} victoires consécutives"
+      },
+      "weaknesses": {
+        "formLow": "Score de forme faible",
+        "winRateLow": "Taux de victoire faible",
+        "attackWeak": "Attaque faible",
+        "defenseWeak": "Défense faible",
+        "goalDiffNegative": "Différence de buts négative",
+        "lossStreak": "Série de {count} défaites consécutives"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "V",
+        "draw": "N",
+        "loss": "D",
+        "unknown": "—"
+      },
+      "titleFallback": "Forme récente",
+      "homeTitle": "Forme à domicile",
+      "awayTitle": "Forme à l'extérieur"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Score de forme",
+      "goalDifference": "Différence de buts",
+      "homeBadge": "DOMICILE",
+      "awayBadge": "EXTÉRIEUR",
+      "streakLabel": "Série de {count} {type} consécutifs",
+      "streakTypes": {
+        "win": "victoires",
+        "draw": "matchs nuls",
+        "loss": "défaites"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Cotes",
+      "matchResult": "Résultat du match",
+      "europeanOdds": "Cotes européennes",
+      "asianHandicap": "Handicap asiatique",
+      "overUnderLines": "Lignes Over/Under",
+      "firstHalf": "Première mi-temps",
+      "firstHalfEuropean": "Cotes européennes première mi-temps",
+      "firstHalfAsian": "Handicap asiatique première mi-temps",
+      "firstHalfOverUnder": "Over/Under première mi-temps",
+      "openingLine": "Ligne d'ouverture",
+      "closingLine": "Ligne de clôture"
+    },
+    "reanalyze": {
+      "title": "Actualisation manuelle",
+      "description": "Si les statistiques semblent obsolètes, demandez un nouveau scraping. Disponible une fois toutes les 15 minutes.",
+      "button": "Demander une nouvelle analyse",
+      "buttonLoading": "Envoi...",
+      "queued": "Demande en file d'attente (position {position}).",
+      "alreadyQueued": "Ce match est déjà dans la file d'analyse.",
+      "rateLimited": "Veuillez attendre avant de demander une autre actualisation pour ce match.",
+      "nextAllowed": "Prochaine demande manuelle disponible à {time}.",
+      "error": "Impossible de demander une nouvelle analyse. Veuillez réessayer plus tard."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Bienvenue !",
+    "subtitle": "Veuillez sélectionner votre langue et votre fuseau horaire préférés",
+    "languageSelection": "Sélection de la langue",
+    "timezoneSelection": "Fuseau horaire",
+    "saving": "Enregistrement...",
+    "continue": "Continuer",
+    "timeFormatSelection": "Sélectionnez votre format d'heure préféré"
+  },
+  "emptyState": {
+    "noData": "Aucune donnée",
+    "tryAgain": "Réessayer"
+  },
+  "matchesScreen": {
+    "title": "Calendrier des matchs",
+    "lastRefresh": "Dernière mise à jour",
+    "tabs": {
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain"
+    },
+    "allLeagues": "Toutes les ligues",
+    "searchPlaceholder": "Rechercher une équipe ou une ligue...",
+    "clearFilters": "Effacer les filtres",
+    "loading": "Chargement des matchs...",
+    "emptyTitle": "Aucun match trouvé",
+    "emptyMessage": "Aucun match disponible pour cette vue pour le moment.\n\nDe nouveaux matchs seront ajoutés bientôt !",
+    "emptyFiltered": "Aucun match trouvé correspondant à vos critères.\n\nVous pouvez effacer les filtres et réessayer.",
+    "statusFallback": "Programmé",
+    "staleDataWarning": "Affichage des matchs du {date}. En attente des dernières données pour actualiser."
+  },
+  "favoritesScreen": {
+    "title": "Favoris",
+    "emptyTitle": "Aucun match favori",
+    "emptyMessage": "Vous n'avez pas encore ajouté de matchs aux favoris.\n\nAppuyez sur l'icône étoile sur les cartes de match pour les ajouter ici.",
+    "loading": "Chargement..."
+  },
+  "errors": {
+    "timeout": "La demande a expiré. Veuillez vérifier votre connexion et réessayer.",
+    "network": "Erreur réseau. Veuillez vérifier votre connexion Internet.",
+    "api": "Le serveur est temporairement indisponible. Veuillez réessayer plus tard.",
+    "unknown": "Une erreur inattendue s'est produite."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Turc",
+      "en": "Anglais",
+      "es": "Espagnol",
+      "de": "Allemand",
+      "it": "Italien",
+      "zh-TW": "Chinois traditionnel",
+      "zh-CN": "Chinois simplifié",
+      "ja": "Japonais",
+      "id": "Indonésien",
+      "fr": "Français",
+      "ru": "Russe",
+      "tl": "Tagalog",
+      "ko": "Coréen",
+      "ar": "Arabe",
+      "pt": "Portugais"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "Istanbul (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "Londres (GMT+0)",
+      "MADRID": "Madrid (GMT+1)",
+      "BERLIN": "Berlin (GMT+1)",
+      "PARIS": "Paris (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Mexico (GMT-6)",
+      "BUENOS_AIRES": "Buenos Aires (GMT-3)",
+      "NEW_YORK": "New York (GMT-5)",
+      "LOS_ANGELES": "Los Angeles (GMT-8)",
+      "CHICAGO": "Chicago (GMT-6)",
+      "BOGOTA": "Bogotá (GMT-5)",
+      "LIMA": "Lima (GMT-5)",
+      "SANTIAGO": "Santiago (GMT-4)",
+      "DUBAI": "Dubai (GMT+4)",
+      "TOKYO": "Tokyo (GMT+9)",
+      "SYDNEY": "Sydney (GMT+10)"
+    },
+    "title": "Paramètres",
+    "preferencesSection": "Préférences",
+    "aboutSection": "À propos de GoalBlip",
+    "language": "Langue",
+    "timezone": "Fuseau horaire",
+    "timeFormat": "Format d'heure",
+    "timeFormatOptions": {
+      "auto": "Automatique",
+      "24h": "24 heures",
+      "12h": "12 heures"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Plateforme d'analyse de matchs alimentée par l'IA"
+  }
+}
+

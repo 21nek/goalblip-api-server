@@ -1,0 +1,456 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "privacy": "Gizlilik Politikası",
+    "support": "Destek"
+  },
+  "hero": {
+    "title": "GoalBlip",
+    "subtitle": "Futbol Maçları için AI Destekli Analiz ve İstatistikler",
+    "description": "Futbol dünyasını yakından takip edin. Detaylı maç analizleri, takım performans istatistikleri ve kapsamlı veriler ile bilinçli kararlar verin.",
+    "appStore": "App Store'dan İndir",
+    "playStore": "Play Store'dan İndir",
+    "scrollDown": "Aşağı Kaydır",
+    "stat1": "Günlük Analiz Edilen Maç",
+    "stat2": "Takip Edilen Lig",
+    "stat3": "Gerçek Zamanlı Güncellemeler",
+    "note": "Sonsuza kadar ücretsiz. Reklam yok. Takip yok.",
+    "mockup": {
+      "title": "Bugünün Maçları",
+      "team1": "Takım A",
+      "team2": "Takım B",
+      "stat1": "Form: GGMBG",
+      "stat2": "Karşılaşma: 3-2-1"
+    }
+  },
+  "howItWorks": {
+    "title": "Nasıl Çalışır?",
+    "subtitle": "Gelişmiş AI Destekli Futbol Analitik Motoru",
+    "intro": "GoalBlip, benzersiz futbol maç tahminleri ve içgörüleri sunmak için en son makine öğrenmesi algoritmaları, istatistiksel modelleme ve gerçek zamanlı veri işlemeyi kullanır. Çok katmanlı analiz hattımız, sofistike hesaplama yöntemleri aracılığıyla ham maç verilerini eyleme dönüştürülebilir istihbarata dönüştürür.",
+    "introStats": {
+      "analysisPhases": "Analiz Fazları",
+      "mlModels": "ML Modelleri",
+      "features": "Özellikler",
+      "uptime": "Çalışma Süresi"
+    },
+    "phase1": {
+      "title": "Faz 1: Akıllı Veri Toplama ve Çok Kaynaklı Füzyon",
+      "subtitle": "Gelişmiş Veri Toplama Altyapısı",
+      "description": "Dağıtılmış veri toplama sistemimiz, birden fazla yetkili kaynaktan kapsamlı futbol istatistiklerini toplamak için akıllı web kazıma, API entegrasyonu ve gerçek zamanlı veri akışı kullanır. Bu çok kaynaklı füzyon yaklaşımı, veri bütünlüğü, doğruluğu ve yedekliliği sağlar.",
+      "features": {
+        "title": "Temel Yetenekler:",
+        "feature1": "Birden fazla kaynaktan gerçek zamanlı veri akışı",
+        "feature1Title": "Gerçek Zamanlı Akış",
+        "feature2": "Veri normalleştirme için akıllı toplama algoritmaları",
+        "feature2Title": "Akıllı Toplama",
+        "feature3": "Çatışma çözümü ile çok kaynaklı veri füzyonu",
+        "feature3Title": "Çok Kaynaklı Füzyon",
+        "feature4": "Otomatik veri kalitesi doğrulama ve anomali tespiti",
+        "feature4Title": "Kalite Doğrulama",
+        "feature5": "Yüksek performanslı veri alımı için dağıtılmış önbellekleme",
+        "feature5Title": "Dağıtılmış Önbellekleme"
+      }
+    },
+    "phase2": {
+      "title": "Faz 2: Özellik Mühendisliği ve İstatistiksel Ön İşleme",
+      "subtitle": "Gelişmiş Veri Dönüşüm Hattı",
+      "description": "Ham maç verileri, yüzlerce istatistiksel özelliğin çıkarıldığı, normalize edildiği ve dönüştürüldüğü sofistike özellik mühendisliği süreçlerinden geçer. Ön işleme hattımız, zamansal özellik çıkarımı, takım form analizi, karşılaşma istatistikleri ve bağlamsal özellik üretimini içerir.",
+      "features": {
+        "title": "İşleme Teknikleri:",
+        "feature1": "Zamansal özellik çıkarımı (kayan ortalamalar, momentum göstergeleri)",
+        "feature1Title": "Zamansal Çıkarım",
+        "feature2": "Ağırlıklı performans metrikleri ile takım form analizi",
+        "feature2Title": "Form Analizi",
+        "feature3": "Tarihsel bağlam ile karşılaşma istatistiksel modelleme",
+        "feature3Title": "Karşılaşma Modelleme",
+        "feature4": "Bağlamsal özellik üretimi (ev/deplasman, hava durumu, sakatlıklar)",
+        "feature4Title": "Bağlamsal Özellikler",
+        "feature5": "Boyut azaltma ve özellik seçim algoritmaları",
+        "feature5Title": "Boyut Azaltma"
+      }
+    },
+    "phase3": {
+      "title": "Faz 3: Makine Öğrenmesi ve Tahmine Dayalı Modelleme",
+      "subtitle": "Topluluk Yöntemleri ve Gelişmiş Algoritmalar",
+      "description": "Tahmin motorumuz, gradyan artırma, sinir ağları ve Bayes çıkarım yöntemleri dahil olmak üzere bir makine öğrenmesi modeli topluluğu kullanır. Her model kapsamlı tarihsel veriler üzerinde eğitilir ve çevrimiçi öğrenme mekanizmaları aracılığıyla sürekli olarak iyileştirilir.",
+      "models": {
+        "title": "Temel Modeller:",
+        "badgeCore": "Temel",
+        "badgeSpecial": "Özel",
+        "model1": "Doğrusal olmayan desen tanıma için Gradient Boosting Makineleri (XGBoost, LightGBM)",
+        "model1Title": "Gradient Boosting",
+        "model2": "Karmaşık özellik etkileşimleri için Derin Sinir Ağları",
+        "model2Title": "Sinir Ağları",
+        "model3": "Olasılıksal tahminler için Bayes Çıkarım Modelleri",
+        "model3Title": "Bayes Çıkarımı",
+        "model4": "Gol atma olasılığı tahmini için Poisson Dağılım Modelleri",
+        "model4Title": "Poisson Dağılımı",
+        "model5": "Sağlam tahminler için birden fazla modeli birleştiren Topluluk Yöntemleri",
+        "model5Title": "Topluluk Yöntemleri"
+      },
+      "algorithms": {
+        "title": "Gelişmiş Algoritmalar:",
+        "algo1": "Sonuç olasılık dağılımı için Monte Carlo Simülasyonu",
+        "algo1Title": "Monte Carlo",
+        "algo2": "Maç durumu geçişleri için Markov Zincir Modelleri",
+        "algo2Title": "Markov Zinciri",
+        "algo3": "Form ve momentum tahmini için Zaman Serisi Analizi",
+        "algo3Title": "Zaman Serisi",
+        "algo4": "Beklenmedik desenleri tanımlamak için Anomali Tespiti",
+        "algo4Title": "Anomali Tespiti",
+        "algo5": "Uyarlanabilir model optimizasyonu için Pekiştirmeli Öğrenme",
+        "algo5Title": "Pekiştirmeli Öğrenme"
+      }
+    },
+    "phase4": {
+      "title": "Faz 4: Güven Skorlama ve Risk Değerlendirmesi",
+      "subtitle": "Olasılıksal Tahmin Kalibrasyonu",
+      "description": "Her tahmin, Bayes kalibrasyonu, belirsizlik nicelleştirme ve model uyum analizi aracılığıyla hesaplanan sofistike bir güven skoru ile birlikte gelir. Güven skorlama sistemimiz, her tahmin için şeffaf risk değerlendirmesi sağlar.",
+      "scoring": {
+        "title": "Güven Metrikleri:",
+        "metric1": "Tahmin güvenilirliği için Bayes Güven Aralıkları",
+        "metric1Title": "Bayes Güveni",
+        "metric2": "Model Uyum Skorları (topluluk modelleri arasında konsensüs)",
+        "metric2Title": "Model Uyumu",
+        "metric3": "Monte Carlo örnekleme ile Belirsizlik Nicelleştirme",
+        "metric3Title": "Belirsizlik Nicelleştirme",
+        "metric4": "Model performans takibi için Tarihsel Doğruluk Kalibrasyonu",
+        "metric4Title": "Doğruluk Kalibrasyonu",
+        "metric5": "Güven ağırlıklı tahminler ile Risk Ayarlı Skorlama",
+        "metric5Title": "Risk Ayarlı Skorlama"
+      }
+    },
+    "phase5": {
+      "title": "Faz 5: Gerçek Zamanlı Analiz ve Sürekli Öğrenme",
+      "subtitle": "Uyarlanabilir Zeka Sistemi",
+      "description": "Sistemimiz sürekli olarak maç sonuçlarını izler, tahminleri gerçek sonuçlarla karşılaştırır ve çevrimiçi öğrenme aracılığıyla modelleri otomatik olarak iyileştirir. Bu uyarlanabilir yaklaşım, daha fazla veri mevcut oldukça tahminlerimizin zamanla iyileşmesini sağlar.",
+      "learning": {
+        "title": "Öğrenme Mekanizmaları:",
+        "learn1": "Gerçek zamanlı model güncellemeleri için Çevrimiçi Öğrenme",
+        "learn1Title": "Çevrimiçi Öğrenme",
+        "learn2": "Ligler ve yarışmalar arasında Transfer Öğrenme",
+        "learn2Title": "Transfer Öğrenme",
+        "learn3": "Yüksek değerli eğitim verilerini tanımlamak için Aktif Öğrenme",
+        "learn3Title": "Aktif Öğrenme",
+        "learn4": "Yeni desenlere hızlı uyum için Meta Öğrenme",
+        "learn4Title": "Meta Öğrenme",
+        "learn5": "Dağıtılmış model iyileştirme için Federatif Öğrenme",
+        "learn5Title": "Federatif Öğrenme"
+      }
+    },
+    "phase6": {
+      "title": "Faz 6: Kullanıcı Arayüzü ve Görselleştirme",
+      "subtitle": "Akıllı Veri Sunumu",
+      "description": "Karmaşık analitik sonuçlar, gelişmiş sunum katmanımız aracılığıyla sezgisel görselleştirmelere ve eyleme dönüştürülebilir içgörülere dönüştürülür. Kullanıcılar, destekleyici istatistikler ve güven göstergeleri ile net, yorumlanabilir tahminler alır.",
+      "presentation": {
+        "title": "Sunum Özellikleri:",
+        "pres1": "Detaylı inceleme yetenekleri ile etkileşimli görselleştirmeler",
+        "pres1Title": "Etkileşimli Görselleştirmeler",
+        "pres2": "Güven skoru görselleştirmesi ve risk göstergeleri",
+        "pres2Title": "Güven Görselleştirmesi",
+        "pres3": "Tarihsel performans ile karşılaştırmalı analiz",
+        "pres3Title": "Karşılaştırmalı Analiz",
+        "pres4": "Canlı maçlar sırasında gerçek zamanlı güncellemeler",
+        "pres4Title": "Gerçek Zamanlı Güncellemeler",
+        "pres5": "Farklı analiz perspektifleri için özelleştirilebilir görünümler",
+        "pres5Title": "Özelleştirilebilir Görünümler"
+      }
+    },
+    "technical": {
+      "title": "Teknik Altyapı",
+      "subtitle": "Kurumsal Düzeyde Hesaplama Mimarisi",
+      "description": "GoalBlip, yüksek performanslı analitik ve gerçek zamanlı işleme için tasarlanmış ölçeklenebilir, dağıtılmış bir hesaplama altyapısı üzerinde çalışır.",
+      "infrastructure": {
+        "title": "Altyapı Bileşenleri:",
+        "comp1": "Yatay ölçeklendirme ile dağıtılmış veri işleme",
+        "comp2": "Milisaniye altı sorgu yanıtları için bellek içi hesaplama",
+        "comp3": "Daha hızlı model eğitimi için GPU Hızlandırmalı Makine Öğrenmesi",
+        "comp4": "Modüler sistem tasarımı için Mikroservis Mimarisi",
+        "comp5": "Canlı veri işleme için gerçek zamanlı akış hattı"
+      }
+    },
+    "conclusion": {
+      "title": "Sonuç",
+      "description": "Bu sofistike çok fazlı hat aracılığıyla, GoalBlip ham futbol verilerini yüksek doğrulukta, güven skorlu tahminlere dönüştürür. Sistemimiz, gelişmiş makine öğrenmesi, istatistiksel modelleme ve gerçek zamanlı işlemenin gücünü birleştirerek, kullanıcıların futbol maçları hakkında bilinçli kararlar vermesine yardımcı olan içgörüler sunar."
+    },
+    "step1": {
+      "title": "Veri Toplama ve İşleme",
+      "description": "GoalBlip, interneti tarayarak futbol takımlarının geçmiş maçları, lig durumu ve çeşitli istatistikler gibi önemli bilgileri toplar. Bu veriler, maçların detaylarını, takım istatistiklerini ve oyuncu bilgilerini içerir."
+    },
+    "step2": {
+      "title": "Veri Analizi",
+      "description": "Toplanan veriler, GoalBlip'in güçlü analiz motorları tarafından işlenir. Ev sahibi ve deplasman performansı, son maçlardaki performans durumu ve oyuncu sağlık durumları gibi çeşitli faktörler dikkate alınır."
+    },
+    "step3": {
+      "title": "Analiz ve Tablo Oluşturma",
+      "description": "Analiz edilen veriler, çeşitli algoritmalar ve modeller kullanılarak işlenir ve potansiyel maç sonuçları, performans tabloları gibi detaylı analizler oluşturulur."
+    },
+    "step4": {
+      "title": "Kullanıcı Etkileşimi",
+      "description": "Kullanıcılar, GoalBlip'in hazırladığı detaylı tablolardan doğrudan sonuçlara bakabilir veya kendi analizlerini yaparak özelleştirilmiş görünümlere erişebilirler."
+    }
+  },
+  "features": {
+    "title": "Özellikler",
+    "subtitle": "Kapsamlı futbol maç analizi için ihtiyacınız olan her şey",
+    "feature1": {
+      "title": "Detaylı Maç Analizleri",
+      "description": "Her maç için kapsamlı istatistikler ve performans metrikleri",
+      "detail1": "Maç istatistikleri ve performans metrikleri",
+      "detail2": "Takım form analizi (son 5 maç)",
+      "detail3": "Karşılaşma geçmişi karşılaştırması"
+    },
+    "feature2": {
+      "title": "Takım Karşılaştırmaları",
+      "description": "Takımların son performansları, form durumu ve karşılaştırmalar",
+      "detail1": "Yan yana takım performansı",
+      "detail2": "Son form görselleştirmesi",
+      "detail3": "Güçlü ve zayıf yönler analizi"
+    },
+    "feature3": {
+      "title": "Favori Takip",
+      "description": "İstediğiniz maçları kaydedin ve kolayca erişin",
+      "detail1": "Sınırsız favori maç kaydetme",
+      "detail2": "Ana ekrandan hızlı erişim",
+      "detail3": "Cihazlar arası senkronizasyon (yakında)"
+    },
+    "feature4": {
+      "title": "Çok Dilli Destek",
+      "description": "Türkçe, İngilizce, İspanyolca, Almanca",
+      "detail1": "Türkçe, İngilizce, İspanyolca, Almanca",
+      "detail2": "Otomatik dil algılama",
+      "detail3": "Daha fazla dil yakında"
+    },
+    "feature5": {
+      "title": "Modern Arayüz",
+      "description": "Kullanıcı dostu, responsive tasarım",
+      "detail1": "Görüntüleme için optimize edilmiş koyu tema",
+      "detail2": "Tüm ekran boyutları için responsive tasarım",
+      "detail3": "Sezgisel navigasyon"
+    },
+    "feature6": {
+      "title": "Gerçek Zamanlı Veriler",
+      "description": "Anlık güncellenen maç bilgileri ve istatistikler",
+      "detail1": "Canlı maç güncellemeleri",
+      "detail2": "Otomatik veri yenileme",
+      "detail3": "Çevrimdışı önbellek desteği"
+    }
+  },
+  "whyGoalblip": {
+    "title": "Maç Analizi Yapmak Bazen Çok Yorucu Olabiliyor",
+    "description": "Artık saatlerce analiz yapmanıza gerek yok; GoalBlip, veriye dayalı öngörüler sunarak karar verme sürecinizi hızlandırır. Karmaşık veri setleri ve istatistiklerle uğraşmak yerine, yapay zekanın gücünü kullanarak zamanınızı ve enerjinizi koruyun.",
+    "benefit1": {
+      "title": "Otomatik Veri Toplama",
+      "desc": "Maç verilerini manuel olarak aramanıza gerek yok. Sistemimiz otomatik olarak birden fazla kaynaktan bilgi toplar ve işler."
+    },
+    "benefit2": {
+      "title": "Gelişmiş Analiz Algoritmaları",
+      "desc": "AI ve makine öğrenmesi ile desteklenen algoritmalarımız, manuel olarak saatler sürecek hesaplamaları yapar ve içgörüler sağlar."
+    },
+    "benefit3": {
+      "title": "Kullanıcı Dostu Arayüz",
+      "desc": "Karmaşık verileri anlaşılır hale getiren temiz, sezgisel tasarım. Teknik bilgi gerekmez."
+    },
+    "benefit4": {
+      "title": "%100 Ücretsiz ve Gizlilik Odaklı",
+      "desc": "Tamamen ücretsiz, gizli maliyet yok. Verileriniz cihazınızda kalır - sizi takip etmiyoruz veya kişisel bilgi toplamıyoruz."
+    },
+    "stat1": {
+      "value": "1000+",
+      "label": "Günlük Analiz Edilen Maç"
+    },
+    "stat2": {
+      "value": "50+",
+      "label": "Takip Edilen Lig"
+    },
+    "stat3": {
+      "value": "24/7",
+      "label": "Gerçek Zamanlı Güncellemeler"
+    },
+    "stat4": {
+      "value": "0",
+      "label": "Toplanan Veri"
+    }
+  },
+  "dataAnalysis": {
+    "title": "Veri Odaklı Analizler",
+    "item1": {
+      "title": "Geniş Veri Kaynakları",
+      "description": "Dünya çapında futbol verilerini anlık olarak toplama"
+    },
+    "item2": {
+      "title": "Güçlü Analiz Algoritmaları",
+      "description": "Gelişmiş veri işleme ve istatistiksel analiz"
+    },
+    "item3": {
+      "title": "Kullanıcı Dostu Arayüz",
+      "description": "Kolay kullanım ve anlaşılır görselleştirmeler"
+    },
+    "item4": {
+      "title": "Sürekli Güncelleme",
+      "description": "En güncel veriler ve sürekli gelişen sistem"
+    }
+  },
+  "screenshots": {
+    "title": "GoalBlip'i Aksiyonda Görün",
+    "subtitle": "Uygulama arayüzünü ve özelliklerini keşfedin",
+    "screen1": "Maç Listesi",
+    "screen1Desc": "Tarih ve lige göre maçları gözden geçirin",
+    "screen2": "Maç Analizi",
+    "screen2Desc": "Detaylı istatistikler ve içgörüler",
+    "screen3": "Takım Karşılaştırması",
+    "screen3Desc": "Takım performansını yan yana karşılaştırın"
+  },
+  "faq": {
+    "title": "Sık Sorulan Sorular",
+    "q1": "GoalBlip ücretsiz mi?",
+    "a1": "Evet, GoalBlip tamamen ücretsizdir. Premium özellik, abonelik veya gizli maliyet yoktur. Futbol analizinin herkes için erişilebilir olması gerektiğine inanıyoruz.",
+    "q2": "GoalBlip hangi verileri topluyor?",
+    "a2": "GoalBlip hiçbir kişisel veri toplamaz. Tüm bilgiler (favoriler, dil tercihleri, saat dilimi) yalnızca cihazınızda yerel olarak saklanır. Sizi takip etmiyoruz ve verilerinizi kimseyle paylaşmıyoruz.",
+    "q3": "Hangi ligler destekleniyor?",
+    "a3": "GoalBlip, Premier League, La Liga, Serie A, Bundesliga, Ligue 1 ve daha fazlası dahil olmak üzere dünya çapında 50'den fazla ligi takip eder. Kullanıcı talebine göre sürekli yeni ligler ekliyoruz.",
+    "q4": "Analizler ne kadar doğru?",
+    "a4": "GoalBlip, kapsamlı maç istatistikleri sağlamak için gelişmiş veri analizi ve AI algoritmaları kullanır. Bunlar geçmiş verilere dayalı analitik içgörülerdir ve tahmin veya garanti olarak kabul edilmemelidir.",
+    "q5": "İnternet bağlantısına ihtiyacım var mı?",
+    "a5": "En son maç verilerini almak için internet bağlantısı gereklidir. Ancak, daha önce görüntülenen maçlar yerel olarak önbelleğe alınır, böylece çevrimdışı erişebilirsiniz.",
+    "q6": "Uygulama ne zaman kullanılabilir olacak?",
+    "a6": "GoalBlip yakında App Store (iOS) ve Play Store (Android)'da kullanılabilir olacak. Güncellemeler için bizi takip edin ve ilk indirenler arasında olun!",
+    "more": "Daha fazla sorunuz mu var?",
+    "contact": "Destek ile İletişime Geçin"
+  },
+  "cta": {
+    "title": "Hemen Ücretsiz Dene!",
+    "subtitle": "App Store ve Play Store'dan indir",
+    "appStore": "App Store'dan İndir",
+    "playStore": "Play Store'dan İndir",
+    "note": "Yakında iOS ve Android'de kullanılabilir"
+  },
+  "footer": {
+    "description": "Futbol dünyasını yakından takip edin. AI destekli analiz ve istatistikler.",
+    "quickLinks": "Hızlı Bağlantılar",
+    "privacy": "Gizlilik Politikası",
+    "support": "Destek",
+    "contact": "İletişim",
+    "legal": "Yasal",
+    "terms": "Kullanım Koşulları",
+    "language": "Dil",
+    "copyright": "© 2025 GoalBlip. All rights reserved."
+  },
+  "privacy": {
+    "lastUpdated": "Son Güncelleme",
+    "intro": {
+      "title": "Giriş",
+      "text": "GoalBlip (\"biz\", \"bizim\" veya \"bizim\") gizliliğinizi korumaya kararlıyız. Bu Gizlilik Politikası, mobil uygulamamızı kullandığınızda bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklar."
+    },
+    "collect": {
+      "title": "Topladığımız Bilgiler",
+      "local": {
+        "title": "Cihazınızda Yerel Olarak Saklanan Bilgiler",
+        "intro": "GoalBlip, aşağıdaki bilgileri yalnızca cihazınızda yerel depolama (AsyncStorage) kullanarak saklar:",
+        "favorites": "Favori Maçlar",
+        "favoritesDesc": "Favori olarak işaretlediğiniz maç ID'leri",
+        "language": "Dil Tercihi",
+        "languageDesc": "Seçtiğiniz dil (Türkçe, İngilizce, İspanyolca, Almanca)",
+        "timezone": "Saat Dilimi Tercihi",
+        "timezoneDesc": "Seçtiğiniz saat dilimi",
+        "timeFormat": "Saat Formatı Tercihi",
+        "timeFormatDesc": "Tercih ettiğiniz saat formatı (12s/24s)",
+        "important": "Önemli",
+        "importantDesc": "Bu bilgiler yalnızca cihazınızda yerel olarak saklanır ve hiçbir zaman sunucularımıza veya üçüncü taraflara iletilmez."
+      },
+      "not": {
+        "title": "Toplamadığımız Bilgiler",
+        "intro": "Toplamıyoruz:",
+        "personal": "Kişisel kimlik bilgileri (ad, e-posta, telefon numarası)",
+        "location": "Konum verileri",
+        "device": "Cihaz tanımlayıcıları",
+        "analytics": "Kullanım analitiği veya takip verileri",
+        "identifiable": "Sizi kişisel olarak tanımlayabilecek herhangi bir veri"
+      }
+    },
+    "use": {
+      "title": "Bilgilerinizi Nasıl Kullanıyoruz",
+      "intro": "Cihazınızda yerel olarak saklanan bilgiler yalnızca şunlar için kullanılır:",
+      "favorites": "Favori maçlarınızı hatırlamak",
+      "preferences": "Dil ve saat dilimi tercihlerinizi korumak",
+      "experience": "Uygulama içinde kişiselleştirilmiş bir deneyim sağlamak"
+    },
+    "storage": {
+      "title": "Veri Depolama ve Güvenlik",
+      "local": "Tüm veriler güvenli yerel depolama kullanılarak yalnızca cihazınızda saklanır",
+      "noTransmit": "Hiçbir veri harici sunuculara iletilmez",
+      "noShare": "Hiçbir veri üçüncü taraflarla paylaşılmaz",
+      "delete": "Uygulamayı kaldırarak tüm saklanan verileri silebilirsiniz"
+    },
+    "thirdParty": {
+      "title": "Üçüncü Taraf Hizmetler",
+      "intro": "GoalBlip, maç verilerini ve istatistikleri almak için kendi API sunucumuza bağlanır. Bu bağlantı:",
+      "noPersonal": "Herhangi bir kişisel bilgi iletmez",
+      "public": "Yalnızca halka açık maç verilerini ister",
+      "https": "Standart HTTPS şifrelemesi kullanır (production'da)"
+    },
+    "rights": {
+      "title": "Haklarınız",
+      "intro": "Şu haklara sahipsiniz:",
+      "delete": "Uygulamayı kaldırarak tüm saklanan verileri silmek",
+      "clear": "Cihaz ayarlarınızdan uygulama verilerini temizlemek",
+      "stop": "İstediğiniz zaman uygulamayı kullanmayı durdurmak"
+    },
+    "children": {
+      "title": "Çocukların Gizliliği",
+      "text": "GoalBlip 13 yaşın altındaki çocuklar için tasarlanmamıştır. Bilerek çocuklardan bilgi toplamıyoruz."
+    },
+    "changes": {
+      "title": "Bu Gizlilik Politikasındaki Değişiklikler",
+      "text": "Bu Gizlilik Politikasını zaman zaman güncelleyebiliriz. Herhangi bir değişikliği \"Son Güncelleme\" tarihini güncelleyerek bildireceğiz."
+    },
+    "contact": {
+      "title": "Bize Ulaşın",
+      "text": "Bu Gizlilik Politikası hakkında sorularınız varsa, lütfen bizimle iletişime geçin:",
+      "email": "E-posta",
+      "website": "Web Sitesi"
+    },
+    "summary": {
+      "title": "Hızlı Özet",
+      "what": "Ne saklıyoruz",
+      "whatDesc": "Yalnızca favorileriniz ve tercihleriniz (cihazınızda)",
+      "where": "Nerede saklanıyor",
+      "whereDesc": "Yalnızca cihazınızda",
+      "who": "Kim görüyor",
+      "whoDesc": "Yalnızca siz",
+      "thirdParty": "Üçüncü taraflar",
+      "thirdPartyDesc": "Hiçbiri",
+      "tracking": "Takip",
+      "trackingDesc": "Hiçbiri",
+      "personal": "Kişisel veri",
+      "personalDesc": "Toplanmıyor"
+    }
+  },
+  "support": {
+    "description": "Yardıma mı ihtiyacınız var? Buradayız. Bize ulaşın veya sık sorulan sorularımıza göz atın.",
+    "contact": {
+      "title": "Bize Ulaşın",
+      "email": "E-posta",
+      "emailDesc": "Bize e-posta gönderin, en kısa sürede size dönüş yapacağız."
+    },
+    "faq": {
+      "title": "Sık Sorulan Sorular",
+      "q1": "GoalBlip ücretsiz mi?",
+      "a1": "Evet, GoalBlip tamamen ücretsizdir. Premium özellik veya abonelik yoktur.",
+      "q2": "GoalBlip hangi verileri topluyor?",
+      "a2": "GoalBlip hiçbir kişisel veri toplamaz. Tüm bilgiler (favoriler, dil tercihleri, saat dilimi) yalnızca cihazınızda yerel olarak saklanır.",
+      "q3": "Hangi diller destekleniyor?",
+      "a3": "GoalBlip şu anda Türkçe, İngilizce, İspanyolca ve Almanca'yı desteklemektedir. Gelecekte daha fazla dil eklenebilir.",
+      "q4": "Verilerimi nasıl silebilirim?",
+      "a4": "Uygulamayı cihazınızdan kaldırmanız yeterlidir. Tüm yerel olarak saklanan veriler kaldırılacaktır. Ayrıca cihaz ayarlarınızdan uygulama verilerini de temizleyebilirsiniz.",
+      "q5": "Uygulamayı nereden indirebilirim?",
+      "a5": "GoalBlip yakında App Store (iOS) ve Play Store (Android)'da kullanılabilir olacak. Güncellemeler için bizi takip edin!",
+      "q6": "Maç analizleri ne kadar doğru?",
+      "a6": "GoalBlip, kapsamlı maç istatistikleri sağlamak için gelişmiş veri analizi ve AI algoritmaları kullanır. Ancak bunlar analitik içgörülerdir ve tahmin veya garanti olarak kabul edilmemelidir."
+    },
+    "resources": {
+      "title": "Ek Kaynaklar"
+    }
+  }
+}
+

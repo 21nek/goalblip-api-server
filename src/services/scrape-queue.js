@@ -5,12 +5,14 @@ import { toUtcFromLocal } from '../utils/datetime.js';
 import { normalizeLocale } from '../config/locales.js';
 
 const DEFAULT_CONCURRENCY = Number(
-  process.env.MATCH_DETAIL_SCRAPE_CONCURRENCY ?? process.env.SCRAPE_CONCURRENCY ?? 2,
+  process.env.MATCH_DETAIL_SCRAPE_CONCURRENCY ?? process.env.SCRAPE_CONCURRENCY ?? 1,
 );
+const DEFAULT_DELAY_MS = Number(process.env.SCRAPE_JOB_DELAY_MS ?? 4000);
 
 class TaskQueue {
-  constructor({ concurrency = DEFAULT_CONCURRENCY, logger = console } = {}) {
+  constructor({ concurrency = DEFAULT_CONCURRENCY, delayMs = DEFAULT_DELAY_MS, logger = console } = {}) {
     this.concurrency = Math.max(1, Number(concurrency) || 1);
+    this.delayMs = Math.max(0, Number(delayMs) || 0);
     this.logger = logger;
     this.activeCount = 0;
     this.queue = [];
@@ -108,7 +110,11 @@ class TaskQueue {
         this.logger?.info?.(
           `[scrape-queue] finished ${label}${metaInfo} (active: ${this.activeCount}/${this.concurrency})`,
         );
-        this.#process();
+        if (this.delayMs > 0) {
+          setTimeout(() => this.#process(), this.delayMs);
+        } else {
+          this.#process();
+        }
       });
   }
 

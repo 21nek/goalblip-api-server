@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "retry": "重試",
+    "cancel": "取消",
+    "save": "儲存",
+    "close": "關閉",
+    "search": "搜尋",
+    "clear": "清除",
+    "all": "全部",
+    "select": "選擇",
+    "continue": "繼續",
+    "back": "返回",
+    "home": "首頁",
+    "favorites": "我的最愛",
+    "unknownLeague": "未知聯賽",
+    "unknown": "未知",
+    "prediction": "預測",
+    "time": {
+      "justNow": "剛剛",
+      "minutes": "{count}分鐘",
+      "hours": "{count}小時",
+      "days": "{count}天"
+    },
+    "settings": "設定",
+    "menu": "選單"
+  },
+  "drawer": {
+    "title": "比賽",
+    "searchPrompt": "搜尋比賽",
+    "searchPromptDescription": "輸入球隊或聯賽名稱搜尋比賽"
+  },
+  "home": {
+    "today": "今天",
+    "tomorrow": "明天",
+    "noMatches": "找不到比賽",
+    "noMatchesMessage": "此視圖尚無可用比賽。\n\n新比賽即將添加！",
+    "noMatchesFiltered": "找不到符合搜尋條件的比賽。\n\n您可以清除篩選條件後重試。",
+    "clearFilters": "清除篩選",
+    "refreshing": "重新整理中...",
+    "dataLoadError": "載入資料失敗",
+    "dataLoadErrorMessage": "請檢查您的網路連線並重試。",
+    "loadingMore": "載入更多...",
+    "topLeagues": {
+      "matches": "{count} 場比賽",
+      "firstMatch": "首場開球 {time}",
+      "waitingKickoff": "等待開球"
+    },
+    "aiShortlist": {
+      "predictionPending": "預測待處理",
+      "noPredictionTitle": "無 AI 預測",
+      "noPredictionMessage": "此比賽的分析尚未準備就緒。"
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "搜尋球隊或聯賽...",
+    "selectLeague": "選擇聯賽",
+    "allLeagues": "所有聯賽",
+    "leaguesSelected": "已選擇 {count} 個聯賽",
+    "clearAll": "全部清除",
+    "all": "全部",
+    "matches": "場比賽",
+    "filterSortSettings": "篩選設定",
+    "filterSortSettingsDescription": "排序和檢視選項"
+  },
+  "filterSort": {
+    "title": "篩選與排序",
+    "tabs": {
+      "filters": "篩選",
+      "sort": "排序",
+      "view": "檢視"
+    },
+    "sortByLeague": "依聯賽",
+    "sortByTime": "依時間",
+    "sortByDate": "依日期",
+    "sortByTeam": "依球隊名稱",
+    "viewGrouped": "依聯賽分組",
+    "viewGroupedDescription": "在聯賽標題下顯示比賽",
+    "viewFlat": "平鋪列表",
+    "viewFlatDescription": "顯示所有比賽，不含聯賽標題"
+  },
+  "match": {
+    "live": "直播",
+    "vs": "對",
+    "kickoff": "即將開球",
+    "detailTitle": "比賽詳情",
+    "loadingDetail": "載入比賽詳情...",
+    "detailError": "載入比賽詳情失敗",
+    "detailErrorMessage": "請檢查您的網路連線並重試。",
+    "pendingAnalysis": "分析中",
+    "pendingMessage": "佇列位置：#{position}\n\n分析完成後將自動更新。",
+    "refresh": "重新整理",
+    "dataDate": "資料日期",
+    "lastUpdate": "最後更新",
+    "dataSource": "資料來源",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "直播",
+      "scheduled": "已排程",
+      "finished": "全場結束",
+      "postponed": "延期",
+      "canceled": "已取消",
+      "abandoned": "已中止",
+      "delayed": "延遲",
+      "halftime": "中場休息",
+      "extraTime": "延長賽",
+      "penalties": "點球大戰"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "快速摘要",
+    "keyInsights": "關鍵洞察",
+    "teamComparison": "球隊比較",
+    "visualComparison": "視覺比較",
+    "strengthsWeaknesses": "優勢與劣勢",
+    "predictionSummary": "預測摘要",
+    "detailedPredictions": "詳細預測",
+    "formStatsTitle": "狀態統計",
+    "formStats": {
+      "winRate": "勝率",
+      "drawRate": "平局率",
+      "lossRate": "敗率",
+      "avgGoalsFor": "平均進球",
+      "avgGoalsAgainst": "平均失球"
+    },
+    "recentForm": "近期狀態詳情",
+    "headToHead": "對戰記錄",
+    "oddsTrends": "賠率趨勢分析",
+    "upcomingMatches": "即將到來的比賽",
+    "upcomingMatchesEmpty": "無可用即將到來的比賽。",
+    "goalAnalysis": "進球分析",
+    "riskAnalysis": "風險分析",
+    "localInfo": "本地資訊",
+    "noDetailedAnalysis": "無詳細分析",
+    "noDetailedAnalysisMessage": "此比賽的詳細預測分析尚不可用。",
+    "predictionsNotAvailable": "預測分析不可用",
+    "predictionsNotAvailableMessage": "此部分目前僅提供土耳其語版本。其他語言版本即將推出。",
+    "predictionLabels": {
+      "matchResult": "比賽結果 (1X2)",
+      "bothTeamsScore": "兩隊都會進球",
+      "totalGoals": "總進球數",
+      "firstHalfResult": "上半場結果",
+      "firstHalfGoals": "上半場進球",
+      "teamToScore": "會進球的球隊",
+      "asianHandicap": "亞洲讓球",
+      "overUnderLines": "大小球線",
+      "firstHalfOverUnder": "上半場大小球",
+      "firstHalfAsianHandicap": "上半場亞洲讓球"
+    },
+    "outcomeLabels": {
+      "home": "主場勝",
+      "draw": "平局",
+      "away": "客場勝",
+      "over": "大",
+      "under": "小",
+      "yes": "是",
+      "no": "否",
+      "bttsYes": "兩隊都會進球：是",
+      "bttsNo": "兩隊都會進球：否",
+      "overWithValue": "大 {value}",
+      "underWithValue": "小 {value}",
+      "firstHalfOver": "上半場大 {value}",
+      "firstHalfUnder": "上半場小 {value}",
+      "homeWillScore": "主隊會進球",
+      "awayWillScore": "客隊會進球"
+    },
+    "aiAnalysis": "AI 分析",
+    "mainPrediction": "主要預測",
+    "recommendedPick": "推薦選擇",
+    "allProbabilities": "所有機率",
+    "highest": "最高",
+    "probability": "機率",
+    "summary": "摘要",
+    "recommended": "推薦：",
+    "confidence": {
+      "veryHigh": "極高信心",
+      "high": "高信心",
+      "good": "良好信心",
+      "medium": "中等信心",
+      "low": "低信心"
+    },
+    "invalidMatchId": "無效的比賽 ID",
+    "detailNotFound": "找不到比賽詳情。",
+    "reloadFailed": "重新載入失敗。",
+    "cacheMessage": "無法取得最新資料，顯示快取內容。",
+    "leagueInfo": "聯賽資訊",
+    "today": "今天",
+    "tomorrow": "明天",
+    "manual": "手動",
+    "scoreboard": {
+      "kickoffFallback": "即將開球",
+      "timezoneLabel": "本地時間：{timezone}"
+    },
+    "teams": {
+      "homeFallback": "主隊",
+      "awayFallback": "客隊",
+      "homeGeneric": "主隊",
+      "awayGeneric": "客隊",
+      "formFallback": "球隊 {index}",
+      "homeShort": "主場",
+      "awayShort": "客場"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} 狀態極佳，過去 5 場比賽勝率為 {winRate}%。",
+        "homeHighLossRate": "{team} 狀態不佳，過去 5 場比賽敗率為 {lossRate}%。",
+        "homeHighGoalsFor": "{team} 最近平均每場進 {goalsFor} 球。",
+        "homeLowGoalsAgainst": "{team} 失球很少，平均每場僅 {goalsAgainst} 球。",
+        "awayHighWinRate": "{team} 狀態極佳，過去 5 場比賽勝率為 {winRate}%。",
+        "awayHighLossRate": "{team} 狀態不佳，過去 5 場比賽敗率為 {lossRate}%。",
+        "homeWinStreak": "{team} 已連續贏得 {streak} 場比賽。",
+        "awayLosingStreak": "{team} 已連續輸掉 {streak} 場比賽。",
+        "homeGoalDifference": "{team} 在淨勝球方面具有明顯優勢。",
+        "homeH2HSuperiority": "{team} 在最近的對戰中佔據主導地位。",
+        "aiVeryHighConfidence": "AI 預測顯示極高信心（平均 %{avgConfidence}）。",
+        "aiSingleHighConfidence": "「{prediction}」預測具有極高信心（%{confidence}）。最可能的結果：{outcome}（%{outcomePct}）。"
+      },
+      "quickSummary": {
+        "home": "主場",
+        "away": "客場",
+        "balanced": "平衡",
+        "homeAdvantage": "主隊具有狀態優勢",
+        "awayAdvantage": "客隊具有狀態優勢",
+        "balancedForm": "兩隊狀態平衡",
+        "highConfidence": "高信心預測",
+        "mediumHighConfidence": "中高信心預測",
+        "balancedConfidence": "平衡預測",
+        "lowConfidence": "低信心預測",
+        "homeAdvantageSuffix": "• 存在主場優勢",
+        "awayAdvantageSuffix": "• 客隊優勢"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "主場",
+      "away": "客場",
+      "neutral": "中立",
+      "form": "狀態"
+    },
+    "teamComparisonCard": {
+      "formScore": "狀態：{score}/100",
+      "advantage": {
+        "home": "{team} 具有明顯優勢",
+        "away": "{team} 具有明顯優勢",
+        "balanced": "兩隊勢均力敵"
+      },
+      "predictionLabel": "預測",
+      "confidenceLabel": "信心",
+      "predictionValues": {
+        "home": "主場",
+        "away": "客場",
+        "draw": "平局",
+        "balanced": "平衡"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "表現比較",
+      "subtitle": "兩隊的視覺比較",
+      "metrics": {
+        "formScore": "狀態分數",
+        "winRate": "勝率",
+        "avgGoals": "平均進球",
+        "defense": "防守"
+      },
+      "units": {
+        "goalsPerMatch": " 球/場",
+        "defenseHint": "（失球越少越好）"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "進球分析",
+      "summary": {
+        "expectedGoals": "預期進球",
+        "prediction": "預測"
+      },
+      "expectation": {
+        "high": "高進球預期",
+        "mediumHigh": "中高進球預期",
+        "medium": "中等進球預期",
+        "low": "低進球預期"
+      },
+      "teamStats": {
+        "avgGoals": "平均進球",
+        "avgConceded": "失球",
+        "overUnderLabel": "大小球選擇",
+        "confidence": "信心"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "風險分析",
+      "riskLevel": {
+        "high": "高風險",
+        "medium": "中等風險",
+        "low": "低風險"
+      },
+      "noRisk": "無明顯風險因素",
+      "factors": {
+        "highLossRate": "{team} 狀態不佳，過去 5 場比賽敗率為 {lossRate}%。",
+        "mediumLossRate": "{team} 顯示狀態下滑跡象。",
+        "lossStreak": "{team} 已連續輸掉 {streak} 場比賽。",
+        "lowScoring": "{team} 進球困難（平均每場 {goalsFor} 球）。",
+        "highConceding": "{team} 失球很多（平均每場 {goalsAgainst} 球）。",
+        "lowFormScore": "{team} 狀態分數較低（{formScore}/100）。",
+        "mediumFormScore": "{team} 狀態不穩定。",
+        "weakAway": "{team} 客場表現較弱。"
+      }
+    },
+    "advancedMetrics": {
+      "title": "進階洞察",
+      "sampleLabel": "基於最近 {matches} 場比賽",
+      "weightedScore": {
+        "title": "加權分數系統",
+        "description": "近期狀態結果經過加權處理，以突出當前實力。",
+        "homeLabel": "主場加權分數",
+        "awayLabel": "客場加權分數"
+      },
+      "momentum": {
+        "title": "動量指標",
+        "description": "從近期表現得出的淨勝球動量。",
+        "bullish": "看漲動量",
+        "neutral": "中性動量",
+        "bearish": "看跌動量"
+      },
+      "confidence": {
+        "title": "信心混合",
+        "description": "結合 AI 選擇和成功歷史的綜合信心。",
+        "scoreLabel": "綜合信心",
+        "topPickLabel": "頂級訊號",
+        "noPick": "無可用訊號"
+      },
+      "poisson": {
+        "title": "泊松進球模型",
+        "description": "基於近期進球率的近似進球分佈。",
+        "expectedHeader": "預期進球",
+        "goalColumn": "進球",
+        "homeColumn": "主場",
+        "awayColumn": "客場",
+        "goalLabel": "{value} 球",
+        "goalLabelPlus": "3+ 球"
+      },
+      "goalTrend": {
+        "title": "進球趨勢",
+        "description": "近期進球與失球總數。",
+        "team": "球隊",
+        "forLabel": "進球",
+        "againstLabel": "失球",
+        "deltaLabel": "差額"
+      },
+      "confidenceLadder": {
+        "title": "信心階梯",
+        "description": "預測信心排名。"
+      },
+      "overUnder": {
+        "title": "大小球信心",
+        "description": "關鍵總進球機率。"
+      },
+      "handicap": {
+        "title": "讓球洞察",
+        "description": "最新亞洲讓球線。"
+      },
+      "halfComparison": {
+        "title": "上半場 vs 全場",
+        "description": "信心在上半場和全場選擇之間的變化。",
+        "halfLabel": "上半場 %{value}",
+        "fullLabel": "全場 %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "關鍵訊號",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} 具有強烈的狀態優勢（+{value} 分，超過 {awayTeam}）。",
+        "awayAdvantage": "{awayTeam} 具有優越的加權狀態（+{value}）。"
+      },
+      "momentum": {
+        "homeBullish": "{team} 顯示進攻動量（+{value} 進球動量）。",
+        "homeBearish": "{team} 動量正在降溫（{value}）。",
+        "awayBullish": "{team} 建立正向動量（+{value}）。",
+        "awayBearish": "{team} 趨勢向下（{value}）。"
+      },
+      "confidence": {
+        "high": "AI 信心仍然很高（{score}%）。",
+        "low": "AI 信心有限（{score}%）。",
+        "topPick": "頂級 AI 訊號：{pick}（{score}%）。"
+      },
+      "poisson": {
+        "highScoring": "預期進球約 {goals}；可能出現高進球情況。",
+        "lowScoring": "預測總進球接近 {goals} 球；可能出現低進球模式。",
+        "homeCleanSheet": "{team} 零封機率 {percent}%。",
+        "awayCleanSheet": "{team} 零封機率 {percent}%。"
+      },
+      "sampleSmall": "僅有 {matches} 場近期比賽可用—請謹慎解讀。"
+    },
+    "strengthsWeaknessesCard": {
+      "title": "優勢與劣勢",
+      "subtitle": "每隊的表現細分",
+      "strengthsTitle": "優勢",
+      "weaknessesTitle": "劣勢",
+      "noData": "資料不足",
+      "strengths": {
+        "formHigh": "高狀態分數",
+        "winRateHigh": "強勁勝率",
+        "attackStrong": "強力進攻",
+        "defenseStrong": "穩固防守",
+        "goalDiffPositive": "正淨勝球",
+        "winStreak": "{count} 場連勝"
+      },
+      "weaknesses": {
+        "formLow": "低狀態分數",
+        "winRateLow": "低勝率",
+        "attackWeak": "弱進攻",
+        "defenseWeak": "弱防守",
+        "goalDiffNegative": "負淨勝球",
+        "lossStreak": "{count} 場連敗"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "勝",
+        "draw": "平",
+        "loss": "敗",
+        "unknown": "—"
+      },
+      "titleFallback": "近期狀態",
+      "homeTitle": "主場狀態",
+      "awayTitle": "客場狀態"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "狀態分數",
+      "goalDifference": "淨勝球",
+      "homeBadge": "主場",
+      "awayBadge": "客場",
+      "streakLabel": "{count} 場 {type} 連勝",
+      "streakTypes": {
+        "win": "連勝",
+        "draw": "連平",
+        "loss": "連敗"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "賠率",
+      "matchResult": "比賽結果",
+      "europeanOdds": "歐洲賠率",
+      "asianHandicap": "亞洲讓球",
+      "overUnderLines": "大小球線",
+      "firstHalf": "上半場",
+      "firstHalfEuropean": "上半場歐洲賠率",
+      "firstHalfAsian": "上半場亞洲讓球",
+      "firstHalfOverUnder": "上半場大小球",
+      "openingLine": "開盤線",
+      "closingLine": "收盤線"
+    },
+    "reanalyze": {
+      "title": "手動重新整理",
+      "description": "如果統計資料看起來過時，請請求新的抓取。每 15 分鐘可用一次。",
+      "button": "請求新分析",
+      "buttonLoading": "發送中...",
+      "queued": "請求已排隊（位置 {position}）。",
+      "alreadyQueued": "此比賽已在分析佇列中。",
+      "rateLimited": "請在為此比賽請求另一個重新整理之前等待。",
+      "nextAllowed": "下次手動請求可用時間：{time}。",
+      "error": "無法請求新分析。請稍後再試。"
+    }
+  },
+  "initialSetup": {
+    "welcome": "歡迎！",
+    "subtitle": "請選擇您偏好的語言和時區",
+    "languageSelection": "語言選擇",
+    "timezoneSelection": "時區",
+    "saving": "儲存中...",
+    "continue": "繼續",
+    "timeFormatSelection": "選擇您偏好的時間格式"
+  },
+  "emptyState": {
+    "noData": "無資料",
+    "tryAgain": "重試"
+  },
+  "matchesScreen": {
+    "title": "比賽賽程",
+    "lastRefresh": "最後更新",
+    "tabs": {
+      "today": "今天",
+      "tomorrow": "明天"
+    },
+    "allLeagues": "所有聯賽",
+    "searchPlaceholder": "搜尋球隊或聯賽...",
+    "clearFilters": "清除篩選",
+    "loading": "載入比賽中...",
+    "emptyTitle": "找不到比賽",
+    "emptyMessage": "此視圖尚無可用比賽。\n\n新比賽即將添加！",
+    "emptyFiltered": "找不到符合您條件的比賽。\n\n您可以清除篩選後重試。",
+    "statusFallback": "已排程",
+    "staleDataWarning": "顯示 {date} 的賽程。等待最新資料重新整理。"
+  },
+  "favoritesScreen": {
+    "title": "我的最愛",
+    "emptyTitle": "無最愛比賽",
+    "emptyMessage": "您尚未將任何比賽添加到我的最愛。\n\n點擊比賽卡片上的星形圖示即可添加。",
+    "loading": "載入中..."
+  },
+  "errors": {
+    "timeout": "請求逾時。請檢查您的連線並重試。",
+    "network": "網路錯誤。請驗證您的網路連線。",
+    "api": "伺服器暫時無法使用。請稍後再試。",
+    "unknown": "發生意外錯誤。"
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "土耳其語",
+      "en": "英語",
+      "es": "西班牙語",
+      "de": "德語",
+      "it": "義大利語",
+      "zh-TW": "繁體中文",
+      "zh-CN": "簡體中文",
+      "ja": "日語",
+      "id": "印尼語",
+      "fr": "法語",
+      "ru": "俄語",
+      "tl": "他加祿語",
+      "ko": "韓語",
+      "ar": "阿拉伯語",
+      "pt": "葡萄牙語"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "伊斯坦堡 (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "倫敦 (GMT+0)",
+      "MADRID": "馬德里 (GMT+1)",
+      "BERLIN": "柏林 (GMT+1)",
+      "PARIS": "巴黎 (GMT+1)",
+      "CIUDAD_DE_MEXICO": "墨西哥城 (GMT-6)",
+      "BUENOS_AIRES": "布宜諾斯艾利斯 (GMT-3)",
+      "NEW_YORK": "紐約 (GMT-5)",
+      "LOS_ANGELES": "洛杉磯 (GMT-8)",
+      "CHICAGO": "芝加哥 (GMT-6)",
+      "BOGOTA": "波哥大 (GMT-5)",
+      "LIMA": "利馬 (GMT-5)",
+      "SANTIAGO": "聖地牙哥 (GMT-4)",
+      "DUBAI": "杜拜 (GMT+4)",
+      "TOKYO": "東京 (GMT+9)",
+      "SYDNEY": "雪梨 (GMT+10)"
+    },
+    "title": "設定",
+    "preferencesSection": "偏好設定",
+    "aboutSection": "關於 GoalBlip",
+    "language": "語言",
+    "timezone": "時區",
+    "timeFormat": "時間格式",
+    "timeFormatOptions": {
+      "auto": "自動",
+      "24h": "24 小時制",
+      "12h": "12 小時制"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI 驅動的比賽分析平台"
+  }
+}
+

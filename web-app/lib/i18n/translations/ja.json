@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "close": "閉じる",
+    "search": "検索",
+    "clear": "クリア",
+    "all": "すべて",
+    "select": "選択",
+    "continue": "続ける",
+    "back": "戻る",
+    "home": "ホーム",
+    "favorites": "お気に入り",
+    "unknownLeague": "不明なリーグ",
+    "unknown": "不明",
+    "prediction": "予測",
+    "time": {
+      "justNow": "たった今",
+      "minutes": "{count}分",
+      "hours": "{count}時間",
+      "days": "{count}日"
+    },
+    "settings": "設定",
+    "menu": "メニュー"
+  },
+  "drawer": {
+    "title": "試合",
+    "searchPrompt": "試合を検索",
+    "searchPromptDescription": "チーム名またはリーグ名を入力して試合を検索"
+  },
+  "home": {
+    "today": "今日",
+    "tomorrow": "明日",
+    "noMatches": "試合が見つかりません",
+    "noMatchesMessage": "このビューにはまだ試合がありません。\n\n新しい試合がまもなく追加されます！",
+    "noMatchesFiltered": "検索条件に一致する試合が見つかりません。\n\nフィルターをクリアして再試行できます。",
+    "clearFilters": "フィルターをクリア",
+    "refreshing": "更新中...",
+    "dataLoadError": "データの読み込みに失敗しました",
+    "dataLoadErrorMessage": "インターネット接続を確認して再試行してください。",
+    "loadingMore": "さらに読み込み中...",
+    "topLeagues": {
+      "matches": "{count}試合",
+      "firstMatch": "最初のキックオフ {time}",
+      "waitingKickoff": "キックオフ待機中"
+    },
+    "aiShortlist": {
+      "predictionPending": "予測待機中",
+      "noPredictionTitle": "AI予測なし",
+      "noPredictionMessage": "この試合の分析はまだ準備できていません。"
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "チームまたはリーグを検索...",
+    "selectLeague": "リーグを選択",
+    "allLeagues": "すべてのリーグ",
+    "leaguesSelected": "{count}リーグが選択されました",
+    "clearAll": "すべてクリア",
+    "all": "すべて",
+    "matches": "試合",
+    "filterSortSettings": "フィルター設定",
+    "filterSortSettingsDescription": "並び替えと表示オプション"
+  },
+  "filterSort": {
+    "title": "フィルターと並び替え",
+    "tabs": {
+      "filters": "フィルター",
+      "sort": "並び替え",
+      "view": "表示"
+    },
+    "sortByLeague": "リーグ別",
+    "sortByTime": "時間別",
+    "sortByDate": "日付別",
+    "sortByTeam": "チーム名別",
+    "viewGrouped": "リーグでグループ化",
+    "viewGroupedDescription": "リーグヘッダーの下に試合を表示",
+    "viewFlat": "フラットリスト",
+    "viewFlatDescription": "リーグヘッダーなしですべての試合を表示"
+  },
+  "match": {
+    "live": "ライブ",
+    "vs": "対",
+    "kickoff": "まもなくキックオフ",
+    "detailTitle": "試合詳細",
+    "loadingDetail": "試合詳細を読み込み中...",
+    "detailError": "試合詳細の読み込みに失敗しました",
+    "detailErrorMessage": "インターネット接続を確認して再試行してください。",
+    "pendingAnalysis": "分析中",
+    "pendingMessage": "キュー位置：#{position}\n\n分析が完了すると自動的に更新されます。",
+    "refresh": "更新",
+    "dataDate": "データ日付",
+    "lastUpdate": "最終更新",
+    "dataSource": "データソース",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "ライブ",
+      "scheduled": "予定",
+      "finished": "試合終了",
+      "postponed": "延期",
+      "canceled": "キャンセル",
+      "abandoned": "中止",
+      "delayed": "遅延",
+      "halftime": "ハーフタイム",
+      "extraTime": "延長戦",
+      "penalties": "PK戦"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "クイックサマリー",
+    "keyInsights": "重要な洞察",
+    "teamComparison": "チーム比較",
+    "visualComparison": "視覚的比較",
+    "strengthsWeaknesses": "強みと弱み",
+    "predictionSummary": "予測サマリー",
+    "detailedPredictions": "詳細な予測",
+    "formStatsTitle": "フォーム統計",
+    "formStats": {
+      "winRate": "勝率",
+      "drawRate": "引き分け率",
+      "lossRate": "敗率",
+      "avgGoalsFor": "平均得点",
+      "avgGoalsAgainst": "平均失点"
+    },
+    "recentForm": "最近のフォーム詳細",
+    "headToHead": "対戦成績",
+    "oddsTrends": "オッズトレンド分析",
+    "upcomingMatches": "今後の試合",
+    "upcomingMatchesEmpty": "今後の試合はありません。",
+    "goalAnalysis": "得点分析",
+    "riskAnalysis": "リスク分析",
+    "localInfo": "ローカル情報",
+    "noDetailedAnalysis": "詳細な分析なし",
+    "noDetailedAnalysisMessage": "この試合の詳細な予測分析はまだ利用できません。",
+    "predictionsNotAvailable": "予測分析が利用できません",
+    "predictionsNotAvailableMessage": "このセクションは現在、トルコ語でのみ利用可能です。他の言語はまもなく追加されます。",
+    "predictionLabels": {
+      "matchResult": "試合結果 (1X2)",
+      "bothTeamsScore": "両チーム得点",
+      "totalGoals": "総得点",
+      "firstHalfResult": "前半結果",
+      "firstHalfGoals": "前半得点",
+      "teamToScore": "得点するチーム",
+      "asianHandicap": "アジアンハンディキャップ",
+      "overUnderLines": "オーバー/アンダーライン",
+      "firstHalfOverUnder": "前半オーバー/アンダー",
+      "firstHalfAsianHandicap": "前半アジアンハンディキャップ"
+    },
+    "outcomeLabels": {
+      "home": "ホーム勝利",
+      "draw": "引き分け",
+      "away": "アウェイ勝利",
+      "over": "オーバー",
+      "under": "アンダー",
+      "yes": "はい",
+      "no": "いいえ",
+      "bttsYes": "両チーム得点：はい",
+      "bttsNo": "両チーム得点：いいえ",
+      "overWithValue": "オーバー {value}",
+      "underWithValue": "アンダー {value}",
+      "firstHalfOver": "前半オーバー {value}",
+      "firstHalfUnder": "前半アンダー {value}",
+      "homeWillScore": "ホームチームが得点",
+      "awayWillScore": "アウェイチームが得点"
+    },
+    "aiAnalysis": "AI分析",
+    "mainPrediction": "メイン予測",
+    "recommendedPick": "推奨選択",
+    "allProbabilities": "すべての確率",
+    "highest": "最高",
+    "probability": "確率",
+    "summary": "サマリー",
+    "recommended": "推奨：",
+    "confidence": {
+      "veryHigh": "非常に高い信頼度",
+      "high": "高い信頼度",
+      "good": "良好な信頼度",
+      "medium": "中程度の信頼度",
+      "low": "低い信頼度"
+    },
+    "invalidMatchId": "無効な試合ID",
+    "detailNotFound": "試合詳細が見つかりません。",
+    "reloadFailed": "再読み込みに失敗しました。",
+    "cacheMessage": "現在のデータを取得できません。キャッシュから表示しています。",
+    "leagueInfo": "リーグ情報",
+    "today": "今日",
+    "tomorrow": "明日",
+    "manual": "手動",
+    "scoreboard": {
+      "kickoffFallback": "キックオフが近づいています",
+      "timezoneLabel": "現地時間：{timezone}"
+    },
+    "teams": {
+      "homeFallback": "ホームチーム",
+      "awayFallback": "アウェイチーム",
+      "homeGeneric": "ホームチーム",
+      "awayGeneric": "アウェイチーム",
+      "formFallback": "チーム {index}",
+      "homeShort": "ホーム",
+      "awayShort": "アウェイ"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team}は過去5試合で{winRate}%の勝率を記録し、絶好調です。",
+        "homeHighLossRate": "{team}は過去5試合で{lossRate}%の敗率を記録し、苦戦しています。",
+        "homeHighGoalsFor": "{team}は最近、試合あたり平均{goalsFor}得点を記録しています。",
+        "homeLowGoalsAgainst": "{team}は失点が非常に少なく、試合あたりわずか{goalsAgainst}失点です。",
+        "awayHighWinRate": "{team}は過去5試合で{winRate}%の勝率を記録し、絶好調です。",
+        "awayHighLossRate": "{team}は過去5試合で{lossRate}%の敗率を記録し、苦戦しています。",
+        "homeWinStreak": "{team}は{streak}試合連勝しています。",
+        "awayLosingStreak": "{team}は{streak}試合連敗しています。",
+        "homeGoalDifference": "{team}は得失点差で明確な優位性を持っています。",
+        "homeH2HSuperiority": "{team}は最近の直接対決で優位に立っています。",
+        "aiVeryHighConfidence": "AI予測は非常に高い信頼度を示しています（平均%{avgConfidence}）。",
+        "aiSingleHighConfidence": "「{prediction}」予測は極めて高い信頼度（%{confidence}）を持っています。最も可能性の高い結果：{outcome}（%{outcomePct}）。"
+      },
+      "quickSummary": {
+        "home": "ホーム",
+        "away": "アウェイ",
+        "balanced": "バランス",
+        "homeAdvantage": "ホームチームがフォーム優位",
+        "awayAdvantage": "アウェイチームがフォーム優位",
+        "balancedForm": "両チームともバランスの取れたフォーム",
+        "highConfidence": "高信頼度予測",
+        "mediumHighConfidence": "中高信頼度予測",
+        "balancedConfidence": "バランス予測",
+        "lowConfidence": "低信頼度予測",
+        "homeAdvantageSuffix": "• ホームアドバンテージあり",
+        "awayAdvantageSuffix": "• アウェイチーム優位"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "ホーム",
+      "away": "アウェイ",
+      "neutral": "中立",
+      "form": "フォーム"
+    },
+    "teamComparisonCard": {
+      "formScore": "フォーム：{score}/100",
+      "advantage": {
+        "home": "{team}が明確な優位性",
+        "away": "{team}が明確な優位性",
+        "balanced": "チームは互角"
+      },
+      "predictionLabel": "予測",
+      "confidenceLabel": "信頼度",
+      "predictionValues": {
+        "home": "ホーム",
+        "away": "アウェイ",
+        "draw": "引き分け",
+        "balanced": "バランス"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "パフォーマンス比較",
+      "subtitle": "両チームの視覚的比較",
+      "metrics": {
+        "formScore": "フォームスコア",
+        "winRate": "勝率",
+        "avgGoals": "平均得点",
+        "defense": "守備"
+      },
+      "units": {
+        "goalsPerMatch": " 得点/試合",
+        "defenseHint": "（失点が少ないほど良い）"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "得点分析",
+      "summary": {
+        "expectedGoals": "予想得点",
+        "prediction": "予測"
+      },
+      "expectation": {
+        "high": "高得点予想",
+        "mediumHigh": "中高得点予想",
+        "medium": "中得点予想",
+        "low": "低得点予想"
+      },
+      "teamStats": {
+        "avgGoals": "平均得点",
+        "avgConceded": "失点",
+        "overUnderLabel": "オーバー/アンダー選択",
+        "confidence": "信頼度"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "リスク分析",
+      "riskLevel": {
+        "high": "高リスク",
+        "medium": "中リスク",
+        "low": "低リスク"
+      },
+      "noRisk": "顕著なリスク要因なし",
+      "factors": {
+        "highLossRate": "{team}は過去5試合で{lossRate}%の敗率を記録し、苦戦しています。",
+        "mediumLossRate": "{team}はフォーム低下の兆候を示しています。",
+        "lossStreak": "{team}は{streak}試合連敗しています。",
+        "lowScoring": "{team}は得点に苦戦しています（試合あたり{goalsFor}得点）。",
+        "highConceding": "{team}は多くの失点を記録しています（試合あたり{goalsAgainst}失点）。",
+        "lowFormScore": "{team}は低いフォームスコア（{formScore}/100）を持っています。",
+        "mediumFormScore": "{team}はフォームが不安定です。",
+        "weakAway": "{team}はアウェイでのパフォーマンスが弱いです。"
+      }
+    },
+    "advancedMetrics": {
+      "title": "高度な洞察",
+      "sampleLabel": "過去{matches}試合に基づく",
+      "weightedScore": {
+        "title": "加重スコアシステム",
+        "description": "最近のフォーム結果は、現在の強さを強調するために加重されます。",
+        "homeLabel": "ホーム加重スコア",
+        "awayLabel": "アウェイ加重スコア"
+      },
+      "momentum": {
+        "title": "モメンタム指標",
+        "description": "最近のパフォーマンスから導き出された得失点差モメンタム。",
+        "bullish": "強気モメンタム",
+        "neutral": "中立モメンタム",
+        "bearish": "弱気モメンタム"
+      },
+      "confidence": {
+        "title": "信頼度ブレンド",
+        "description": "AI選択と成功履歴を組み合わせた複合信頼度。",
+        "scoreLabel": "複合信頼度",
+        "topPickLabel": "トップシグナル",
+        "noPick": "シグナルなし"
+      },
+      "poisson": {
+        "title": "ポアソン得点モデル",
+        "description": "最近の得点率に基づく近似得点分布。",
+        "expectedHeader": "予想得点",
+        "goalColumn": "得点",
+        "homeColumn": "ホーム",
+        "awayColumn": "アウェイ",
+        "goalLabel": "{value}得点",
+        "goalLabelPlus": "3+得点"
+      },
+      "goalTrend": {
+        "title": "得点トレンド",
+        "description": "最近の得点と失点の合計。",
+        "team": "チーム",
+        "forLabel": "得点",
+        "againstLabel": "失点",
+        "deltaLabel": "差"
+      },
+      "confidenceLadder": {
+        "title": "信頼度ラダー",
+        "description": "予測信頼度ランキング。"
+      },
+      "overUnder": {
+        "title": "オーバー/アンダー信頼度",
+        "description": "主要な総得点確率。"
+      },
+      "handicap": {
+        "title": "ハンディキャップ洞察",
+        "description": "最新のアジアンハンディキャップライン。"
+      },
+      "halfComparison": {
+        "title": "前半 vs フルタイム",
+        "description": "前半とフルタイムの選択間での信頼度の変化。",
+        "halfLabel": "前半 %{value}",
+        "fullLabel": "FT %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "重要なシグナル",
+      "weighted": {
+        "homeAdvantage": "{homeTeam}は明確なフォーム優位性（{awayTeam}に対して+{value}ポイント）を持っています。",
+        "awayAdvantage": "{awayTeam}は優れた加重フォーム（+{value}）を持っています。"
+      },
+      "momentum": {
+        "homeBullish": "{team}は攻撃的なモメンタム（+{value}得点モメンタム）を示しています。",
+        "homeBearish": "{team}のモメンタムは冷めています（{value}）。",
+        "awayBullish": "{team}はポジティブなモメンタム（+{value}）を構築しています。",
+        "awayBearish": "{team}は下降傾向（{value}）です。"
+      },
+      "confidence": {
+        "high": "AI信頼度は高いままです（{score}%）。",
+        "low": "AI信頼度は限定的です（{score}%）。",
+        "topPick": "トップAIシグナル：{pick}（{score}%）。"
+      },
+      "poisson": {
+        "highScoring": "予想得点は約{goals}。高得点シナリオの可能性が高いです。",
+        "lowScoring": "予測総得点は約{goals}得点。低得点パターンの可能性があります。",
+        "homeCleanSheet": "{team}のクリーンシート確率{percent}%。",
+        "awayCleanSheet": "{team}のクリーンシート確率{percent}%。"
+      },
+      "sampleSmall": "最近の試合は{matches}試合のみ利用可能—注意して解釈してください。"
+    },
+    "strengthsWeaknessesCard": {
+      "title": "強みと弱み",
+      "subtitle": "チームごとのパフォーマンス内訳",
+      "strengthsTitle": "強み",
+      "weaknessesTitle": "弱み",
+      "noData": "データ不足",
+      "strengths": {
+        "formHigh": "高いフォームスコア",
+        "winRateHigh": "強い勝率",
+        "attackStrong": "強力な攻撃",
+        "defenseStrong": "堅実な守備",
+        "goalDiffPositive": "正の得失点差",
+        "winStreak": "{count}試合連勝"
+      },
+      "weaknesses": {
+        "formLow": "低いフォームスコア",
+        "winRateLow": "低い勝率",
+        "attackWeak": "弱い攻撃",
+        "defenseWeak": "弱い守備",
+        "goalDiffNegative": "負の得失点差",
+        "lossStreak": "{count}試合連敗"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "勝",
+        "draw": "分",
+        "loss": "敗",
+        "unknown": "—"
+      },
+      "titleFallback": "最近のフォーム",
+      "homeTitle": "ホームフォーム",
+      "awayTitle": "アウェイフォーム"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "フォームスコア",
+      "goalDifference": "得失点差",
+      "homeBadge": "ホーム",
+      "awayBadge": "アウェイ",
+      "streakLabel": "{count}試合{type}連続",
+      "streakTypes": {
+        "win": "連勝",
+        "draw": "連分",
+        "loss": "連敗"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "オッズ",
+      "matchResult": "試合結果",
+      "europeanOdds": "ヨーロッパオッズ",
+      "asianHandicap": "アジアンハンディキャップ",
+      "overUnderLines": "オーバー/アンダーライン",
+      "firstHalf": "前半",
+      "firstHalfEuropean": "前半ヨーロッパオッズ",
+      "firstHalfAsian": "前半アジアンハンディキャップ",
+      "firstHalfOverUnder": "前半オーバー/アンダー",
+      "openingLine": "オープニングライン",
+      "closingLine": "クロージングライン"
+    },
+    "reanalyze": {
+      "title": "手動更新",
+      "description": "統計が古く見える場合は、新しいスクレイプをリクエストしてください。15分に1回利用可能です。",
+      "button": "新しい分析をリクエスト",
+      "buttonLoading": "送信中...",
+      "queued": "リクエストがキューに入りました（位置{position}）。",
+      "alreadyQueued": "この試合はすでに分析キューにあります。",
+      "rateLimited": "この試合の別の更新をリクエストする前に待機してください。",
+      "nextAllowed": "次の手動リクエストは{time}に利用可能です。",
+      "error": "新しい分析をリクエストできませんでした。後でもう一度お試しください。"
+    }
+  },
+  "initialSetup": {
+    "welcome": "ようこそ！",
+    "subtitle": "希望する言語とタイムゾーンを選択してください",
+    "languageSelection": "言語選択",
+    "timezoneSelection": "タイムゾーン",
+    "saving": "保存中...",
+    "continue": "続ける",
+    "timeFormatSelection": "希望する時刻形式を選択"
+  },
+  "emptyState": {
+    "noData": "データなし",
+    "tryAgain": "再試行"
+  },
+  "matchesScreen": {
+    "title": "試合日程",
+    "lastRefresh": "最終更新",
+    "tabs": {
+      "today": "今日",
+      "tomorrow": "明日"
+    },
+    "allLeagues": "すべてのリーグ",
+    "searchPlaceholder": "チームまたはリーグを検索...",
+    "clearFilters": "フィルターをクリア",
+    "loading": "試合を読み込み中...",
+    "emptyTitle": "試合が見つかりません",
+    "emptyMessage": "このビューにはまだ試合がありません。\n\n新しい試合がまもなく追加されます！",
+    "emptyFiltered": "条件に一致する試合が見つかりません。\n\nフィルターをクリアして再試行できます。",
+    "statusFallback": "予定",
+    "staleDataWarning": "{date}の日程を表示しています。最新データの更新を待機中です。"
+  },
+  "favoritesScreen": {
+    "title": "お気に入り",
+    "emptyTitle": "お気に入りの試合なし",
+    "emptyMessage": "まだお気に入りに試合を追加していません。\n\n試合カードの星アイコンをタップしてここに追加してください。",
+    "loading": "読み込み中..."
+  },
+  "errors": {
+    "timeout": "リクエストがタイムアウトしました。接続を確認して再試行してください。",
+    "network": "ネットワークエラー。インターネット接続を確認してください。",
+    "api": "サーバーが一時的に利用できません。後でもう一度お試しください。",
+    "unknown": "予期しないエラーが発生しました。"
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "トルコ語",
+      "en": "英語",
+      "es": "スペイン語",
+      "de": "ドイツ語",
+      "it": "イタリア語",
+      "zh-TW": "繁体字中国語",
+      "zh-CN": "簡体字中国語",
+      "ja": "日本語",
+      "id": "インドネシア語",
+      "fr": "フランス語",
+      "ru": "ロシア語",
+      "tl": "タガログ語",
+      "ko": "韓国語",
+      "ar": "アラビア語",
+      "pt": "ポルトガル語"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "イスタンブール (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "ロンドン (GMT+0)",
+      "MADRID": "マドリード (GMT+1)",
+      "BERLIN": "ベルリン (GMT+1)",
+      "PARIS": "パリ (GMT+1)",
+      "CIUDAD_DE_MEXICO": "メキシコシティ (GMT-6)",
+      "BUENOS_AIRES": "ブエノスアイレス (GMT-3)",
+      "NEW_YORK": "ニューヨーク (GMT-5)",
+      "LOS_ANGELES": "ロサンゼルス (GMT-8)",
+      "CHICAGO": "シカゴ (GMT-6)",
+      "BOGOTA": "ボゴタ (GMT-5)",
+      "LIMA": "リマ (GMT-5)",
+      "SANTIAGO": "サンティアゴ (GMT-4)",
+      "DUBAI": "ドバイ (GMT+4)",
+      "TOKYO": "東京 (GMT+9)",
+      "SYDNEY": "シドニー (GMT+10)"
+    },
+    "title": "設定",
+    "preferencesSection": "設定",
+    "aboutSection": "GoalBlipについて",
+    "language": "言語",
+    "timezone": "タイムゾーン",
+    "timeFormat": "時刻形式",
+    "timeFormatOptions": {
+      "auto": "自動",
+      "24h": "24時間制",
+      "12h": "12時間制"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI搭載の試合分析プラットフォーム"
+  }
+}
+

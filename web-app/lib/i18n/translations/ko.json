@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류",
+    "retry": "다시 시도",
+    "cancel": "취소",
+    "save": "저장",
+    "close": "닫기",
+    "search": "검색",
+    "clear": "지우기",
+    "all": "전체",
+    "select": "선택",
+    "continue": "계속",
+    "back": "뒤로",
+    "home": "홈",
+    "favorites": "즐겨찾기",
+    "unknownLeague": "알 수 없는 리그",
+    "unknown": "알 수 없음",
+    "prediction": "예측",
+    "time": {
+      "justNow": "방금",
+      "minutes": "{count}분",
+      "hours": "{count}시간",
+      "days": "{count}일"
+    },
+    "settings": "설정",
+    "menu": "메뉴"
+  },
+  "drawer": {
+    "title": "경기",
+    "searchPrompt": "경기 검색",
+    "searchPromptDescription": "팀 또는 리그 이름을 입력하여 경기를 검색하세요"
+  },
+  "home": {
+    "today": "오늘",
+    "tomorrow": "내일",
+    "noMatches": "경기를 찾을 수 없음",
+    "noMatchesMessage": "이 보기에는 아직 경기가 없습니다.\n\n새 경기가 곧 추가될 예정입니다!",
+    "noMatchesFiltered": "검색 조건에 맞는 경기를 찾을 수 없습니다.\n\n필터를 지우고 다시 시도할 수 있습니다.",
+    "clearFilters": "필터 지우기",
+    "refreshing": "새로고침 중...",
+    "dataLoadError": "데이터 로드 실패",
+    "dataLoadErrorMessage": "인터넷 연결을 확인하고 다시 시도해 주세요.",
+    "loadingMore": "더 불러오는 중...",
+    "topLeagues": {
+      "matches": "{count}경기",
+      "firstMatch": "첫 경기 시작 {time}",
+      "waitingKickoff": "경기 시작 대기 중"
+    },
+    "aiShortlist": {
+      "predictionPending": "예측 대기 중",
+      "noPredictionTitle": "AI 예측 없음",
+      "noPredictionMessage": "이 경기에 대한 분석이 아직 준비되지 않았습니다."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "팀 또는 리그 검색...",
+    "selectLeague": "리그 선택",
+    "allLeagues": "모든 리그",
+    "leaguesSelected": "{count}개 리그 선택됨",
+    "clearAll": "전체 지우기",
+    "all": "전체",
+    "matches": "경기",
+    "filterSortSettings": "필터 설정",
+    "filterSortSettingsDescription": "정렬 및 보기 옵션"
+  },
+  "filterSort": {
+    "title": "필터 및 정렬",
+    "tabs": {
+      "filters": "필터",
+      "sort": "정렬",
+      "view": "보기"
+    },
+    "sortByLeague": "리그별",
+    "sortByTime": "시간별",
+    "sortByDate": "날짜별",
+    "sortByTeam": "팀 이름별",
+    "viewGrouped": "리그별 그룹화",
+    "viewGroupedDescription": "리그 헤더 아래에 경기 표시",
+    "viewFlat": "평면 목록",
+    "viewFlatDescription": "리그 헤더 없이 모든 경기 표시"
+  },
+  "match": {
+    "live": "라이브",
+    "vs": "대",
+    "kickoff": "곧 시작",
+    "detailTitle": "경기 상세",
+    "loadingDetail": "경기 상세 로딩 중...",
+    "detailError": "경기 상세 로드 실패",
+    "detailErrorMessage": "인터넷 연결을 확인하고 다시 시도해 주세요.",
+    "pendingAnalysis": "분석 중",
+    "pendingMessage": "대기열 위치: #{position}\n\n분석이 완료되면 자동으로 업데이트됩니다.",
+    "refresh": "새로고침",
+    "dataDate": "데이터 날짜",
+    "lastUpdate": "마지막 업데이트",
+    "dataSource": "데이터 소스",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "라이브",
+      "scheduled": "예정됨",
+      "finished": "경기 종료",
+      "postponed": "연기됨",
+      "canceled": "취소됨",
+      "abandoned": "중단됨",
+      "delayed": "지연됨",
+      "halftime": "하프타임",
+      "extraTime": "연장전",
+      "penalties": "승부차기"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "빠른 요약",
+    "keyInsights": "주요 인사이트",
+    "teamComparison": "팀 비교",
+    "visualComparison": "시각적 비교",
+    "strengthsWeaknesses": "강점 및 약점",
+    "predictionSummary": "예측 요약",
+    "detailedPredictions": "상세 예측",
+    "formStatsTitle": "폼 통계",
+    "formStats": {
+      "winRate": "승률",
+      "drawRate": "무승부율",
+      "lossRate": "패배율",
+      "avgGoalsFor": "평균 득점",
+      "avgGoalsAgainst": "평균 실점"
+    },
+    "recentForm": "최근 폼 상세",
+    "headToHead": "상대전적",
+    "oddsTrends": "배당률 트렌드 분석",
+    "upcomingMatches": "예정된 경기",
+    "upcomingMatchesEmpty": "예정된 경기가 없습니다.",
+    "goalAnalysis": "득점 분석",
+    "riskAnalysis": "위험 분석",
+    "localInfo": "로컬 정보",
+    "noDetailedAnalysis": "상세 분석 없음",
+    "noDetailedAnalysisMessage": "이 경기에 대한 상세 예측 분석이 아직 제공되지 않습니다.",
+    "predictionsNotAvailable": "예측 분석 사용 불가",
+    "predictionsNotAvailableMessage": "이 섹션은 현재 터키어로만 제공됩니다. 다른 언어는 곧 추가될 예정입니다.",
+    "predictionLabels": {
+      "matchResult": "경기 결과 (1X2)",
+      "bothTeamsScore": "양팀 득점",
+      "totalGoals": "총 득점",
+      "firstHalfResult": "전반전 결과",
+      "firstHalfGoals": "전반전 득점",
+      "teamToScore": "득점할 팀",
+      "asianHandicap": "아시안 핸디캡",
+      "overUnderLines": "오버/언더 라인",
+      "firstHalfOverUnder": "전반전 오버/언더",
+      "firstHalfAsianHandicap": "전반전 아시안 핸디캡"
+    },
+    "outcomeLabels": {
+      "home": "홈 승리",
+      "draw": "무승부",
+      "away": "원정 승리",
+      "over": "오버",
+      "under": "언더",
+      "yes": "예",
+      "no": "아니오",
+      "bttsYes": "양팀 득점: 예",
+      "bttsNo": "양팀 득점: 아니오",
+      "overWithValue": "오버 {value}",
+      "underWithValue": "언더 {value}",
+      "firstHalfOver": "전반전 오버 {value}",
+      "firstHalfUnder": "전반전 언더 {value}",
+      "homeWillScore": "홈팀이 득점할 것",
+      "awayWillScore": "원정팀이 득점할 것"
+    },
+    "aiAnalysis": "AI 분석",
+    "mainPrediction": "주요 예측",
+    "recommendedPick": "추천 선택",
+    "allProbabilities": "모든 확률",
+    "highest": "최고",
+    "probability": "확률",
+    "summary": "요약",
+    "recommended": "추천:",
+    "confidence": {
+      "veryHigh": "매우 높은 신뢰도",
+      "high": "높은 신뢰도",
+      "good": "양호한 신뢰도",
+      "medium": "중간 신뢰도",
+      "low": "낮은 신뢰도"
+    },
+    "invalidMatchId": "유효하지 않은 경기 ID",
+    "detailNotFound": "경기 상세를 찾을 수 없습니다.",
+    "reloadFailed": "다시 로드 실패.",
+    "cacheMessage": "현재 데이터를 가져올 수 없어 캐시에서 표시합니다.",
+    "leagueInfo": "리그 정보",
+    "today": "오늘",
+    "tomorrow": "내일",
+    "manual": "수동",
+    "scoreboard": {
+      "kickoffFallback": "경기 시작 예정",
+      "timezoneLabel": "현지 시간: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "홈팀",
+      "awayFallback": "원정팀",
+      "homeGeneric": "홈팀",
+      "awayGeneric": "원정팀",
+      "formFallback": "팀 {index}",
+      "homeShort": "홈",
+      "awayShort": "원정"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team}은(는) 최근 5경기에서 {winRate}%의 승률로 훌륭한 폼을 보이고 있습니다.",
+        "homeHighLossRate": "{team}은(는) 최근 5경기에서 {lossRate}%의 패배율로 어려움을 겪고 있습니다.",
+        "homeHighGoalsFor": "{team}은(는) 최근 경기당 평균 {goalsFor}골을 기록하고 있습니다.",
+        "homeLowGoalsAgainst": "{team}은(는) 실점이 매우 적어 경기당 {goalsAgainst}골만 허용합니다.",
+        "awayHighWinRate": "{team}은(는) 최근 5경기에서 {winRate}%의 승률로 훌륭한 폼을 보이고 있습니다.",
+        "awayHighLossRate": "{team}은(는) 최근 5경기에서 {lossRate}%의 패배율로 어려움을 겪고 있습니다.",
+        "homeWinStreak": "{team}은(는) 연속 {streak}경기에서 승리했습니다.",
+        "awayLosingStreak": "{team}은(는) 연속 {streak}경기에서 패배했습니다.",
+        "homeGoalDifference": "{team}은(는) 득실차에서 명확한 우위를 가지고 있습니다.",
+        "homeH2HSuperiority": "{team}은(는) 최근 상대전적에서 우위를 보였습니다.",
+        "aiVeryHighConfidence": "AI 예측이 매우 높은 신뢰도를 보여줍니다 (평균 %{avgConfidence}).",
+        "aiSingleHighConfidence": "\"{prediction}\" 예측이 극도로 높은 신뢰도(%{confidence})를 가지고 있습니다. 가장 가능성 높은 결과: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "홈",
+        "away": "원정",
+        "balanced": "균형",
+        "homeAdvantage": "홈팀이 폼에서 우위",
+        "awayAdvantage": "원정팀이 폼에서 우위",
+        "balancedForm": "양팀 모두 균형 잡힌 폼",
+        "highConfidence": "높은 신뢰도 예측",
+        "mediumHighConfidence": "중-높은 신뢰도 예측",
+        "balancedConfidence": "균형 예측",
+        "lowConfidence": "낮은 신뢰도 예측",
+        "homeAdvantageSuffix": "• 홈 어드밴티지 존재",
+        "awayAdvantageSuffix": "• 원정팀 우위"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "홈",
+      "away": "원정",
+      "neutral": "중립",
+      "form": "폼"
+    },
+    "teamComparisonCard": {
+      "formScore": "폼: {score}/100",
+      "advantage": {
+        "home": "{team}이(가) 명확한 우위",
+        "away": "{team}이(가) 명확한 우위",
+        "balanced": "팀들이 동등함"
+      },
+      "predictionLabel": "예측",
+      "confidenceLabel": "신뢰도",
+      "predictionValues": {
+        "home": "홈",
+        "away": "원정",
+        "draw": "무승부",
+        "balanced": "균형"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "성과 비교",
+      "subtitle": "양팀의 시각적 비교",
+      "metrics": {
+        "formScore": "폼 점수",
+        "winRate": "승률",
+        "avgGoals": "평균 득점",
+        "defense": "수비"
+      },
+      "units": {
+        "goalsPerMatch": " 골/경기",
+        "defenseHint": " (골이 적을수록 좋음)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "득점 분석",
+      "summary": {
+        "expectedGoals": "예상 득점",
+        "prediction": "예측"
+      },
+      "expectation": {
+        "high": "높은 득점 기대",
+        "mediumHigh": "중-높은 득점 기대",
+        "medium": "중간 득점 기대",
+        "low": "낮은 득점 기대"
+      },
+      "teamStats": {
+        "avgGoals": "평균 득점",
+        "avgConceded": "실점",
+        "overUnderLabel": "오버/언더 선택",
+        "confidence": "신뢰도"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "위험 분석",
+      "riskLevel": {
+        "high": "높은 위험",
+        "medium": "중간 위험",
+        "low": "낮은 위험"
+      },
+      "noRisk": "주목할 만한 위험 요소 없음",
+      "factors": {
+        "highLossRate": "{team}은(는) 최근 5경기에서 {lossRate}%의 패배율로 어려움을 겪고 있습니다.",
+        "mediumLossRate": "{team}은(는) 폼 하락 징후를 보이고 있습니다.",
+        "lossStreak": "{team}은(는) 연속 {streak}경기에서 패배했습니다.",
+        "lowScoring": "{team}은(는) 득점에 어려움을 겪고 있습니다 (경기당 {goalsFor}골).",
+        "highConceding": "{team}은(는) 많은 실점을 허용하고 있습니다 (경기당 {goalsAgainst}골).",
+        "lowFormScore": "{team}은(는) 낮은 폼 점수({formScore}/100)를 가지고 있습니다.",
+        "mediumFormScore": "{team}은(는) 폼이 일관되지 않습니다.",
+        "weakAway": "{team}은(는) 원정 경기에서 약한 성과를 보이고 있습니다."
+      }
+    },
+    "advancedMetrics": {
+      "title": "고급 인사이트",
+      "sampleLabel": "최근 {matches}경기 기준",
+      "weightedScore": {
+        "title": "가중 점수 시스템",
+        "description": "최근 폼 결과는 현재 강점을 강조하기 위해 가중치가 부여됩니다.",
+        "homeLabel": "홈 가중 점수",
+        "awayLabel": "원정 가중 점수"
+      },
+      "momentum": {
+        "title": "모멘텀 지표",
+        "description": "최근 성과에서 도출된 득실차 모멘텀.",
+        "bullish": "상승 모멘텀",
+        "neutral": "중립 모멘텀",
+        "bearish": "하락 모멘텀"
+      },
+      "confidence": {
+        "title": "신뢰도 혼합",
+        "description": "AI 선택과 성공 이력을 결합한 복합 신뢰도.",
+        "scoreLabel": "복합 신뢰도",
+        "topPickLabel": "최고 신호",
+        "noPick": "사용 가능한 신호 없음"
+      },
+      "poisson": {
+        "title": "푸아송 득점 모델",
+        "description": "최근 득점률을 기반으로 한 근사 득점 분포.",
+        "expectedHeader": "예상 득점",
+        "goalColumn": "득점",
+        "homeColumn": "홈",
+        "awayColumn": "원정",
+        "goalLabel": "{value}골",
+        "goalLabelPlus": "3+골"
+      },
+      "goalTrend": {
+        "title": "득점 트렌드",
+        "description": "최근 득점 대 실점 합계.",
+        "team": "팀",
+        "forLabel": "득점",
+        "againstLabel": "실점",
+        "deltaLabel": "차이"
+      },
+      "confidenceLadder": {
+        "title": "신뢰도 사다리",
+        "description": "예측 신뢰도 순위."
+      },
+      "overUnder": {
+        "title": "오버/언더 신뢰도",
+        "description": "주요 총 득점 확률."
+      },
+      "handicap": {
+        "title": "핸디캡 인사이트",
+        "description": "최신 아시안 핸디캡 라인."
+      },
+      "halfComparison": {
+        "title": "전반전 대 풀타임",
+        "description": "전반전과 풀타임 선택 간 신뢰도 변화.",
+        "halfLabel": "전반 %{value}",
+        "fullLabel": "풀타임 %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "주요 신호",
+      "weighted": {
+        "homeAdvantage": "{homeTeam}이(가) 강한 폼 우위를 가지고 있습니다 ({awayTeam}보다 +{value}점).",
+        "awayAdvantage": "{awayTeam}이(가) 우수한 가중 폼을 가지고 있습니다 (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team}이(가) 공격적 모멘텀을 보여줍니다 (+{value} 득점 모멘텀).",
+        "homeBearish": "{team}의 모멘텀이 약해지고 있습니다 ({value}).",
+        "awayBullish": "{team}이(가) 긍정적 모멘텀을 구축하고 있습니다 (+{value}).",
+        "awayBearish": "{team}이(가) 하락 추세입니다 ({value})."
+      },
+      "confidence": {
+        "high": "AI 신뢰도가 높게 유지됩니다 ({score}%).",
+        "low": "AI 신뢰도가 제한적입니다 ({score}%).",
+        "topPick": "최고 AI 신호: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "예상 득점 약 {goals}골; 높은 득점 시나리오가 가능합니다.",
+        "lowScoring": "예상 총 득점 약 {goals}골; 낮은 득점 패턴이 가능합니다.",
+        "homeCleanSheet": "{team} 무실점 확률 {percent}%.",
+        "awayCleanSheet": "{team} 무실점 확률 {percent}%."
+      },
+      "sampleSmall": "최근 {matches}경기만 사용 가능—주의해서 해석하세요."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "강점 및 약점",
+      "subtitle": "팀별 성과 분석",
+      "strengthsTitle": "강점",
+      "weaknessesTitle": "약점",
+      "noData": "데이터 부족",
+      "strengths": {
+        "formHigh": "높은 폼 점수",
+        "winRateHigh": "강한 승률",
+        "attackStrong": "강력한 공격",
+        "defenseStrong": "견고한 수비",
+        "goalDiffPositive": "양수 득실차",
+        "winStreak": "{count}경기 연승"
+      },
+      "weaknesses": {
+        "formLow": "낮은 폼 점수",
+        "winRateLow": "낮은 승률",
+        "attackWeak": "약한 공격",
+        "defenseWeak": "약한 수비",
+        "goalDiffNegative": "음수 득실차",
+        "lossStreak": "{count}경기 연패"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "승",
+        "draw": "무",
+        "loss": "패",
+        "unknown": "—"
+      },
+      "titleFallback": "최근 폼",
+      "homeTitle": "홈 폼",
+      "awayTitle": "원정 폼"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "폼 점수",
+      "goalDifference": "득실차",
+      "homeBadge": "홈",
+      "awayBadge": "원정",
+      "streakLabel": "{count}경기 {type} 연속",
+      "streakTypes": {
+        "win": "연승",
+        "draw": "연무",
+        "loss": "연패"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "배당률",
+      "matchResult": "경기 결과",
+      "europeanOdds": "유럽식 배당률",
+      "asianHandicap": "아시안 핸디캡",
+      "overUnderLines": "오버/언더 라인",
+      "firstHalf": "전반전",
+      "firstHalfEuropean": "전반전 유럽식 배당률",
+      "firstHalfAsian": "전반전 아시안 핸디캡",
+      "firstHalfOverUnder": "전반전 오버/언더",
+      "openingLine": "오프닝 라인",
+      "closingLine": "클로징 라인"
+    },
+    "reanalyze": {
+      "title": "수동 새로고침",
+      "description": "통계가 오래된 것 같으면 새로운 스크래핑을 요청하세요. 15분마다 한 번 사용 가능합니다.",
+      "button": "새 분석 요청",
+      "buttonLoading": "전송 중...",
+      "queued": "요청이 대기열에 추가되었습니다 (위치 {position}).",
+      "alreadyQueued": "이 경기는 이미 분석 대기열에 있습니다.",
+      "rateLimited": "이 경기에 대한 다른 새로고침을 요청하기 전에 기다려 주세요.",
+      "nextAllowed": "다음 수동 요청은 {time}에 사용 가능합니다.",
+      "error": "새 분석을 요청할 수 없습니다. 나중에 다시 시도해 주세요."
+    }
+  },
+  "initialSetup": {
+    "welcome": "환영합니다!",
+    "subtitle": "선호하는 언어와 시간대를 선택해 주세요",
+    "languageSelection": "언어 선택",
+    "timezoneSelection": "시간대",
+    "saving": "저장 중...",
+    "continue": "계속",
+    "timeFormatSelection": "선호하는 시간 형식 선택"
+  },
+  "emptyState": {
+    "noData": "데이터 없음",
+    "tryAgain": "다시 시도"
+  },
+  "matchesScreen": {
+    "title": "경기 일정",
+    "lastRefresh": "마지막 업데이트",
+    "tabs": {
+      "today": "오늘",
+      "tomorrow": "내일"
+    },
+    "allLeagues": "모든 리그",
+    "searchPlaceholder": "팀 또는 리그 검색...",
+    "clearFilters": "필터 지우기",
+    "loading": "경기 로딩 중...",
+    "emptyTitle": "경기를 찾을 수 없음",
+    "emptyMessage": "이 보기에는 아직 경기가 없습니다.\n\n새 경기가 곧 추가될 예정입니다!",
+    "emptyFiltered": "조건에 맞는 경기를 찾을 수 없습니다.\n\n필터를 지우고 다시 시도할 수 있습니다.",
+    "statusFallback": "예정됨",
+    "staleDataWarning": "{date}의 일정을 표시하고 있습니다. 최신 데이터 업데이트를 기다리는 중입니다."
+  },
+  "favoritesScreen": {
+    "title": "즐겨찾기",
+    "emptyTitle": "즐겨찾기 경기 없음",
+    "emptyMessage": "아직 즐겨찾기에 경기를 추가하지 않았습니다.\n\n경기 카드의 별 아이콘을 탭하여 여기에 추가하세요.",
+    "loading": "로딩 중..."
+  },
+  "errors": {
+    "timeout": "요청 시간이 초과되었습니다. 연결을 확인하고 다시 시도해 주세요.",
+    "network": "네트워크 오류. 인터넷 연결을 확인해 주세요.",
+    "api": "서버가 일시적으로 사용할 수 없습니다. 나중에 다시 시도해 주세요.",
+    "unknown": "예기치 않은 오류가 발생했습니다."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "터키어",
+      "en": "영어",
+      "es": "스페인어",
+      "de": "독일어",
+      "it": "이탈리아어",
+      "zh-TW": "번체 중국어",
+      "zh-CN": "간체 중국어",
+      "ja": "일본어",
+      "id": "인도네시아어",
+      "fr": "프랑스어",
+      "ru": "러시아어",
+      "tl": "타갈로그어",
+      "ko": "한국어",
+      "ar": "아랍어",
+      "pt": "포르투갈어"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "이스탄불 (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "런던 (GMT+0)",
+      "MADRID": "마드리드 (GMT+1)",
+      "BERLIN": "베를린 (GMT+1)",
+      "PARIS": "파리 (GMT+1)",
+      "CIUDAD_DE_MEXICO": "멕시코시티 (GMT-6)",
+      "BUENOS_AIRES": "부에노스아이레스 (GMT-3)",
+      "NEW_YORK": "뉴욕 (GMT-5)",
+      "LOS_ANGELES": "로스앤젤레스 (GMT-8)",
+      "CHICAGO": "시카고 (GMT-6)",
+      "BOGOTA": "보고타 (GMT-5)",
+      "LIMA": "리마 (GMT-5)",
+      "SANTIAGO": "산티아고 (GMT-4)",
+      "DUBAI": "두바이 (GMT+4)",
+      "TOKYO": "도쿄 (GMT+9)",
+      "SYDNEY": "시드니 (GMT+10)"
+    },
+    "title": "설정",
+    "preferencesSection": "환경 설정",
+    "aboutSection": "GoalBlip 정보",
+    "language": "언어",
+    "timezone": "시간대",
+    "timeFormat": "시간 형식",
+    "timeFormatOptions": {
+      "auto": "자동",
+      "24h": "24시간",
+      "12h": "12시간"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "AI 기반 경기 분석 플랫폼"
+  }
+}
+

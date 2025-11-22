@@ -1,0 +1,558 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "retry": "Повторить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "close": "Закрыть",
+    "search": "Поиск",
+    "clear": "Очистить",
+    "all": "Все",
+    "select": "Выбрать",
+    "continue": "Продолжить",
+    "back": "Назад",
+    "home": "Главная",
+    "favorites": "Избранное",
+    "unknownLeague": "Неизвестная лига",
+    "unknown": "Неизвестно",
+    "prediction": "Прогноз",
+    "time": {
+      "justNow": "только что",
+      "minutes": "{count}м",
+      "hours": "{count}ч",
+      "days": "{count}д"
+    },
+    "settings": "Настройки",
+    "menu": "Меню"
+  },
+  "drawer": {
+    "title": "Матчи",
+    "searchPrompt": "Поиск матчей",
+    "searchPromptDescription": "Ищите матчи, вводя название команды или лиги"
+  },
+  "home": {
+    "today": "Сегодня",
+    "tomorrow": "Завтра",
+    "noMatches": "Матчи не найдены",
+    "noMatchesMessage": "Для этого представления пока нет матчей.\n\nНовые матчи будут добавлены в ближайшее время!",
+    "noMatchesFiltered": "Не найдено матчей, соответствующих вашим критериям поиска.\n\nВы можете очистить фильтры и попробовать снова.",
+    "clearFilters": "Очистить фильтры",
+    "refreshing": "Обновление...",
+    "dataLoadError": "Не удалось загрузить данные",
+    "dataLoadErrorMessage": "Пожалуйста, проверьте подключение к Интернету и попробуйте снова.",
+    "loadingMore": "Загрузка дополнительных...",
+    "topLeagues": {
+      "matches": "{count} матчей",
+      "firstMatch": "Первый старт {time}",
+      "waitingKickoff": "Ожидание начала матча"
+    },
+    "aiShortlist": {
+      "predictionPending": "Прогноз в ожидании",
+      "noPredictionTitle": "Нет прогноза ИИ",
+      "noPredictionMessage": "Анализ для этого матча еще не готов."
+    }
+  },
+  "filter": {
+    "searchPlaceholder": "Поиск команды или лиги...",
+    "selectLeague": "Выбрать лигу",
+    "allLeagues": "Все лиги",
+    "leaguesSelected": "Выбрано {count} лиг",
+    "clearAll": "Очистить все",
+    "all": "Все",
+    "matches": "матчей",
+    "filterSortSettings": "Настройки фильтра",
+    "filterSortSettingsDescription": "Параметры сортировки и отображения"
+  },
+  "filterSort": {
+    "title": "Фильтры и сортировка",
+    "tabs": {
+      "filters": "Фильтры",
+      "sort": "Сортировка",
+      "view": "Вид"
+    },
+    "sortByLeague": "По лиге",
+    "sortByTime": "По времени",
+    "sortByDate": "По дате",
+    "sortByTeam": "По названию команды",
+    "viewGrouped": "Группировать по лиге",
+    "viewGroupedDescription": "Показывать матчи под заголовками лиг",
+    "viewFlat": "Плоский список",
+    "viewFlatDescription": "Показывать все матчи без заголовков лиг"
+  },
+  "match": {
+    "live": "В прямом эфире",
+    "vs": "против",
+    "kickoff": "Скоро начало",
+    "detailTitle": "Детали матча",
+    "loadingDetail": "Загрузка деталей матча...",
+    "detailError": "Не удалось загрузить детали матча",
+    "detailErrorMessage": "Пожалуйста, проверьте подключение к Интернету и попробуйте снова.",
+    "pendingAnalysis": "Анализ",
+    "pendingMessage": "Позиция в очереди: #{position}\n\nБудет автоматически обновлено после завершения анализа.",
+    "refresh": "Обновить",
+    "dataDate": "Дата данных",
+    "lastUpdate": "Последнее обновление",
+    "dataSource": "Источник данных",
+    "dataSourceValue": "GoalBlip Scout",
+    "statusLabels": {
+      "live": "В прямом эфире",
+      "scheduled": "Запланирован",
+      "finished": "Матч завершен",
+      "postponed": "Перенесен",
+      "canceled": "Отменен",
+      "abandoned": "Прерван",
+      "delayed": "Задержан",
+      "halftime": "Перерыв",
+      "extraTime": "Дополнительное время",
+      "penalties": "Пенальти"
+    }
+  },
+  "matchDetail": {
+    "quickSummary": "Краткое резюме",
+    "keyInsights": "Ключевые выводы",
+    "teamComparison": "Сравнение команд",
+    "visualComparison": "Визуальное сравнение",
+    "strengthsWeaknesses": "Сильные и слабые стороны",
+    "predictionSummary": "Резюме прогнозов",
+    "detailedPredictions": "Детальные прогнозы",
+    "formStatsTitle": "Статистика формы",
+    "formStats": {
+      "winRate": "Процент побед",
+      "drawRate": "Процент ничьих",
+      "lossRate": "Процент поражений",
+      "avgGoalsFor": "Среднее голов за",
+      "avgGoalsAgainst": "Среднее голов против"
+    },
+    "recentForm": "Детали недавней формы",
+    "headToHead": "Очные встречи",
+    "oddsTrends": "Анализ трендов коэффициентов",
+    "upcomingMatches": "Предстоящие матчи",
+    "upcomingMatchesEmpty": "Нет доступных предстоящих матчей.",
+    "goalAnalysis": "Анализ голов",
+    "riskAnalysis": "Анализ рисков",
+    "localInfo": "Местная информация",
+    "noDetailedAnalysis": "Нет детального анализа",
+    "noDetailedAnalysisMessage": "Детальный анализ прогнозов пока недоступен для этого матча.",
+    "predictionsNotAvailable": "Анализ прогнозов недоступен",
+    "predictionsNotAvailableMessage": "Этот раздел в настоящее время доступен только на турецком языке. Другие языки будут добавлены в ближайшее время.",
+    "predictionLabels": {
+      "matchResult": "Результат матча (1X2)",
+      "bothTeamsScore": "Обе команды забьют",
+      "totalGoals": "Всего голов",
+      "firstHalfResult": "Результат первого тайма",
+      "firstHalfGoals": "Голы первого тайма",
+      "teamToScore": "Команда забьет",
+      "asianHandicap": "Азиатский гандикап",
+      "overUnderLines": "Линии Over/Under",
+      "firstHalfOverUnder": "Over/Under первого тайма",
+      "firstHalfAsianHandicap": "Азиатский гандикап первого тайма"
+    },
+    "outcomeLabels": {
+      "home": "Победа дома",
+      "draw": "Ничья",
+      "away": "Победа в гостях",
+      "over": "Over",
+      "under": "Under",
+      "yes": "Да",
+      "no": "Нет",
+      "bttsYes": "Обе команды забьют: Да",
+      "bttsNo": "Обе команды забьют: Нет",
+      "overWithValue": "Over {value}",
+      "underWithValue": "Under {value}",
+      "firstHalfOver": "Over первого тайма {value}",
+      "firstHalfUnder": "Under первого тайма {value}",
+      "homeWillScore": "Домашняя команда забьет",
+      "awayWillScore": "Гостевая команда забьет"
+    },
+    "aiAnalysis": "Анализ ИИ",
+    "mainPrediction": "Основной прогноз",
+    "recommendedPick": "Рекомендуемый выбор",
+    "allProbabilities": "Все вероятности",
+    "highest": "Самая высокая",
+    "probability": "вероятность",
+    "summary": "Резюме",
+    "recommended": "Рекомендуется:",
+    "confidence": {
+      "veryHigh": "Очень высокая уверенность",
+      "high": "Высокая уверенность",
+      "good": "Хорошая уверенность",
+      "medium": "Средняя уверенность",
+      "low": "Низкая уверенность"
+    },
+    "invalidMatchId": "Неверный ID матча",
+    "detailNotFound": "Детали матча не найдены.",
+    "reloadFailed": "Перезагрузка не удалась.",
+    "cacheMessage": "Не удалось получить текущие данные, показываем из кэша.",
+    "leagueInfo": "Информация о лиге",
+    "today": "Сегодня",
+    "tomorrow": "Завтра",
+    "manual": "Вручную",
+    "scoreboard": {
+      "kickoffFallback": "Скоро начало матча",
+      "timezoneLabel": "Местное время: {timezone}"
+    },
+    "teams": {
+      "homeFallback": "Домашняя команда",
+      "awayFallback": "Гостевая команда",
+      "homeGeneric": "домашняя команда",
+      "awayGeneric": "гостевая команда",
+      "formFallback": "Команда {index}",
+      "homeShort": "ДОМА",
+      "awayShort": "В ГОСТЯХ"
+    },
+    "analysis": {
+      "insights": {
+        "homeHighWinRate": "{team} в отличной форме с процентом побед {winRate}% за последние 5 матчей.",
+        "homeHighLossRate": "{team} испытывает трудности с процентом поражений {lossRate}% за последние 5 матчей.",
+        "homeHighGoalsFor": "{team} в среднем забивает {goalsFor} голов за матч в последнее время.",
+        "homeLowGoalsAgainst": "{team} пропускает очень мало голов, всего {goalsAgainst} за матч.",
+        "awayHighWinRate": "{team} в отличной форме с процентом побед {winRate}% за последние 5 матчей.",
+        "awayHighLossRate": "{team} испытывает трудности с процентом поражений {lossRate}% за последние 5 матчей.",
+        "homeWinStreak": "{team} выиграла {streak} матчей подряд.",
+        "awayLosingStreak": "{team} проиграла {streak} матчей подряд.",
+        "homeGoalDifference": "{team} имеет явное преимущество в разнице голов.",
+        "homeH2HSuperiority": "{team} доминировала в недавних очных встречах.",
+        "aiVeryHighConfidence": "Прогнозы ИИ показывают очень высокую уверенность (средняя %{avgConfidence}).",
+        "aiSingleHighConfidence": "Прогноз «{prediction}» имеет чрезвычайно высокую уверенность (%{confidence}). Наиболее вероятный исход: {outcome} (%{outcomePct})."
+      },
+      "quickSummary": {
+        "home": "Дома",
+        "away": "В гостях",
+        "balanced": "Сбалансировано",
+        "homeAdvantage": "Домашняя команда имеет преимущество в форме",
+        "awayAdvantage": "Гостевая команда имеет преимущество в форме",
+        "balancedForm": "Обе команды в сбалансированной форме",
+        "highConfidence": "Прогноз с высокой уверенностью",
+        "mediumHighConfidence": "Прогноз со средней-высокой уверенностью",
+        "balancedConfidence": "Сбалансированный прогноз",
+        "lowConfidence": "Прогноз с низкой уверенностью",
+        "homeAdvantageSuffix": "• Преимущество дома присутствует",
+        "awayAdvantageSuffix": "• Преимущество гостевой команды"
+      }
+    },
+    "upcomingMatchTags": {
+      "home": "Дома",
+      "away": "В гостях",
+      "neutral": "Нейтрально",
+      "form": "Форма"
+    },
+    "teamComparisonCard": {
+      "formScore": "Форма: {score}/100",
+      "advantage": {
+        "home": "{team} имеет явное преимущество",
+        "away": "{team} имеет явное преимущество",
+        "balanced": "Команды равны"
+      },
+      "predictionLabel": "Прогноз",
+      "confidenceLabel": "Уверенность",
+      "predictionValues": {
+        "home": "Дома",
+        "away": "В гостях",
+        "draw": "Ничья",
+        "balanced": "Сбалансировано"
+      }
+    },
+    "visualComparisonCard": {
+      "title": "Сравнение производительности",
+      "subtitle": "Визуальное сравнение обеих команд",
+      "metrics": {
+        "formScore": "Оценка формы",
+        "winRate": "Процент побед",
+        "avgGoals": "Среднее голов",
+        "defense": "Защита"
+      },
+      "units": {
+        "goalsPerMatch": " голов/матч",
+        "defenseHint": " (меньше голов = лучше)"
+      }
+    },
+    "goalAnalysisCard": {
+      "title": "Анализ голов",
+      "summary": {
+        "expectedGoals": "Ожидаемые голы",
+        "prediction": "Прогноз"
+      },
+      "expectation": {
+        "high": "Высокие ожидания голов",
+        "mediumHigh": "Средне-высокие ожидания голов",
+        "medium": "Средние ожидания голов",
+        "low": "Низкие ожидания голов"
+      },
+      "teamStats": {
+        "avgGoals": "Среднее голов",
+        "avgConceded": "Пропущено",
+        "overUnderLabel": "Выбор Over/Under",
+        "confidence": "Уверенность"
+      }
+    },
+    "riskAnalysisCard": {
+      "title": "Анализ рисков",
+      "riskLevel": {
+        "high": "Высокий риск",
+        "medium": "Средний риск",
+        "low": "Низкий риск"
+      },
+      "noRisk": "Нет заметных факторов риска",
+      "factors": {
+        "highLossRate": "{team} испытывает трудности с процентом поражений {lossRate}% за последние 5 матчей.",
+        "mediumLossRate": "{team} показывает признаки снижения формы.",
+        "lossStreak": "{team} проиграла {streak} матчей подряд.",
+        "lowScoring": "{team} испытывает трудности с забиванием голов ({goalsFor} голов за матч).",
+        "highConceding": "{team} пропускает много голов ({goalsAgainst} за матч).",
+        "lowFormScore": "{team} имеет низкую оценку формы ({formScore}/100).",
+        "mediumFormScore": "{team} остается нестабильной в форме.",
+        "weakAway": "{team} имеет слабые выступления в гостях."
+      }
+    },
+    "advancedMetrics": {
+      "title": "Продвинутые выводы",
+      "sampleLabel": "На основе последних {matches} матчей",
+      "weightedScore": {
+        "title": "Система взвешенных оценок",
+        "description": "Недавние результаты формы взвешиваются, чтобы подчеркнуть текущую силу.",
+        "homeLabel": "Взвешенная оценка дома",
+        "awayLabel": "Взвешенная оценка в гостях"
+      },
+      "momentum": {
+        "title": "Индикатор импульса",
+        "description": "Импульс разницы голов, полученный из недавних выступлений.",
+        "bullish": "Бычий импульс",
+        "neutral": "Нейтральный импульс",
+        "bearish": "Медвежий импульс"
+      },
+      "confidence": {
+        "title": "Смешанная уверенность",
+        "description": "Композитная уверенность, объединяющая выборы ИИ и историю успеха.",
+        "scoreLabel": "Композитная уверенность",
+        "topPickLabel": "Топ-сигнал",
+        "noPick": "Нет доступного сигнала"
+      },
+      "poisson": {
+        "title": "Модель голов Пуассона",
+        "description": "Приблизительное распределение голов на основе недавних показателей забивания.",
+        "expectedHeader": "Ожидаемые голы",
+        "goalColumn": "Голы",
+        "homeColumn": "Дома",
+        "awayColumn": "В гостях",
+        "goalLabel": "{value} голов",
+        "goalLabelPlus": "3+ голов"
+      },
+      "goalTrend": {
+        "title": "Тренд голов",
+        "description": "Недавние забитые против пропущенных голов.",
+        "team": "Команда",
+        "forLabel": "ЗГ",
+        "againstLabel": "ПГ",
+        "deltaLabel": "Разн"
+      },
+      "confidenceLadder": {
+        "title": "Лестница уверенности",
+        "description": "Рейтинг уверенности прогнозов."
+      },
+      "overUnder": {
+        "title": "Уверенность Over/Under",
+        "description": "Ключевые вероятности общего количества голов."
+      },
+      "handicap": {
+        "title": "Вывод о гандикапе",
+        "description": "Последняя линия азиатского гандикапа."
+      },
+      "halfComparison": {
+        "title": "Первый тайм против полного времени",
+        "description": "Как уверенность меняется между выборами первого тайма и полного времени.",
+        "halfLabel": "ПТ %{value}",
+        "fullLabel": "ФТ %{value}"
+      }
+    },
+    "insightSentences": {
+      "title": "Ключевые сигналы",
+      "weighted": {
+        "homeAdvantage": "{homeTeam} имеет сильное преимущество в форме (+{value} очков над {awayTeam}).",
+        "awayAdvantage": "{awayTeam} имеет превосходную взвешенную форму (+{value})."
+      },
+      "momentum": {
+        "homeBullish": "{team} показывает атакующий импульс (+{value} импульс голов).",
+        "homeBearish": "{team} импульс охлаждается ({value}).",
+        "awayBullish": "{team} строит позитивный импульс (+{value}).",
+        "awayBearish": "{team} имеет тенденцию к снижению ({value})."
+      },
+      "confidence": {
+        "high": "Уверенность ИИ остается высокой ({score}%).",
+        "low": "Уверенность ИИ ограничена ({score}%).",
+        "topPick": "Топ-сигнал ИИ: {pick} ({score}%)."
+      },
+      "poisson": {
+        "highScoring": "Ожидаемые голы около {goals}; вероятен сценарий с высоким счетом.",
+        "lowScoring": "Прогнозируемый итог около {goals} голов; возможен паттерн с низким счетом.",
+        "homeCleanSheet": "{team} вероятность сухого матча {percent}%.",
+        "awayCleanSheet": "{team} вероятность сухого матча {percent}%."
+      },
+      "sampleSmall": "Доступно только {matches} недавних матчей — интерпретируйте с осторожностью."
+    },
+    "strengthsWeaknessesCard": {
+      "title": "Сильные и слабые стороны",
+      "subtitle": "Разбивка производительности по командам",
+      "strengthsTitle": "Сильные стороны",
+      "weaknessesTitle": "Слабые стороны",
+      "noData": "Недостаточно данных",
+      "strengths": {
+        "formHigh": "Высокая оценка формы",
+        "winRateHigh": "Сильный процент побед",
+        "attackStrong": "Мощная атака",
+        "defenseStrong": "Надежная защита",
+        "goalDiffPositive": "Положительная разница голов",
+        "winStreak": "Серия из {count} побед подряд"
+      },
+      "weaknesses": {
+        "formLow": "Низкая оценка формы",
+        "winRateLow": "Низкий процент побед",
+        "attackWeak": "Слабая атака",
+        "defenseWeak": "Слабая защита",
+        "goalDiffNegative": "Отрицательная разница голов",
+        "lossStreak": "Серия из {count} поражений подряд"
+      }
+    },
+    "recentFormCard": {
+      "resultLabels": {
+        "win": "В",
+        "draw": "Н",
+        "loss": "П",
+        "unknown": "—"
+      },
+      "titleFallback": "Недавняя форма",
+      "homeTitle": "Форма дома",
+      "awayTitle": "Форма в гостях"
+    },
+    "formStatsCard": {
+      "formScoreLabel": "Оценка формы",
+      "goalDifference": "Разница голов",
+      "homeBadge": "ДОМА",
+      "awayBadge": "В ГОСТЯХ",
+      "streakLabel": "Серия из {count} {type} подряд",
+      "streakTypes": {
+        "win": "побед",
+        "draw": "ничьих",
+        "loss": "поражений"
+      }
+    },
+    "oddsTrendCard": {
+      "rowLabel": "Коэффициенты",
+      "matchResult": "Результат матча",
+      "europeanOdds": "Европейские коэффициенты",
+      "asianHandicap": "Азиатский гандикап",
+      "overUnderLines": "Линии Over/Under",
+      "firstHalf": "Первый тайм",
+      "firstHalfEuropean": "Европейские коэффициенты первого тайма",
+      "firstHalfAsian": "Азиатский гандикап первого тайма",
+      "firstHalfOverUnder": "Over/Under первого тайма",
+      "openingLine": "Линия открытия",
+      "closingLine": "Линия закрытия"
+    },
+    "reanalyze": {
+      "title": "Ручное обновление",
+      "description": "Если статистика выглядит устаревшей, запросите новый скрапинг. Доступно раз в 15 минут.",
+      "button": "Запросить новый анализ",
+      "buttonLoading": "Отправка...",
+      "queued": "Запрос в очереди (позиция {position}).",
+      "alreadyQueued": "Этот матч уже в очереди анализа.",
+      "rateLimited": "Пожалуйста, подождите перед запросом другого обновления для этого матча.",
+      "nextAllowed": "Следующий ручной запрос доступен в {time}.",
+      "error": "Не удалось запросить новый анализ. Пожалуйста, попробуйте позже."
+    }
+  },
+  "initialSetup": {
+    "welcome": "Добро пожаловать!",
+    "subtitle": "Пожалуйста, выберите предпочитаемый язык и часовой пояс",
+    "languageSelection": "Выбор языка",
+    "timezoneSelection": "Часовой пояс",
+    "saving": "Сохранение...",
+    "continue": "Продолжить",
+    "timeFormatSelection": "Выберите предпочитаемый формат времени"
+  },
+  "emptyState": {
+    "noData": "Нет данных",
+    "tryAgain": "Попробовать снова"
+  },
+  "matchesScreen": {
+    "title": "Расписание матчей",
+    "lastRefresh": "Последнее обновление",
+    "tabs": {
+      "today": "Сегодня",
+      "tomorrow": "Завтра"
+    },
+    "allLeagues": "Все лиги",
+    "searchPlaceholder": "Поиск команды или лиги...",
+    "clearFilters": "Очистить фильтры",
+    "loading": "Загрузка матчей...",
+    "emptyTitle": "Матчи не найдены",
+    "emptyMessage": "Для этого представления пока нет матчей.\n\nНовые матчи будут добавлены в ближайшее время!",
+    "emptyFiltered": "Не найдено матчей, соответствующих вашим критериям.\n\nВы можете очистить фильтры и попробовать снова.",
+    "statusFallback": "Запланирован",
+    "staleDataWarning": "Показываем расписание с {date}. Ожидание последних данных для обновления."
+  },
+  "favoritesScreen": {
+    "title": "Избранное",
+    "emptyTitle": "Нет избранных матчей",
+    "emptyMessage": "Вы еще не добавили матчи в избранное.\n\nНажмите на значок звезды на карточках матчей, чтобы добавить их сюда.",
+    "loading": "Загрузка..."
+  },
+  "errors": {
+    "timeout": "Запрос истек. Пожалуйста, проверьте ваше подключение и попробуйте снова.",
+    "network": "Ошибка сети. Пожалуйста, проверьте ваше подключение к Интернету.",
+    "api": "Сервер временно недоступен. Пожалуйста, попробуйте позже.",
+    "unknown": "Произошла непредвиденная ошибка."
+  },
+  "settings": {
+    "localeNames": {
+      "tr": "Турецкий",
+      "en": "Английский",
+      "es": "Испанский",
+      "de": "Немецкий",
+      "it": "Итальянский",
+      "zh-TW": "Традиционный китайский",
+      "zh-CN": "Упрощённый китайский",
+      "ja": "Японский",
+      "id": "Индонезийский",
+      "fr": "Французский",
+      "ru": "Русский",
+      "tl": "Тагальский",
+      "ko": "Корейский",
+      "ar": "Арабский",
+      "pt": "Португальский"
+    },
+    "timezoneLabels": {
+      "ISTANBUL": "Стамбул (GMT+3)",
+      "UTC": "UTC (GMT+0)",
+      "LONDON": "Лондон (GMT+0)",
+      "MADRID": "Мадрид (GMT+1)",
+      "BERLIN": "Берлин (GMT+1)",
+      "PARIS": "Париж (GMT+1)",
+      "CIUDAD_DE_MEXICO": "Мехико (GMT-6)",
+      "BUENOS_AIRES": "Буэнос-Айрес (GMT-3)",
+      "NEW_YORK": "Нью-Йорк (GMT-5)",
+      "LOS_ANGELES": "Лос-Анджелес (GMT-8)",
+      "CHICAGO": "Чикаго (GMT-6)",
+      "BOGOTA": "Богота (GMT-5)",
+      "LIMA": "Лима (GMT-5)",
+      "SANTIAGO": "Сантьяго (GMT-4)",
+      "DUBAI": "Дубай (GMT+4)",
+      "TOKYO": "Токио (GMT+9)",
+      "SYDNEY": "Сидней (GMT+10)"
+    },
+    "title": "Настройки",
+    "preferencesSection": "Предпочтения",
+    "aboutSection": "О GoalBlip",
+    "language": "Язык",
+    "timezone": "Часовой пояс",
+    "timeFormat": "Формат времени",
+    "timeFormatOptions": {
+      "auto": "Автоматически",
+      "24h": "24 часа",
+      "12h": "12 часов"
+    },
+    "version": "GoalBlip v3.0",
+    "subtitle": "Платформа анализа матчей на основе ИИ"
+  }
+}
+
